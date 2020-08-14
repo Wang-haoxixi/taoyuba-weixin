@@ -1,0 +1,71 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
+		{
+			"path": "pages/home/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/find/index/index",
+			"style": {
+				"navigationBarTitleText": "发现",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/release/index/index",
+			"style": {
+				"navigationBarTitleText": "发布",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/message/index/index",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/user/index/index",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#919397",
+		"selectedColor": "#FF4603",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/home/index/index"
+			},
+			{
+				"pagePath": "pages/find/index/index"
+			},
+			{
+				"pagePath": "pages/release/index/index"
+			},
+			{
+				"pagePath": "pages/message/index/index"
+			},
+			{
+				"pagePath": "pages/user/index/index"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "shopping",
+		"navigationBarBackgroundColor": "#FFF",
+		"backgroundColor": "#FFF"
+	}
+}
