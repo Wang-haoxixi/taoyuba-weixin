@@ -9,6 +9,6 @@ const ENV_BASE_URL = {
 	production: 'https://www.baidu.com/', //生产环境
 }
 
-export const IMAGE_URL = 'https://woneng-oss.oss-cn-hangzhou.aliyuncs.com/ygl/' // 图片地址系统维护
+export const IMAGE_URL = 'https://mini.taoyu58.com/' // 图片地址系统维护
 export const BASE_URL = ENV_BASE_URL[process.env.NODE_ENV || 'development']; //后台根域名
 export const API_URL = ENV_API_URL[process.env.NODE_ENV || 'development']; //后台接口域名

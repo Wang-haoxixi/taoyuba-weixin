@@ -6,40 +6,115 @@
 		{
 			"path": "pages/home/index/index",
 			"style": {
-				"navigationBarTitleText": "首页",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
+			"path": "pages/home/search/index",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		},
+		{
+			"path": "pages/home/recruit/list/index",
+			"style": {
+				"navigationBarTitleText": "招聘"
+			}
+		},
+		{
+			"path": "pages/home/recruit/detail/index",
+			"style": {
+				"navigationBarTitleText": "招聘"
+			}
+		},
+		{
+			"path": "pages/home/resume/list/index",
+			"style": {
+				"navigationBarTitleText": "应聘"
+			}
+		},
+		{
+			"path": "pages/home/resume/detail/index",
+			"style": {
+				"navigationBarTitleText": "应聘"
+			}
+		},
+		{
+			"path": "pages/home/video/detail/index",
+			"style": {
+				"navigationBarTitleText": "在线教育"
+			}
+		},
+		{
+			"path": "pages/home/training/list/index",
+			"style": {
+				"navigationBarTitleText": "培训机构"
+			}
+		},
+		{
+			"path": "pages/home/training/detail/index",
+			"style": {
+				"navigationBarTitleText": "培训机构"
+			}
+		},
+		{
+			"path": "pages/home/curriculum/list/index",
+			"style": {
+				"navigationBarTitleText": "渔民学院"
+			}
+		},
+		{
+			"path": "pages/home/curriculum/detail/index",
+			"style": {
+				"navigationBarTitleText": "渔民学院"
+			}
+		},
+		{
+			"path": "pages/home/curriculum/list/index",
+			"style": {
+				"navigationBarTitleText": "examination"
+			}
+		},
+		{
+			"path": "pages/home/curriculum/detail/index",
+			"style": {
+				"navigationBarTitleText": "examination"
+			}
+		},
+		{
+			"path": "pages/home/report/index",
+			"style": {
+				"navigationBarTitleText": "进出港报告"
+			}
+		},
+		
+		{
 			"path": "pages/find/index/index",
 			"style": {
-				"navigationBarTitleText": "发现",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/release/index/index",
 			"style": {
-				"navigationBarTitleText": "发布",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/message/index/index",
 			"style": {
-				"navigationBarTitleText": "消息",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/user/index/index",
 			"style": {
-				"navigationBarTitleText": "我的",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		}
 	],
 	"tabBar": {
+		"custom": true,
 		"color": "#919397",
 		"selectedColor": "#FF4603",
 		"borderStyle": "black",

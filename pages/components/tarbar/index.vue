@@ -111,6 +111,7 @@
 			.tyb-tarbar-item_text {
 				display: block;
 				margin-top: 4rpx;
+				font-size: 26rpx;
 			}
 		}
 		.tyb-tarbar-item_image_slot {

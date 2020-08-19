@@ -59,7 +59,7 @@
 			}
 		}
 		.title {
-			font-size: 32rpx;
+			font-size: 30rpx;
 		}
 		.time {
 			font-size: 26rpx;

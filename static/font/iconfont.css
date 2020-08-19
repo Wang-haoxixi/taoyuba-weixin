@@ -1,12 +1,13 @@
 @font-face {
-  font-family: 'iconfont';  /* project id 1962611 */
-  src: url('https://at.alicdn.com/t/font_1962611_diowigtyqzu.eot');
-  src: url('https://at.alicdn.com/t/font_1962611_diowigtyqzu.eot?#iefix') format('embedded-opentype'),
-  url('https://at.alicdn.com/t/font_1962611_diowigtyqzu.woff2') format('woff2'),
-  url('https://at.alicdn.com/t/font_1962611_diowigtyqzu.woff') format('woff'),
-  url('https://at.alicdn.com/t/font_1962611_diowigtyqzu.ttf') format('truetype'),
-  url('https://at.alicdn.com/t/font_1962611_diowigtyqzu.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 2010853 */
+  src: url('https://at.alicdn.com/t/font_2010853_6wlprfpzlyx.eot');
+  src: url('https://at.alicdn.com/t/font_2010853_6wlprfpzlyx.eot?#iefix') format('embedded-opentype'),
+  url('https://at.alicdn.com/t/font_2010853_6wlprfpzlyx.woff2') format('woff2'),
+  url('https://at.alicdn.com/t/font_2010853_6wlprfpzlyx.woff') format('woff'),
+  url('https://at.alicdn.com/t/font_2010853_6wlprfpzlyx.ttf') format('truetype'),
+  url('https://at.alicdn.com/t/font_2010853_6wlprfpzlyx.svg#iconfont') format('svg');
 }
+
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
@@ -15,47 +16,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.iconico_home_committed:before {
-  content: "\e65c";
+.icontianqi:before {
+  content: "\e623";
 }
 
-.icondizhi:before {
-  content: "\e628";
+.iconchengyuan:before {
+  content: "\e61c";
 }
 
-.iconchakantieziguanzhu:before {
-  content: "\e662";
+.iconmima:before {
+  content: "\e621";
 }
 
-.iconweibiaoti105:before {
-  content: "\e609";
+.iconshoucang:before {
+  content: "\e78c";
 }
 
-.iconhuangguan:before {
-  content: "\e798";
-}
-
-.iconsaoyisao:before {
-  content: "\e606";
-}
-
-.iconwenhao:before {
-  content: "\e64e";
-}
-
-.iconGroup-:before {
-  content: "\e686";
-}
-
-.iconiconfontjiantou5:before {
-  content: "\e635";
-}
-
-.iconrili:before {
-  content: "\e785";
-}
-
-.iconshengyin:before {
-  content: "\e63e";
+.iconziliao:before {
+  content: "\e6b6";
 }
 
