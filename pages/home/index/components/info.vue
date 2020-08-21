@@ -1,7 +1,7 @@
 <template>
 	<view class="info-wrapper">
 		<home-container>
-			<u-tabs slot="header" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" :is-scroll="false" :current="current" @change="tabsChange"></u-tabs>
+			<view class="title" slot="header">在线测试</view>
 		</home-container>
 	</view>
 </template>
@@ -14,23 +14,19 @@
 		},
 		data () {
 			return {
-				current: 0,
-				list: [
-					{ name: '职务' },
-					{ name: '科目' },
-					{ name: '证书' },
-					{ name: '考场信息' }
-				]
 			}
 		},
 		methods: {
-			// tabs切换
-			tabsChange (index) {
-				this.current = index
-			},
 		}
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.info-wrapper {
+		.title {
+			padding: 0 50rpx;
+			line-height: 80rpx;
+			color: #fff;
+		}
+	}
 </style>

@@ -11,11 +11,11 @@
 						<text class="phone">{{userInfo.phone}}</text>
 					</view>
 				</view>
-				<view class="base-info-wrapper-right">
+				<!-- <view class="base-info-wrapper-right">
 					<text @click="show = true">{{getLabel}}</text>
 					<u-icon name="arrow-down-fill" color="#666" size="16"></u-icon>
 					<u-select v-model="show" :list="list" @confirm="onConfirm"></u-select>
-				</view>
+				</view> -->
 			</view>
 			<view class="content-wrapper">
 				<view class="item">

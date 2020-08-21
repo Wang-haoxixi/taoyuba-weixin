@@ -70,24 +70,29 @@
 			}
 		},
 		{
-			"path": "pages/home/curriculum/list/index",
-			"style": {
-				"navigationBarTitleText": "examination"
-			}
-		},
-		{
-			"path": "pages/home/curriculum/detail/index",
-			"style": {
-				"navigationBarTitleText": "examination"
-			}
-		},
-		{
 			"path": "pages/home/report/index",
 			"style": {
 				"navigationBarTitleText": "进出港报告"
 			}
 		},
-		
+		{
+			"path": "pages/home/register/index",
+			"style": {
+				"navigationBarTitleText": "船员登记"
+			}
+		},
+		{
+			"path": "pages/home/plan/index",
+			"style": {
+				"navigationBarTitleText": "职业规划"
+			}
+		},
+		{
+			"path": "pages/home/news/detail/index",
+			"style": {
+				"navigationBarTitleText": "新闻"
+			}
+		},
 		{
 			"path": "pages/find/index/index",
 			"style": {
@@ -107,9 +112,27 @@
 			}
 		},
 		{
+			"path": "pages/message/list/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/message/detail/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
 			"path": "pages/user/index/index",
 			"style": {
 				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/user/resume/list/index",
+			"style": {
+				"navigationBarTitleText": "简历管理"
 			}
 		}
 	],

@@ -1,7 +1,7 @@
 <template>
 	<view class="menu-wrapper">
 		<u-cell-group>
-			<u-cell-item v-for="(item, index) in menu" :title="item.label" :key="index"></u-cell-item>
+			<u-cell-item v-for="(item, index) in menu" :title="item.label" :key="index" @click="onTo(item.path)"></u-cell-item>
 		</u-cell-group>
 	</view>
 </template>
@@ -18,7 +18,7 @@
 		data () {
 			return {
 				menu1: [
-					{ label: '简历管理', path: '' },
+					{ label: '简历管理', path: '/pages/user/resume/list/index' },
 					// { label: '发送的简历', path: '' },
 					// { label: '我的报名', path: '' },
 					{ label: '我的培训', path: '' },
@@ -46,6 +46,15 @@
 		computed: {
 			menu () {
 				return this.type === 1 ? this.menu1 : (this.type === 2 ? this.menu2 : (this.type === 3 ? this.menu3 : []))
+			}
+		},
+		methods: {
+			onTo (path) {
+				if (path) {
+					uni.navigateTo({
+						url: path
+					});
+				}
 			}
 		}
 	}

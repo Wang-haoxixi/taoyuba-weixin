@@ -1,5 +1,5 @@
 <template>
-	<view class="recruit-detail-wrapper">
+	<view class="recruit-detail-wrapper phonex-mb">
 		<view class="header-wrapper">
 			<view class="title">一级船长</view>
 			<view class="content">
@@ -58,11 +58,6 @@
 
 <style lang="scss" scoped>
 	.recruit-detail-wrapper {
-		/* iphonex 等安全区设置，底部安全区适配 */
-		/* #ifndef APP-NVUE */
-		margin-bottom: constant(safe-area-inset-bottom);
-		margin-bottom: env(safe-area-inset-bottom);
-		/* #endif */
 		.header-wrapper {
 			padding: 30rpx;
 			border-radius: 8rpx;

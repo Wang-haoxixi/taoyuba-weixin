@@ -101,7 +101,7 @@
 	}
 
 	.u-grid-item-box {
-		padding: 20rpx 0;
+		padding: 30rpx 0;
 		display: flex;
 		align-items: center;
 		justify-content: center;

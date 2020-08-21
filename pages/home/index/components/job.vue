@@ -28,20 +28,20 @@
 			return {
 				current: 0,
 				list: [
-					{ name: '热门招聘' },
-					{ name: '热门简历' },
+					{ name: '船东招聘' },
+					{ name: '企业招聘' },
 				],
 				data1: [
-					{ title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' }
+					{ id: 1, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
+					{ id: 2, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
+					{ id: 3, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
+					{ id: 4, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' }
 				],
 				data2: [
-					{ title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海', publisher: '辛弃疾' },
-					{ title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海', publisher: '辛弃疾' },
-					{ title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海', publisher: '辛弃疾' },
-					{ title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海', publisher: '辛弃疾' }
+					{ id: 1,title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海', publisher: '辛弃疾' },
+					{ id: 2,title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海', publisher: '辛弃疾' },
+					{ id: 3,title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海', publisher: '辛弃疾' },
+					{ id: 4,title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海', publisher: '辛弃疾' }
 				]
 			}
 		},

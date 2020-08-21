@@ -1,5 +1,5 @@
 <template>
-	<view class="list-item-wrapper">
+	<view class="list-item-wrapper" @tap="onTo">
 		<view class="list-item_left">
 			<view class="title">
 				<text class="name ellipsis">{{info.title}}</text>
@@ -13,7 +13,7 @@
 				发布时间：{{info.time}}
 			</view>
 		</view>
-		<view class="list-item_right">
+		<view class="list-item_right" v-if="!hideBtn">
 			<view class="">
 				<u-button :custom-style="{backgroundColor: 'rgba(64, 158, 255, 1)', height: '60rpx', lineHight: '60rpx', color: '#fff', fontSize: '26rpx', padding: '10rpx 20rpx'}">{{btnText}}</u-button>
 			</view>
@@ -35,6 +35,19 @@
 			btnText: {
 				type: String,
 				default: '申请'
+			},
+			hideBtn: {
+				type: Boolean,
+				default: false
+			}
+		},
+		methods: {
+			onTo () {
+				if (this.info.id) {
+					uni.navigateTo({
+						url: `/pages/home/recruit/detail/index?id=${this.info.id}`
+					});
+				}
 			}
 		}
 	}

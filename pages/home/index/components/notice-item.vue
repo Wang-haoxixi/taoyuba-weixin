@@ -2,29 +2,29 @@
 	<view class="notice-item-wrapper">
 		<template v-if="type === 'text'">
 			<view class="text-wrapper">
-				<text class="title ellipsis">{{data.title}}</text>
-				<text class="time">{{data.time}}</text>
+				<text class="title ellipsis">{{info.title}}</text>
+				<text class="time">{{info.time}}</text>
 			</view>
 		</template>
 		<template v-else-if="type === 'miniImg'">
 			<view class="mini-img-wrapper">
 				<view class="mini-img-wrapper-left">
-					<text class="title two-ellipsis">{{data.title}}</text>
-					<text class="time">{{data.time}}</text>
+					<text class="title two-ellipsis">{{info.title}}</text>
+					<text class="time">{{info.time}}</text>
 				</view>
 				<view class="mini-img-wrapper-right">
-					<image :src="data.img"></image>
+					<image :src="info.img"></image>
 				</view>
 			</view>
 		</template>
 		<template v-else-if="type === 'largeImg'">
 			<view class="large-img-wrapper">
 				<view class="large-img-wrapper-image">
-					<image :src="data.img"></image>
+					<image :src="info.img"></image>
 				</view>
 				<view class="large-img-wrapper-content">
-					<text class="title ellipsis">{{data.title}}</text>
-					<text class="time">{{data.time}}</text>
+					<text class="title ellipsis">{{info.title}}</text>
+					<text class="time">{{info.time}}</text>
 				</view>
 			</view>
 		</template>
@@ -39,10 +39,13 @@
 				type: String,
 				default: 'text'
 			},
-			data: {
+			info: {
 				type: Object,
 				default: () => {}
 			}
+		},
+		methods: {
+			
 		}
 	}
 </script>

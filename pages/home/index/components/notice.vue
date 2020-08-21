@@ -4,13 +4,15 @@
 			<u-tabs slot="header" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" :is-scroll="false" :current="current" @change="tabsChange"></u-tabs>
 			<template>
 				<view class="" v-show="current === 0">
-					<notice-item v-for="(item, index) in data1" :key="index" :data="item" :type="item.type"></notice-item>
+					<view v-for="(item, index) in data1" :key="index" @tap="onTo(item)">
+						<notice-item :info="item" :type="item.type"></notice-item>
+					</view>
 				</view>
 				<view class="" v-show="current === 1">
-					<notice-item v-for="(item, index) in data1" :key="index" :data="item" :type="item.type"></notice-item>
+					<notice-item v-for="(item, index) in data1" :key="index" :info="item" :type="item.type" @tap="onTo(item)"></notice-item>
 				</view>
 				<view class="" v-show="current === 2">
-					<notice-item v-for="(item, index) in data1" :key="index" :data="item" :type="item.type"></notice-item>
+					<notice-item v-for="(item, index) in data1" :key="index" :info="item" :type="item.type" @tap="onTo(item)"></notice-item>
 				</view>
 			</template>
 		</home-container>
@@ -35,12 +37,12 @@
 					{ name: '平台公告' },
 				],
 				data1: [
-					{ title: '宁波市海洋环境', time: '2011-01-01', img: 'https://cdn.uviewui.com/uview/swiper/1.jpg', type: 'largeImg' },
-					{ title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办法', time: '2011-01-01', type: 'text' },
-					{ title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办法', time: '2011-01-01', type: 'text' },
-					{ title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办法', time: '2011-01-01', type: 'text' },
-					{ title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办', time: '2011-01-01', type: 'text' },
-					{ title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办', time: '2011-01-01', img: 'https://cdn.uviewui.com/uview/swiper/1.jpg', type: 'miniImg' },
+					{ id: 1, title: '宁波市海洋环境1', time: '2011-01-01', img: 'https://cdn.uviewui.com/uview/swiper/1.jpg', type: 'largeImg' },
+					{ id: 2, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办法', time: '2011-01-01', type: 'text' },
+					{ id: 3, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办法', time: '2011-01-01', type: 'text' },
+					{ id: 4, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办法', time: '2011-01-01', type: 'text' },
+					{ id: 5, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办', time: '2011-01-01', type: 'text' },
+					{ id: 6, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办', time: '2011-01-01', img: 'https://cdn.uviewui.com/uview/swiper/1.jpg', type: 'miniImg' },
 				]
 			}
 		},
@@ -49,6 +51,14 @@
 			tabsChange (index) {
 				this.current = index
 			},
+			onTo (row) {
+				console.log('row', row)
+				if (row.id) {
+					uni.navigateTo({
+						url: `/pages/home/news/detail/index?id=${row.id}`
+					});
+				}
+			}
 		}
 	}
 </script>

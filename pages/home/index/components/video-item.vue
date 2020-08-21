@@ -1,5 +1,5 @@
 <template>
-	<view class="">
+	<view class="" @tap="onTo">
 		<view class="video-item-wrapper" :style="[videoStyle]" ref="video">
 			<image :src="imageUrl || 'https://cdn.uviewui.com/uview/swiper/1.jpg'"></image>
 			<view class="play-wrapper" :class="playType === 'mini' ? 'mini-play' : ''" :style="[playStyle]"></view>
@@ -35,15 +35,23 @@
 			imageUrl: {
 				type: String,
 				default: ''
-			}
+			},
+			id: [String, Number]
 		},
 		data () {
 			return {
 				playStyle: {}
 			}
 		},
-		mounted () {
-			console.log(this.$refs.video)
+		methods: {
+			onTo () {
+				console.log('this.id', this.id)
+				if (this.id) {
+					uni.navigateTo({
+						url: `/pages/home/video/detail/index?id=${this.id}`
+					});
+				}
+			}
 		}
 	}
 </script>

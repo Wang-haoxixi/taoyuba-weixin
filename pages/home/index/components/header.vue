@@ -50,12 +50,12 @@
 				menu: [
 					{ path: '/pages/home/recruit/list/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-zhaopin.png`, label: '招聘' },
 					{ path: '/pages/home/resume/list/index', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-jianli.png`, label: '求职' },
-					{ path: '', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '船员登记' },
+					{ path: '/pages/home/register/index', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '船员登记' },
 					{ path: '', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-hetong.png`, label: '合同' },
 					{ path: '/pages/home/training/list/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-peixunjigou.png`, label: '培训机构' },
-					{ path: '/pages/home/video/detail/index', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, label: '在线测试' },
+					{ path: '', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, label: '在线测试' },
 					{ path: '/pages/home/report/index', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-jinyuqi.png`, label: '进出港报告' },
-					{ path: '/pages/home/curriculum/list/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '渔民学院' },
+					{ path: '/pages/home/video/detail/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '渔民学院' },
 				]
 			}
 		},
@@ -66,7 +66,7 @@
 				}
 				uni.navigateTo({
 					url: path
-				});
+				})
 			},
 		}
 	}

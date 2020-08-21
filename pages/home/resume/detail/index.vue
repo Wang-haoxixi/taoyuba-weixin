@@ -1,5 +1,5 @@
 <template>
-	<view class="resume-detail-container">
+	<view class="resume-detail-container phonex-mb">
 		<view class="header-wrapper">
 			<view class="header-top">
 				<view class="avatar">
@@ -66,11 +66,6 @@
 
 <style lang="scss" scoped>
 	.resume-detail-container {
-		/* iphonex 等安全区设置，底部安全区适配 */
-		/* #ifndef APP-NVUE */
-		margin-bottom: constant(safe-area-inset-bottom);
-		margin-bottom: env(safe-area-inset-bottom);
-		/* #endif */
 		.header-wrapper {
 			padding: 30rpx;
 			border-radius: 8rpx;

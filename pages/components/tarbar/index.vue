@@ -7,10 +7,10 @@
 						<image src="../../../static/image/tabbar/release.png"></image>
 					</view>
 					<view class="tyb-tarbar_sub-menu" :style="{display: show ? 'block' : 'none'}">
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">简历</view>
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">招聘</view>
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">开班</view>
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">中介</view>	
+						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/home/resume/list/index')">简历</view>
+						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/home/recruit/list/index')">招聘</view>
+						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/home/register/index')">登记</view>
+						<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">中介</view>	 -->
 					</view>
 					<text class="tyb-tarbar-item_text">{{item.text}}</text>
 				</template>
@@ -69,8 +69,8 @@
 					this.rotate = 0
 					this.show = false
 					uni.switchTab({
-						url: item.pagePath
-					})
+						url: item.pagePath,
+					});
 				}
 				
 			}
@@ -146,24 +146,24 @@
 				display: hidden;
 				&:nth-child(1) {
 					top: -40rpx;
-					left: -100rpx;
+					left: -46rpx;
 					color: #e57979;
 				}
 				&:nth-child(2) {
 					top: -100rpx;
-					left: -16rpx;
+					left: 40rpx;
 					color: #b2c835;
 				}
 				&:nth-child(3) {
-					top: -100rpx;
-					left: 90rpx;
+					top: -40rpx;
+					left: 120rpx;
 					color: #82d967;
 				}
-				&:nth-child(4) {
-					top: -40rpx;
-					left: 166rpx;
-					color: #67aed9;
-				}
+				// &:nth-child(4) {
+				// 	top: -40rpx;
+				// 	left: 166rpx;
+				// 	color: #67aed9;
+				// }
 			}
 			
 		}

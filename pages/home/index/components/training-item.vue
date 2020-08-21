@@ -1,5 +1,5 @@
 <template>
-	<view class="list-item-wrapper">
+	<view class="list-item-wrapper" @tap="onTo">
 		<view class="list-item_left">
 			<view class="title">
 				<text class="name ellipsis">{{info.title}}</text>
@@ -40,6 +40,15 @@
 			btnText: {
 				type: String,
 				default: '签到'
+			}
+		},
+		methods: {
+			onTo () {
+				if (this.info.id) {
+					uni.navigateTo({
+						url: `/pages/home/training/detail/index?id=${this.info.id}`
+					});
+				}
 			}
 		}
 	}

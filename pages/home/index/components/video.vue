@@ -12,16 +12,16 @@
 				<u-row gutter="16">
 					<u-col span="8">
 						<view class="video-content-left">
-							<view-item class="large-video" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '260rpx'}"></view-item>
+							<video-item class="large-video" id="1" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '260rpx'}"></video-item>
 						</view>
 					</u-col>
 					<u-col span="4">
 						<view class="demo-layout bg-purple-light">
 							<view>
-								<view-item play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></view-item>
+								<video-item play-type="mini" id="1" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
 							</view>
 							<view style="margin-top: 20rpx;">
-								<view-item class="large-video" play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></view-item>
+								<video-item class="large-video" id="1" play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
 							</view>
 						</view>
 					</u-col>
@@ -29,17 +29,16 @@
 				<view class="video-content-bottom">
 					<u-row gutter="16">
 						<u-col span="4">
-							<view-item class="large-video" textPosition="bottom" play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></view-item>
+							<video-item class="large-video" id="1" textPosition="bottom" play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
 						</u-col>
 						<u-col span="4">
-							<view-item class="large-video" textPosition="bottom" play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></view-item>
+							<video-item class="large-video" id="1" textPosition="bottom" play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
 						</u-col>
 						<u-col span="4">
-							<view-item class="large-video" textPosition="bottom" play-type="mini" title="[最新] 船员岗位培训进阶教学船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></view-item>
+							<video-item class="large-video" id="1" textPosition="bottom" play-type="mini" title="[最新] 船员岗位培训进阶教学船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
 						</u-col>
 					</u-row>
 				</view>
-				
 			</view>
 		</home-container>
 	</view>
@@ -47,11 +46,11 @@
 
 <script>
 	import homeContainer from './container.vue'
-	import viewItem from './video-item.vue'
+	import videoItem from './video-item.vue'
 	export default {
 		components: {
 			homeContainer,
-			viewItem
+			videoItem
 		},
 		methods: {
 			onReload () {}

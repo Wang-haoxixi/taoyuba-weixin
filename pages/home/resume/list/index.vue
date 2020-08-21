@@ -1,6 +1,6 @@
 <template>
 	<!-- 求职 -->
-	<view class="recruit-list-wrapper">
+	<view class="recruit-list-wrapper phonex-mb">
 		<view class="search-wrapper">
 			<u-search placeholder="搜索" v-model="content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
 		</view>
@@ -64,11 +64,6 @@
 
 <style lang="scss" scoped>
 	.recruit-list-wrapper {
-		/* iphonex 等安全区设置，底部安全区适配 */
-		/* #ifndef APP-NVUE */
-		margin-bottom: constant(safe-area-inset-bottom);
-		margin-bottom: env(safe-area-inset-bottom);
-		/* #endif */
 		.search-wrapper {
 			padding: 20rpx;
 		}

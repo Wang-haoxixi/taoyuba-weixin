@@ -22,3 +22,10 @@
 .page-bottom {
 	margin-bottom: 150rpx;
 }
+.phonex-mb {
+	/* iphonex 等安全区设置，底部安全区适配 */
+	/* #ifndef APP-NVUE */
+	margin-bottom: constant(safe-area-inset-bottom);
+	margin-bottom: env(safe-area-inset-bottom);
+	/* #endif */
+}

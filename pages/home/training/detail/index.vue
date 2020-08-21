@@ -1,6 +1,6 @@
 <template>
 	<!-- 培训班 -->
-	<view class="training-detail-wrapper">
+	<view class="training-detail-wrapper phonex-mb">
 		<view class="header-wrapper">
 			<view class="title">东方培训机构</view>
 			<view class="content">
@@ -54,11 +54,6 @@
 
 <style lang="scss" scoped>
 	.training-detail-wrapper {
-		/* iphonex 等安全区设置，底部安全区适配 */
-		/* #ifndef APP-NVUE */
-		margin-bottom: constant(safe-area-inset-bottom);
-		margin-bottom: env(safe-area-inset-bottom);
-		/* #endif */
 		.header-wrapper {
 			padding: 30rpx;
 			border-radius: 8rpx;
