@@ -1,5 +1,5 @@
-import Request from './request'
-// import store from '@/common/store/index.js'
+import Request from '@/utils/luch-request/index.js'
+import { API_URL } from '@/env.js'
 
 const errorCode = {
 	"401": "当前操作没有权限或者登入过期",
@@ -20,7 +20,10 @@ const getTokenStorage = () => {
 
 const http = new Request()
 http.setConfig((config) => { /* 设置全局配置 */
-	// config.baseUrl = 'https://api.woneng.net/' /* 根域名不同 */
+	// config.baseUrl = 'http://192.168.0.250:9999/'
+	// config.baseUrl = 'http://183.131.134.242:10026/'
+	// config.baseUrl = 'https://www.woneng.net/api/ '
+	config.baseUrl = API_URL /* 根域名不同 */
 	config.header = {
 		...config.header,
 	}
@@ -56,7 +59,7 @@ http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
 // 必须使用异步函数，注意
 http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 	uni.hideLoading();
-	if (response.data.code === 0) {
+	if (response.data.code == 1) {
 		uni.showToast({
 			icon: 'none',
 			title: response.data.msg
@@ -71,29 +74,6 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 			title: '网络请求失败，请检查网络连接！',
 		});
 	}
-	// for (var key in errorCode) {
-	// 	if (key == response.statusCode) {
-	// 		uni.showToast({
-	// 			icon: 'none',
-	// 			mask: true,
-	// 			title: errorCode[key],
-	// 			success() {
-	// 				if (response.statusCode == '401') {
-	// 					let pages = getCurrentPages()
-	// 					if (pages.length < 2) {
-	// 						uni.navigateTo({
-	// 							url: '/pages/getUserInfo/getUserInfo'
-	// 						});
-	// 					} else {
-	// 						uni.redirectTo({
-	// 							url: '/pages/getUserInfo/getUserInfo'
-	// 						});
-	// 					}
-	// 				}
-	// 			}
-	// 		});
-	// 	}
-	// }
 })
 
 export default http

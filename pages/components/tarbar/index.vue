@@ -7,8 +7,8 @@
 						<image src="../../../static/image/tabbar/release.png"></image>
 					</view>
 					<view class="tyb-tarbar_sub-menu" :style="{display: show ? 'block' : 'none'}">
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/home/resume/list/index')">简历</view>
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/home/recruit/list/index')">招聘</view>
+						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/resume/edit')">简历</view>
+						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/recruit/edit')">招聘</view>
 						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/home/register/index')">登记</view>
 						<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">中介</view>	 -->
 					</view>

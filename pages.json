@@ -106,6 +106,18 @@
 			}
 		},
 		{
+			"path": "pages/release/resume/edit",
+			"style": {
+				"navigationBarTitleText": "发布简历"
+			}
+		},
+		{
+			"path": "pages/release/recruit/edit",
+			"style": {
+				"navigationBarTitleText": "发布招聘"
+			}
+		},
+		{
 			"path": "pages/message/index/index",
 			"style": {
 				"navigationBarTitleText": ""

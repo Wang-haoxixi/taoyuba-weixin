@@ -548,6 +548,7 @@ export default {
 					if (val != e.detail.value[idx]) index = idx;
 				});
 				// 为了让用户对多列变化时，对动态设置其他列的变更
+				console.log(this.defaultSelector, index, e.detail.value)
 				if (index != null) {
 					this.$emit('columnchange', {
 						column: index,
