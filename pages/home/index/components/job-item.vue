@@ -2,20 +2,19 @@
 	<view class="list-item-wrapper" @tap="onTo">
 		<view class="list-item_left">
 			<view class="title">
-				<text class="name ellipsis">{{info.title}}</text>
-				<text class="address">{{info.address}}</text>
+				<text class="name ellipsis">{{info.positionIdLabel}}</text>
 			</view>
 			<view class="content">
-				<text>{{info.price}}</text>
+				<text>￥{{info.salary}}</text>
 				<text class="price-type">{{info.priceType}}</text>
 			</view>
 			<view class="time">
-				发布时间：{{info.time}}
+				发布时间：{{getTime(info.createTime)}}
 			</view>
 		</view>
 		<view class="list-item_right" v-if="!hideBtn">
 			<view class="">
-				<u-button :custom-style="{backgroundColor: 'rgba(64, 158, 255, 1)', height: '60rpx', lineHight: '60rpx', color: '#fff', fontSize: '26rpx', padding: '10rpx 20rpx'}">{{btnText}}</u-button>
+				<u-button @click="onTo" :custom-style="{backgroundColor: 'rgba(64, 158, 255, 1)', height: '60rpx', lineHight: '60rpx', color: '#fff', fontSize: '26rpx', padding: '10rpx 20rpx'}">{{btnText}}</u-button>
 			</view>
 			<view class="right-content">
 				<slot name="right"></slot>
@@ -43,12 +42,12 @@
 		},
 		methods: {
 			onTo () {
-				if (this.info.id) {
-					uni.navigateTo({
-						url: `/pages/home/recruit/detail/index?id=${this.info.id}`
-					});
-				}
-			}
+				this.$emit('to', this.info)
+			},
+			// 获取时间
+			getTime (time) {
+				return this.$tools.dateFormat('YYYY-mm-dd', new Date(time))
+			},
 		}
 	}
 </script>

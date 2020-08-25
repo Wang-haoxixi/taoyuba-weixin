@@ -7,10 +7,8 @@
 		<view class="dropdown-wrapper" ref="dropdown">
 		</view>
 		<view class="content-wrapper">
-			<view class="item" v-for="(item, index) in data" :key="index" @tap="onTo(item.id)">
-				<trainning-item :info="item" btn-text="查看详情">
-					<text slot="right">联系人：{{item.publisher}}</text>
-				</trainning-item>
+			<view class="item" v-for="(item, index) in data" :key="index">
+				<trainning-item :info="item" btn-text="查看详情" @to="onTo"></trainning-item>
 			</view>
 		</view>
 		<u-loadmore :status="status" />
@@ -19,7 +17,9 @@
 
 <script>
 	import trainningItem from '@/pages/home/index/components/training-item.vue'
+	import pageMixin from '@/pages/mixins/page.js'
 	export default {
+		mixins: [pageMixin],
 		components: {
 			trainningItem,
 		},
@@ -27,37 +27,37 @@
 			return {
 				status: 'loadmore',
 				content: '',
-				data: [
-					{ id: 1, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 2, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 3, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 4, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 5, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 6, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 7, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 8, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' }
-				],
-				data1: [
-					{ title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' }
-				],
+				data: [],
+			}
+		},
+		onReachBottom() {
+			if (this.page.total > this.page.current * this.page.size) {
+				this.status = 'loading'
+				this.page.current++
+				this.getList()
+			} else{
+				this.status = 'nomore'
 			}
 		},
 		onLoad () {
-			console.log('dropdown', this.$refs.dropdown)
-		},
-		onReachBottom() {
-			this.status = 'loading';
-			setTimeout(() => {
-				this.data = this.data.concat(this.data1)
-				this.status = 'loading';
-			}, 2000)
+			this.getList()
 		},
 		methods: {
 			onSearch () {},
-			getList () {},
+			getList () {
+				this.$http.get('/tmlms/dept/pageForAll', {
+					params: {
+						size: this.page.size,
+						current: this.page.current
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let result = data.data
+						this.data = this.data.concat(result.records)
+						this.page.total = result.total
+					}
+				})
+			},
 			onTo (id) {
 				uni.navigateTo({
 					url: `/pages/home/training/detail/index?id=${id}`

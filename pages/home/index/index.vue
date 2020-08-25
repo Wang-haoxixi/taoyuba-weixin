@@ -25,7 +25,9 @@
 	import homeVideo from './components/video.vue'
 	import homeInfo from './components/info.vue'
 	import tybTarbar from '@/pages/components/tarbar/index.vue'
+	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	export default {
+		mixins: [dictMapMixin],
 		components: {
 			tybTarbar,
 			homeHeader,

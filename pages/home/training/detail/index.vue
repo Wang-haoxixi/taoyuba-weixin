@@ -2,30 +2,30 @@
 	<!-- 培训班 -->
 	<view class="training-detail-wrapper phonex-mb">
 		<view class="header-wrapper">
-			<view class="title">东方培训机构</view>
+			<view class="title">{{data.deptName || ''}}</view>
 			<view class="content">
-				<view class="text">联系人：黄旭东</view>
-				<view class="text">联系电话：18800008888</view>
-				<view class="text">联系地址：舟山市定海临城海洋科学城A11幢11楼1102室</view>
+				<view class="text">联系人：{{data.contactName || ''}}</view>
+				<view class="text">联系电话：{{data.phone || ''}}</view>
+				<view class="text">联系地址：{{data.address || ''}}</view>
 			</view>
 		</view>
 		<view class="content-wrapper">
 			<content-container title="机构介绍">
-				<view class="text">机构介绍</view>
+				<view class="text">{{data.trainScope}}</view>
 			</content-container>
 			<content-container title="地图信息" class="map-container">
 				<view class="map-wrapper">
 					<map :latitude="markers[0].latitude" :longitude="markers[0].longitude" :markers="markers"></map>
 				</view>
 			</content-container>
-			<view class="item">
+			<!-- <view class="item">
 				<view class="title">培训信息</view>
 				<view class="info-wrapper">
 					<view class="item" v-for="(item, index) in data" :key="index">
 						<curriculum-item :info="item" hide-btn></curriculum-item>
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -40,13 +40,25 @@
 		},
 		data () {
 			return {
-				markers: [{id: 1, latitude: 29.987586723756884, longitude: 122.1850346467285}],
-				data: [
-					{ id: 1, title: '[舟山] 钳工进阶班钳工进阶班钳工进阶班钳工进阶班钳工进阶班', time: '2019.10.01 - 2019.11.01', name: '东方培训机构', day: '30' },
-					{ id: 2, title: '[舟山] 钳工进阶班', time: '2019.10.01 - 2019.11.01', name: '东方培训机构', day: '30' },
-					{ id: 3, title: '[舟山] 钳工进阶班', time: '2019.10.01 - 2019.11.01', name: '东方培训机构', day: '30' },
-					{ id: 4, title: '[舟山] 钳工进阶班', time: '2019.10.01 - 2019.11.01', name: '东方培训机构', day: '30' },
-				]
+				markers: [],
+				data: {}
+			}
+		},
+		onLoad (params) {
+			this.getList(params.id)
+		},
+		methods: {
+			getList (id) {
+				this.$http.get(`/tmlms/dept/detail`, {
+					params: {
+						userId: id
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.data = data.data
+						this.markers = [{id: 1, latitude: this.data.lat, longitude: this.data.lng}]
+					}
+				})
 			}
 		}
 	}

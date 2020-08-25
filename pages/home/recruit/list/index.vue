@@ -5,19 +5,19 @@
 			<view class="search-wrapper">
 				<u-search placeholder="搜索" v-model="form.content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
 			</view>
-			<view class="dropdown-wrapper">
+			<!-- <view class="dropdown-wrapper">
 				<u-dropdown>
 					<u-dropdown-item v-model="form.value1" title="职务" :options="options1" @change="(value) => {onChangeDrowdown('value1', value)}"></u-dropdown-item>
 					<u-dropdown-item v-model="form.value2" title="薪水" :options="options2" @change="(value) => {onChangeDrowdown('value2', value)}"></u-dropdown-item>
 					<u-dropdown-item v-model="form.value3" title="作业" :options="options3" @change="(value) => {onChangeDrowdown('value3', value)}"></u-dropdown-item>
 					<u-dropdown-item v-model="form.value4" title="排序" :options="options4" @change="(value) => {onChangeDrowdown('value4', value)}"></u-dropdown-item>
 				</u-dropdown>
-			</view>
+			</view> -->
 		</view>
 		
 		<view class="content-wrapper" id="contentWrapper">
-			<view class="item" v-for="(item, index) in data" :key="index" @tap="onTo(item.id)">
-				<job-item :info="item"></job-item>
+			<view class="item" v-for="(item, index) in data" :key="index">
+				<job-item :info="item" @to="onTo"></job-item>
 			</view>
 		</view>
 		<u-loadmore :status="status" />
@@ -26,7 +26,10 @@
 
 <script>
 	import jobItem from '@/pages/home/index/components/job-item.vue'
+	import dictMapMixin from '@/pages/mixins/dictMap.js'
+	import pageMixin from '@/pages/mixins/page.js'
 	export default {
+		mixins: [dictMapMixin, pageMixin],
 		components: {
 			jobItem,
 		},
@@ -59,55 +62,64 @@
 					value3: 1,
 					value4: 1
 				},
-				data: [
-					{ id: 1, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 2, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 3, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 4, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 5, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 6, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 7, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 8, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 9, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 10, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' }
-				],
-				data1: [
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ title: '船舶维修钳工1', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' }
-				],
+				data: []
 			}
 		},
+		onLoad () {
+			this.getList()
+		},
 		onReachBottom() {
-			this.status = 'loading';
-			setTimeout(() => {
-				this.data = this.data.concat(this.data1)
-				this.status = 'loading';
-			}, 2000)
+			if (this.page.total > this.page.current * this.page.size) {
+				this.status = 'loading'
+				this.page.current++
+				this.getList()
+			} else{
+				this.status = 'nomore'
+			}
 		},
 		methods: {
 			onSearch () {},
-			getList () {},
-			onTo (id) {
-				uni.navigateTo({
-					url: `/pages/home/recruit/detail/index?id=${id}`
-				});
+			getList () {
+				this.$http.get('/tybhrms/tybrecruit/page', {
+					params: {
+						size: this.page.size,
+						current: this.page.current
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let result = data.data
+						this.data = this.data.concat(this.setList(result.records))
+						this.page.total = result.total
+					}
+				})
+			},
+			// 重构数据
+			setList (data) {
+				let dictData = this.dictMap['tyb_resume_position'] || []
+				for (let i = 0, len = data.length; i < len; i++) {
+					let val = data[i]
+					let positionIdLabel = ''
+					let result = dictData.find((item) => {
+						return item.value === val.positionId
+					})
+					if (result) {
+						positionIdLabel = result.label
+					}
+					data[i].positionIdLabel = positionIdLabel
+				}
+				return data
 			},
 			onChangeDrowdown (label, value) {
 				uni.pageScrollTo({
 					scrollTop: 0
 				})
-				this.data = [{ id: 1, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 2, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 3, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' },
-					{ id: 4, title: '船舶维修钳工', time: '2019.10.20', price: '5K - 8K', address: '舟山市 - 定海' }]
+			},
+			onTo (row) {
+				if (row.recruitId) {
+					uni.navigateTo({
+						url: `/pages/home/recruit/detail/index?id=${row.recruitId}`
+					});
+				}
 			}
 		}
 	}

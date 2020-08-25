@@ -2,25 +2,26 @@
 	<view class="list-item-wrapper" @tap="onTo">
 		<view class="list-item_left">
 			<view class="title">
-				<text class="name ellipsis">{{info.title}}</text>
-				<text class="address">{{info.address}}</text>
+				<text class="name ellipsis">{{info.deptName}}</text>
+				
 			</view>
 			<view class="time ellipsis">
-				<template v-if="info.phone">
+				{{info.address}}
+				<!-- <template v-if="info.phone">
 					<u-icon name="phone"></u-icon>
 					<text>{{info.phone}}</text>
 				</template>
 				<template v-else>
 					<text>报名时间：{{info.time}}</text>
-				</template>
+				</template> -->
 			</view>
-			<view class="info ellipsis">
+			<!-- <view class="info ellipsis">
 				{{info.text}}
-			</view>
+			</view> -->
 		</view>
 		<view class="list-item_right">
 			<view class="">
-				<u-button :custom-style="{backgroundColor: 'rgba(64, 158, 255, 1)', height: '60rpx', lineHight: '60rpx', color: '#fff', fontSize: '26rpx', padding: '10rpx 20rpx'}">{{btnText}}</u-button>
+				<u-button @click="onTo" :custom-style="{backgroundColor: 'rgba(64, 158, 255, 1)', height: '60rpx', lineHight: '60rpx', color: '#fff', fontSize: '26rpx', padding: '10rpx 20rpx'}">{{btnText}}</u-button>
 			</view>
 			<view class="right-content">
 				<slot name="right"></slot>
@@ -44,11 +45,7 @@
 		},
 		methods: {
 			onTo () {
-				if (this.info.id) {
-					uni.navigateTo({
-						url: `/pages/home/training/detail/index?id=${this.info.id}`
-					});
-				}
+				this.$emit('to', this.info.userId)
 			}
 		}
 	}
@@ -69,7 +66,7 @@
 				display: flex;
 				align-items: center;
 				.name {
-					max-width: 280rpx;
+					max-width: 450rpx;
 					line-height: 1.2;
 					display: inline-block;
 				}

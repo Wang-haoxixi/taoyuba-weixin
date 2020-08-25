@@ -30,7 +30,7 @@
 						<u-form-item label="作业方式" prop="workMode" required>
 							<u-input type="select" :select-open="workModeShow" v-model="form.workModeLabel" placeholder="请选择作业方式" @click="workModeShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="上船地点" prop="city" required>
+						<u-form-item label="上船地点" prop="cityLabel" required>
 							<u-input type="select" :select-open="cityShow" v-model="form.cityLabel" placeholder="请选择上船地点" @click="openCity"></u-input>
 						</u-form-item>
 					</view>
@@ -83,7 +83,7 @@
 		<!-- 作业方式 -->
 		<u-select mode="single-column" safe-area-inset-bottom :list="workModeList" v-model="workModeShow" @confirm="(e) => onConfirm(e, 'workMode')"></u-select>
 		<!-- 上船地点 -->
-		<u-picker safe-area-inset-bottom mode="multiSelector" @confirm="onConfirmCity" v-model="cityShow" range-key="shortName" @columnchange="onColumnChangeCity" :default-selector="cityAddressList" :range="cityAddressList"></u-picker>
+		<u-picker safe-area-inset-bottom :default-selector="cityDefaultSelector" mode="multiSelector" @confirm="onConfirmCity" v-model="cityShow" range-key="shortName" @columnchange="onColumnChangeCity" :range="cityAddressList"></u-picker>
 	</view>
 </template>
 
@@ -104,16 +104,13 @@
 				ageRequireShow: false,
 				workExprienceShow: false,
 				imgURL: this.$IMAGE_URL,
+				cityDefaultSelector: [0, 0, 0],
 				btnStyle: {
 					backgroundColor: 'rgba(232, 103, 73, 1)',
 					color: '#fff',
 					fontSize: '32rpx',
 					lineHeight: '100rpx'
 				},
-				experienceList: [
-					{ value: '1', label: '无要求' },
-					{ value: '2', label: '有要求' }
-				],
 				form: {
 					positionId: '',  // 招聘岗位
 					recruitNo: '', // 招聘人数
@@ -122,13 +119,13 @@
 					certTitle: '', // 证书职务
 					certLevel: '', // 证书等级
 					workMode: '', // 作业方式
-					city: '', // 上船地点
+					city: [], // 上船地点
 					ageRequire: '', // 年龄要求
 					workExprience: '', // 工作经验
 					hullLength: '', // 船长
 					totalPower: '', // 主机总功率
 					contactName: '', // 联系人
-					coageRequirentactPhone: '', // 联系电话
+					contactPhone: '', // 联系电话
 				},
 				rules: {
 					positionId: [ { required: true, message: '请选择招聘岗位', trigger: 'change' } ],
@@ -138,7 +135,7 @@
 					certTitle: [ { required: true, message: '请选择证书职务', trigger: 'change' } ],
 					certLevel: [ { required: true, message: '请选择证书等级', trigger: 'change' } ],
 					workMode: [ { required: true, message: '请选择作业方式', trigger: 'change' } ],
-					city: [ { required: true, message: '请选择上船地点', trigger: 'change' } ],
+					city: [ { required: true, message: '请选择上船地点', trigger: ['change', 'blur'] } ],
 					ageRequire: [ { required: true, message: '请选择年龄要求', trigger: 'change' } ],
 					workExprience: [ { required: true, message: '请选择工作经验', trigger: 'change' } ],
 				}
@@ -152,24 +149,19 @@
 				return this.dictMap ? this.dictMap['tyb_work_exprience'] : []
 			},
 			salaryCurrencyList () {
-				return [
-					{ label: '人民币(RMB)', value: '1' },
-					{ label: '美元(USD)', value: '2' }
-				  ]
+				return this.dictMap['salaryCurrency']
 			},
 			certTitleList () {
 				return this.dictMap ? this.dictMap['tyb_crew_cert_title'] : []
 			},
 			certLevelList () {
-				return [
-					{ value: '0', label: '--' },      
-					{ value: '1', label: '一级' },
-					{ value: '2', label: '二级' },
-					{ value: '3', label: '三级' }
-				]
+				return this.dictMap['certLevelList']
 			},
 			workModeList () {
 				return this.dictMap ? this.dictMap['tyb_resume_worktype'] : [] 
+			},
+			positionIdList () {
+				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
 			}
 		},
 		onReady () {
@@ -196,11 +188,40 @@
 				}
 				this.cityShow = true
 			},
-			onConfirmCity (index) {
-				console.log('index', index)
+			onConfirmCity (val) {
+				this.cityDefaultSelector = val
+				let third = this.cityAddressList[2]
+				if (third && third.length > 0) {
+					let city = third[val[2]].areaCode
+					let cityLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}-${this.cityAddressList[2][val[2]].shortName}`
+					this.$set(this.form, 'cityLabel', cityLabel)
+					this.$set(this.form, 'city', city)
+					return
+				} 
+				let second = this.cityAddressList[1]
+				if (second && second.length > 0) {
+					let city = second[val[1]].areaCode
+					let cityLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}`
+					this.$set(this.form, 'cityLabel', cityLabel)
+					this.$set(this.form, 'city', city)
+					return
+				} 
+				let first = this.cityAddressList[0]
+				if (first && first.length > 0) {
+					let city = first[val[0]].areaCode
+					let cityLabel = `${this.cityAddressList[0][val[0]].shortName}`
+					this.$set(this.form, 'cityLabel', cityLabel)
+					this.$set(this.form, 'city', city)
+				} 
 			},
-			onColumnChangeCity ({column: column, index: index}) {
-				console.log(column, index)
+			onColumnChangeCity ({column, index}) {
+				if (column === 0) {
+					let areaCode = this.cityAddressList[column][index].areaCode
+					this.getCityAddressSecond(areaCode)
+				} else if (column === 1) {
+					let areaCode = this.cityAddressList[column][index].areaCode
+					this.getCityAddressThird(areaCode)
+				}
 			}
 		}
 	}

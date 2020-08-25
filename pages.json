@@ -30,13 +30,13 @@
 		{
 			"path": "pages/home/resume/list/index",
 			"style": {
-				"navigationBarTitleText": "应聘"
+				"navigationBarTitleText": "求职"
 			}
 		},
 		{
 			"path": "pages/home/resume/detail/index",
 			"style": {
-				"navigationBarTitleText": "应聘"
+				"navigationBarTitleText": "求职"
 			}
 		},
 		{

@@ -9,43 +9,43 @@
 				<view class="content-container">
 					<view class="title">基本信息</view>
 					<view class="body-wrapper">
-						<u-form-item label="应聘职务" prop="newsJob" required>
-							<u-input type="select" :select-open="newsJobShow" v-model="form.newsJobLabel" placeholder="请选择应聘职务" @click="newsJobShow = true"></u-input>
+						<u-form-item label="应聘职务" prop="newPositionId" required>
+							<u-input type="select" :select-open="newPositionIdShow" v-model="form.newPositionIdLabel" placeholder="请选择应聘职务" @click="newPositionIdShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="原有职务" prop="oldJob" required>
-							<u-input type="select" :select-open="oldJobShow" v-model="form.oldJobLabel" placeholder="请选择原有职务" @click="oldJobShow = true"></u-input>
+						<u-form-item label="原有职务" prop="oldPositionId" required>
+							<u-input type="select" :select-open="oldPositionIdShow" v-model="form.oldPositionIdLabel" placeholder="请选择原有职务" @click="oldPositionIdShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="作业方式" prop="type" required>
-							<u-input type="select" :select-open="typeShow" v-model="form.typeLabel" placeholder="请选择作业方式" @click="typeShow = true"></u-input>
+						<u-form-item label="作业方式" prop="workRequire" required>
+							<u-input type="select" :select-open="workRequireShow" v-model="form.workRequireLabel" placeholder="请选择作业方式" @click="workRequireShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="工作经验" prop="experience" required>
-							<u-input type="select" :select-open="experienceShow" v-model="form.experienceLabel" placeholder="请选择工作经验" @click="experienceShow = true"></u-input>
+						<u-form-item label="工作经验" prop="workExprience" required>
+							<u-input type="select" :select-open="workExprienceShow" v-model="form.workExprienceLabel" placeholder="请选择工作经验" @click="workExprienceShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="期望月薪" prop="monthlyPay" required>
-							<u-input type="select" :select-open="monthlyPayShow" v-model="form.monthlyPayLabel" placeholder="请选择期望月薪" @click="monthlyPayShow = true"></u-input>
+						<u-form-item label="期望月薪" prop="salary" required>
+							<u-input v-model="form.salary" trim placeholder="请输入期望月薪" type="number"/>
 						</u-form-item>
 						<u-form-item label="特殊技能">
-							<u-input v-model="form.skill" placeholder="请输入特殊技能"/>
+							<u-input v-model="form.speciality" placeholder="请输入特殊技能"/>
 						</u-form-item>
 					</view>
 				</view>
 				<view class="content-container">
 					<view class="title">个人资料</view>
 					<view class="body-wrapper">
-						<u-form-item label="姓名" prop="name" required>
-							<u-input v-model="form.name" trim placeholder="请输入姓名"/>
+						<u-form-item label="姓名" prop="realName" required>
+							<u-input v-model="form.realName" trim placeholder="请输入姓名"/>
 						</u-form-item>
 						<u-form-item label="电话" prop="phone" required>
 							<u-input placeholder="请输入电话" trim v-model="form.phone" type="number"></u-input>
 						</u-form-item>
-						<u-form-item label="籍贯" prop="nativePlace" required>
-							<u-input type="select" :select-open="nativePlaceShow" v-model="form.nativePlaceLabel" placeholder="请选择籍贯" @click="nativePlaceShow = true"></u-input>
+						<u-form-item label="籍贯" prop="nationalityLabel" required>
+							<u-input type="select" :select-open="nationalityShow" v-model="form.nationalityLabel" placeholder="请选择籍贯" @click="openNationality"></u-input>
 						</u-form-item>
 						<u-form-item label="出生日期" prop="birthday" required>
 							<u-input type="select" :select-open="birthdayShow" v-model="form.birthday" placeholder="请选择出生日期" @click="birthdayShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="教育程度" prop="education" required>
-							<u-input type="select" :select-open="educationShow" v-model="form.educationLabel" placeholder="请选择教育程度" @click="educationShow = true"></u-input>
+						<u-form-item label="教育程度" prop="eduDegree" required>
+							<u-input type="select" :select-open="eduDegreeShow" v-model="form.eduDegreeLabel" placeholder="请选择教育程度" @click="eduDegreeShow = true"></u-input>
 						</u-form-item>
 						<u-form-item label="外语水平" prop="language" required>
 							<u-input type="select" :select-open="languageShow" v-model="form.languageLabel" placeholder="请选择外语水平" @click="languageShow = true"></u-input>
@@ -62,7 +62,7 @@
 					<view class="title">补充说明</view>
 					<view class="body-wrapper">
 						<u-form-item>
-							<u-input v-model="form.supplement" trim type="textarea" :border="false" height="100" auto-height placeholder="补充说明" />
+							<u-input v-model="form.remark" trim type="textarea" :border="false" height="100" auto-height placeholder="补充说明" />
 						</u-form-item>
 					</view>
 				</view>
@@ -72,40 +72,40 @@
 			</u-form>
 		</view>
 		<!-- 应聘职务 -->
-		<u-select mode="single-column" :list="newsJobList" v-model="newsJobShow" @confirm="(e) => onConfirm(e, 'newsJob')"></u-select>
+		<u-select safe-area-inset-bottom mode="single-column" :list="newPositionIdList" v-model="newPositionIdShow" @confirm="(e) => onConfirm(e, 'newPositionId')"></u-select>
 		<!-- 原有职务 -->
-		<u-select mode="single-column" :list="oldJobList" v-model="oldJobShow" @confirm="(e) => onConfirm(e, 'oldJob')"></u-select>
+		<u-select safe-area-inset-bottom mode="single-column" :list="oldPositionIdList" v-model="oldPositionIdShow" @confirm="(e) => onConfirm(e, 'oldPositionId')"></u-select>
 		<!-- 作业方式 -->
-		<u-select mode="single-column" :list="typeList" v-model="typeShow" @confirm="(e) => onConfirm(e, 'type')"></u-select>
+		<u-select safe-area-inset-bottom mode="single-column" :list="workRequireList" v-model="workRequireShow" @confirm="(e) => onConfirm(e, 'workRequire')"></u-select>
 		<!-- 期望月薪 -->
-		<u-select mode="single-column" :list="experienceList" v-model="experienceShow" @confirm="(e) => onConfirm(e, 'experience')"></u-select>
-		<!-- 期望月薪 -->
-		<u-select mode="single-column" :list="monthlyPayList" v-model="monthlyPayShow" @confirm="(e) => onConfirm(e, 'monthlyPay')"></u-select>
+		<u-select safe-area-inset-bottom mode="single-column" :list="workExprienceList" v-model="workExprienceShow" @confirm="(e) => onConfirm(e, 'workExprience')"></u-select>
 		<!-- 籍贯 -->
-		<u-picker mode="region" v-model="nativePlaceShow" @confirm="nativePlaceConfirm"></u-picker>
+		<u-picker safe-area-inset-bottom mode="multiSelector" :default-selector="nationalityDefaultSelector" @confirm="onConfirmNationality" v-model="nationalityShow" range-key="shortName" @columnchange="onColumnChangeNationality" :range="cityAddressList"></u-picker>
 		<!-- 出生日期 -->
-		<u-picker mode="time" v-model="birthdayShow" @confirm="birthdayConfirm" :params="{year: true, month: true, day: true, hour: false, minute: false, second: false}"></u-picker>
+		<u-picker safe-area-inset-bottom mode="time" v-model="birthdayShow" @confirm="birthdayConfirm" :params="{year: true, month: true, day: true, hour: false, minute: false, second: false}"></u-picker>
 		<!-- 教育程度 -->
-		<u-select mode="single-column" :list="educationList" v-model="educationShow" @confirm="(e) => onConfirm(e, 'education')"></u-select>
+		<u-select safe-area-inset-bottom mode="single-column" :list="eduDegreeList" v-model="eduDegreeShow" @confirm="(e) => onConfirm(e, 'eduDegree')"></u-select>
 		<!-- 外语水平 -->
-		<u-select mode="single-column" :list="languageList" v-model="languageShow" @confirm="(e) => onConfirm(e, 'language')"></u-select>
+		<u-select safe-area-inset-bottom mode="single-column" :list="languageList" v-model="languageShow" @confirm="(e) => onConfirm(e, 'language')"></u-select>
 		<!-- 是否公开 -->
-		<u-select mode="single-column" :list="isOpenList" v-model="isOpenShow" @confirm="(e) => onConfirm(e, 'isOpen')"></u-select>
+		<u-select safe-area-inset-bottom mode="single-column" :list="isOpenList" v-model="isOpenShow" @confirm="(e) => onConfirm(e, 'isOpen')"></u-select>
 	</view>
 </template>
 
 <script>
+	import dictMapMixin from '@/pages/mixins/dictMap.js'
+	import cityMixin from '@/pages/mixins/city.js'
 	export default {
+		mixins: [dictMapMixin, cityMixin],
 		data () {
 			return {
 				loading: false,
-				newsJobShow: false,
-				oldJobShow: false,
-				typeShow: false,
-				experienceShow: false,
-				monthlyPayShow: false,
-				educationShow: false,
-				nativePlaceShow: false,
+				newPositionIdShow: false,
+				oldPositionIdShow: false,
+				workRequireShow: false,
+				eduDegreeShow: false,
+				workExprienceShow: false,
+				nationalityShow: false,
 				birthdayShow: false,
 				languageShow: false,
 				isOpenShow: false,
@@ -116,194 +116,134 @@
 					fontSize: '32rpx',
 					lineHeight: '100rpx'
 				},
-				newsJobList: [
-					{
-						value: '1',
-						label: '一级船长'
-					},
-					{
-						value: '2',
-						label: '二级船长'
-					}
-				],
-				oldJobList: [
-					{
-						value: '1',
-						label: '一级船长'
-					},
-					{
-						value: '2',
-						label: '二级船长'
-					}
-				],
-				typeList: [
-					{
-						value: '1',
-						label: '张网类1'
-					},
-					{
-						value: '2',
-						label: '张网类2'
-					}
-				],
-				experienceList: [
-					{
-						value: '1',
-						label: '不限'
-					},
-					{
-						value: '2',
-						label: '5年'
-					}
-				],
-				educationList: [
-					{
-						value: '1',
-						label: '大学'
-					},
-					{
-						value: '2',
-						label: '高中'
-					}
-				],
 				languageList: [
-					{
-						value: '1',
-						label: '精通'
-					},
-					{
-						value: '2',
-						label: '不精通'
-					}
+					{ value: '1', label: '精通' },
+					{ value: '2', label: '不精通' }
 				],
 				isOpenList: [
-					{
-						value: '1',
-						label: '是'
-					},
-					{
-						value: '0',
-						label: '否'
-					}
+					{ value: '1', label: '是' },
+					{ value: '0', label: '否' }
 				],
-				monthlyPayList: [
-					{
-						value: '1',
-						label: '5k-10k'
-					},
-					{
-						value: '2',
-						label: '10-15k'
-					}
-				],
+				nationalityDefaultSelector: [0, 0, 0],
 				form: {
 					userId: '', 
-					newsJob: '', //应聘职务
-					oldJob: '', // 原有职务
-					type: '', // 作业方式 
-					experience: '', // 工作经验 
-					monthlyPay: '', // 期望月薪
-					skill: '', // 特殊技能
-					name: '', // 姓名
+					newPositionId: '', //应聘职务
+					oldPositionId: '', // 原有职务
+					workRequire: '', // 作业方式 
+					workExprience: '', // 工作经验 
+					salary: '', // 期望月薪
+					speciality: '', // 特殊技能
+					realName: '', // 姓名
 					phone: '', // 电话
-					nativePlace: '', // 籍贯
+					nationality: '', // 籍贯
 					birthday: '', // 出生日期
-					education: '', // 教育程度
+					eduDegree: '', // 教育程度
 					language: '', // 外语水平
 					height: '', // 身高
 					isOpen: '', // 是否公开 
-					supplement: '', // 补充说明
+					remark: '', // 补充说明
 				},
 				rules: {
-					newsJob: [
-						{
-							required: true,
-							message: '请选择应聘职务',
-							trigger: 'change'
-						}
+					newPositionId: [
+						{ required: true, message: '请选择应聘职务', trigger: 'change' }
 					],
-					oldJob: [
-						{
-							required: true,
-							message: '请选择原有职务',
-							trigger: 'change' ,
-						}
+					oldPositionId: [
+						{ required: true, message: '请选择原有职务', trigger: 'change' }
 					],
-					type: [
-						{
-							required: true,
-							message: '请选择作业方式',
-							trigger: 'change' ,
-						}
+					workRequire: [
+						{ required: true, message: '请选择作业方式', trigger: 'change' }
 					],
-					experience: [
-						{
-							required: true,
-							message: '请选择工作经验',
-							trigger: 'change' ,
-						}
+					workExprience: [
+						{ required: true, message: '请选择工作经验', trigger: 'change' }
 					],
-					monthlyPay: [
-						{
-							required: true,
-							message: '请选择期望月薪',
-							trigger: 'change' ,
-						}
+					salary: [
+						{ required: true, message: '请输入期望月薪', trigger: 'change' }
 					],
-					name: [
-						{
-							required: true,
-							message: '请输入姓名',
-							trigger: 'blur'
-						}
+					realName: [
+						{ required: true, message: '请输入姓名', trigger: 'blur' }
 					],
 					phone: [
-						{
-							required: true,
-							message: '请输入电话',
-							trigger: 'blur' ,
-						}
+						{ required: true, message: '请输入电话', trigger: 'blur' }
 					],
-					nativePlace: [
-						{
-							required: true,
-							message: '请选择籍贯',
-							trigger: 'change'
-						}
+					nationalityLabel: [
+						{ required: true, message: '请选择籍贯', trigger: 'change' }
 					],
 					birthday: [
-						{
-							required: true,
-							message: '请选择出生日期',
-							trigger: 'change'
-						}
+						{ required: true, message: '请选择出生日期', trigger: 'change' }
 					],
-					education: [
-						{
-							required: true,
-							message: '请选择教育程度',
-							trigger: 'change'
-						}
+					eduDegree: [
+						{ required: true, message: '请选择教育程度', trigger: 'change' }
 					],
 					isOpen: [
-						{
-							required: true,
-							message: '请选择是否公开',
-							trigger: 'change'
-						}
+						{ required: true, message: '请选择是否公开', trigger: 'change' }
 					],
 				}
+			}
+		},
+		computed: {
+			newPositionIdList () {
+				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
+			},
+			oldPositionIdList () {
+				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
+			},
+			workRequireList () {
+				return this.dictMap ? this.dictMap['tyb_resume_worktype'] : [] 
+			},
+			workExprienceList () {
+				return this.dictMap ? this.dictMap['tyb_work_exprience'] : []
+			},
+			eduDegreeList () {
+				return this.dictMap ? this.dictMap['tyb_education_degree'] : []
 			}
 		},
 		onReady () {
 			this.$refs.uForm.setRules(this.rules)
 		},
 		methods: {
+			onColumnChangeNationality ({column, index}) {
+				if (column === 0) {
+					let areaCode = this.cityAddressList[column][index].areaCode
+					this.getCityAddressSecond(areaCode)
+				} else if (column === 1) {
+					let areaCode = this.cityAddressList[column][index].areaCode
+					this.getCityAddressThird(areaCode)
+				}
+			},
 			// 籍贯
-			nativePlaceConfirm(e) {
-				this.form.monthlyPayLabel = e.province.label + '-' + e.city.label + '-' + e.area.label
-				this.form.nativePlace = [e.province.label, e.city.label, e.area.label]
-				console.log(e)
+			onConfirmNationality (val) {
+				this.nationalityDefaultSelector = val
+				let third = this.cityAddressList[2]
+				if (third && third.length > 0) {
+					let nationality = third[val[2]].areaCode
+					let nationalityLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}-${this.cityAddressList[2][val[2]].shortName}`
+					this.$set(this.form, 'nationalityLabel', nationalityLabel)
+					this.$set(this.form, 'nationality', nationality)
+					console.log('third', this.form)
+					return
+				} 
+				let second = this.cityAddressList[1]
+				if (second && second.length > 0) {
+					let nationality = second[val[1]].areaCode
+					let nationalityLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}`
+					this.$set(this.form, 'nationalityLabel', nationalityLabel)
+					this.$set(this.form, 'nationality', nationality)
+					console.log('second', this.form)
+					return
+				} 
+				let first = this.cityAddressList[0]
+				if (first && first.length > 0) {
+					let nationality = first[val[0]].areaCode
+					let nationalityLabel = `${this.cityAddressList[0][val[0]].shortName}`
+					this.$set(this.form, 'nationalityLabel', nationalityLabel)
+					this.$set(this.form, 'nationality', nationality)
+				} 
+			},
+			openNationality () {
+				if (!(this.cityAddressList.length > 0 && this.cityAddressList[0].length > 0)) {
+					this.getCityAddressFirst('0')
+				}
+				this.nationalityShow = true
 			},
 			// 出生日期
 			birthdayConfirm (e) {

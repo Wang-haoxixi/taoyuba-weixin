@@ -19,12 +19,12 @@ export default {
 		getCityAddressFirst (id) {
 			this.getCityAddress(id, 0).then((data) => {
 				return this.getCityAddressSecond(data[0].areaCode)
-			}).then((data) => {
-				return this.getCityAddressThird(data[0].areaCode)
 			})
 		},
 		getCityAddressSecond (id) {
-			return this.getCityAddress(id, 1)
+			return this.getCityAddress(id, 1).then((data) => {
+				return this.getCityAddressThird(data[0].areaCode)
+			})
 		},
 		getCityAddressThird (id) {
 			return this.getCityAddress(id, 2)
