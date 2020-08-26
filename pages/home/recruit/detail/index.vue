@@ -3,8 +3,8 @@
 		<view class="header-wrapper">
 			<view class="title">{{positionIdLabel}}</view>
 			<view class="content">
-				<text class="price">￥{{data.salary}}</text>
-				<text class="time">发布时间：{{data.createTime}}</text>
+				<text class="price">￥{{data.salary || ''}}</text>
+				<text class="time">发布时间：{{data.createTime || ''}}</text>
 			</view>
 		</view>
 		<view class="content-wrapper">

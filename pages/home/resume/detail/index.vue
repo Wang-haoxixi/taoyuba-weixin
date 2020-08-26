@@ -6,7 +6,7 @@
 					<image src="https://cdn.uviewui.com/uview/swiper/1.jpg"></image>
 				</view>
 				<view class="content-wrapper">
-					<view class="name">{{data.realName}}</view>
+					<view class="name">{{data.realName || ''}}</view>
 					<!-- <view class="content">状态：在职-考虑机会</view> -->
 				</view>
 			</view>

@@ -83,8 +83,7 @@
 				// 外层内容的样式，初始时处于底层，且透明
 				contentStyle: {
 					zIndex: -1,
-					opacity: 0,
-					display: 'none'
+					opacity: 0
 				}
 			}
 		},
@@ -118,8 +117,7 @@
 				// 展开时，设置下拉内容的样式
 				this.contentStyle = {
 					zIndex: 11,
-					opacity: 1,
-					display: 'block'
+					opacity: 1
 				}
 				// 标记展开状态以及当前展开项的索引
 				this.active = true;
@@ -138,8 +136,7 @@
 				// 下拉内容的样式进行调整，不透明度设置为0
 				this.contentStyle = {
 					zIndex: -1,
-					opacity: 0,
-					display: 'none'
+					opacity: 0
 				}
 			},
 			// 点击遮罩

@@ -78,6 +78,10 @@
 					uni.navigateTo({
 						url: '/pages/home/plan/index'
 					})
+				} else if (index === 3) {
+					uni.navigateTo({
+						url: '/pages/home/book/list/index'
+					})
 				} else{
 					this.current = index
 				}

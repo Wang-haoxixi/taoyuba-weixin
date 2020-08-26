@@ -2,7 +2,16 @@
 	<!-- 求职 -->
 	<view class="recruit-list-wrapper phonex-mb">
 		<view class="search-wrapper">
-			<u-search placeholder="搜索" v-model="content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
+			<u-search placeholder="搜索" v-model="form.content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
+		</view>
+		<view class="dropdown-wrapper">
+			<u-dropdown>
+				<u-dropdown-item v-model="form.salaryStart" title="经验" :options="options1" @change="(value) => {onChangeDrowdown('workExprience', 'options1', value)}"></u-dropdown-item>
+				<u-dropdown-item v-model="form.workMode" title="作业" :options="options2" @change="(value) => {onChangeDrowdown('workMode', 'options2', value)}"></u-dropdown-item>
+				<u-dropdown-item v-model="form.positionId" title="职务" :options="options3" @change="(value) => {onChangeDrowdown('positionId', 'options3', value)}"></u-dropdown-item>
+				<u-dropdown-item v-model="form.salaryStart" title="薪水" :options="options4" @change="(value) => {onChangeDrowdown('salaryStart', 'options4', value)}"></u-dropdown-item>
+				<u-dropdown-item v-model="form.order" title="排序" :options="options5" @change="(value) => {onChangeDrowdown('order', 'options5', value)}"></u-dropdown-item>
+			</u-dropdown>
 		</view>
 		<view class="content-wrapper">
 			<view class="item" v-for="(item, index) in data" :key="index">
@@ -27,8 +36,34 @@
 		data () {
 			return {
 				status: 'loadmore',
-				content: '',
-				data: []
+				form: {
+					content: '',
+					positionId: '',
+					salaryStart: '',
+					salaryEnd: '',
+					workExprience: '',
+					workMode: '',
+					order: ''
+				},
+				data: [],
+				options5: [
+					{ label: '正序', value: 1 },
+					{ label: '倒叙', value: 2 }
+				],
+			}
+		},
+		computed: {
+			options1 () {
+				return this.dictMap ? this.dictMap['tyb_work_exprience'] : []
+			},
+			options3 () {
+				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
+			},
+			options2 () {
+				return this.dictMap ? this.dictMap['tyb_resume_worktype'] : []
+			},
+			options4 () {
+				return this.dictMap['salaryList']
 			}
 		},
 		onReachBottom() {
@@ -40,23 +75,39 @@
 				this.status = 'nomore'
 			}
 		},
+		onPullDownRefresh () {
+			this.data = []
+			this.page.current = 1
+			this.resetForm()
+			this.getList()
+		},
 		onLoad () {
 			this.getList()
 		},
 		methods: {
 			onSearch () {},
 			getList () {
+				let form = {}
+				for (let key in this.form) {
+					if (this.form[key] !== '' && this.form[key] != null) {
+						form[key] = this.form[key]
+					}
+				}
 				this.$http.get('/tmlms/crew/xsPage', {
-					params: {
+					params: Object.assign({
 						size: this.page.size,
 						current: this.page.current
-					}
+					}, form)
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						let result = data.data
 						this.data = this.data.concat(this.setList(result.records))
 						this.page.total = result.total
+						if (this.page.total === 0) {
+							this.status = 'nomore'
+						}
 					}
+					uni.stopPullDownRefresh()
 				})
 			},
 			// 重构数据
@@ -74,6 +125,31 @@
 					data[i].positionIdLabel = positionIdLabel
 				}
 				return data
+			},
+			onChangeDrowdown (label, options, value) {
+				this.resetForm()
+				this.page.current = 1
+				if (label === 'salaryStart') {
+					let result = this.$tools.getDictItem(value, this[options])
+					this.form.salaryStart = result.salaryStart
+					this.form.salaryEnd = result.salaryEnd
+				} else {
+					let result = this.$tools.getDictItem(value, this[options])
+					this.form[label] = result.value
+				}
+				this.data = []
+				this.getList()
+				uni.pageScrollTo({
+					scrollTop: 0
+				})
+			},
+			resetForm (ignore = ['content']) {
+				let form = this.form
+				for (let key in form) {
+					if (ignore.findIndex(item => item === key) === -1) {
+						form[key] = ''
+					}
+				}
 			},
 			onTo (row) {
 				if (row.idcard) {
@@ -99,5 +175,9 @@
 				border-bottom: 1px solid #f6f6f6;
 			}
 		}
+	}
+	::v-deep .u-dropdown-item__options-scroll {
+		max-height: 500rpx;
+		overflow: auto;
 	}
 </style>

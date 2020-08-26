@@ -1,18 +1,18 @@
 <template>
 	<!-- 招聘 -->
 	<view class="recruit-list-wrapper phonex-mb">
-		<view style="position: fixed;top: 0;left: 0;right: 0;background-color: #f6f6f6;z-index: 20;">
+		<view>
 			<view class="search-wrapper">
 				<u-search placeholder="搜索" v-model="form.content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
 			</view>
-			<!-- <view class="dropdown-wrapper">
+			<view class="dropdown-wrapper">
 				<u-dropdown>
-					<u-dropdown-item v-model="form.value1" title="职务" :options="options1" @change="(value) => {onChangeDrowdown('value1', value)}"></u-dropdown-item>
-					<u-dropdown-item v-model="form.value2" title="薪水" :options="options2" @change="(value) => {onChangeDrowdown('value2', value)}"></u-dropdown-item>
-					<u-dropdown-item v-model="form.value3" title="作业" :options="options3" @change="(value) => {onChangeDrowdown('value3', value)}"></u-dropdown-item>
-					<u-dropdown-item v-model="form.value4" title="排序" :options="options4" @change="(value) => {onChangeDrowdown('value4', value)}"></u-dropdown-item>
+					<u-dropdown-item v-model="form.positionId" title="职务" :options="options1" @change="(value) => {onChangeDrowdown('positionId', 'options1', value)}"></u-dropdown-item>
+					<u-dropdown-item v-model="form.salaryStart" title="薪水" :options="options2" @change="(value) => {onChangeDrowdown('salaryStart', 'options2', value)}"></u-dropdown-item>
+					<u-dropdown-item v-model="form.workMode" title="作业" :options="options3" @change="(value) => {onChangeDrowdown('workMode', 'options3', value)}"></u-dropdown-item>
+					<u-dropdown-item v-model="form.order" title="排序" :options="options4" @change="(value) => {onChangeDrowdown('order', 'options4', value)}"></u-dropdown-item>
 				</u-dropdown>
-			</view> -->
+			</view>
 		</view>
 		
 		<view class="content-wrapper" id="contentWrapper">
@@ -36,36 +36,39 @@
 		data () {
 			return {
 				status: 'loadmore',
-				options1: [
-					{ label: '职务1', value: 1 },
-					{ label: '职务2', value: 2 },
-					{ label: '职务3', value: 3 }
-				],
-				options2: [
-					{ label: '薪水1', value: 1 },
-					{ label: '薪水2', value: 2 },
-					{ label: '薪水3', value: 3 }
-				],
-				options3: [
-					{ label: '作业1', value: 1 },
-					{ label: '作业2', value: 2 },
-					{ label: '作业3', value: 3 }
-				],
 				options4: [
 					{ label: '正序', value: 1 },
 					{ label: '倒叙', value: 2 }
 				],
 				form: {
 					content: '',
-					value1: 1,
-					value2: 1,
-					value3: 1,
-					value4: 1
+					positionId: '',
+					salaryStart: '',
+					salaryEnd: '',
+					workMode: '',
+					order: ''
 				},
 				data: []
 			}
 		},
+		computed: {
+			options1 () {
+				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
+			},
+			options3 () {
+				return this.dictMap ? this.dictMap['tyb_resume_worktype'] : []
+			},
+			options2 () {
+				return this.dictMap['salaryList']
+			}
+		},
 		onLoad () {
+			this.getList()
+		},
+		onPullDownRefresh () {
+			this.data = []
+			this.page.current = 1
+			this.resetForm()
 			this.getList()
 		},
 		onReachBottom() {
@@ -80,17 +83,27 @@
 		methods: {
 			onSearch () {},
 			getList () {
+				let form = {}
+				for (let key in this.form) {
+					if (this.form[key] !== '' && this.form[key] != null) {
+						form[key] = this.form[key]
+					}
+				}
 				this.$http.get('/tybhrms/tybrecruit/page', {
-					params: {
+					params: Object.assign({
 						size: this.page.size,
 						current: this.page.current
-					}
+					}, form)
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						let result = data.data
 						this.data = this.data.concat(this.setList(result.records))
 						this.page.total = result.total
+						if (this.page.total === 0) {
+							this.status = 'nomore'
+						}
 					}
+					uni.stopPullDownRefresh()
 				})
 			},
 			// 重构数据
@@ -109,10 +122,30 @@
 				}
 				return data
 			},
-			onChangeDrowdown (label, value) {
+			onChangeDrowdown (label, options, value) {
+				this.resetForm()
+				this.page.current = 1
+				if (label === 'salaryStart') {
+					let result = this.$tools.getDictItem(value, this[options])
+					this.form.salaryStart = result.salaryStart
+					this.form.salaryEnd = result.salaryEnd
+				} else {
+					let result = this.$tools.getDictItem(value, this[options])
+					this.form[label] = result.value
+				}
+				this.data = []
+				this.getList()
 				uni.pageScrollTo({
 					scrollTop: 0
 				})
+			},
+			resetForm (ignore = ['content']) {
+				let form = this.form
+				for (let key in form) {
+					if (ignore.findIndex(item => item === key) === -1) {
+						form[key] = ''
+					}
+				}
 			},
 			onTo (row) {
 				if (row.recruitId) {
@@ -133,24 +166,28 @@
 		.dropdown-wrapper {
 			background-color: #fff;
 			height: 80rpx;
-			.dropdown-ref {
-				background-color: #fff;
-				top: 0;
-				left: 0;
-				right: 0;
-				z-index: 10;
-				::v-deep.__content {
-					height: 100vh;
-				}
-			}
+			// .dropdown-ref {
+			// 	background-color: #fff;
+			// 	top: 0;
+			// 	left: 0;
+			// 	right: 0;
+			// 	z-index: 10;
+			// 	::v-deep.__content {
+			// 		height: 100vh;
+			// 	}
+			// }
 		}
 		.content-wrapper {
 			// margin-top: 0rpx;
-			margin-top: 184rpx;
+			// margin-top: 184rpx;
 			background-color: #fff;
 			.item {
 				border-bottom: 1px solid #f6f6f6;
 			}
 		}
+	}
+	::v-deep .u-dropdown-item__options-scroll {
+		max-height: 500rpx;
+		overflow: auto;
 	}
 </style>

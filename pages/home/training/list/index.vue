@@ -30,6 +30,10 @@
 				data: [],
 			}
 		},
+		onPullDownRefresh () {
+			this.page.current = 1
+			this.getList()
+		},
 		onReachBottom() {
 			if (this.page.total > this.page.current * this.page.size) {
 				this.status = 'loading'
@@ -56,6 +60,7 @@
 						this.data = this.data.concat(result.records)
 						this.page.total = result.total
 					}
+					uni.stopPullDownRefresh()
 				})
 			},
 			onTo (id) {

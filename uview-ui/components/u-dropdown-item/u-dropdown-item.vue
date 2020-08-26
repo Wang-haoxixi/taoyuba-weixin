@@ -1,13 +1,15 @@
 <template>
 	<view class="u-dropdown-item" v-if="active" @touchmove.stop.prevent @tap.stop.prevent>
 		<view class="u-dropdown-item__options" v-if="!$slots.default">
-			<u-cell-group>
-				<u-cell-item @click="cellClick(item.value)" :arrow="false" :title="item.label" v-for="(item, index) in options" :key="index" :title-style="{
-					color: value == item.value ? activeColor : inactiveColor
-				}">
-					<u-icon v-if="value == item.value" name="checkbox-mark" :color="activeColor" size="32"></u-icon>
-				</u-cell-item>
-			</u-cell-group>
+			<scroll-view scroll-y class="u-dropdown-item__options-scroll">
+				<u-cell-group>
+					<u-cell-item @click="cellClick(item.value)" :arrow="false" :title="item.label" v-for="(item, index) in options" :key="index" :title-style="{
+						color: value == item.value ? activeColor : inactiveColor
+					}">
+						<u-icon v-if="value == item.value" name="checkbox-mark" :color="activeColor" size="32"></u-icon>
+					</u-cell-item>
+				</u-cell-group>
+			</scroll-view>
 		</view>
 		<slot v-else />
 	</view>

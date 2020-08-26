@@ -212,5 +212,15 @@ export default {
 			mask: (options && options.mask) || true,
 		});
 	},
-
+	// 获取字典内容
+	getDictItem (value, data, valueName = 'value') {
+		let result = {}
+		for (let i = 0, len = data.length; i < len; i++) {
+			if (data[i][valueName] === value) {
+				result = data[i]
+				break
+			}
+		}
+		return result
+	}
 }

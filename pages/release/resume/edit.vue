@@ -257,6 +257,7 @@
 			onSubmit () {
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
+						console.log('form', this.form)
 						console.log('验证通过')
 					} else {
 						console.log('验证失败')
