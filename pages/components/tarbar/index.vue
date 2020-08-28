@@ -86,6 +86,11 @@
 		left: 0;
 		right: 0;
 		height: 100rpx;
+		/* iphonex 等安全区设置，底部安全区适配 */
+		/* #ifndef APP-NVUE */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
 		// overflow: hidden;
 		background-color: #fff;
 		display: flex;

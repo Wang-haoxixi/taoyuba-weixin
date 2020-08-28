@@ -1,13 +1,13 @@
 <template>
 	<view class="" @tap="onTo">
 		<view class="video-item-wrapper" :style="[videoStyle]" ref="video">
-			<image :src="imageUrl || 'https://cdn.uviewui.com/uview/swiper/1.jpg'"></image>
+			<image :src="imageUrl || 'https://cdn.uviewui.com/uview/swiper/1.jpg'" mode="scaleToFill"></image>
 			<view class="play-wrapper" :class="playType === 'mini' ? 'mini-play' : ''" :style="[playStyle]"></view>
 			<view class="title ellipsis" v-if="textPosition !== 'bottom'">
 				{{title}}
 			</view>
 		</view>
-		<view class="title-bottom" v-if="textPosition === 'bottom'">
+		<view class="title-bottom u-line-1 ellipsis" v-if="textPosition === 'bottom'">
 			{{title}}
 		</view>
 	</view>
@@ -45,8 +45,8 @@
 		},
 		methods: {
 			onTo () {
-				console.log('this.id', this.id)
 				if (this.id) {
+					console.log('this.id', this.id)
 					uni.navigateTo({
 						url: `/pages/home/video/detail/index?id=${this.id}`
 					});
@@ -99,12 +99,12 @@
 		font-size: 24rpx;
 		margin-top: 6rpx;
 		color: #333;
-		text-overflow: -o-ellipsis-lastline;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		line-clamp: 2;
-		-webkit-box-orient: vertical;
+		// text-overflow: -o-ellipsis-lastline;
+		// overflow: hidden;
+		// text-overflow: ellipsis;
+		// display: -webkit-box;
+		// -webkit-line-clamp: 2;
+		// line-clamp: 2;
+		// -webkit-box-orient: vertical;
 	}
 </style>

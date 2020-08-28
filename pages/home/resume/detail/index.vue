@@ -3,7 +3,7 @@
 		<view class="header-wrapper">
 			<view class="header-top">
 				<view class="avatar">
-					<image src="https://cdn.uviewui.com/uview/swiper/1.jpg"></image>
+					<image src="https://cdn.uviewui.com/uview/swiper/1.jpg" mode="scaleToFill"></image>
 				</view>
 				<view class="content-wrapper">
 					<view class="name">{{data.realName || ''}}</view>

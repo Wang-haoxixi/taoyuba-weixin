@@ -53,12 +53,11 @@ export default {
 			uni.login({
 				provider: 'weixin',
 				success: function (loginRes) {
-					cache.set('code', loginRes.code)
-					console.log('login', loginRes)
+					// cache.set('code', loginRes.code)
+					console.log('loginRes', loginRes)
 					uni.getUserInfo({
 						provider: 'weixin',
 						success: function (infoRes) {
-							console.log('getUserInfo')
 							resolve(infoRes)
 						},
 						fail: function (err) {

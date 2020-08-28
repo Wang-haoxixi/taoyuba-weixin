@@ -2,7 +2,7 @@
 	<view class="book-list-container">
 		<view class="book-content">
 			<template v-for="item in data">
-				<bookItem :key="item.id" :title="item.title" :info="item.info" :price="item.price" :imgUrl="item.bookImg"></bookItem>
+				<book-item :key="item.id" :title="item.title" :info="item.info" :price="item.price" :imgUrl="item.bookImg"></book-item>
 			</template>
 		</view>
 	</view>

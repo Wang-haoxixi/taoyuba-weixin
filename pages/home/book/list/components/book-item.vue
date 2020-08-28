@@ -1,7 +1,7 @@
 <template>
 	<view class="book-list-item">
 		<view class="image-wrapper">
-			<u-image width="170" height="200" :src="imgUrl"></u-image>
+			<u-image width="170" height="200" :src="imgUrl" mode="scaleToFill"></u-image>
 			<!-- <image :src="imgUrl"></image> -->
 		</view>
 		<view class="content-wrapper">

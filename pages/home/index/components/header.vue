@@ -6,12 +6,12 @@
 				<text class="text">舟山市</text>
 				<u-icon class="ic-right" name="arrow-down" size="28"></u-icon>
 			</view> -->
-			<view class="search-wrapper" @tap="onTo('/pages/home/search/index')">
-				<u-icon name="search" size="24" color="#aaa"></u-icon>
-				<text class="text">搜索你感兴趣的内容</text>
+			<view class="static-search-wrapper">
+				<static-search to="/pages/home/search/index" placeholder="搜索你感兴趣的内容"></static-search>
 			</view>
+			
 			<view class="img-wrapper">
-				<image :src="`${imgUrl}/v.png`"></image>
+				<image :src="`${imgUrl}/v.png`" mode="scaleToFill"></image>
 			</view>
 		</view>
 		<view class="content-wrapper">
@@ -33,7 +33,11 @@
 </template>
 
 <script>
+	import staticSearch from './search.vue'
 	export default {
+		components: {
+			staticSearch
+		},
 		data () {
 			return {
 				list: [
@@ -55,7 +59,7 @@
 					{ path: '/pages/home/training/list/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-peixunjigou.png`, label: '培训机构' },
 					{ path: '', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, label: '在线测试' },
 					{ path: '/pages/home/report/index', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-jinyuqi.png`, label: '进出港报告' },
-					{ path: '/pages/home/video/detail/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '渔民学院' },
+					{ path: '/pages/home/video/list/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '渔民学院' },
 				]
 			}
 		},
@@ -96,19 +100,9 @@
 					margin-left: 6rpx;
 				}
 			}
-			.search-wrapper {
-				margin: 0 20rpx;
+			.static-search-wrapper {
 				width: 100%;
-				line-height: 58rpx;
-				height: 58rpx;
-				padding: 0 16rpx;
-				background-color: #fff;
-				border-radius: 8rpx;
-				.text {
-					font-size: 26rpx;
-					color: #aaa;
-					margin-left: 10rpx;
-				}
+				margin-right: 30rpx;
 			}
 			.img-wrapper {
 				width: 78rpx;

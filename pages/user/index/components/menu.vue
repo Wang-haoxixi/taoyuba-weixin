@@ -24,8 +24,8 @@
 					{ label: '我的培训', path: '' },
 					// { label: '我要签到', path: '' },
 					// { label: '我的办证', path: '' },
-					{ label: '我的合同', path: '' },
-					{ label: '合同解除', path: '' },
+					{ label: '我的合同', path: '/pages/user/contract/list/index' },
+					{ label: '合同解除', path: '/pages/user/contract/terminat-list/index' },
 					{ label: '我的评价', path: '' },
 					// { label: '教材订购', path: '' },
 					// { label: '我的订单', path: '' }

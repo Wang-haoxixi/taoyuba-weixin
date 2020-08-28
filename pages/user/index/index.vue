@@ -4,7 +4,7 @@
 			<view class="base-info-wrapper">
 				<view class="base-info-wrapper-left">
 					<view class="avatar-wrapper">
-						<image :src="userInfo.avatar"></image>
+						<image :src="userInfo.avatar" mode="scaleToFill"></image>
 					</view>
 					<view class="content">
 						<text class="name">{{userInfo.name}}</text>

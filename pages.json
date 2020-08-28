@@ -42,6 +42,12 @@
 			}
 		},
 		{
+			"path": "pages/home/video/list/index",
+			"style": {
+				"navigationBarTitleText": "在线教育"
+			}
+		},
+		{
 			"path": "pages/home/video/detail/index",
 			"style": {
 				"navigationBarTitleText": "在线教育"
@@ -158,6 +164,18 @@
 			}
 		},
 		{
+			"path": "pages/user/contract/list/index",
+			"style": {
+				"navigationBarTitleText": "合同管理"
+			}
+		},
+		{
+			"path": "pages/user/contract/terminat-list/index",
+			"style": {
+				"navigationBarTitleText": "合同解除"
+			}
+		},
+		{
 			"path": "pages/base/web",
 			"style": {
 				"navigationBarTitleText": ""
@@ -165,6 +183,14 @@
 		},
 		{
 			"path": "pages/base/login",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/base/register",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",

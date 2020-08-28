@@ -13,14 +13,14 @@
 					<text class="time">{{info.time}}</text>
 				</view>
 				<view class="mini-img-wrapper-right">
-					<image :src="info.img"></image>
+					<image :src="info.img" mode="scaleToFill"></image>
 				</view>
 			</view>
 		</template>
 		<template v-else-if="type === 'largeImg'">
 			<view class="large-img-wrapper">
 				<view class="large-img-wrapper-image">
-					<image :src="info.img"></image>
+					<image :src="info.img" mode="scaleToFill"></image>
 				</view>
 				<view class="large-img-wrapper-content">
 					<text class="title ellipsis">{{info.title}}</text>
