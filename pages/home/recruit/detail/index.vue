@@ -11,17 +11,17 @@
 			<content-container title="基本信息">
 				<view>
 					<view class="text">招聘人数：{{data.recruitNo || 0}}人</view>
-					<view class="text">货币种类：{{salaryCurrencyLabel}}</view>
-					<view class="text">证书职务：{{certTitleLabel}}</view>
-					<view class="text">证书等级：{{certLevelLabel}}</view>
-					<view class="text">作业方式：{{workModeLabel}}</view>
-					<view class="text">上船地点：{{cityLabel}}</view>
+					<view class="text">货币种类：{{salaryCurrencyLabel || ''}}</view>
+					<view class="text">证书职务：{{certTitleLabel || ''}}</view>
+					<view class="text">证书等级：{{certLevelLabel || ''}}</view>
+					<view class="text">作业方式：{{workModeLabel || ''}}</view>
+					<view class="text">上船地点：{{cityLabel || ''}}</view>
 				</view>
 			</content-container>
 			<content-container title="其他要求">
 				<view>
-					<view class="text">年龄要求：{{ageRequireLabel}}</view>
-					<view class="text">工作经验：{{workExprienceLabel}}</view>
+					<view class="text">年龄要求：{{ageRequireLabel || ''}}</view>
+					<view class="text">工作经验：{{workExprienceLabel || ''}}</view>
 				</view>
 			</content-container>
 			<content-container title="其他信息">

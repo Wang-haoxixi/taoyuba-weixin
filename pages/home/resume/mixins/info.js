@@ -64,6 +64,9 @@ export default {
 	},
 	methods: {
 		getDictLabel (val, data) {
+			if (val === '' || val == null) {
+				return
+			}
 			let result = ''
 			for (let i = 0, len = data.length; i < len; i++) {
 				if (data[i].value === val) {

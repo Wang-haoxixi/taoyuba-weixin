@@ -11,9 +11,9 @@ const errorCode = {
 	"428": "验证码错误,请重新输入",
 };
 const getTokenStorage = () => {
-	let token = 'Basic Z2RzOmdkcw=='
+	let token = ''
 	try {
-		token = uni.getStorageSync('token')
+		token = 'Bearer ' + uni.getStorageSync('taoyuba-token')
 	} catch (e) {}
 	return token
 }
@@ -46,7 +46,10 @@ http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
 	});
 	config.header = {
 		...config.header,
-		Authorization: getTokenStorage()
+	}
+	let token = getTokenStorage()
+	if (token) {
+		config.header.Authorization = token
 	}
 	/*
 	if (!token) { // 如果token不存在，调用cancel 会取消本次请求，但是该函数的catch() 仍会执行

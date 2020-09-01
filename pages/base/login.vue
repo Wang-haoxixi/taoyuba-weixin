@@ -8,11 +8,21 @@
 			<view class="title">淘渔吧</view>
 			<view class="form-wrapper">
 				<u-form :model="form" ref="uForm">
-					<u-form-item  left-icon="account" :leftIconStyle="{color: '#999', fontSize: '32rpx'}"><u-input trim v-model="form.phone" type="number" placeholder="请输入手机号"/></u-form-item>
+					<u-form-item left-icon="account" :leftIconStyle="{color: '#999', fontSize: '32rpx'}">
+						<u-input trim v-model="form.username" placeholder="请输入用户名"/>
+					</u-form-item>
+					<u-form-item left-icon="lock" :leftIconStyle="{color: '#999', fontSize: '32rpx'}">
+						<u-input type="password" trim v-model="form.password" placeholder="请输入密码"/>
+					</u-form-item>
+					<u-form-item :leftIconStyle="{color: '#999', fontSize: '32rpx'}" left-icon="tags" prop="code">
+						<u-input trim placeholder="请输入验证码" v-model="form.code" type="text"></u-input>
+						<view slot="right" @tap="refreshCode" style="height: 60rpx;width: 160rpx;"><image style="width: 100%;height: 100%;" :src="code.src" mode="scaleToFill"></image></view>
+					</u-form-item>
+					<!-- <u-form-item left-icon="account" :leftIconStyle="{color: '#999', fontSize: '32rpx'}"><u-input trim v-model="form.phone" type="number" placeholder="请输入手机号"/></u-form-item>
 					<u-form-item :leftIconStyle="{color: '#999', fontSize: '32rpx'}" left-icon="lock" prop="code">
 						<u-input trim placeholder="请输入验证码" v-model="form.code" type="text"></u-input>
 						<u-button slot="right" type="success" size="mini" @click="getCode" hover-class="none" :custom-style="{backgroundColor:'#fff',color: '#409EFF', fontSize: '32rpx'}">{{codeTips}}</u-button>
-					</u-form-item>
+					</u-form-item> -->
 					<view class="btn-wrapper">
 						<u-button @click="onSubmit" type="default" :custom-style="{backgroundColor: '#409EFF', color: '#fff'}" hover-class="none" shape="circle" :loading="loading">登录</u-button>
 					</view>
@@ -23,14 +33,14 @@
 			<text @tap="onTo('/pages/base/register')">没有账号？立即注册</text>
 			<text>找回密码</text>
 		</view>
-		<view class="other-wrapper">
+		<!-- <view class="other-wrapper">
 			<u-divider bg-color="transparent">其他方式登录</u-divider>
 			<view class="ic-wrapper">
 				<u-button open-type="getUserInfo" @getuserinfo="onWechat" hover-class="none" :custom-style="{backgroundColor: 'transparent', borderColor: '#f8f8f8'}" size="medium " :hair-line="false">
 					<u-icon name="weixin-circle-fill" size="80rpx" color="#4cbf00"></u-icon>
 				</u-button>
 			</view>
-		</view>
+		</view> -->
 		<u-verification-code seconds="60" ref="uCode" @change="codeChange"></u-verification-code>
 		<u-toast ref="uToast" />
 	</view>
@@ -38,6 +48,7 @@
 
 <script>
 	import getUser from '@/common/utils/user'
+	import { signin } from '@/common/utils/login.js'
 	export default {
 		data () {
 			return {
@@ -45,10 +56,22 @@
 				imgUrl: this.$IMAGE_URL,
 				codeTips: '',
 				form: {
+					username: '',
+					password: '',
 					phone: '',
-					code: ''
-				}
+					code: '',
+					randomStr: ''
+				},
+				code: {
+					src: '',
+					value: '',
+					len: 4,
+					type: 'image'
+				 }
 			}
+		},
+		onLoad () {
+			this.refreshCode()
 		},
 		methods: {
 			onTo (path) {
@@ -80,16 +103,30 @@
 				this.codeTips = text
 			},
 			onSubmit () {
-				if (this.form.phone === '') {
+				// if (this.form.phone === '') {
+				// 	this.$refs.uToast.show({
+				// 		title: '请输入手机号',
+				// 		type: 'error'
+				// 	})
+				// 	return
+				// }
+				// if(!(/^1[3456789]\d{9}$/.test(this.form.phone))) {
+				// 	this.$refs.uToast.show({
+				// 		title: '请输入正确的手机号',
+				// 		type: 'error'
+				// 	})
+				// 	return
+				// }
+				if (this.form.username === '') {
 					this.$refs.uToast.show({
-						title: '请输入手机号',
+						title: '请输入用户名',
 						type: 'error'
 					})
 					return
 				}
-				if(!(/^1[3456789]\d{9}$/.test(this.form.phone))) {
+				if (this.form.password === '') {
 					this.$refs.uToast.show({
-						title: '请输入正确的手机号',
+						title: '请输入密码',
 						type: 'error'
 					})
 					return
@@ -105,18 +142,42 @@
 					title: '登录中',
 					mask: true
 				})
-				setTimeout(() => {
+				signin(this.form).then((data) => {
+					console.log('登录', data)
+					this.$cache.set('taoyuba-token', data['access_token'])
+					this.$cache.set('refresh_token', data['refresh_token'])
 					uni.switchTab({
-						url: '/pages/home/index/index'
-					});
-					console.log('调转')
+						url: '/pages/user/index/index'
+					})
 					uni.hideLoading()
-				}, 2000)
+				})
+				// setTimeout(() => {
+				// 	uni.switchTab({
+				// 		url: '/pages/home/index/index'
+				// 	});
+				// 	console.log('调转')
+				// 	uni.hideLoading()
+				// }, 2000)
 			},
 			onWechat () {
 				getUser.onLogin().then((res) => {
 					console.log('success', res)
 				})
+			},
+			refreshCode () {
+				this.form.code = ''
+				this.form.randomStr = this.randomLenNum(this.code.len, true)
+				this.code.type === 'text'
+					? (this.code.value = this.randomLenNum(this.code.len))
+					: (this.code.src = `${this.$API_URL}/code?randomStr=${this.form.randomStr}`)
+			},
+			randomLenNum (len, date) {
+			  let random = ''
+			  random = Math.ceil(Math.random() * 100000000000000)
+			    .toString()
+			    .substr(0, len || 4)
+			  if (date) random = random + Date.now()
+			  return random
 			}
 		}
 	}
@@ -155,7 +216,7 @@
 				width: 95%;
 				box-sizing: border-box;
 				padding: 60rpx 40rpx;
-				height: 460rpx;
+				height: 570rpx;
 				background-color: #fff;
 				top: 500rpx;
 				left: 2.5%;
@@ -169,7 +230,7 @@
 			}
 		}
 		.other-wrapper1 {
-			margin-top: 400rpx;
+			margin-top: 520rpx;
 			padding: 0 30rpx;
 			display: flex;
 			justify-content: space-between;

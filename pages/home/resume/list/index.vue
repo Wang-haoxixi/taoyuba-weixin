@@ -179,5 +179,6 @@
 	::v-deep .u-dropdown-item__options-scroll {
 		max-height: 500rpx;
 		overflow: auto;
+		-webkit-overflow-scrolling: touch;
 	}
 </style>

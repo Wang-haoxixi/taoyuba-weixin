@@ -4,11 +4,11 @@
 			<view class="base-info-wrapper">
 				<view class="base-info-wrapper-left">
 					<view class="avatar-wrapper">
-						<image :src="userInfo.avatar" mode="scaleToFill"></image>
+						<image :src="`${imageUrl}/avatar.jpg`" mode="scaleToFill"></image>
 					</view>
 					<view class="content">
-						<text class="name">{{userInfo.name}}</text>
-						<text class="phone">{{userInfo.phone}}</text>
+						<text class="name">{{userInfo.realName}}</text>
+						<text class="phone">{{userInfo.username}}</text>
 					</view>
 				</view>
 				<!-- <view class="base-info-wrapper-right">
@@ -52,13 +52,10 @@
 		},
 		data () {
 			return {
+				userInfo: this.$cache.get('userInfo'),
+				imageUrl: this.$IMAGE_URL,
 				type: 1,
 				show: false,
-				userInfo: {
-					avatar: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-					name: '辛弃疾',
-					phone: '13111111111'
-				},
 				list: [
 					{ value: 1, label: '船员' },
 					{ value: 2, label: '船东' },
@@ -78,10 +75,21 @@
 				return result
 			}
 		},
+		onLoad () {
+			this.getUserInfo()
+		},
 		methods: {
 			onConfirm (e) {
 				this.type = e[0].value
-			}
+			},
+			getUserInfo () {
+				this.$http.get('/admin/user/info').then(({ data }) => {
+					if (data.code === 0) {
+						this.userInfo = data.data.sysUser
+						this.$cache.set('userInfo', this.userInfo)
+					}
+				})
+			},
 		}
 	}
 </script>

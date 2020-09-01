@@ -13,7 +13,8 @@
 					<text class="time">{{info.time}}</text>
 				</view>
 				<view class="mini-img-wrapper-right">
-					<image :src="info.img" mode="scaleToFill"></image>
+					<u-lazy-load :image="info.img" class="lazy-image" height="140" img-mode="scaleToFill"></u-lazy-load>
+					<!-- <image :src="info.img" mode="scaleToFill"></image> -->
 				</view>
 			</view>
 		</template>
@@ -42,6 +43,12 @@
 			info: {
 				type: Object,
 				default: () => {}
+			}
+		},
+		data () {
+			return {
+				loadingImg: '/static/uView/loading.png',
+				errorImg: '/static/uView/load_error.png'
 			}
 		},
 		methods: {
@@ -81,6 +88,7 @@
 					display: block;
 				}
 				.title {
+					color: #666;
 					height: 84rpx;
 					overflow: hidden;
 					text-overflow: -o-ellipsis-lastline;
@@ -98,9 +106,9 @@
 				width: 200rpx;
 				overflow: hidden;
 				border-radius: 10rpx;
-				image {
+				.lazy-image {
 					width: 100%;
-					height: 100%;
+					height: 140rpx;
 				}
 			}
 		}

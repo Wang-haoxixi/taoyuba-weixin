@@ -1,40 +1,70 @@
 <template>
 	<view class="video-list-container">
-		<view class="static-search-wrapper">
+		<!-- <view class="static-search-wrapper">
 			<static-search placeholder="搜索你感兴趣的视频"></static-search>
-		</view>
+		</view> -->
 		<view class="list-wrapper">
-			<u-row gutter="40">
-				<u-col span="6" v-for="item in list" :key="item.id" @click="onTo(item.id)">
-					<view class="item">
-						<video-item textPosition="bottom" :title="item.title" :imageUrl="item.url" :videoStyle="{height: '200rpx'}"></video-item>
-					</view>
-				</u-col>
-			</u-row>
+			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId)">
+				<video-item :info="item"></video-item>
+			</view>
 		</view>
+		<u-loadmore :status="status" />
 	</view>
 </template>
 
 <script>
 	import staticSearch from '@/pages/home/index/components/search.vue'
-	import videoItem from '@/pages/home/index/components/video-item.vue'
+	import videoItem from './components/video-item.vue'
+	import pageMixin from '@/pages/mixins/page.js'
 	export default {
 		components: {
 			staticSearch,
 			videoItem
 		},
+		mixins: [pageMixin],
 		data () {
 			return {
-				list: [
-					{ id: 1, title: '[最新] 船员岗位培训进阶教学', url: 'https://cdn.uviewui.com/uview/swiper/1.jpg' },
-					{ id: 2, title: '[最新] 船员岗位培训进阶教学', url: 'https://cdn.uviewui.com/uview/swiper/1.jpg' },
-					{ id: 3, title: '[最新] 船员岗位培训进阶教学', url: 'https://cdn.uviewui.com/uview/swiper/1.jpg' },
-					{ id: 4, title: '[最新] 船员岗位培训进阶教学', url: 'https://cdn.uviewui.com/uview/swiper/1.jpg' },
-					{ id: 5, title: '[最新] 船员岗位培训进阶教学船员岗位培训进阶教学', url: 'https://cdn.uviewui.com/uview/swiper/1.jpg' }
-				]
+				status: 'loadmore',
+				data: []
 			}
 		},
+		onReachBottom() {
+			if (this.page.total > this.page.current * this.page.size) {
+				this.status = 'loading'
+				this.page.current++
+				this.getList()
+			} else{
+				this.status = 'nomore'
+			}
+		},
+		onPullDownRefresh () {
+			this.data = []
+			this.page.current = 1
+			this.resetForm()
+			this.getList()
+		},
+		onLoad () {
+			this.getList()
+		},
 		methods: {
+			getList () {
+				this.$http.get('/tybhrms/tyblessonvideo/page', {
+					params: {
+						size: this.page.size,
+						current: this.page.current
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let result = data.data
+						this.data = this.data.concat(result.records)
+						this.page.total = result.total
+						if (this.page.total <= this.page.size) {
+							this.status = 'nomore'
+						}
+					}
+					uni.stopPullDownRefresh()
+				})
+			},
 			onTo (id) {
 				if (id) {
 					uni.navigateTo({

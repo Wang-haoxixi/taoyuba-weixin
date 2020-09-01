@@ -3,7 +3,7 @@
 		<view class="header-wrapper">
 			<view class="header-top">
 				<view class="avatar">
-					<image src="https://cdn.uviewui.com/uview/swiper/1.jpg" mode="scaleToFill"></image>
+					<image :src="`${image_url}/avatar.jpg`" mode="scaleToFill"></image>
 				</view>
 				<view class="content-wrapper">
 					<view class="name">{{data.realName || ''}}</view>
@@ -19,10 +19,10 @@
 		<view class="content-wrapper">
 			<content-container title="基本信息">
 				<view>
-					<view class="text">应聘职务：{{newPositionIdLabel}}</view>
-					<view class="text">原任职务：{{oldPositionIdLabel}}</view>
-					<view class="text">作业方式：{{workRequireLabel}}</view>
-					<view class="text">工作经验：{{workExprienceLabel}}</view>
+					<view class="text">应聘职务：{{newPositionIdLabel || ''}}</view>
+					<view class="text">原任职务：{{oldPositionIdLabel || ''}}</view>
+					<view class="text">作业方式：{{workRequireLabel || ''}}</view>
+					<view class="text">工作经验：{{workExprienceLabel || ''}}</view>
 					<view class="text">特殊技能：{{data.speciality || ''}}</view>
 					<view class="text">期望月薪：<text class="money">{{data.salary || ''}}</text></view>
 				</view>
@@ -30,9 +30,9 @@
 			<content-container title="个人资料">
 				<view>
 					<view class="text">电话：{{data.contactPhone || ''}}</view>
-					<view class="text">籍贯：浙江，舟山</view>
+					<view class="text">籍贯：{{cityLabel || ''}}</view>
 					<view class="text">出生日期：{{data.birthday || ''}}</view>
-					<view class="text">教育程度：{{eduDegreeLabel}}</view>
+					<view class="text">教育程度：{{eduDegreeLabel || ''}}</view>
 					<view class="text">外语水平：{{data.language || ''}}</view>
 					<view class="text">身高：{{data.height || ''}}</view>
 				</view>
@@ -54,7 +54,9 @@
 		},
 		data () {
 			return {
-				data: {}
+				data: {},
+				cityLabel: '',
+				image_url: this.$IMAGE_URL
 			}
 		},
 		onLoad (params) {

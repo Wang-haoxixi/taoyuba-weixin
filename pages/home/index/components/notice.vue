@@ -55,7 +55,7 @@
 				console.log('row', row)
 				if (row.id) {
 					uni.navigateTo({
-						url: `/pages/home/news/detail/index?id=${row.id}`
+						url: `/pages/home/news/list/index`
 					});
 				}
 			}

@@ -25,7 +25,7 @@ var postfix = '_shoppingStore'; // 缓存前缀
  * @param  {[type]} v [键值]
  * @param  {[type]} t [时间、单位秒]
  */
-function set(k, v, t = 60 * 60 * 24 * 30) {
+function set(k, v, t = 60 * 60 * 24 * 1) {
     uni.setStorageSync(k, v) 
     var seconds = parseInt(t);
     if (seconds > 0) {

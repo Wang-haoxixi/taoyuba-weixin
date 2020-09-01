@@ -44,13 +44,14 @@
 		{
 			"path": "pages/home/video/list/index",
 			"style": {
-				"navigationBarTitleText": "在线教育"
+				"navigationBarTitleText": "渔民学院",
+				"enablePullDownRefresh": true
 			}
 		},
 		{
 			"path": "pages/home/video/detail/index",
 			"style": {
-				"navigationBarTitleText": "在线教育"
+				"navigationBarTitleText": "渔民学院"
 			}
 		},
 		{
@@ -66,18 +67,18 @@
 				"navigationBarTitleText": "培训机构"
 			}
 		},
-		{
-			"path": "pages/home/curriculum/list/index",
-			"style": {
-				"navigationBarTitleText": "渔民学院"
-			}
-		},
-		{
-			"path": "pages/home/curriculum/detail/index",
-			"style": {
-				"navigationBarTitleText": "渔民学院"
-			}
-		},
+		// {
+		// 	"path": "pages/home/curriculum/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/curriculum/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院"
+		// 	}
+		// },
 		{
 			"path": "pages/home/report/index",
 			"style": {
@@ -97,11 +98,18 @@
 			}
 		},
 		{
-			"path": "pages/home/news/detail/index",
+			"path": "pages/home/news/list/index",
 			"style": {
-				"navigationBarTitleText": "新闻"
+				"navigationBarTitleText": "新闻",
+				"enablePullDownRefresh": true
 			}
 		},
+		// {
+		// 	"path": "pages/home/news/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "新闻"
+		// 	}
+		// },
 		{
 			"path": "pages/home/book/list/index",
 			"style": {

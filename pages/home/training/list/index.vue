@@ -31,6 +31,7 @@
 			}
 		},
 		onPullDownRefresh () {
+			this.data = []
 			this.page.current = 1
 			this.getList()
 		},
