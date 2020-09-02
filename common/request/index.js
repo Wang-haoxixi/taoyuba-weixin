@@ -1,5 +1,7 @@
 import Request from '@/utils/luch-request/index.js'
 import { API_URL } from '@/env.js'
+import { TOKEN } from '@/common/config/index.js'
+import cache from '@/common/utils/cache'
 
 const errorCode = {
 	"401": "当前操作没有权限或者登入过期",
@@ -13,7 +15,7 @@ const errorCode = {
 const getTokenStorage = () => {
 	let token = ''
 	try {
-		token = 'Bearer ' + uni.getStorageSync('taoyuba-token')
+		token = uni.getStorageSync(TOKEN)
 	} catch (e) {}
 	return token
 }
@@ -49,7 +51,7 @@ http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
 	}
 	let token = getTokenStorage()
 	if (token) {
-		config.header.Authorization = token
+		config.header.Authorization = 'Bearer ' + token
 	}
 	/*
 	if (!token) { // 如果token不存在，调用cancel 会取消本次请求，但是该函数的catch() 仍会执行
@@ -66,17 +68,28 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 		uni.showToast({
 			icon: 'none',
 			title: response.data.msg
-		});
+		})
 	}
 	return response
 }, (response) => { // 请求错误后执行
-	uni.hideLoading();
+	uni.hideLoading()
 	if (response.errMsg == 'request:fail ') {
 		uni.showToast({
 			icon: 'none',
-			title: '网络请求失败，请检查网络连接！',
-		});
+			title: '网络请求失败，请检查网络连接！'
+		})
+		return
 	}
+	if (response.statusCode === 401) {
+		uni.navigateTo({
+			url: '/pages/base/login'
+		})
+		cache.remove(TOKEN)
+		cache.remove('userInfo')
+		cache.remove('refresh_token')
+		return
+	}
+	return response
 })
 
 export default http

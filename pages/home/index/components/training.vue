@@ -76,7 +76,7 @@
 			tabsChange (index) {
 				if (index === 2) {
 					uni.navigateTo({
-						url: '/pages/home/plan/index'
+						url: `/pages/base/web?src=https://www.baidu.com`
 					})
 				} else if (index === 3) {
 					uni.navigateTo({

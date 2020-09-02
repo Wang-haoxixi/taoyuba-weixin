@@ -31,7 +31,7 @@
 		</view>
 		<view class="other-wrapper1">
 			<text @tap="onTo('/pages/base/register')">没有账号？立即注册</text>
-			<text>找回密码</text>
+			<text @tap="onTo('/pages/base/forget-password')">找回密码</text>
 		</view>
 		<!-- <view class="other-wrapper">
 			<u-divider bg-color="transparent">其他方式登录</u-divider>
@@ -49,6 +49,7 @@
 <script>
 	import getUser from '@/common/utils/user'
 	import { signin } from '@/common/utils/login.js'
+	import { TOKEN } from '@/common/config/index.js'
 	export default {
 		data () {
 			return {
@@ -143,21 +144,32 @@
 					mask: true
 				})
 				signin(this.form).then((data) => {
-					console.log('登录', data)
-					this.$cache.set('taoyuba-token', data['access_token'])
+					this.refreshCode()
+					if (data.code === 1) {
+						this.$refs.uToast.show({
+							title: data.msg || '登录失败',
+							type: 'error'
+						})
+						uni.hideLoading()
+						return
+					}
+					
+					this.$cache.set(TOKEN, data['access_token'])
 					this.$cache.set('refresh_token', data['refresh_token'])
 					uni.switchTab({
-						url: '/pages/user/index/index'
+						url: '/pages/home/index/index',
+						success: () => {
+							this.$http.get('/admin/user/info').then(({ data }) => {
+								if (data.code === 0) {
+									this.$cache.set('userInfo', data.data.sysUser)
+								}
+							})
+						}
 					})
 					uni.hideLoading()
+				}).catch(() => {
+					this.refreshCode()
 				})
-				// setTimeout(() => {
-				// 	uni.switchTab({
-				// 		url: '/pages/home/index/index'
-				// 	});
-				// 	console.log('调转')
-				// 	uni.hideLoading()
-				// }, 2000)
 			},
 			onWechat () {
 				getUser.onLogin().then((res) => {
@@ -218,7 +230,7 @@
 				padding: 60rpx 40rpx;
 				height: 570rpx;
 				background-color: #fff;
-				top: 500rpx;
+				top: 450rpx;
 				left: 2.5%;
 				right: 2.5%;
 				overflow: hidden;
@@ -230,7 +242,7 @@
 			}
 		}
 		.other-wrapper1 {
-			margin-top: 520rpx;
+			margin-top: 470rpx;
 			padding: 0 30rpx;
 			display: flex;
 			justify-content: space-between;

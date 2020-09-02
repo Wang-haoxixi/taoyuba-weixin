@@ -45,6 +45,7 @@
 <script>
 	import tybTarbar from '@/pages/components/tarbar/index.vue'
 	import userMenu from './components/menu.vue'
+	import { TOKEN } from '@/common/config/index.js'
 	export default {
 		components: {
 			tybTarbar,
@@ -75,8 +76,11 @@
 				return result
 			}
 		},
-		onLoad () {
+		onReady () {
 			this.getUserInfo()
+		},
+		onShow () {
+			this.userInfo = this.$cache.get('userInfo')
 		},
 		methods: {
 			onConfirm (e) {
@@ -84,6 +88,7 @@
 			},
 			getUserInfo () {
 				this.$http.get('/admin/user/info').then(({ data }) => {
+					console.log('获取用户数据结果', data)
 					if (data.code === 0) {
 						this.userInfo = data.data.sysUser
 						this.$cache.set('userInfo', this.userInfo)

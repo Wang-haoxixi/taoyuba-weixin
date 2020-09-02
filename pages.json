@@ -67,36 +67,6 @@
 				"navigationBarTitleText": "培训机构"
 			}
 		},
-		// {
-		// 	"path": "pages/home/curriculum/list/index",
-		// 	"style": {
-		// 		"navigationBarTitleText": "渔民学院"
-		// 	}
-		// },
-		// {
-		// 	"path": "pages/home/curriculum/detail/index",
-		// 	"style": {
-		// 		"navigationBarTitleText": "渔民学院"
-		// 	}
-		// },
-		{
-			"path": "pages/home/report/index",
-			"style": {
-				"navigationBarTitleText": "进出港报告"
-			}
-		},
-		{
-			"path": "pages/home/register/index",
-			"style": {
-				"navigationBarTitleText": "船员登记"
-			}
-		},
-		{
-			"path": "pages/home/plan/index",
-			"style": {
-				"navigationBarTitleText": "职业规划"
-			}
-		},
 		{
 			"path": "pages/home/news/list/index",
 			"style": {
@@ -144,7 +114,8 @@
 		{
 			"path": "pages/message/index/index",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true
 			}
 		},
 		{
@@ -199,6 +170,14 @@
 		},
 		{
 			"path": "pages/base/register",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/base/forget-password",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",

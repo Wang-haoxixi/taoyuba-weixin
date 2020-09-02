@@ -18,7 +18,7 @@
  * 】
  * @type {String}
  */
-var postfix = '_shoppingStore'; // 缓存前缀 
+var postfix = '_taoyubaStore'; // 缓存前缀 
 /**
  * 设置缓存 
  * @param  {[type]} k [键名]
@@ -83,5 +83,5 @@ export default {
     set: set,
     get: get,
     remove: remove,
-    clear: clear,
+    clear: clear
 }
