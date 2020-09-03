@@ -13,10 +13,10 @@
 							<u-input type="select" :select-open="positionIdShow" v-model="form.positionIdLabel" placeholder="请选择招聘岗位" @click="positionIdShow = true"></u-input>
 						</u-form-item>
 						<u-form-item label="招聘人数" prop="recruitNo" required>
-							<u-input v-model="form.recruitNo" trim placeholder="请输入招聘人数" type="number"/>
+							<u-input v-model="form.recruitNo" placeholder="请输入招聘人数" type="number"/>
 						</u-form-item>
 						<u-form-item label="月薪" prop="salary" required>
-							<u-input v-model="form.salary" trim placeholder="请输入月薪" type="number"/>
+							<u-input v-model="form.salary" placeholder="请输入月薪" type="number"/>
 						</u-form-item>
 						<u-form-item label="货币种类" prop="salaryCurrency" required>
 							<u-input type="select" :select-open="salaryCurrencyShow" v-model="form.salaryCurrencyLabel" placeholder="请选择货币种类" @click="salaryCurrencyShow = true"></u-input>
@@ -94,6 +94,7 @@
 		mixins: [dictMapMixin, cityMixin],
 		data () {
 			return {
+				id: '',
 				loading: false,
 				positionIdShow: false,
 				salaryCurrencyShow: false,
@@ -113,7 +114,7 @@
 				},
 				form: {
 					positionId: '',  // 招聘岗位
-					recruitNo: '', // 招聘人数
+					recruitNo: undefined, // 招聘人数
 					salary: '', // 月薪
 					salaryCurrency: '', // 货币种类
 					certTitle: '', // 证书职务
@@ -129,8 +130,8 @@
 				},
 				rules: {
 					positionId: [ { required: true, message: '请选择招聘岗位', trigger: 'change' } ],
-					recruitNo: [ { required: true, message: '请输入招聘人数', trigger: 'blur' } ],
-					salary: [ { required: true, message: '请输入月薪', trigger: 'blur' } ],
+					recruitNo: [ { required: true, message: '请输入招聘人数', trigger: 'blur,change' } ],
+					salary: [ { required: true, message: '请输入月薪', trigger: ['blur', 'change'] } ],
 					salaryCurrency: [ { required: true, message: '请选择货币种类', trigger: 'change' } ],
 					certTitle: [ { required: true, message: '请选择证书职务', trigger: 'change' } ],
 					certLevel: [ { required: true, message: '请选择证书等级', trigger: 'change' } ],
@@ -155,7 +156,7 @@
 				return this.dictMap ? this.dictMap['tyb_crew_cert_title'] : []
 			},
 			certLevelList () {
-				return this.dictMap['certLevelList']
+				return this.dictMap['certLevel']
 			},
 			workModeList () {
 				return this.dictMap ? this.dictMap['tyb_resume_worktype'] : [] 
@@ -167,18 +168,107 @@
 		onReady () {
 			this.$refs.uForm.setRules(this.rules)
 		},
+		onLoad (params) {
+			console.log('params', params)
+			if (params.id) {
+				this.id = params.id
+				this.getList(params.id)	
+			}
+		},
 		methods: {
+			getList (id) {
+				this.$http.get(`/tybhrms/tybrecruit/getdetail/${id}`).then(({ data }) => {
+					if (data.code === 0) {
+						this.form = data.data.data
+						if (this.form.city) {
+							this.initCityLabel(this.form.city)
+						}
+						this.initForm()
+						this.form.salary = this.form.salary + ''
+						this.form.recruitNo = this.form.recruitNo + ''
+					}
+				})
+			},
+			initForm () {
+				this.getDictLabel('positionId', this.form.positionId, this.positionIdList)
+				this.getDictLabel('salaryCurrency', this.form.salaryCurrency, this.salaryCurrencyList)
+				this.getDictLabel('certTitle', this.form.certTitle, this.certTitleList)
+				this.getDictLabel('certLevel', this.form.certLevel, this.certLevelList)
+				this.getDictLabel('workMode', this.form.workMode, this.workModeList)
+				this.getDictLabel('ageRequire', this.form.ageRequire, this.ageRequireList)
+				this.getDictLabel('workExprience', this.form.workExprience, this.workExprienceList)
+			},
+			getDictLabel (prop, value, data) {
+				for (let i = 0, len = data.length; i < len; i++) {
+					if (data[i].value === value) {
+						this.form[`${prop}Label`] = data[i].label
+						break
+					}
+				}
+			},
+			// 获取部门中文名
+			initCityLabel (id) {
+				this.$http.get(`/admin/region/wholeInfo?areaCode=${id}`).then(({ data }) => {
+					if (data.code === 0) {
+						let result = []
+						this.recursionCityLabel(result, data.data)
+						this.$set(this.form, 'cityLabel', result.join('-'))
+						// this.form.cityLabel = result.join('-')
+					}
+				})
+			},
+			recursionCityLabel (result, data) {
+				for (let key in data) {
+					if (key === 'name') {
+						result.push(data[key])
+						let child = data.child
+						if (child && Object.keys(child).length > 0) {
+							this.recursionCityLabel(result, child)
+						}
+					}
+				}
+			},
 			onConfirm (e, prop) {
 				this.form[prop] = e[0].value
 				this.form[`${prop}Label`] = e[0].label
 			},
 			// 发布招聘
 			onSubmit () {
+				console.log(this.form)
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
-						console.log('验证通过')
+						this.loading = true
+						this.form.salary = +this.form.salary
+						this.form.recruitNo = +this.form.recruitNo
+						if (this.id) {
+							this.$http.post('/tybhrms/tybrecruit/update', this.form).then(({ data }) => {
+								if (data.code === 0 && data.data === true) {
+									uni.showToast({
+										icon: 'none',
+										title: '更新成功'
+									})
+									uni.navigateTo({
+										url: '/pages/user/recruit/list/index'
+									})
+								} else {
+									uni.showToast({
+										icon: 'none',
+										title: '更新失败'
+									})
+								}
+								this.loading = false
+							}).catch(() => {
+								uni.showToast({
+									icon: 'none',
+									title: '更新失败'
+								})
+								this.loading = false
+							})
+						}
+						
 					} else {
 						console.log('验证失败')
+						this.loading = false
 					}
 				})
 			},

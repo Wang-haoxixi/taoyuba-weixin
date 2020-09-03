@@ -102,13 +102,13 @@
 		{
 			"path": "pages/release/resume/edit",
 			"style": {
-				"navigationBarTitleText": "发布简历"
+				"navigationBarTitleText": "简历"
 			}
 		},
 		{
 			"path": "pages/release/recruit/edit",
 			"style": {
-				"navigationBarTitleText": "发布招聘"
+				"navigationBarTitleText": "招聘"
 			}
 		},
 		{
@@ -152,6 +152,25 @@
 			"path": "pages/user/contract/terminat-list/index",
 			"style": {
 				"navigationBarTitleText": "合同解除"
+			}
+		},
+		{
+			"path": "pages/user/setting/index",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
+		},
+		{
+			"path": "pages/user/change-password/index",
+			"style": {
+				"navigationBarTitleText": "修改密码"
+			}
+		},
+		{
+			"path": "pages/user/recruit/list/index",
+			"style": {
+				"navigationBarTitleText": "船员招聘",
+				"enablePullDownRefresh": true
 			}
 		},
 		{

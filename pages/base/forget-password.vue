@@ -16,7 +16,7 @@
 						<u-button slot="right" type="success" size="mini" @click="getCode" hover-class="none" :custom-style="{backgroundColor:'#fff',color: '#409EFF', fontSize: '32rpx'}">{{codeTips}}</u-button>
 					</u-form-item>
 					<u-form-item left-icon="lock" :leftIconStyle="{color: '#999', fontSize: '32rpx'}">
-						<u-input type="password" trim v-model="form.newPassword" placeholder="请输入密码"/>
+						<u-input type="password" trim v-model="form.newPassword" placeholder="请输入密码(6-16位数字或字母)"/>
 					</u-form-item>
 					<u-form-item left-icon="lock" :leftIconStyle="{color: '#999', fontSize: '32rpx'}">
 						<u-input type="password" trim v-model="form.rePassword" placeholder="请输入确认密码"/>
@@ -109,6 +109,7 @@
 					})
 					return
 				}
+				
 				if (this.form.newPassword === '') {
 					this.$refs.uToast.show({
 						title: '请输入密码',
@@ -116,6 +117,14 @@
 					})
 					return
 				}
+				let reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/
+				if (!reg.exec(this.form.newPassword)) {
+					this.$refs.uToast.show({
+						title: '6-16位密码、数字或字母',
+						type: 'error'
+					})
+					return false
+				} 
 				if (this.form.rePassword === '') {
 					this.$refs.uToast.show({
 						title: '请输入确认密码',

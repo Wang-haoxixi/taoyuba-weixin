@@ -36,7 +36,7 @@
 							<u-input v-model="form.realName" trim placeholder="请输入姓名"/>
 						</u-form-item>
 						<u-form-item label="电话" prop="phone" required>
-							<u-input placeholder="请输入电话" trim v-model="form.phone" type="number"></u-input>
+							<u-input placeholder="请输入电话" v-model="form.phone" type="number"></u-input>
 						</u-form-item>
 						<u-form-item label="籍贯" prop="nationalityLabel" required>
 							<u-input type="select" :select-open="nationalityShow" v-model="form.nationalityLabel" placeholder="请选择籍贯" @click="openNationality"></u-input>
@@ -51,7 +51,7 @@
 							<u-input type="select" :select-open="languageShow" v-model="form.languageLabel" placeholder="请选择外语水平" @click="languageShow = true"></u-input>
 						</u-form-item>
 						<u-form-item label="身高">
-							<u-input v-model="form.height" trim placeholder="请输入身高"/>
+							<u-input v-model="form.height" type="number" placeholder="请输入身高"/>
 						</u-form-item>
 						<u-form-item label="是否公开" prop="isOpen" required>
 							<u-input type="select" :select-open="isOpenShow" v-model="form.isOpenLabel" placeholder="请选择是否公开" @click="isOpenShow = true"></u-input>
@@ -110,6 +110,7 @@
 				languageShow: false,
 				isOpenShow: false,
 				imgURL: this.$IMAGE_URL,
+				currentInfo: {},
 				btnStyle: {
 					backgroundColor: 'rgba(232, 103, 73, 1)',
 					color: '#fff',
@@ -145,10 +146,10 @@
 				},
 				rules: {
 					newPositionId: [
-						{ required: true, message: '请选择应聘职务', trigger: 'change' }
+						{ required: true, message: '请选择应聘职务', trigger: ['change', 'blur'] }
 					],
 					oldPositionId: [
-						{ required: true, message: '请选择原有职务', trigger: 'change' }
+						{ required: true, message: '请选择原有职务', trigger: ['change', 'blur'] }
 					],
 					workRequire: [
 						{ required: true, message: '请选择作业方式', trigger: 'change' }
@@ -198,9 +199,62 @@
 			}
 		},
 		onReady () {
+			this.getCurrentInfo()
 			this.$refs.uForm.setRules(this.rules)
 		},
 		methods: {
+			initForm () {
+				this.getDictLabel('newPositionId', this.form.positionId, this.newPositionIdList)
+				this.getDictLabel('oldPositionId', this.form.positionId, this.newPositionIdList)
+				this.getDictLabel('workRequire', this.form.workRequire, this.workRequireList)
+				this.getDictLabel('workExprience', this.form.workExprience, this.workExprienceList)
+				this.getDictLabel('eduDegree', this.form.eduDegree, this.eduDegreeList)
+			},
+			getDictLabel (prop, value, data) {
+				for (let i = 0, len = data.length; i < len; i++) {
+					if (data[i].value === value) {
+						this.form[`${prop}Label`] = data[i].label
+						break
+					}
+				}
+			},
+			// 获取部门中文名
+			initCityLabel (id) {
+				this.$http.get(`/admin/region/wholeInfo?areaCode=${id}`).then(({ data }) => {
+					if (data.code === 0) {
+						let result = []
+						this.recursionCityLabel(result, data.data)
+						this.$set(this.form, 'nationalityLabel', result.join('-'))
+						this.form.nationalityLabel = result.join('-')
+					}
+				})
+			},
+			recursionCityLabel (result, data) {
+				for (let key in data) {
+					if (key === 'name') {
+						result.push(data[key])
+						let child = data.child
+						if (child && Object.keys(child).length > 0) {
+							this.recursionCityLabel(result, child)
+						}
+					}
+				}
+			},
+			// 获取当前用户信息
+			getCurrentInfo () {
+				this.$http.get('/tmlms/crew/myInfo').then(({ data }) => {
+					if (data.code === 0) {
+						if (Object.keys(data.data).length === 0) {
+							return
+						}
+						this.form = data.data
+						if (this.form.districtId) {
+							this.initCityLabel(this.form.districtId)
+						}
+						this.initForm()
+					}
+				})
+			},
 			onColumnChangeNationality ({column, index}) {
 				if (column === 0) {
 					let areaCode = this.cityAddressList[column][index].areaCode
@@ -219,7 +273,6 @@
 					let nationalityLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}-${this.cityAddressList[2][val[2]].shortName}`
 					this.$set(this.form, 'nationalityLabel', nationalityLabel)
 					this.$set(this.form, 'nationality', nationality)
-					console.log('third', this.form)
 					return
 				} 
 				let second = this.cityAddressList[1]
@@ -228,7 +281,6 @@
 					let nationalityLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}`
 					this.$set(this.form, 'nationalityLabel', nationalityLabel)
 					this.$set(this.form, 'nationality', nationality)
-					console.log('second', this.form)
 					return
 				} 
 				let first = this.cityAddressList[0]

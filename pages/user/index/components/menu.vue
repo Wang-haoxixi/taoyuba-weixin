@@ -18,7 +18,7 @@
 		data () {
 			return {
 				menu1: [
-					{ label: '简历管理', path: '/pages/user/resume/list/index' },
+					{ label: '简历管理', path: '/pages/release/resume/edit' },
 					// { label: '发送的简历', path: '' },
 					// { label: '我的报名', path: '' },
 					{ label: '我的培训', path: '' },
@@ -27,6 +27,8 @@
 					{ label: '我的合同', path: '/pages/user/contract/list/index' },
 					{ label: '合同解除', path: '/pages/user/contract/terminat-list/index' },
 					{ label: '我的评价', path: '' },
+					{ label: '船员招聘', path: '/pages/user/recruit/list/index' },
+					{ label: '设置', path: '/pages/user/setting/index' },
 					// { label: '教材订购', path: '' },
 					// { label: '我的订单', path: '' }
 				],

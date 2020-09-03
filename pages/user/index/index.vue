@@ -18,7 +18,7 @@
 				</view> -->
 			</view>
 			<view class="content-wrapper">
-				<view class="item">
+				<view class="item" @tap="onTo('/pages/release/resume/edit')">
 					<view class="iconfont iconziliao"></view>
 					<text>个人资料</text>
 				</view>
@@ -26,7 +26,7 @@
 					<view class="iconfont iconshoucang other-ic"></view>
 					<text>我的收藏</text>
 				</view>
-				<view class="item">
+				<view class="item" @tap="onTo('/pages/user/change-password/index')">
 					<view class="iconfont iconmima other-ic"></view>
 					<text>密码修改</text>
 				</view>
@@ -88,13 +88,19 @@
 			},
 			getUserInfo () {
 				this.$http.get('/admin/user/info').then(({ data }) => {
-					console.log('获取用户数据结果', data)
 					if (data.code === 0) {
 						this.userInfo = data.data.sysUser
 						this.$cache.set('userInfo', this.userInfo)
 					}
 				})
 			},
+			onTo (path) {
+				if (path) {
+					uni.navigateTo({
+						url: path
+					});
+				}
+			}
 		}
 	}
 </script>

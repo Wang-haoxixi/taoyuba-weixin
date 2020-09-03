@@ -113,3 +113,14 @@ export const forgetForm = (form) => {
 		})
 	})
 }
+
+// 退出
+export const logout = () => {
+	return new Promise((resolve, reject) => {
+		$http.delete('/auth/token/logout').then(({ data }) => {
+			resolve(data)
+		}).catch((e) => {
+			reject(e)
+		})
+	})
+}
