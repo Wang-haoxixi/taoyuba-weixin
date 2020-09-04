@@ -2,15 +2,15 @@
 	<!-- 招聘 -->
 	<view class="recruit-list-wrapper phonex-mb">
 		<view>
-			<view class="search-wrapper">
+			<!-- <view class="search-wrapper">
 				<u-search placeholder="搜索" v-model="form.content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
-			</view>
+			</view> -->
 			<view class="dropdown-wrapper">
 				<u-dropdown>
 					<u-dropdown-item v-model="form.positionId" title="职务" :options="options1" @change="(value) => {onChangeDrowdown('positionId', 'options1', value)}"></u-dropdown-item>
 					<u-dropdown-item v-model="form.salaryStart" title="薪水" :options="options2" @change="(value) => {onChangeDrowdown('salaryStart', 'options2', value)}"></u-dropdown-item>
 					<u-dropdown-item v-model="form.workMode" title="作业" :options="options3" @change="(value) => {onChangeDrowdown('workMode', 'options3', value)}"></u-dropdown-item>
-					<u-dropdown-item v-model="form.order" title="排序" :options="options4" @change="(value) => {onChangeDrowdown('order', 'options4', value)}"></u-dropdown-item>
+					<!-- <u-dropdown-item v-model="form.order" title="排序" :options="options4" @change="(value) => {onChangeDrowdown('order', 'options4', value)}"></u-dropdown-item> -->
 				</u-dropdown>
 			</view>
 		</view>

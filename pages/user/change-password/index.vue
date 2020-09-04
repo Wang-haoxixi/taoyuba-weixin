@@ -82,7 +82,6 @@
 					return false
 				}
 				let reg = /^[a-zA-Z0-9]{6,16}$/
-				console.log(reg.test(value))
 				if (!reg.test(value)) {
 					uni.showToast({
 						icon: 'none',

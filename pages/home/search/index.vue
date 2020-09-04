@@ -8,12 +8,12 @@
 			<u-tabs :bold="false" active-color="#ff9999" :bar-style="{background: '#ff9999'}" :list="list" :is-scroll="false" :current="current" @change="onChange"></u-tabs>
 		</view>
 		<!-- 热门搜索 -->
-		<view class="hot-wrapper">
+		<!-- <view class="hot-wrapper">
 			<view class="title">热门搜索</view>
 			<view class="content">
 				<u-tag :text="item" @tap="onChooseTag(item)" v-for="(item, index) in hotList" :key="index" bg-color="#f4f4f4" border-color="#f4f4f4" type="info" class="item"/>
 			</view>
-		</view>
+		</view> -->
 		<!-- 历史记录 -->
 		<view class="history-wrapper" v-if="historyList.length">
 			<view class="title">
@@ -39,7 +39,7 @@
 				current: 0,
 				content: '',
 				list: [
-					{ name: '咨询', id: 1 },
+					// { name: '咨询', id: 1 },
 					{ name: '招聘', id: 2 },
 					{ name: '简历', id: 3 }
 				],

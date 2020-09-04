@@ -9,45 +9,34 @@
 <script>
 	export default {
 		props: {
-			// 1 船员 2 船东 3 培训机构
+			// 105 船员 108 船东 
 			type: {
 				type: Number,
-				default: 1
+				default: 0
 			}
 		},
 		data () {
 			return {
-				menu1: [
+				menu0: [
+					{ label: '设置', path: '/pages/user/setting/index' }
+				],
+				menu105: [
 					{ label: '简历管理', path: '/pages/release/resume/edit' },
-					// { label: '发送的简历', path: '' },
-					// { label: '我的报名', path: '' },
 					{ label: '我的培训', path: '' },
-					// { label: '我要签到', path: '' },
-					// { label: '我的办证', path: '' },
+					{ label: '设置', path: '/pages/user/setting/index' },
+				],
+				menu108: [
 					{ label: '我的合同', path: '/pages/user/contract/list/index' },
 					{ label: '合同解除', path: '/pages/user/contract/terminat-list/index' },
 					{ label: '我的评价', path: '' },
 					{ label: '船员招聘', path: '/pages/user/recruit/list/index' },
 					{ label: '设置', path: '/pages/user/setting/index' },
-					// { label: '教材订购', path: '' },
-					// { label: '我的订单', path: '' }
-				],
-				menu2: [
-					{ label: '招聘管理', path: '' },
-					{ label: '收到的简历', path: '' },
-					{ label: '禁渔期工作管理', path: '' },
-					{ label: '收到的简历（禁渔期）', path: '' }
-				],
-				menu3: [
-					{ label: '培训开班', path: '' },
-					{ label: '培训报名', path: '' },
-					{ label: '签到记录', path: '' }
 				]
 			}
 		},
 		computed: {
 			menu () {
-				return this.type === 1 ? this.menu1 : (this.type === 2 ? this.menu2 : (this.type === 3 ? this.menu3 : []))
+				return this.type === 105 ? this.menu105 : (this.type === 108 ? this.menu108 : this.menu0)
 			}
 		},
 		methods: {

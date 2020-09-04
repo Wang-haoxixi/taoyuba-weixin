@@ -117,14 +117,22 @@
 					})
 					return
 				}
-				let reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/
-				if (!reg.exec(this.form.newPassword)) {
-					this.$refs.uToast.show({
-						title: '6-16位密码、数字或字母',
-						type: 'error'
+				let reg = /^[a-zA-Z0-9]{6,16}$/
+				if (!reg.test(this.form.newPassword)) {
+					uni.showToast({
+						icon: 'none',
+						title: `密码为6-16位、数字或字母`
 					})
 					return false
-				} 
+				}
+				// let reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/
+				// if (!reg.exec(this.form.newPassword)) {
+				// 	this.$refs.uToast.show({
+				// 		title: '6-16位密码、数字或字母',
+				// 		type: 'error'
+				// 	})
+				// 	return false
+				// } 
 				if (this.form.rePassword === '') {
 					this.$refs.uToast.show({
 						title: '请输入确认密码',

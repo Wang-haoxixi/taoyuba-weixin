@@ -232,38 +232,67 @@
 				this.form[prop] = e[0].value
 				this.form[`${prop}Label`] = e[0].label
 			},
+			updateApi () {
+				this.$http.post('/tybhrms/tybrecruit/update', this.form).then(({ data }) => {
+					if (data.code === 0 && data.data.data === true) {
+						uni.showToast({
+							icon: 'none',
+							title: '更新成功'
+						})
+						uni.navigateTo({
+							url: '/pages/user/index/index'
+						})
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: '更新失败'
+						})
+					}
+					this.loading = false
+				}).catch(() => {
+					uni.showToast({
+						icon: 'none',
+						title: '更新失败'
+					})
+					this.loading = false
+				})
+			},
+			createApi () {
+				this.$http.post('/tybhrms/tybrecruit/save', this.form).then(({ data }) => {
+					if (data.code === 0 && data.data === true) {
+						uni.showToast({
+							icon: 'none',
+							title: '新增成功'
+						})
+						uni.navigateTo({
+							url: '/pages/user/index/index'
+						})
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: '新增失败'
+						})
+					}
+					this.loading = false
+				}).catch(() => {
+					uni.showToast({
+						icon: 'none',
+						title: '新增失败'
+					})
+					this.loading = false
+				})
+			},
 			// 发布招聘
 			onSubmit () {
-				console.log(this.form)
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
 						this.loading = true
 						this.form.salary = +this.form.salary
 						this.form.recruitNo = +this.form.recruitNo
 						if (this.id) {
-							this.$http.post('/tybhrms/tybrecruit/update', this.form).then(({ data }) => {
-								if (data.code === 0 && data.data === true) {
-									uni.showToast({
-										icon: 'none',
-										title: '更新成功'
-									})
-									uni.navigateTo({
-										url: '/pages/user/recruit/list/index'
-									})
-								} else {
-									uni.showToast({
-										icon: 'none',
-										title: '更新失败'
-									})
-								}
-								this.loading = false
-							}).catch(() => {
-								uni.showToast({
-									icon: 'none',
-									title: '更新失败'
-								})
-								this.loading = false
-							})
+							this.updateApi()
+						} else {
+							this.createApi()
 						}
 						
 					} else {

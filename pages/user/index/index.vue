@@ -18,7 +18,7 @@
 				</view> -->
 			</view>
 			<view class="content-wrapper">
-				<view class="item" @tap="onTo('/pages/release/resume/edit')">
+				<view class="item" @tap="onToUser">
 					<view class="iconfont iconziliao"></view>
 					<text>个人资料</text>
 				</view>
@@ -46,7 +46,10 @@
 	import tybTarbar from '@/pages/components/tarbar/index.vue'
 	import userMenu from './components/menu.vue'
 	import { TOKEN } from '@/common/config/index.js'
+	import dictMapMixin from '@/pages/mixins/dictMap.js'
+	// import cloneDeep from 'lodash/cloneDeep'
 	export default {
+		mixins: [dictMapMixin],
 		components: {
 			tybTarbar,
 			userMenu
@@ -54,8 +57,9 @@
 		data () {
 			return {
 				userInfo: this.$cache.get('userInfo'),
+				roles: this.$cache.get('roles'),
 				imageUrl: this.$IMAGE_URL,
-				type: 1,
+				type: 0,
 				show: false,
 				list: [
 					{ value: 1, label: '船员' },
@@ -81,8 +85,23 @@
 		},
 		onShow () {
 			this.userInfo = this.$cache.get('userInfo')
+			this.roles = this.$cache.get('roles')
+			if (Object.keys(this.userInfo).length === 0) {
+				this.getUserInfo()
+			}
+			if (this.roles && this.roles.length > 0) {
+				this.type = this.roles[1]
+			}
+			this.getDicMap()
 		},
 		methods: {
+			onToUser () {
+				if (this.type === 108) {
+					this.onTo('/pages/release/shipowner-resume/edit')
+				} else {
+					this.onTo('/pages/release/resume/edit')
+				}
+			},
 			onConfirm (e) {
 				this.type = e[0].value
 			},
@@ -91,6 +110,12 @@
 					if (data.code === 0) {
 						this.userInfo = data.data.sysUser
 						this.$cache.set('userInfo', this.userInfo)
+						this.roles = data.data.roles
+						this.$cache.set('roles', this.roles)
+						if (this.roles && this.roles.length > 0) {
+							this.type = this.roles[1]
+						}
+						console.log('this.type', this.type)
 					}
 				})
 			},

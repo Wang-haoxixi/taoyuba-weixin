@@ -112,6 +112,12 @@
 			}
 		},
 		{
+			"path": "pages/release/shipowner-resume/edit",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
 			"path": "pages/message/index/index",
 			"style": {
 				"navigationBarTitleText": "",

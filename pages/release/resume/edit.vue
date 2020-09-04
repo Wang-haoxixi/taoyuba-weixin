@@ -252,6 +252,7 @@
 							this.initCityLabel(this.form.districtId)
 						}
 						this.initForm()
+						this.form.salary = this.form.salary + ''
 					}
 				})
 			},
@@ -305,12 +306,66 @@
 				this.form[prop] = e[0].value
 				this.form[`${prop}Label`] = e[0].label
 			},
+			updateApi () {
+				this.$http.post('/tmlms/crew/edit?type=2', this.form).then(({ data }) => {
+					if (data.code === 0 && data.data === true) {
+					 	uni.showToast({
+					 		icon: 'none',
+					 		title: '修改成功'
+					 	})
+						uni.navigateTo({
+							url: '/pages/user/index/index'
+						})
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: '修改失败'
+						})
+					}
+					this.loading = false
+				}).catch(() => {
+					uni.showToast({
+						icon: 'none',
+						title: '修改失败'
+					})
+					this.loading = false
+				})
+			},
+			createApi () {
+				this.$http.post('/tmlms/crew/create?type=2', this.form).then(({ data }) => {
+					if (data.code === 0 && data.data === true) {
+					 	uni.showToast({
+					 		icon: 'none',
+					 		title: '新增成功'
+					 	})
+						uni.navigateTo({
+							url: '/pages/user/index/index'
+						})
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: '新增失败'
+						})
+					}
+					this.loading = false
+				}).catch(() => {
+					uni.showToast({
+						icon: 'none',
+						title: '新增失败'
+					})
+					this.loading = false
+				})
+			},
 			// 发布简历
 			onSubmit () {
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
-						console.log('form', this.form)
-						console.log('验证通过')
+						this.loading = true
+						if (this.form.userId) {
+							this.updateApi()
+						} else {
+							this.createApi()
+						}
 					} else {
 						console.log('验证失败')
 					}

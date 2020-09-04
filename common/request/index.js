@@ -86,6 +86,7 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 		})
 		cache.remove(TOKEN)
 		cache.remove('userInfo')
+		cache.remove('dictMap')
 		cache.remove('refresh_token')
 		return
 	}
