@@ -39,11 +39,11 @@
 				current: 0,
 				content: '',
 				list: [
-					// { name: '咨询', id: 1 },
+					{ name: '咨询', id: 1 },
 					{ name: '招聘', id: 2 },
 					{ name: '简历', id: 3 }
 				],
-				hotList: ['工资1', '工资2', '工资3', '工资4', '工资5', '工资6', '工资7', '工资8'],
+				hotList: [],
 				historyList: [],
 				showHistory: false
 			}

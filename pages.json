@@ -74,12 +74,12 @@
 				"enablePullDownRefresh": true
 			}
 		},
-		// {
-		// 	"path": "pages/home/news/detail/index",
-		// 	"style": {
-		// 		"navigationBarTitleText": "新闻"
-		// 	}
-		// },
+		{
+			"path": "pages/home/news/detail/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
 		{
 			"path": "pages/home/book/list/index",
 			"style": {

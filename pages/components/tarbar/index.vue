@@ -7,9 +7,9 @@
 						<image src="../../../static/image/tabbar/release.png"></image>
 					</view>
 					<view class="tyb-tarbar_sub-menu" :style="{display: show ? 'block' : 'none'}">
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/resume/edit')">简历</view>
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/recruit/edit')">招聘</view>
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/home/register/index')">登记</view>
+						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/resume/edit', 'resume')">简历</view>
+						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/recruit/edit', 'recruit')">招聘</view>
+						<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/home/register/index')">登记</view> -->
 						<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">中介</view>	 -->
 					</view>
 					<text class="tyb-tarbar-item_text">{{item.text}}</text>
@@ -26,7 +26,9 @@
 </template>
 
 <script>
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
+		mixins: [userInfoMixin],
 		props: {
 			currentIndex: {
 				type: Number,
@@ -47,12 +49,66 @@
 			}
 		},
 		methods: {
-			onSubMenu (path) {
-				if (path !== '') {
-					uni.navigateTo({
-						url: path,
-					});
+			onSubMenu (path, name) {
+				let userInfo = this.$cache.get('userInfo')
+				let roles = this.$cache.get('roles')
+				if (userInfo.userId) {
+					if (roles[1] === 108) {
+						if ( name === 'recruit') {
+							if (path !== '') {
+								uni.navigateTo({
+									url: path,
+								})
+							}
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '只有船员能填写简历'
+							})
+						}
+					} else if (roles[1] === 105) {
+						if (name === 'resume') {
+							if (path !== '') {
+								uni.navigateTo({
+									url: path,
+								})
+							}
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '只有船东能进行招聘'
+							})
+						}
+					} else if (roles[1] == null) {
+						uni.showToast({
+							icon: 'none',
+							title: '无权限查看'
+						})
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: '您还未登录，请先登录'
+						})
+						uni.navigateTo({
+							url: '/pages/base/login',
+						})
+					}
+					
+				} else {
+					this.getUserInfoApi().then(({ data }) => {
+						if (path !== '') {
+							uni.navigateTo({
+								url: path,
+							})
+						}
+					}).catch(() => {
+						uni.showToast({
+							icon: 'none',
+							title: '您还未登录，请先登录后再操作'
+						})
+					})
 				}
+				
 			},
 			onTo (item, index) {
 				if (item.slot && item.id === index) {

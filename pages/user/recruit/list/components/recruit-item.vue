@@ -35,7 +35,7 @@
 				let result = ''
 				if (this.info.updateTime) {
 					let date = +new Date(this.info.updateTime)
-					console.log('date', date)
+					// console.log('date', date)
 					result = this.$tools.timestamp(date / 1000)
 				}
 				return result

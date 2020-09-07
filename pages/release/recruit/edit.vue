@@ -30,6 +30,7 @@
 						<u-form-item label="作业方式" prop="workMode" required>
 							<u-input type="select" :select-open="workModeShow" v-model="form.workModeLabel" placeholder="请选择作业方式" @click="workModeShow = true"></u-input>
 						</u-form-item>
+						form.city:{{form.city}}
 						<u-form-item label="上船地点" prop="cityLabel" required>
 							<u-input type="select" :select-open="cityShow" v-model="form.cityLabel" placeholder="请选择上船地点" @click="openCity"></u-input>
 						</u-form-item>
@@ -234,12 +235,13 @@
 			},
 			updateApi () {
 				this.$http.post('/tybhrms/tybrecruit/update', this.form).then(({ data }) => {
-					if (data.code === 0 && data.data.data === true) {
+					if (data.code === 0 && data.data === true) {
 						uni.showToast({
 							icon: 'none',
 							title: '更新成功'
 						})
-						uni.navigateTo({
+						console.log('更新成功')
+						uni.switchTab({
 							url: '/pages/user/index/index'
 						})
 					} else {
@@ -259,12 +261,12 @@
 			},
 			createApi () {
 				this.$http.post('/tybhrms/tybrecruit/save', this.form).then(({ data }) => {
-					if (data.code === 0 && data.data === true) {
+					if (data.code === 0 && data.data.data === true) {
 						uni.showToast({
 							icon: 'none',
 							title: '新增成功'
 						})
-						uni.navigateTo({
+						uni.switchTab({
 							url: '/pages/user/index/index'
 						})
 					} else {

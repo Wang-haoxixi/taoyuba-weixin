@@ -1,7 +1,7 @@
 <template>
 	<view class="news-list-detail-container phonex-mb">
 		<view class="news-list-content">
-			<view v-for="item in data" :key="item.articleId" @tap="onTo(item.httpSrc)">
+			<view v-for="item in data" :key="item.articleId" @tap="onTo(item)">
 				<news-item :info="item"></news-item>
 			</view>
 		</view>
@@ -59,10 +59,16 @@
 					uni.stopPullDownRefresh()
 				})
 			},
-			onTo (path) {
-				if (path) {
+			onTo (row) {
+				if (row.isDispatch) {
+					if (row.httpSrc) {
+						uni.navigateTo({
+							url: `/pages/base/web?src=${row.httpSrc}`
+						})
+					}
+				} else {
 					uni.navigateTo({
-						url: `/pages/base/web?src=${path}`
+						url: `/pages/home/news/detail/index?id=${row.articleId}`
 					})
 				}
 			}

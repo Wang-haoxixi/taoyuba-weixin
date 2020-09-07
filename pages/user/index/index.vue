@@ -11,11 +11,6 @@
 						<text class="phone">{{userInfo.username}}</text>
 					</view>
 				</view>
-				<!-- <view class="base-info-wrapper-right">
-					<text @click="show = true">{{getLabel}}</text>
-					<u-icon name="arrow-down-fill" color="#666" size="16"></u-icon>
-					<u-select v-model="show" :list="list" @confirm="onConfirm"></u-select>
-				</view> -->
 			</view>
 			<view class="content-wrapper">
 				<view class="item" @tap="onToUser">
@@ -86,11 +81,14 @@
 		onShow () {
 			this.userInfo = this.$cache.get('userInfo')
 			this.roles = this.$cache.get('roles')
+			console.log('this.roles', this.roles)
 			if (Object.keys(this.userInfo).length === 0) {
 				this.getUserInfo()
 			}
 			if (this.roles && this.roles.length > 0) {
-				this.type = this.roles[1]
+				this.type = this.roles[1] || ''
+			} else {
+				this.type = ''
 			}
 			this.getDicMap()
 		},
@@ -101,9 +99,6 @@
 				} else {
 					this.onTo('/pages/release/resume/edit')
 				}
-			},
-			onConfirm (e) {
-				this.type = e[0].value
 			},
 			getUserInfo () {
 				this.$http.get('/admin/user/info').then(({ data }) => {
@@ -193,7 +188,7 @@
 			.item {
 				color: #666;
 				position: relative;
-				width: 25%;
+				// width: 25%;
 				.iconfont {
 					font-size: 38rpx;
 					color: #999;
@@ -206,21 +201,21 @@
 					display: block;
 					font-size: 27rpx;
 				}
-				&::after {
-					content: '';
-					width: 2rpx;
-					background-color: #d7d7d7;
-					height: 40rpx;
-					position: absolute;
-					top: 50%;
-					right: 0;
-					margin-top: -20rpx;
-				}
-				&:last-child {
-					&::after {
-						display: none;
-					}
-				}
+				// &::after {
+				// 	content: '';
+				// 	width: 2rpx;
+				// 	background-color: #d7d7d7;
+				// 	height: 40rpx;
+				// 	position: absolute;
+				// 	top: 50%;
+				// 	right: 0;
+				// 	margin-top: -20rpx;
+				// }
+				// &:last-child {
+				// 	&::after {
+				// 		display: none;
+				// 	}
+				// }
 			}
 		}
 	}
