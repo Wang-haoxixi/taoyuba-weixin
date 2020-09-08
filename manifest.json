@@ -51,7 +51,7 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "wx0a22546ae21b16f3",
+        "appid" : "wx0743d7a0547fda62",
         "setting" : {
             "urlCheck" : false,
             "es6" : true,
@@ -64,15 +64,15 @@
             "mode" : "history"
         },
         "devServer" : {
-			 "port" : 8000, //端口号
-			  "disableHostCheck" : true,
-			  "proxy" : {
-				  "/api" : {
-					  "target" : "http://m.taoyu58.com/", //目标接口域名
-					  "changeOrigin" : true,  //是否跨域
-					  "secure" : false  // 设置支持https协议的代理
-				 }
-			}
-		}
+            "port" : 8000, //端口号
+            "disableHostCheck" : true,
+            "proxy" : {
+                "/api" : {
+                    "target" : "http://m.taoyu58.com/", //目标接口域名
+                    "changeOrigin" : true, //是否跨域
+                    "secure" : false // 设置支持https协议的代理
+                }
+            }
+        }
     }
 }

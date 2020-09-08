@@ -81,6 +81,7 @@
 
 <style lang="scss" scoped>
 	.resume-detail-container {
+		margin-bottom: 30rpx;
 		.header-wrapper {
 			padding: 30rpx;
 			border-radius: 8rpx;

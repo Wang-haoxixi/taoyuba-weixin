@@ -1,7 +1,6 @@
 <template>
 	<view class="news-detail-wrapper phonex-mb">
 		<view class="header-wrapper">
-			<image  class="img" src="https://cdn.uviewui.com/uview/swiper/3.jpg"></image>
 			<view class="title">{{data.title}}</view>
 			<view class="time">{{data.createTime}}</view>
 		</view>
@@ -25,7 +24,7 @@
 		},
 		methods: {
 			getList (id) {
-				this.$https.get(`/tybhrms/tybarticle/${id}`).then(({ data }) => {
+				this.$http.get(`/tybhrms/tybarticle/${id}`).then(({ data }) => {
 					if (data.code === 0) {
 						this.data = data.data
 					}
@@ -42,6 +41,7 @@
 </style>
 <style scoped lang="scss">
 	.news-detail-wrapper {
+		margin-bottom: 30rpx;
 		padding: 0 30rpx;
 		.header-wrapper {
 			padding: 30rpx 0;

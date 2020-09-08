@@ -3,14 +3,14 @@
 		<template v-if="type === 'text'">
 			<view class="text-wrapper">
 				<text class="title ellipsis">{{info.title}}</text>
-				<text class="time">{{info.time}}</text>
+				<text class="time">{{getTime(info.createTime)}}</text>
 			</view>
 		</template>
 		<template v-else-if="type === 'miniImg'">
 			<view class="mini-img-wrapper">
 				<view class="mini-img-wrapper-left">
 					<text class="title two-ellipsis">{{info.title}}</text>
-					<text class="time">{{info.time}}</text>
+					<text class="time">{{info.createTime}}</text>
 				</view>
 				<view class="mini-img-wrapper-right">
 					<u-lazy-load :image="info.img" class="lazy-image" height="140" img-mode="scaleToFill"></u-lazy-load>
@@ -25,7 +25,7 @@
 				</view>
 				<view class="large-img-wrapper-content">
 					<text class="title ellipsis">{{info.title}}</text>
-					<text class="time">{{info.time}}</text>
+					<text class="time">{{info.createTime}}</text>
 				</view>
 			</view>
 		</template>
@@ -52,7 +52,12 @@
 			}
 		},
 		methods: {
-			
+			getTime (time) {
+				if (time) {
+					let t = +new Date(time)
+					return this.$tools.timestamp(t / 1000)
+				}
+			}
 		}
 	}
 </script>
@@ -61,7 +66,7 @@
 	.notice-item-wrapper {
 		padding: 30rpx 30rpx 0;
 		.text-wrapper {
-			padding: 20rpx 0;
+			padding-bottom: 30rpx;
 			border-bottom: 1px solid #f6f6f6;
 			color: #666;
 			text {
@@ -70,12 +75,13 @@
 		}
 		.title {
 			font-size: 30rpx;
+			color: #666;
 		}
 		.time {
 			font-size: 26rpx;
 			margin-top: 25rpx;
 			text-align: right;
-			color: #999;
+			color: #aaa;
 		}
 		.mini-img-wrapper {
 			display: flex;
@@ -89,6 +95,7 @@
 				}
 				.title {
 					color: #666;
+					font-size: 30rpx;
 					height: 84rpx;
 					overflow: hidden;
 					text-overflow: -o-ellipsis-lastline;

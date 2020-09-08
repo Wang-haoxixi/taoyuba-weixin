@@ -3,13 +3,13 @@
 		<!-- 头部 菜单 -->
 		<home-header></home-header>
 		<!-- 渔业资讯 政策法规 平台公告 -->
-		<home-notice></home-notice>
+		<home-notice ref="homeNotice"></home-notice>
 		<!-- 热门招聘 热门简历 禁渔期工作 -->
-		<home-job></home-job>
+		<home-job ref="homeJob"></home-job>
 		<!-- 培训班 -->
-		<home-training></home-training>
+		<home-training ref="homeTraining"></home-training>
 		<!-- 热门视频 -->
-		<home-video></home-video>
+		<home-video ref="homeVideo"></home-video>
 		<!-- 职务 科目 证书 考场信息 -->
 		<home-info></home-info>
 		
@@ -36,6 +36,11 @@
 			homeTraining,
 			homeVideo,
 			homeInfo
+		},
+		onReady () {
+			this.getDicMap().then(() => {
+				this.$refs.homeJob.init()
+			})
 		}
 	}
 </script>

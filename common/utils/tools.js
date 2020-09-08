@@ -159,7 +159,7 @@ export default {
 
 		m = m < 10 ? '0' + m : m;
 		d = d < 10 ? '0' + d : d
-
+		
 		let dateText = y + "-" + m + "-" + d
 		return dateText
 	},

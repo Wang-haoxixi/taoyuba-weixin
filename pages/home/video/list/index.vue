@@ -3,7 +3,15 @@
 		<!-- <view class="static-search-wrapper">
 			<static-search placeholder="搜索你感兴趣的视频"></static-search>
 		</view> -->
-		<view class="list-wrapper">
+		<view class="tabs-wrapper">
+			<u-tabs :list="list" active-color="#409EFF" :bold="false" :is-scroll="false" :current="current" @change="onChange"></u-tabs>
+		</view>
+		<view class="list-wrapper" v-show="current === 0">
+			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId)">
+				<video-item :info="item"></video-item>
+			</view>
+		</view>
+		<view class="list-wrapper" v-show="current === 1">
 			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId)">
 				<video-item :info="item"></video-item>
 			</view>
@@ -24,8 +32,13 @@
 		mixins: [pageMixin],
 		data () {
 			return {
+				list: [
+					{ name: '渔民学院1', type: 1 }, { name: '渔民学院2', type: 2 }
+				],
+				current: 0,
 				status: 'loadmore',
-				data: []
+				data: [],
+				data2: []
 			}
 		},
 		onReachBottom() {
@@ -71,6 +84,9 @@
 						url: `/pages/home/video/detail/index?id=${id}`
 					});
 				}
+			},
+			onChange (index) {
+				this.current = index
 			}
 		}
 	}
@@ -82,9 +98,12 @@
 			padding: 20rpx 20rpx;
 			background-color: #f8f8f8;
 		}
+		.tabs-wrapper {
+			border-bottom: 1px solid #f6f6f6;
+		}
 		.list-wrapper {
 			background-color: #fff;
-			padding: 30rpx 10rpx;
+			padding: 0rpx 10rpx 30rpx;
 			.item {
 				margin-bottom: 40rpx;
 			}

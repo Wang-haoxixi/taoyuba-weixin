@@ -1,8 +1,8 @@
 <template>
-	<view class="" @tap="onTo">
+	<view class="">
 		<view class="video-item-wrapper" :style="[videoStyle]" ref="video">
 			<!-- <u-lazy-load :image="imageUrl || 'https://cdn.uviewui.com/uview/swiper/1.jpg'" img-mode="scaleToFill"></u-lazy-load> -->
-			<image :src="imageUrl || 'https://cdn.uviewui.com/uview/swiper/1.jpg'" mode="scaleToFill"></image>
+			<image :src="imageUrl" mode="scaleToFill"></image>
 			<view class="play-wrapper" :class="playType === 'mini' ? 'mini-play' : ''" :style="[playStyle]"></view>
 			<view class="title ellipsis" v-if="textPosition !== 'bottom'">
 				{{title}}
@@ -45,14 +45,7 @@
 			}
 		},
 		methods: {
-			onTo () {
-				if (this.id) {
-					console.log('this.id', this.id)
-					uni.navigateTo({
-						url: `/pages/home/video/detail/index?id=${this.id}`
-					});
-				}
-			}
+			
 		}
 	}
 </script>

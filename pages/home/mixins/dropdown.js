@@ -8,7 +8,6 @@ export default {
 		}
 	},
 	mounted () {
-		console.log('start')
 		let el = uni.createSelectorQuery().select(`#${this.dropdownRef}`)
 		el.boundingClientRect((data) => {
 			this.dropdownTop = data.top

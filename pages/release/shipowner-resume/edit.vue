@@ -211,7 +211,7 @@
 				})
 			},
 			onRemoveLicensesOwnerPhoto (index, lists, name) {
-				this.licensesOwnerList = lists
+				this.licensesOwnerPhotoList = lists
 			},
 			onRemoveLicensesFishingPhoto (index, lists, name) {
 				this.licensesFishingPhotoList = lists

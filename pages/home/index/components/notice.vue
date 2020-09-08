@@ -1,18 +1,18 @@
 <template>
 	<view class="content-wrapper">
 		<home-container>
-			<u-tabs slot="header" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" :is-scroll="false" :current="current" @change="tabsChange"></u-tabs>
+			<u-tabs slot="header" font-size="32" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" :is-scroll="false" :current="current" @change="tabsChange"></u-tabs>
 			<template>
-				<view class="" v-show="current === 0">
+				<view class="notice-content" v-show="current === 0" :class="data1.length !== 0 ? 'pt30' : ''">
 					<view v-for="(item, index) in data1" :key="index" @tap="onTo(item)">
-						<notice-item :info="item" :type="item.type"></notice-item>
+						<notice-item :info="item"></notice-item>
 					</view>
 				</view>
-				<view class="" v-show="current === 1">
-					<notice-item v-for="(item, index) in data1" :key="index" :info="item" :type="item.type" @tap="onTo(item)"></notice-item>
+				<view class="notice-content" v-show="current === 1" :class="data2.length !== 0 ? 'pt30' : ''">
+					<notice-item v-for="(item, index) in data2" :key="index" :info="item" @tap="onTo(item)"></notice-item>
 				</view>
-				<view class="" v-show="current === 2">
-					<notice-item v-for="(item, index) in data1" :key="index" :info="item" :type="item.type" @tap="onTo(item)"></notice-item>
+				<view class="notice-content" v-show="current === 2" :class="data3.length !== 0 ? 'pt30' : ''">
+					<notice-item v-for="(item, index) in data3" :key="index" :info="item" @tap="onTo(item)"></notice-item>
 				</view>
 			</template>
 		</home-container>
@@ -36,27 +36,75 @@
 					{ name: '政策法规' },
 					{ name: '平台公告' },
 				],
-				data1: [
-					{ id: 1, title: '宁波市海洋环境1', time: '2011-01-01', img: 'https://cdn.uviewui.com/uview/swiper/1.jpg', type: 'largeImg' },
-					{ id: 2, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办法', time: '2011-01-01', type: 'text' },
-					{ id: 3, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办法', time: '2011-01-01', type: 'text' },
-					{ id: 4, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办法', time: '2011-01-01', type: 'text' },
-					{ id: 5, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办', time: '2011-01-01', type: 'text' },
-					{ id: 6, title: '宁波市海洋环境与渔业水域污染事故调查处理暂行办法的调查处理暂行办', time: '2011-01-01', img: 'https://cdn.uviewui.com/uview/swiper/1.jpg', type: 'miniImg' },
-				]
+				data1: [],
+				data2: [],
+				data3: []
 			}
 		},
+		onReady () {
+			this.init()
+		},
 		methods: {
+			init () {
+				this.getList1()
+				this.getList2()
+				this.getList3()
+			},
+			// 渔业资讯
+			getList1 () {
+				this.$http.get('/tybhrms/tybarticle/page', {
+					params: {
+						size: 6,
+						type: 1
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.data1 = data.data.records
+					}
+				})
+			},
+			// 政策法规
+			getList2 () {
+				this.$http.get('/tybhrms/tybarticle/page', {
+					params: {
+						size: 6,
+						type: 2
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let arr = []
+						this.data2 = arr.concat(data.data.records)
+					}
+				})
+			},
+			// 政策法规
+			getList3 () {
+				this.$http.get('/tybhrms/tybarticle/page', {
+					params: {
+						size: 6,
+						type: 7
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.data3 = data.data.records
+					}
+				})
+			},
 			// tabs切换
 			tabsChange (index) {
 				this.current = index
 			},
 			onTo (row) {
-				console.log('row', row)
-				if (row.id) {
+				if (row.isDispatch) {
+					if (row.httpSrc) {
+						uni.navigateTo({
+							url: `/pages/base/web?src=${row.httpSrc}`
+						})
+					}
+				} else {
 					uni.navigateTo({
-						url: `/pages/home/news/list/index`
-					});
+						url: `/pages/home/news/detail/index?id=${row.articleId}`
+					})
 				}
 			}
 		}
@@ -65,5 +113,10 @@
 
 <style lang="scss" scoped>
 	.content-wrapper {
+		.notice-content {
+			&.pt30 {
+				padding-top: 30rpx;
+			}
+		}
 	}
 </style>

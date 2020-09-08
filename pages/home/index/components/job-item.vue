@@ -5,8 +5,8 @@
 				<text class="name ellipsis">{{info.positionIdLabel}}</text>
 			</view>
 			<view class="content">
-				<text>￥{{info.salary}}</text>
-				<text class="price-type">{{info.priceType}}</text>
+				<text v-if="info.salary">￥{{info.salary}}</text>
+				<!-- <text class="price-type">{{info.priceType}}</text> -->
 			</view>
 			<view class="time">
 				发布时间：{{getTime(info.createTime)}}
@@ -57,6 +57,7 @@
 		display: flex;
 		padding: 15px;
 		line-height: 2;
+		border-bottom: 1px solid #f6f6f6;
 		.list-item_left {
 			flex: 1 1 auto;
 			width: 100%;

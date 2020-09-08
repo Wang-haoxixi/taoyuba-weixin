@@ -151,7 +151,7 @@
 				if (row.recruitId) {
 					uni.navigateTo({
 						url: `/pages/home/recruit/detail/index?id=${row.recruitId}`
-					});
+					})
 				}
 			}
 		}

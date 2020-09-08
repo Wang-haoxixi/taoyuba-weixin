@@ -1,13 +1,13 @@
 <template>
 	<view class="class-wrapper">
 		<home-container>
-			<u-tabs slot="header" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" is-scroll :current="current" @change="tabsChange"></u-tabs>
+			<u-tabs slot="header" font-size="32" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" is-scroll :current="current" @change="tabsChange"></u-tabs>
 			<template>
 				<view class="" v-show="current === 0">
-					<trainning-item :info="item" btn-text="查看详情" v-for="(item, index) in data1" :key="index"></trainning-item>
+					<trainning-item :info="item" btn-text="查看详情" v-for="(item, index) in data1" :key="index" @tap="onTo(item.userId)"></trainning-item>
 				</view>
 				<view class="" v-show="current === 1">
-					<trainning-item :info="item" btn-text="报名" v-for="(item, index) in data2" :key="index">
+					<trainning-item :info="item" btn-text="报名" v-for="(item, index) in data2" :key="index" @tap="onTo(item.userId)">
 						<text slot="right">培训天数：{{item.count}}天</text>
 					</trainning-item>
 				</view>
@@ -43,35 +43,20 @@
 					{ name: '职业规划' },
 					{ name: '教程订购' }
 				],
-				data1: [
-					{ id: 1, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！！！！' },
-					{ id: 2, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！！！！' },
-					{ id: 3, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！！！！' },
-					{ id: 4, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！！！！' },
-					{ id: 5, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！！！！' },
-				],
-				data2: [
-					{ id: 1, title: '东方培训机构', address: '舟山市 - 定海', count: '30', time: '2019.10.01 - 2019.11.01', text: '培养专业的钳工、维修工，选我，准没错！！' },
-					{ id: 2, title: '东方培训机构', address: '舟山市 - 定海', count: '30', time: '2019.10.01 - 2019.11.01', text: '培养专业的钳工、维修工，选我，准没错！！' },
-					{ id: 3, title: '东方培训机构', address: '舟山市 - 定海', count: '30', time: '2019.10.01 - 2019.11.01', text: '培养专业的钳工、维修工，选我，准没错！！' },
-					{ id: 4, title: '东方培训机构', address: '舟山市 - 定海', count: '30', time: '2019.10.01 - 2019.11.01', text: '培养专业的钳工、维修工，选我，准没错！！' },
-				],
-				data3: [
-					{ id: 1, title: '东方培训机构', address: '舟山市 - 定海', count: '30', time: '2019.10.01 - 2019.11.01', text: '培养专业的钳工、维修工，选我，准没错！！' },
-					{ id: 2, title: '东方培训机构', address: '舟山市 - 定海', count: '30', time: '2019.10.01 - 2019.11.01', text: '培养专业的钳工、维修工，选我，准没错！！' },
-					{ id: 3, title: '东方培训机构', address: '舟山市 - 定海', count: '30', time: '2019.10.01 - 2019.11.01', text: '培养专业的钳工、维修工，选我，准没错！！' },
-					{ id: 4, title: '东方培训机构', address: '舟山市 - 定海', count: '30', time: '2019.10.01 - 2019.11.01', text: '培养专业的钳工、维修工，选我，准没错！！' },
-					{ id: 5, title: '东方培训机构', address: '舟山市 - 定海', count: '30', time: '2019.10.01 - 2019.11.01', text: '培养专业的钳工、维修工，选我，准没错！！' }
-				],
-				data4: [
-					{ id: 1, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 2, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 3, title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' },
-					{ id: 4,title: '东方培训机构', address: '舟山市 - 定海', phone: '2020999', text: '培养专业的钳工、维修工，选我，准没错！！', publisher: '辛弃疾' }
-				]
+				data1: [],
+				data2: [],
+				data3: [],
+				data4: []
 			}
 		},
+		onReady () {
+			this.init()
+		},
 		methods: {
+			init () {
+				this.getList1()
+				this.getList2()
+			},
 			// tabs切换
 			tabsChange (index) {
 				if (index === 2) {
@@ -85,7 +70,37 @@
 				} else{
 					this.current = index
 				}
-				
+			},
+			// 培训机构
+			getList1 () {
+				this.$http.get('/tmlms/dept/pageForAll', {
+					params: {
+						size: 6
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.data1 = data.data.records
+					}
+				})
+			},
+			// 培训信息
+			getList2 () {
+				this.$http.get('/tybhrms/tybarticle/page', {
+					params: {
+						size: 6,
+						type: 8
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.data2 = data.data.records
+					}
+				})
+			},
+			onTo (id) {
+				console.log('id', id)
+				uni.navigateTo({
+					url: `/pages/home/training/detail/index?id=${id}`
+				})
 			},
 		}
 	}

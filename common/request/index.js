@@ -84,10 +84,7 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 		uni.navigateTo({
 			url: '/pages/base/login'
 		})
-		cache.remove(TOKEN)
-		cache.remove('userInfo')
-		cache.remove('dictMap')
-		cache.remove('refresh_token')
+		cache.clear()
 		return
 	}
 	return response

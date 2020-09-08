@@ -1,6 +1,6 @@
 <template>
 	<view class="search-wrapper" @tap="onTo">
-		<u-icon name="search" size="24" color="#aaa"></u-icon>
+		<u-icon name="search" size="34" color="#aaa"></u-icon>
 		<text class="text">{{placeholder}}</text>
 	</view>
 </template>
@@ -31,8 +31,8 @@
 		background-color: #fff;
 		border-radius: 8rpx;
 		.text {
-			font-size: 26rpx;
-			color: #aaa;
+			font-size: 28rpx;
+			color: #bbb;
 			margin-left: 10rpx;
 		}
 	}

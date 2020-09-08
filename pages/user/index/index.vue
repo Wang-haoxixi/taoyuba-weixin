@@ -75,9 +75,9 @@
 				return result
 			}
 		},
-		onReady () {
-			this.getUserInfo()
-		},
+		// onReady () {
+		// 	this.getUserInfo()
+		// },
 		onShow () {
 			this.userInfo = this.$cache.get('userInfo')
 			this.roles = this.$cache.get('roles')
@@ -132,6 +132,7 @@
 			width: 100%;
 			position: relative;
 			background: url('#{$img-url}/user-bg.png') no-repeat;
+			background-size: cover;
 		}
 		.base-info-wrapper {
 			display: flex;

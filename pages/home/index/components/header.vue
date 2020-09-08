@@ -16,13 +16,13 @@
 		</view>
 		<view class="content-wrapper">
 			<view class="swiper-wrapper">
-				<u-swiper :list="list" mode="dot"></u-swiper>
+				<u-swiper :list="list" mode="dot" height="300"></u-swiper>
 			</view>
 			<view class="menu-wrapper">
 				<u-grid :col="4" :border="false">
-					<u-grid-item v-for="(item, index) in menu" :key="index" class="grid-item" @click="onTo(item.path)">
+					<u-grid-item v-for="(item, index) in menu" :key="index" class="" @click="onTo(item.path)">
 						<view class="ic-wrapper" :style="{background: item.color}">
-							<u-icon :name="item.icon" size="40" color="#fff"></u-icon>
+							<u-icon :name="item.icon" size="45" color="#fff"></u-icon>
 						</view>
 						<view class="text">{{item.label}}</view>
 					</u-grid-item>
@@ -75,7 +75,6 @@
 		}
 	}
 </script>
-
 <style lang="scss" scoped>
 	.home-header {
 		margin-bottom: 30rpx;
@@ -128,10 +127,8 @@
 				margin-left: -20rpx;
 				margin-right: -20rpx;
 				.grid-item {
-					margin: 0 0 20rpx 0;
-					/deep/.u-grid-item-box {
-						padding: 0;
-					}
+					overflow: hidden;
+					margin: -15rpx 0;
 				}
 				.ic-wrapper {
 					height: 90rpx;

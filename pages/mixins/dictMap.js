@@ -23,19 +23,27 @@ export default {
 			}
 		}
 	},
-	created () {
+	// created () {
+	// 	this.getDicMap()
+	// },
+	onReady () {
 		this.getDicMap()
 	},
 	methods: {
 		getDicMap () {
-			let dictMap = this.$cache.get('dictMap') || {}
-			this.dictMap = Object.assign(this.dictMap, dictMap)
-			if (dictMap && Object.keys(dictMap).length > 0) {
-				return
-			}
-			this.$http.get('/admin/dict/all_map').then(({ data }) => {
-				this.dictMap = Object.assign(this.dictMap, data)
-				this.$cache.set('dictMap', this.dictMap)
+			return new Promise((resolve, reject) => {
+				let dictMap = this.$cache.get('dictMap') || {}
+				this.dictMap = Object.assign(this.dictMap, dictMap)
+				if (dictMap && Object.keys(dictMap).length > 0) {
+					resolve()
+					return
+				}
+				
+				this.$http.get('/admin/dict/all_map').then(({ data }) => {
+					this.dictMap = Object.assign(this.dictMap, data)
+					this.$cache.set('dictMap', this.dictMap)
+					resolve()
+				})
 			})
 		}
 	}

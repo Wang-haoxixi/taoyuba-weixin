@@ -30,7 +30,6 @@
 						<u-form-item label="作业方式" prop="workMode" required>
 							<u-input type="select" :select-open="workModeShow" v-model="form.workModeLabel" placeholder="请选择作业方式" @click="workModeShow = true"></u-input>
 						</u-form-item>
-						form.city:{{form.city}}
 						<u-form-item label="上船地点" prop="cityLabel" required>
 							<u-input type="select" :select-open="cityShow" v-model="form.cityLabel" placeholder="请选择上船地点" @click="openCity"></u-input>
 						</u-form-item>

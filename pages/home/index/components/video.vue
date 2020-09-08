@@ -3,25 +3,25 @@
 		<home-container>
 			<view class="video-title" slot="header">
 				<text class="text">热门视频</text>
-				<view class="reload" @tap="onReload">
-					<u-icon name="reload" size="24"></u-icon>
+				<!-- <view class="reload" @tap="onReload">
+					<u-icon name="reload" size="30"></u-icon>
 					<text>换一批</text>
-				</view>
+				</view> -->
 			</view>
 			<view class="video-content">
 				<u-row gutter="16">
 					<u-col span="8">
 						<view class="video-content-left">
-							<video-item class="large-video" id="1" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '260rpx'}"></video-item>
+							<video-item class="large-video" :imageUrl="data[0].videoImg" @tap="onTo(data[0].vedioId)" :title="data[0].vedioName" :videoStyle="{height: '260rpx'}"></video-item>
 						</view>
 					</u-col>
 					<u-col span="4">
 						<view class="demo-layout bg-purple-light">
 							<view>
-								<video-item play-type="mini" id="1" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
+								<video-item play-type="mini" :imageUrl="data[1].videoImg" @tap="onTo(data[1].vedioId)" :title="data[1].vedioName" :videoStyle="{height: '120rpx'}"></video-item>
 							</view>
 							<view style="margin-top: 20rpx;">
-								<video-item class="large-video" id="1" play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
+								<video-item class="large-video" play-type="mini" :imageUrl="data[2].videoImg"  @tap="onTo(data[2].vedioId)" :title="data[2].vedioName" :videoStyle="{height: '120rpx'}"></video-item>
 							</view>
 						</view>
 					</u-col>
@@ -29,13 +29,13 @@
 				<view class="video-content-bottom">
 					<u-row gutter="16">
 						<u-col span="4">
-							<video-item class="large-video" id="1" textPosition="bottom" play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
+							<video-item class="large-video" textPosition="bottom" :imageUrl="data[3].videoImg" play-type="mini"  @tap="onTo(data[3].vedioId)" :id="data[3].vedioId" :title="data[3].vedioName" :videoStyle="{height: '120rpx'}"></video-item>
 						</u-col>
 						<u-col span="4">
-							<video-item class="large-video" id="1" textPosition="bottom" play-type="mini" title="[最新] 船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
+							<video-item class="large-video" textPosition="bottom" :imageUrl="data[4].videoImg" play-type="mini"  @tap="onTo(data[4].vedioId)" :id="data[4].vedioId" :title="data[4].vedioName" :videoStyle="{height: '120rpx'}"></video-item>
 						</u-col>
 						<u-col span="4">
-							<video-item class="large-video" id="1" textPosition="bottom" play-type="mini" title="[最新] 船员岗位培训进阶教学船员岗位培训进阶教学" :videoStyle="{height: '120rpx'}"></video-item>
+							<video-item class="large-video" textPosition="bottom" :imageUrl="data[5].videoImg" play-type="mini"  @tap="onTo(data[5].vedioId)" :id="data[5].vedioId" :title="data[5].vedioName" :videoStyle="{height: '120rpx'}"></video-item>
 						</u-col>
 					</u-row>
 				</view>
@@ -52,7 +52,35 @@
 			homeContainer,
 			videoItem
 		},
+		data () {
+			return {
+				data: []
+			}
+		},
+		onReady () {
+			this.getList()
+		},
 		methods: {
+			getList () {
+				this.$http.get('/tybhrms/tyblessonvideo/page', {
+					params: {
+						size: 6,
+						type: 1
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.data = data.data.records
+					}
+				})
+			},
+			onTo (id) {
+				if (id) {
+					console.log('this.id', id)
+					uni.navigateTo({
+						url: `/pages/home/video/detail/index?id=${id}`
+					});
+				}
+			},
 			onReload () {}
 		}
 	}
@@ -67,10 +95,10 @@
 			padding: 0 50rpx;
 			line-height: 80rpx;
 			.text {
-				font-size: 28rpx;
+				font-size: 32rpx;
 			}
 			.reload {
-				font-size: 24rpx;
+				font-size: 28rpx;
 				text {
 					margin-left: 6rpx;
 				}

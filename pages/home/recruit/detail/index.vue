@@ -68,6 +68,7 @@
 
 <style lang="scss" scoped>
 	.recruit-detail-wrapper {
+		margin-bottom: 30rpx;
 		.header-wrapper {
 			padding: 30rpx;
 			border-radius: 8rpx;
