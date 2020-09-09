@@ -25,9 +25,10 @@
 					<view class="iconfont iconmima other-ic"></view>
 					<text>密码修改</text>
 				</view>
-				<view class="item">
+				<view class="item" v-if="!roles[1]" @click="onChoose">
 					<view class="iconfont iconchengyuan other-ic"></view>
 					<text>我要成为</text>
+					<u-select v-model="show" :list="list" @confirm="onConfirm"></u-select>
 				</view>
 			</view>
 		</view>
@@ -59,7 +60,6 @@
 				list: [
 					{ value: 1, label: '船员' },
 					{ value: 2, label: '船东' },
-					{ value: 3, label: '培训机构' },
 				]
 			}
 		},
@@ -119,6 +119,21 @@
 					uni.navigateTo({
 						url: path
 					});
+				}
+			},
+			onChoose () {
+				this.show = true
+			},
+			onConfirm (e) {
+				let val = e[0].value
+				if (val === 1) {
+					uni.navigateTo({
+						url: '/pages/release/resume/edit?type=add'
+					})
+				} else if (val === 2) {
+					uni.navigateTo({
+						url: '/pages/release/ship/index'
+					})
 				}
 			}
 		}
@@ -182,7 +197,7 @@
 			left: 5%;
 			border-radius: 8rpx;
 			display: flex;
-			justify-content: space-between;
+			justify-content: space-around;
 			padding: 0 20rpx;
 			text-align: center;
 			align-items: center;
@@ -202,22 +217,8 @@
 					display: block;
 					font-size: 27rpx;
 				}
-				// &::after {
-				// 	content: '';
-				// 	width: 2rpx;
-				// 	background-color: #d7d7d7;
-				// 	height: 40rpx;
-				// 	position: absolute;
-				// 	top: 50%;
-				// 	right: 0;
-				// 	margin-top: -20rpx;
-				// }
-				// &:last-child {
-				// 	&::after {
-				// 		display: none;
-				// 	}
-				// }
 			}
 		}
+		
 	}
 </style>

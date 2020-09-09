@@ -9,23 +9,29 @@
 				<view class="content-container">
 					<view class="title">基本信息</view>
 					<view class="body-wrapper">
-						<u-form-item label="应聘职务" prop="newPositionId" required>
-							<u-input type="select" :select-open="newPositionIdShow" v-model="form.newPositionIdLabel" placeholder="请选择应聘职务" @click="newPositionIdShow = true"></u-input>
+						<u-form-item label="应聘职务" prop="positionId" required>
+							<u-input type="select" :select-open="positionIdShow" v-model="form.positionIdLabel" placeholder="请选择应聘职务" @click="positionIdShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="原有职务" prop="oldPositionId" required>
-							<u-input type="select" :select-open="oldPositionIdShow" v-model="form.oldPositionIdLabel" placeholder="请选择原有职务" @click="oldPositionIdShow = true"></u-input>
+						<u-form-item label="婚姻状态">
+							<u-input type="select" :select-open="maritalStatusShow" v-model="form.maritalStatusLabel" placeholder="请选择应聘职务" @click="maritalStatusShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="作业方式" prop="workRequire" required>
+						<u-form-item label="作业方式">
 							<u-input type="select" :select-open="workRequireShow" v-model="form.workRequireLabel" placeholder="请选择作业方式" @click="workRequireShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="工作经验" prop="workExprience" required>
+						<u-form-item label="工作经验">
 							<u-input type="select" :select-open="workExprienceShow" v-model="form.workExprienceLabel" placeholder="请选择工作经验" @click="workExprienceShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="期望月薪" prop="salary" required>
+						<u-form-item label="文化程度">
+							<u-input type="select" :select-open="eduDegreeShow" v-model="form.eduDegreeLabel" placeholder="请选择教育程度" @click="eduDegreeShow = true"></u-input>
+						</u-form-item>
+						<u-form-item label="期望月薪">
 							<u-input v-model="form.salary" trim placeholder="请输入期望月薪" type="number"/>
 						</u-form-item>
-						<u-form-item label="特殊技能">
-							<u-input v-model="form.speciality" placeholder="请输入特殊技能"/>
+						<u-form-item label="现住地址" >
+							<u-input v-model="form.preAddress" trim placeholder="请输入现住地址"/>
+						</u-form-item>
+						<u-form-item label="特长">
+							<u-input v-model="form.speciality" trim placeholder="请输入特长"/>
 						</u-form-item>
 					</view>
 				</view>
@@ -33,36 +39,46 @@
 					<view class="title">个人资料</view>
 					<view class="body-wrapper">
 						<u-form-item label="姓名" prop="realName" required>
-							<u-input v-model="form.realName" trim placeholder="请输入姓名"/>
+							<u-input v-model="form.realName" trim placeholder="请输入姓名" :disabled="form.realName"/>
 						</u-form-item>
-						<u-form-item label="电话" prop="phone" required>
-							<u-input placeholder="请输入电话" v-model="form.phone" type="number"></u-input>
+						<u-form-item label="身份证号" prop="idcard" required>
+							<u-input v-model="form.idcard" trim placeholder="请输入身份证号" :disabled="form.idcard"/>
 						</u-form-item>
-						<u-form-item label="籍贯" prop="nationalityLabel" required>
-							<u-input type="select" :select-open="nationalityShow" v-model="form.nationalityLabel" placeholder="请选择籍贯" @click="openNationality"></u-input>
+						<u-form-item label="性别" prop="genderLabel" required>
+							<u-input type="select" :select-open="genderShow" v-model="form.genderLabel" placeholder="请输入性别" @click="genderShow = true"/>
+						</u-form-item>
+						<u-form-item label="籍贯地区" prop="districtIdLabel" required>
+							<u-input type="select" :select-open="districtIdShow" v-model="form.districtIdLabel" placeholder="请选择籍贯" @click="openDistrictId"></u-input>
+						</u-form-item>
+						<u-form-item label="国籍" prop="nationality" required>
+							<u-input v-model="form.nationality" trim placeholder="请输入国籍"/>
 						</u-form-item>
 						<u-form-item label="出生日期" prop="birthday" required>
 							<u-input type="select" :select-open="birthdayShow" v-model="form.birthday" placeholder="请选择出生日期" @click="birthdayShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="教育程度" prop="eduDegree" required>
-							<u-input type="select" :select-open="eduDegreeShow" v-model="form.eduDegreeLabel" placeholder="请选择教育程度" @click="eduDegreeShow = true"></u-input>
+						<u-form-item label="民族" prop="nation" required>
+							<u-input type="select" :select-open="nationShow" v-model="form.nation" placeholder="请选择民族" @click="nationShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="外语水平" prop="language" required>
-							<u-input type="select" :select-open="languageShow" v-model="form.languageLabel" placeholder="请选择外语水平" @click="languageShow = true"></u-input>
+						<u-form-item label="家庭地址">
+							<u-input placeholder="请输入家庭地址" trim v-model="form.address"></u-input>
 						</u-form-item>
-						<u-form-item label="身高">
-							<u-input v-model="form.height" type="number" placeholder="请输入身高"/>
+						<u-form-item label="联系电话" prop="phone" required>
+							<u-input placeholder="请输入联系电话" trim :disabled="form.phone" v-model="form.phone" type="number"></u-input>
 						</u-form-item>
-						<u-form-item label="是否公开" prop="isOpen" required>
-							<u-input type="select" :select-open="isOpenShow" v-model="form.isOpenLabel" placeholder="请选择是否公开" @click="isOpenShow = true"></u-input>
+						<u-form-item label="家庭联系人" prop="contactPhone" required>
+							<u-input placeholder="请输入家庭联系人" v-model="form.contactName"></u-input>
 						</u-form-item>
-					</view>
-				</view>
-				<view class="content-container">
-					<view class="title">补充说明</view>
-					<view class="body-wrapper">
-						<u-form-item>
-							<u-input v-model="form.remark" trim type="textarea" :border="false" height="100" auto-height placeholder="补充说明" />
+						<u-form-item label="家庭联系电话" prop="contactName" required>
+							<u-input placeholder="请输入家庭联系电话" trim v-model="form.contactPhone"></u-input>
+						</u-form-item>
+						<u-form-item label="身份证正面照片" required prop="photoFront" label-position="top">
+							<u-upload :show-progress="false" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/avatar`"></u-upload>
+						</u-form-item>
+						<u-form-item label="身份证反面照片" required prop="photoReverse" label-position="top">
+							<u-upload :show-progress="false" @on-remove="onRemovePhotoReverse" ref="uUpload2" :file-list="photoReverseList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/avatar`"></u-upload>
+						</u-form-item>
+						<u-form-item label="船员证书" required prop="certPhoto" label-position="top">
+							<u-upload :show-progress="false" @on-remove="onRemoveCertPhotoList" ref="uUpload3" :file-list="certPhotoList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/avatar`"></u-upload>
 						</u-form-item>
 					</view>
 				</view>
@@ -71,16 +87,20 @@
 				</view>
 			</u-form>
 		</view>
+		<!-- 婚姻状态 -->
+		<u-select safe-area-inset-bottom mode="single-column" :list="maritalStatusList" v-model="maritalStatusShow" @confirm="(e) => onConfirm(e, 'maritalStatus')"></u-select>
+		<!-- 民族 -->
+		<u-select safe-area-inset-bottom mode="single-column" :list="nationList" v-model="nationShow" @confirm="onConfirmNation"></u-select>
+		<!-- 性别 -->
+		<u-select safe-area-inset-bottom mode="single-column" :list="genderList" v-model="genderShow" @confirm="(e) => onConfirm(e, 'gender')"></u-select>
 		<!-- 应聘职务 -->
-		<u-select safe-area-inset-bottom mode="single-column" :list="newPositionIdList" v-model="newPositionIdShow" @confirm="(e) => onConfirm(e, 'newPositionId')"></u-select>
-		<!-- 原有职务 -->
-		<u-select safe-area-inset-bottom mode="single-column" :list="oldPositionIdList" v-model="oldPositionIdShow" @confirm="(e) => onConfirm(e, 'oldPositionId')"></u-select>
+		<u-select safe-area-inset-bottom mode="single-column" :list="positionIdList" v-model="positionIdShow" @confirm="(e) => onConfirm(e, 'positionId')"></u-select>
 		<!-- 作业方式 -->
 		<u-select safe-area-inset-bottom mode="single-column" :list="workRequireList" v-model="workRequireShow" @confirm="(e) => onConfirm(e, 'workRequire')"></u-select>
 		<!-- 期望月薪 -->
 		<u-select safe-area-inset-bottom mode="single-column" :list="workExprienceList" v-model="workExprienceShow" @confirm="(e) => onConfirm(e, 'workExprience')"></u-select>
 		<!-- 籍贯 -->
-		<u-picker safe-area-inset-bottom mode="multiSelector" :default-selector="nationalityDefaultSelector" @confirm="onConfirmNationality" v-model="nationalityShow" range-key="shortName" @columnchange="onColumnChangeNationality" :range="cityAddressList"></u-picker>
+		<u-picker safe-area-inset-bottom mode="multiSelector" :default-selector="districtIdDefaultSelector" @confirm="onConfirmDistrictId" v-model="districtIdShow" range-key="shortName" @columnchange="onColumnChangeNationality" :range="cityAddressList"></u-picker>
 		<!-- 出生日期 -->
 		<u-picker safe-area-inset-bottom mode="time" v-model="birthdayShow" @confirm="birthdayConfirm" :params="{year: true, month: true, day: true, hour: false, minute: false, second: false}"></u-picker>
 		<!-- 教育程度 -->
@@ -95,20 +115,33 @@
 <script>
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	import cityMixin from '@/pages/mixins/city.js'
+	import { TOKEN } from '@/common/config/index.js'
+	import cloneDeep from 'lodash/cloneDeep'
 	export default {
 		mixins: [dictMapMixin, cityMixin],
 		data () {
 			return {
+				editType: '',
+				photoFrontList: [],
+				photoReverseList: [],
+				certPhotoList: [],
+				header: {
+					'Authorization': 'Bearer ' + uni.getStorageSync(TOKEN)
+				},
 				loading: false,
-				newPositionIdShow: false,
+				districtIdShow: false,
+				positionIdShow: false,
+				maritalStatusShow: false,
 				oldPositionIdShow: false,
 				workRequireShow: false,
 				eduDegreeShow: false,
 				workExprienceShow: false,
 				nationalityShow: false,
+				nationShow: false,
 				birthdayShow: false,
 				languageShow: false,
 				isOpenShow: false,
+				genderShow: false,
 				imgURL: this.$IMAGE_URL,
 				currentInfo: {},
 				btnStyle: {
@@ -125,11 +158,23 @@
 					{ value: '1', label: '是' },
 					{ value: '0', label: '否' }
 				],
-				nationalityDefaultSelector: [0, 0, 0],
+				districtIdDefaultSelector: [0, 0, 0],
 				form: {
 					userId: '', 
-					newPositionId: '', //应聘职务
-					oldPositionId: '', // 原有职务
+					photoFront: '', // 身份证正面照片
+					photoReverse: '', // 身份证反面照片
+					certPhoto: '', // 船员证书
+					maritalStatus: '', // 婚姻状态
+					preAddress: '', // 现住地址
+					idcard: '', // 身份证号
+					gender: '', // 性别
+					nation: '',  // 民族
+					address: '', // 家庭地址
+					contactName: '', // 家庭联系人
+					contactPhone: '', // 家庭联系电话
+					positionId: '', // 职务
+					// newPositionId: '', //应聘职务
+					// oldPositionId: '', // 原有职务
 					workRequire: '', // 作业方式 
 					workExprience: '', // 工作经验 
 					salary: '', // 期望月薪
@@ -137,6 +182,9 @@
 					realName: '', // 姓名
 					phone: '', // 电话
 					nationality: '', // 籍贯
+					provinceId: '', // 省
+					cityId: '', // 市
+					districtId: '', // 县
 					birthday: '', // 出生日期
 					eduDegree: '', // 教育程度
 					language: '', // 外语水平
@@ -145,11 +193,21 @@
 					remark: '', // 补充说明
 				},
 				rules: {
-					newPositionId: [
-						{ required: true, message: '请选择应聘职务', trigger: ['change', 'blur'] }
+					idcard: [
+						{ required: true, message: '请选择职务', trigger: ['change', 'blur'] },
+						{
+							pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+							transform(value) {
+								return String(value);
+							},
+							message: '身份证号码不正确'
+						},
 					],
-					oldPositionId: [
-						{ required: true, message: '请选择原有职务', trigger: ['change', 'blur'] }
+					genderLabel: [
+						{ required: true, message: '请选择性别', trigger: ['change', 'blur'] }
+					],
+					positionId: [
+						{ required: true, message: '请选择职务', trigger: ['change', 'blur'] }
 					],
 					workRequire: [
 						{ required: true, message: '请选择作业方式', trigger: 'change' }
@@ -166,46 +224,84 @@
 					phone: [
 						{ required: true, message: '请输入电话', trigger: 'blur' }
 					],
-					nationalityLabel: [
-						{ required: true, message: '请选择籍贯', trigger: 'change' }
+					districtIdLabel:  [
+						{ required: true, message: '请选择籍贯地区', trigger: 'change' }
+					],
+					nationality: [
+						{ required: true, message: '请填写籍贯', trigger: 'blur' }
+					],
+					nationLabel:  [
+						{ required: true, message: '请选择民族', trigger: 'change' }
+					],
+					contactName: [
+						{ required: true, message: '请填写家庭联系人', trigger: 'blur' }
+					],
+					contactPhone: [
+						{ required: true, message: '请填写家庭联系电话', trigger: 'blur' }
 					],
 					birthday: [
 						{ required: true, message: '请选择出生日期', trigger: 'change' }
 					],
-					eduDegree: [
-						{ required: true, message: '请选择教育程度', trigger: 'change' }
+					maritalStatus: [
+						{ required: true, message: '请选择婚姻状态', trigger: 'change' }
 					],
-					isOpen: [
-						{ required: true, message: '请选择是否公开', trigger: 'change' }
+					photoFront: [
+						{ required: true, message: '请上传身份证正面照片', trigger: 'change' }
 					],
+					photoReverse: [
+						{ required: true, message: '请上传身份证反面照片', trigger: 'change' }
+					],
+					certPhoto: [
+						{ required: true, message: '请上传船员证书', trigger: 'change' }
+					]
+					// eduDegree: [
+					// 	{ required: true, message: '请选择教育程度', trigger: 'change' }
+					// ],
+					// isOpen: [
+					// 	{ required: true, message: '请选择是否公开', trigger: 'change' }
+					// ],
 				}
 			}
 		},
 		computed: {
-			newPositionIdList () {
-				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
+			maritalStatusList () {
+				return cloneDeep(this.dictMap)['marital'] || []
 			},
-			oldPositionIdList () {
-				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
+			nationList () {
+				return cloneDeep(this.dictMap)['nationals'] || []
+			},
+			genderList () {
+				return cloneDeep(this.dictMap)['sex'] || []
+			},
+			positionIdList () {
+				return cloneDeep(this.dictMap)['tyb_resume_position'] || [] 
 			},
 			workRequireList () {
-				return this.dictMap ? this.dictMap['tyb_resume_worktype'] : [] 
+				return cloneDeep(this.dictMap)['tyb_resume_worktype'] || [] 
 			},
 			workExprienceList () {
-				return this.dictMap ? this.dictMap['tyb_work_exprience'] : []
+				return cloneDeep(this.dictMap)['tyb_work_exprience'] || []
 			},
 			eduDegreeList () {
-				return this.dictMap ? this.dictMap['tyb_education_degree'] : []
+				return cloneDeep(this.dictMap)['tyb_education_degree'] || []
 			}
 		},
 		onReady () {
-			this.getCurrentInfo()
 			this.$refs.uForm.setRules(this.rules)
+			this.photoFrontList = this.$refs.uUpload1.lists
+			this.photoReverseList = this.$refs.uUpload2.lists
+			this.certPhotoList = this.$refs.uUpload3.lists
+		},
+		onLoad (params) {
+			this.editType = params.type
+			this.getCurrentInfo()
 		},
 		methods: {
 			initForm () {
-				this.getDictLabel('newPositionId', this.form.positionId, this.newPositionIdList)
-				this.getDictLabel('oldPositionId', this.form.positionId, this.newPositionIdList)
+				this.getDictLabel('maritalStatus', this.form.maritalStatus, this.maritalStatusList)
+				this.getDictLabel('gender', this.form.gender, this.genderList)
+				this.getDictLabel('positionId', this.form.positionId, this.positionIdList)
+				this.getDictLabel('nation', this.form.nation, this.nationList)
 				this.getDictLabel('workRequire', this.form.workRequire, this.workRequireList)
 				this.getDictLabel('workExprience', this.form.workExprience, this.workExprienceList)
 				this.getDictLabel('eduDegree', this.form.eduDegree, this.eduDegreeList)
@@ -224,8 +320,8 @@
 					if (data.code === 0) {
 						let result = []
 						this.recursionCityLabel(result, data.data)
-						this.$set(this.form, 'nationalityLabel', result.join('-'))
-						this.form.nationalityLabel = result.join('-')
+						this.$set(this.form, 'districtIdLabel', result.join('-'))
+						this.form.districtIdLabel = result.join('-')
 					}
 				})
 			},
@@ -251,8 +347,19 @@
 						if (this.form.districtId) {
 							this.initCityLabel(this.form.districtId)
 						}
-						this.initForm()
+						this.getDicMap().then(() => {
+							this.initForm()
+						})
 						this.form.salary = this.form.salary + ''
+						if (this.form.photoFront) {
+							this.photoFrontList = [{url: this.form.photoFront}]
+						}
+						if (this.form.photoReverse) {
+							this.photoReverseList = [{url: this.form.photoReverse}]
+						}
+						if (this.form.certPhoto) {
+							this.certPhotoList = [{url: this.form.certPhoto}]
+						}
 					}
 				})
 			},
@@ -266,8 +373,8 @@
 				}
 			},
 			// 籍贯
-			onConfirmNationality (val) {
-				this.nationalityDefaultSelector = val
+			onConfirmDistrictId (val) {
+				this.districtIdDefaultSelector = val
 				let third = this.cityAddressList[2]
 				if (third && third.length > 0) {
 					let nationality = third[val[2]].areaCode
@@ -292,11 +399,11 @@
 					this.$set(this.form, 'nationality', nationality)
 				} 
 			},
-			openNationality () {
+			openDistrictId () {
 				if (!(this.cityAddressList.length > 0 && this.cityAddressList[0].length > 0)) {
 					this.getCityAddressFirst('0')
 				}
-				this.nationalityShow = true
+				this.districtIdShow = true
 			},
 			// 出生日期
 			birthdayConfirm (e) {
@@ -313,7 +420,7 @@
 					 		icon: 'none',
 					 		title: '修改成功'
 					 	})
-						uni.navigateTo({
+						uni.switchTab({
 							url: '/pages/user/index/index'
 						})
 					} else {
@@ -338,7 +445,7 @@
 					 		icon: 'none',
 					 		title: '新增成功'
 					 	})
-						uni.navigateTo({
+						uni.switchTab({
 							url: '/pages/user/index/index'
 						})
 					} else {
@@ -361,15 +468,27 @@
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
 						this.loading = true
-						if (this.form.userId) {
-							this.updateApi()
-						} else {
+						if (this.editType === 'add') {
 							this.createApi()
+						} else {
+							this.updateApi()
 						}
 					} else {
 						console.log('验证失败')
 					}
 				})
+			},
+			onRemovePhotoFront (index, lists, name) {
+				this.photoFrontList = lists
+			},
+			onRemovePhotoReverse (index, lists, name) {
+				this.photoReverseList = lists
+			},
+			onRemoveCertPhoto (index, lists, name) {
+				this.CertPhotoList = lists
+			},
+			onConfirmNation (e) {
+				this.form['nation'] = e[0].label
 			}
 		}
 	}

@@ -118,6 +118,18 @@
 			}
 		},
 		{
+			"path": "pages/release/ship/index",
+			"style": {
+				"navigationBarTitleText": "绑定渔船"
+			}
+		},
+		{
+			"path": "pages/release/identity/index",
+			"style": {
+				"navigationBarTitleText": "绑定渔船"
+			}
+		},
+		{
 			"path": "pages/message/index/index",
 			"style": {
 				"navigationBarTitleText": "",

@@ -1,6 +1,9 @@
 <script>
+import dictMapMixin from '@/pages/mixins/dictMap.js'
 export default {
+	mixins: [dictMapMixin],
 	onLaunch: function() {
+		this.getDicMap()
 		// console.log('App Launch');
 	},
 	onShow: function() {

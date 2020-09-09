@@ -90,6 +90,7 @@
 <script>
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	import cityMixin from '@/pages/mixins/city.js'
+	import cloneDeep from 'lodash/cloneDeep'
 	export default {
 		mixins: [dictMapMixin, cityMixin],
 		data () {
@@ -144,25 +145,25 @@
 		},
 		computed: {
 			ageRequireList () {
-				return this.dictMap ? this.dictMap['tyb_position_agerequirement'] : []
+				return cloneDeep(this.dictMap)['tyb_position_agerequirement'] || []
 			},
 			workExprienceList () {
-				return this.dictMap ? this.dictMap['tyb_work_exprience'] : []
+				return cloneDeep(this.dictMap)['tyb_work_exprience'] || []
 			},
 			salaryCurrencyList () {
-				return this.dictMap['salaryCurrency']
+				return cloneDeep(this.dictMap)['salaryCurrency']
 			},
 			certTitleList () {
-				return this.dictMap ? this.dictMap['tyb_crew_cert_title'] : []
+				return cloneDeep(this.dictMap)['tyb_crew_cert_title'] || []
 			},
 			certLevelList () {
-				return this.dictMap['certLevel']
+				return cloneDeep(this.dictMap)['certLevel']
 			},
 			workModeList () {
-				return this.dictMap ? this.dictMap['tyb_resume_worktype'] : [] 
+				return cloneDeep(this.dictMap)['tyb_resume_worktype'] || [] 
 			},
 			positionIdList () {
-				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
+				return cloneDeep(this.dictMap)['tyb_resume_position'] || [] 
 			}
 		},
 		onReady () {
