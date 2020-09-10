@@ -85,7 +85,6 @@
 		},
 		methods: {
 			onSubmit () {
-				console.log('this.form', this.form)
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
 						this.loading = true
@@ -132,6 +131,7 @@
 						icon: 'none',
 						title: data.data.nonIdcard || '无法识别'
 					});
+					this.form.idcardPhoto = ''
 					this.idcardPhotoList.splice(0, 1)
 				}
 			},

@@ -9,7 +9,7 @@
 					<view class="tyb-tarbar_sub-menu" :style="{display: show ? 'block' : 'none'}">
 						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/resume/edit', 'resume')">简历</view>
 						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/recruit/edit', 'recruit')">招聘</view>
-						<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/home/register/index')">登记</view> -->
+						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/register/index', 'register')">登记</view>
 						<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">中介</view>	 -->
 					</view>
 					<text class="tyb-tarbar-item_text">{{item.text}}</text>
@@ -18,7 +18,7 @@
 			<template>
 				<view class="tyb-tarbar-item_image">
 					<image :src="index === currentIndex ? item.selectedIconPath : item.iconPath" ></image>
-				</view>
+				</view> 
 				<text class="tyb-tarbar-item_text">{{item.text}}</text>
 			</template>
 		</view>
@@ -50,6 +50,14 @@
 		},
 		methods: {
 			onSubMenu (path, name) {
+				if (name === 'register') {
+					if (path !== '') {
+						uni.navigateTo({
+							url: path,
+						})
+					}
+					return
+				}
 				let userInfo = this.$cache.get('userInfo')
 				let roles = this.$cache.get('roles')
 				if (userInfo.userId) {

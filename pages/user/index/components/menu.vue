@@ -1,6 +1,6 @@
 <template>
 	<view class="menu-wrapper">
-		<view class="tip-wrapper" v-if="show">{{text}}</view>
+		<view class="tip-wrapper" v-if="text">{{text}}</view>
 		<u-cell-group>
 			<u-cell-item v-for="(item, index) in menu" :title="item.label" :key="index" @click="onTo(item.path)"></u-cell-item>
 		</u-cell-group>
@@ -14,12 +14,11 @@
 			type: {
 				type: Number,
 				default: 0
-			}
+			},
+			text: String,
 		},
 		data () {
 			return {
-				show: false,
-				text: '',
 				menu0: [
 					{ label: '设置', path: '/pages/user/setting/index' }
 				],
@@ -49,11 +48,7 @@
 						url: path
 					});
 				}
-			},
-			init () {
-				
-			},
-			
+			}			
 		}
 	}
 </script>
@@ -64,7 +59,7 @@
 		.tip-wrapper {
 			font-size: 28rpx;
 			margin: 20rpx 0;
-			padding: 20rpx 2 0rpx;
+			padding: 20rpx 20rpx;
 			color: #c7535a;
 			background-color: #fff;
 		}

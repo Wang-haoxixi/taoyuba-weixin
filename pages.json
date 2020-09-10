@@ -130,6 +130,25 @@
 			}
 		},
 		{
+			"path": "pages/release/register/index",
+			"style": {
+				"navigationBarTitleText": "船员登记"
+			}
+		},
+		{
+			"path": "pages/release/register/success",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/release/ship-registration/index",
+			"style": {
+				"navigationBarTitleText": "船员上传登记"
+			}
+		},
+		{
 			"path": "pages/message/index/index",
 			"style": {
 				"navigationBarTitleText": "",

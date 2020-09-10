@@ -33,7 +33,7 @@
 			</view>
 		</view>
 		<!-- 菜单 -->
-		<user-menu :type="type"></user-menu>
+		<user-menu :type="type" :text="text"></user-menu>
 		<tyb-tarbar :current-index="4"></tyb-tarbar>
 	</view>
 </template>
@@ -43,15 +43,16 @@
 	import userMenu from './components/menu.vue'
 	import { TOKEN } from '@/common/config/index.js'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
-	// import cloneDeep from 'lodash/cloneDeep'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
-		mixins: [dictMapMixin],
+		mixins: [dictMapMixin, userInfoMixin],
 		components: {
 			tybTarbar,
 			userMenu
 		},
 		data () {
 			return {
+				text: '',
 				userInfo: this.$cache.get('userInfo'),
 				roles: this.$cache.get('roles'),
 				imageUrl: this.$IMAGE_URL,
@@ -83,7 +84,11 @@
 			this.roles = this.$cache.get('roles')
 			console.log('this.roles', this.roles)
 			if (Object.keys(this.userInfo).length === 0) {
-				this.getUserInfo()
+				this.getUserInfo().then(() => {
+					this.init()
+				})
+			} else {
+				this.init()
 			}
 			if (this.roles && this.roles.length > 0) {
 				this.type = this.roles[1] || ''
@@ -93,6 +98,34 @@
 			this.getDicMap()
 		},
 		methods: {
+			init () {
+				let userInfo = this.userInfo
+				console.log('userInfo', userInfo)
+				if (userInfo && userInfo.idCard) {
+					// 判断是否已注册船员
+					this.$http.get('/tmlms/crew/getCrewByidcard', {
+						params: {
+							idcard: userInfo.idCard
+						}
+					}).then(({ data }) => {
+						if(data.msg == '成功获取船员信息' && data.data.status == 1){
+						    this.text = "您的船员信息正在审核中..."
+						}
+					})
+					this.$http.get('/tmlms/ship_owner/getDetail', {
+						params: {
+							idcard: userInfo.idCard
+						}
+					}).then(({ data }) => {
+						if(data.data){
+							if(data.msg == 'success' && data.data.status === 1 && data.data.userId !== 0){
+							    this.text= '您的船东信息正在审核中...'
+							}
+						}
+					})
+					// 判断是否已注册船东
+				}
+			},
 			onToUser () {
 				if (this.type === 108) {
 					this.onTo('/pages/release/shipowner-resume/edit')
@@ -101,17 +134,19 @@
 				}
 			},
 			getUserInfo () {
-				this.$http.get('/admin/user/info').then(({ data }) => {
-					if (data.code === 0) {
-						this.userInfo = data.data.sysUser
-						this.$cache.set('userInfo', this.userInfo)
-						this.roles = data.data.roles
-						this.$cache.set('roles', this.roles)
-						if (this.roles && this.roles.length > 0) {
-							this.type = this.roles[1]
+				return new Promise((resolve, reject) => {
+					this.$http.get('/admin/user/info').then(({ data }) => {
+						if (data.code === 0) {
+							this.userInfo = data.data.sysUser
+							this.$cache.set('userInfo', this.userInfo)
+							this.roles = data.data.roles
+							this.$cache.set('roles', this.roles)
+							if (this.roles && this.roles.length > 0) {
+								this.type = this.roles[1]
+							}
+							resolve()
 						}
-						console.log('this.type', this.type)
-					}
+					})
 				})
 			},
 			onTo (path) {
@@ -122,7 +157,15 @@
 				}
 			},
 			onChoose () {
-				this.show = true
+				if (this.text) {
+					uni.showToast({
+						icon: 'none',
+						title: this.text
+					})
+				} else {
+					this.show = true
+				}
+				
 			},
 			onConfirm (e) {
 				let val = e[0].value
