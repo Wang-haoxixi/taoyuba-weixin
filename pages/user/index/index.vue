@@ -82,7 +82,6 @@
 		onShow () {
 			this.userInfo = this.$cache.get('userInfo')
 			this.roles = this.$cache.get('roles')
-			console.log('this.roles', this.roles)
 			if (Object.keys(this.userInfo).length === 0) {
 				this.getUserInfo().then(() => {
 					this.init()
@@ -100,7 +99,6 @@
 		methods: {
 			init () {
 				let userInfo = this.userInfo
-				console.log('userInfo', userInfo)
 				if (userInfo && userInfo.idCard) {
 					// 判断是否已注册船员
 					this.$http.get('/tmlms/crew/getCrewByidcard', {
@@ -165,7 +163,6 @@
 				} else {
 					this.show = true
 				}
-				
 			},
 			onConfirm (e) {
 				let val = e[0].value

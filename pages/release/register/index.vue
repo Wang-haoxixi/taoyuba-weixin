@@ -141,9 +141,18 @@
 					this.photoFrontList.splice(0, 1)
 				}
 			},
-			onRemovePhotoFront () {
+			onRemovePhotoFront (index, lists, name) {
 				this.photoFrontList = lists
 				this.form.photoFront = ''
+				this.form.idcard= ''
+				this.form.realname = ''
+				this.form.photoFront = ''
+				this.form.address = ''
+				this.form.nation = ''
+				this.form.birthday = ''
+				this.form.provinceId = ''
+				this.form.cityId = ''
+				this.form.districtId = ''
 			},
 			onConfirm (e) {
 				this.form.contactName = e[0].label

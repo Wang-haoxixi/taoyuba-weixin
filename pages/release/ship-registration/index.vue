@@ -30,6 +30,7 @@
 
 <script>
 	import { TOKEN } from '@/common/config/index.js'
+	import cloneDeep from 'lodash/cloneDeep'
 	export default {
 		data () {
 			return {
@@ -52,6 +53,8 @@
 					address: '',
 					realName: '',
 					sex: '',
+					orgId: 21, // 衢山
+					flag: 2,
 					birthday: '',
 					gender: '',
 					nation: '',
@@ -107,7 +110,7 @@
 				if (data.data.imageState === 'normal') {
 					let result = data.data
 					this.form.idcard= result.idcard
-					this.form.realname = result.name
+					this.form.realName = result.name
 					this.form.photoFront = result.url
 					this.form.address = result.address
 					this.form.nation = result.nation
@@ -132,9 +135,18 @@
 					this.photoFrontList.splice(0, 1)
 				}
 			},
-			onRemovePhotoFront () {
+			onRemovePhotoFront (index, lists, name) {
 				this.photoFrontList = lists
 				this.form.photoFront = ''
+				this.form.idcard= ''
+				this.form.realName = ''
+				this.form.photoFront = ''
+				this.form.address = ''
+				this.form.nation = ''
+				this.form.birthday = ''
+				this.form.provinceId = ''
+				this.form.cityId = ''
+				this.form.districtId = ''
 			},
 			onConfirm (e) {
 				this.form.shipName = e[0].label
@@ -143,18 +155,29 @@
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
 						// 判断渔船存在否
+						let form = cloneDeep(this.form)
+						form.contactName = form.shipName
+						form.shipName = form.shipName + form.shipNum
 						this.$http.get(`/tybship/tybship/findmyshipWx/${this.form.shipName}${this.form.shipNum}`).then(({ data }) => {
 							if (data.data) {
-								this.$http.post('/tmlms/crew/checkMoreRelations', this.form).then(({ data }) => {
+								this.$http.post('/tmlms/crew/checkMoreRelations', [form]).then(({ data }) => {
 									if (data.data) {
-										this.$http.post(`/tmlms/crew/batchCreate?type=1`, this.form).then(({ data }) => {
-											uni.showToast({
-												icon: 'none',
-												title: '船员登记添加成功'
-											})
-											uni.navigateTo({
-												url: '/pages/release/register/success?text=船员登记添加成功'
-											})
+										this.$http.post(`/tmlms/crew/batchCreate?type=1`, [form]).then(({ data }) => {
+											if (data.code === 0) {
+												uni.showToast({
+													icon: 'none',
+													title: '船员登记添加成功'
+												})
+												uni.navigateTo({
+													url: '/pages/release/register/success?text=船员登记添加成功'
+												})
+											} else {
+												uni.showToast({
+													icon: 'none',
+													title: data.msg || '船员登记添加失败'
+												})
+											}
+											
 										})
 									} else {
 										uni.showToast({
@@ -162,7 +185,6 @@
 											title: data.msg
 										})
 									}
-									
 								})
 							} else {
 								uni.showToast({
