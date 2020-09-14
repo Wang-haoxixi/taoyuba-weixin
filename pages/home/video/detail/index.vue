@@ -1,7 +1,18 @@
 <template>
 	<view class="video-detail-wrapper phonex-mb">
 		<view class="video-detail-content">
-			<video :src="data.videoSrc" :poster="data.videoImg"></video>
+			<!-- <video :enable-progress-gesture="false" :show-progress="false" :src="data.videoSrc :poster="data.videoImg"></video> -->
+			<video
+				id="myVideo"
+				:initial-time="initialTime"
+				@loadedmetadata="onLoadedmetadata"
+				@ended="onEnded"
+				@timeupdate="onTimeupdate"
+				@pause="onPause"
+				:enable-progress-gesture="false"
+				:show-progress="true"
+				:src="'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4'"
+				:poster="data.videoImg"></video>
 		</view>
 		<view class="content-wrapper">
 			<view class="title1 title">{{data.vedioName || ''}}</view>
@@ -13,13 +24,23 @@
 				{{data.videoDescript || ''}}
 			</view>
 		</view>
+		<face-recognition v-model="show" @end="onFaceEnd"></face-recognition>
 	</view>
 </template>
 
 <script>
+	const TIME = 10
+	import faceRecognition from '@/pages/components/face-recognition/index.vue'
 	export default {
+		components: {
+			faceRecognition
+		},
 		data () {
 			return {
+				show: false,
+				initialTime: 0,
+				videoContext: null,
+				faceTime: TIME,
 				data: {}
 			}
 		},
@@ -27,6 +48,10 @@
 			if (params.id) {
 				this.getList(params.id)
 			}
+			this.faceTime += this.initialTime
+		},
+		onReady: function (res) {
+			this.videoContext = uni.createVideoContext('myVideo')
 		},
 		methods: {
 			getList (id) {
@@ -35,6 +60,23 @@
 						this.data = data.data
 					}
 				})
+			},
+			onEnded () {},
+			onPause () {},
+			onTimeupdate (e) {
+				let currentTime = e.detail.currentTime
+				if (this.faceTime < currentTime) {
+					this.videoContext.pause()
+					this.faceTime += TIME
+					this.show = true
+				}
+			},
+			onFaceEnd () {
+				this.videoContext.play()
+				this.show = false
+			},
+			onLoadedmetadata (e) {
+				console.log(e.detail)
 			}
 		}
 	}

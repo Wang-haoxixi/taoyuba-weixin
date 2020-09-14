@@ -88,6 +88,19 @@
 			}
 		},
 		{
+			"path": "pages/home/contract/list/index",
+			"style": {
+				"navigationBarTitleText": "合同",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/home/contract/detail/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
 			"path": "pages/find/index/index",
 			"style": {
 				"navigationBarTitleText": ""

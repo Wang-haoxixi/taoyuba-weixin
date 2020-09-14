@@ -3,7 +3,6 @@
 		<view class="">
 			<contract-item v-for="item in data" :key="item.id" :info="item"></contract-item>
 		</view>
-		
 	</view>
 </template>
 
@@ -15,12 +14,19 @@
 		},
 		data () {
 			return {
-				data: [
-					{ title: '浙渔K8799', name: '黄某某', company: '国脉海洋', people: '中船通', createTime: '2019.10.20' },
-					{ title: '浙渔K8799', name: '黄某某', company: '国脉海洋', people: '中船通', createTime: '2019.10.20' },
-					{ title: '浙渔K8799', name: '黄某某', company: '国脉海洋', people: '中船通', createTime: '2019.10.20' },
-					{ title: '浙渔K8799', name: '黄某某', company: '国脉海洋', people: '中船通', createTime: '2019.10.20' }
-				]
+				data: []
+			}
+		},
+		onReady () {
+			this.getList()
+		},
+		methods: {
+			getList () {
+				this.$http.get('/tmlms/tybcontract/page').then(({ data }) => {
+					if (data.code === 0) {
+						this.data = data.data
+					}
+				})
 			}
 		}
 	}

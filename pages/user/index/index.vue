@@ -82,6 +82,7 @@
 		onShow () {
 			this.userInfo = this.$cache.get('userInfo')
 			this.roles = this.$cache.get('roles')
+			
 			if (Object.keys(this.userInfo).length === 0) {
 				this.getUserInfo().then(() => {
 					this.init()
@@ -89,12 +90,12 @@
 			} else {
 				this.init()
 			}
+			
 			if (this.roles && this.roles.length > 0) {
 				this.type = this.roles[1] || ''
 			} else {
 				this.type = ''
 			}
-			this.getDicMap()
 		},
 		methods: {
 			init () {

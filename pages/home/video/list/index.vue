@@ -33,7 +33,7 @@
 		data () {
 			return {
 				list: [
-					{ name: '渔民学院1', type: 1 }, { name: '渔民学院2', type: 2 }
+					{ name: '安全教育', type: 1 }, { name: '课程培训', type: 2 }
 				],
 				current: 0,
 				status: 'loadmore',

@@ -1,14 +1,16 @@
 <template>
 	<view class="contract-item-wrapper">
-		<view class="header">
-			<text class="title">{{info.title}}</text>
-			<text class="name">持证人：{{info.name}}</text>
+		<view class="left-item">
+			<view class="title">{{info.contractNumber}}</view>
+			<view class="text">船名：{{info.shipName}}</view>
+			<view class="text">
+				<text>舶拥有者：{{info.shipowner}}</text>
+				<text>雇员：{{info.employeeName}}</text>
+			</view>
 		</view>
-		<view class="body">
-			<text class="text">雇主：{{info.company}}</text>
-			<text>雇员：{{info.people}}</text>
+		<view class="right-item">
+			
 		</view>
-		<view class="footer">创建时间：{{info.createTime}}</view>
 	</view>
 </template>
 
@@ -30,18 +32,5 @@
 		color: #999;
 		font-size: 26rpx;
 		border-bottom: 1px solid #f6f6f6;
-		.header {
-			.title {
-				color: #666;
-				font-size: 30rpx;
-				margin-right: 20rpx;
-			}
-		}
-		.body, .footer {
-			margin-top: 20rpx;
-			.text {
-				margin-right: 20rpx;
-			}
-		}
 	}
 </style>
