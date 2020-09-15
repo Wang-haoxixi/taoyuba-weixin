@@ -2,6 +2,14 @@ export default {
 	data () {
 		return {
 			dictMap: {
+				contractList: [
+					{ label: '未审核', value: 0 },
+					{ label: '合同成立', value: 1 },
+					{ label: '未通过审核', value: 2 },
+					{ label: '合同纠纷', value: 3 },
+					{ label: '合同解除', value: 4 },
+					{ label: '合同过期', value: 5 }
+				],
 				salaryCurrency: [
 					{ label: '人民币(RMB)', value: '1' },
 					{ label: '美元(USD)', value: '2' }
@@ -112,6 +120,16 @@ export default {
 					resolve()
 				})
 			})
+		},
+		getDictLabel (data, value) {
+			let result = ''
+			for (let i = 0, len = data.length; i < len; i++) {
+				if (data[i].value === value) {
+					result = data[i].label
+					break
+				}
+			}
+			return result
 		}
 	}
 }

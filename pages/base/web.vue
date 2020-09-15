@@ -12,7 +12,13 @@
 		onLoad (params) {
 			console.log('params', params)
 			if (params.src) {
-				this.src = params.src
+				let src = params.src
+				for (let key in params) {
+					if (key !== 'src') {
+						src += `?${key}=${params[key]}`
+					}
+				}
+				this.src = src
 				console.log('this.src', this.src)
 			}
 		}

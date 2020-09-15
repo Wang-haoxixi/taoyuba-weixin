@@ -20,6 +20,7 @@
 		data () {
 			return {
 				menu0: [
+					// { label: '我的合同', path: '/pages/user/contract/list/index' },
 					{ label: '设置', path: '/pages/user/setting/index' }
 				],
 				menu105: [

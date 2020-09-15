@@ -1,31 +1,61 @@
 <template>
 	<view class="user-contract-container">
 		<view class="">
-			<contract-item v-for="item in data" :key="item.id" :info="item"></contract-item>
+			<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
 		</view>
+		<u-loadmore :status="status"/>
 	</view>
 </template>
 
 <script>
 	import contractItem from './components/contract-item.vue'
+	import pageMixin from '@/pages/mixins/page.js'
+	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	export default {
+		mixins: [pageMixin, dictMapMixin],
 		components: {
 			contractItem
 		},
 		data () {
 			return {
+				status: 'loadmore',
 				data: []
 			}
+		},
+		onReachBottom() {
+			if (this.page.total > this.page.current * this.page.size) {
+				this.status = 'loading'
+				this.page.current++
+				this.getList()
+			} else{
+				this.status = 'nomore'
+			}
+		},
+		onPullDownRefresh () {
+			this.data = []
+			this.page.current = 1
+			this.getList()
 		},
 		onReady () {
 			this.getList()
 		},
 		methods: {
 			getList () {
-				this.$http.get('/tmlms/tybcontract/page').then(({ data }) => {
-					if (data.code === 0) {
-						this.data = data.data
+				this.$http.get('/tmlms/tybcontract/mycon', {
+					params: {
+						size: this.page.size,
+						current: this.page.current
 					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let result = data.data
+						this.data = this.data.concat(result.records)
+						this.page.total = result.total
+						if (this.page.total <= this.page.size) {
+							this.status = 'nomore'
+						}
+					}
+					uni.stopPullDownRefresh()
 				})
 			}
 		}

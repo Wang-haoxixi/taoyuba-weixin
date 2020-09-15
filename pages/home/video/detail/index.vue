@@ -9,8 +9,9 @@
 				@ended="onEnded"
 				@timeupdate="onTimeupdate"
 				@pause="onPause"
+				@play="onPlay"
 				:enable-progress-gesture="false"
-				:show-progress="true"
+				:show-progress="false"
 				:src="'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4'"
 				:poster="data.videoImg"></video>
 		</view>
@@ -29,7 +30,8 @@
 </template>
 
 <script>
-	const TIME = 10
+	const TIME = 3 * 60
+	const INTERVAL_TIME = 5 * 60
 	import faceRecognition from '@/pages/components/face-recognition/index.vue'
 	export default {
 		components: {
@@ -38,9 +40,12 @@
 		data () {
 			return {
 				show: false,
-				initialTime: 0,
+				once: true,
+				initialTime: 5,
+				time: 0,
 				videoContext: null,
-				faceTime: TIME,
+				faceTime: TIME, // 活体识别间隔时间
+				intervalTime: INTERVAL_TIME, // 间隔记录时间
 				data: {}
 			}
 		},
@@ -49,9 +54,14 @@
 				this.getList(params.id)
 			}
 			this.faceTime += this.initialTime
+			this.intervalTime += this.initialTime
+			this.time = this.initialTime
 		},
-		onReady: function (res) {
+		onReady (res) {
 			this.videoContext = uni.createVideoContext('myVideo')
+		},
+		onUnload () {
+			console.log('onUnload', this.time)
 		},
 		methods: {
 			getList (id) {
@@ -61,14 +71,33 @@
 					}
 				})
 			},
-			onEnded () {},
-			onPause () {},
+			onPlay (e) {
+				if (this.once) {
+					this.videoContext.pause()
+					this.show = true
+					this.once = false
+				}
+			},
+			onEnded (e) {
+				console.log('onEnded', e)
+			},
+			onPause (e) {
+				console.log('onPause', this.intervalTime, e)
+			},
 			onTimeupdate (e) {
 				let currentTime = e.detail.currentTime
+				this.time = currentTime
 				if (this.faceTime < currentTime) {
 					this.videoContext.pause()
 					this.faceTime += TIME
+					this.intervalTime += INTERVAL_TIME
 					this.show = true
+					console.log('活体识别时间', currentTime, this.intervalTime)
+					return
+				}
+				if (currentTime > this.intervalTime) {
+					this.intervalTime += INTERVAL_TIME
+					console.log('记录时间', currentTime, this.intervalTime)
 				}
 			},
 			onFaceEnd () {

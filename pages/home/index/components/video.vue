@@ -8,7 +8,7 @@
 					<text>换一批</text>
 				</view> -->
 			</view>
-			<view class="video-content">
+			<view class="video-content" v-if="data.length">
 				<u-row gutter="16">
 					<u-col span="8">
 						<view class="video-content-left">

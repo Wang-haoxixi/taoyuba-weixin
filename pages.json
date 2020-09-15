@@ -195,7 +195,8 @@
 		{
 			"path": "pages/user/contract/list/index",
 			"style": {
-				"navigationBarTitleText": "合同管理"
+				"navigationBarTitleText": "合同管理",
+				"enablePullDownRefresh": true
 			}
 		},
 		{
