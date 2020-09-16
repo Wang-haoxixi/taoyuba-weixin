@@ -5,7 +5,7 @@
 			<template>
 				<view class="" v-show="current === 0">
 					<view class="job-item-content" v-for="(item, index) in data1" :key="item.recruitId">
-						<job-item :info="item" @tap="onTo(item)"></job-item>
+						<job-item :info="item" @tap="onTo(item)" :dictMap="dictMap"></job-item>
 					</view>
 				</view>
 				<view class="news-content" v-show="current === 1">

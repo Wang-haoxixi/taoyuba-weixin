@@ -39,16 +39,24 @@
 				current: 0,
 				content: '',
 				list: [
-					{ name: '咨询', id: 1 },
-					{ name: '招聘', id: 2 },
-					{ name: '简历', id: 3 }
+					{ name: '咨询', id: 0 },
+					{ name: '招聘', id: 1 },
+					{ name: '求职', id: 2 },
+					{ name: '培训信息', id: 3 },
+					{ name: '培训机构', id: 4 }
 				],
 				hotList: [],
 				historyList: [],
 				showHistory: false
 			}
 		},
-		onLoad () {
+		onLoad (params) {
+			if (params.keyword) {
+				this.content = params.keyword
+			}
+			if (params.type) {
+				this.current = params.type
+			}
 			let historyList = this.$cache.get('historySearchList') 
 			if (historyList) {
 				this.historyList = historyList

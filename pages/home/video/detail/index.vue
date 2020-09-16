@@ -2,6 +2,7 @@
 	<view class="video-detail-wrapper phonex-mb">
 		<view class="video-detail-content">
 			<!-- <video :enable-progress-gesture="false" :show-progress="false" :src="data.videoSrc :poster="data.videoImg"></video> -->
+			<!-- 'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4' -->
 			<video
 				id="myVideo"
 				:initial-time="initialTime"
@@ -12,7 +13,7 @@
 				@play="onPlay"
 				:enable-progress-gesture="false"
 				:show-progress="false"
-				:src="'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4'"
+				:src="data.videoSrc"
 				:poster="data.videoImg"></video>
 		</view>
 		<view class="content-wrapper">

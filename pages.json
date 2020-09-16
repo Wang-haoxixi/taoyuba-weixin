@@ -55,6 +55,12 @@
 			}
 		},
 		{
+			"path": "pages/home/video/detail/index1",
+			"style": {
+				"navigationBarTitleText": "渔民学院"
+			}
+		},
+		{
 			"path": "pages/home/training/list/index",
 			"style": {
 				"navigationBarTitleText": "培训机构",

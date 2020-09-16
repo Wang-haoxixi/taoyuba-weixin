@@ -4,14 +4,14 @@
 			<u-tabs slot="header" font-size="32" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" is-scroll :current="current" @change="tabsChange"></u-tabs>
 			<template>
 				<view class="" v-show="current === 0">
-					<trainning-item :info="item" btn-text="查看详情" v-for="(item, index) in data1" :key="index" @tap="onTo(item.userId)"></trainning-item>
+					<trainning-item :info="item" btn-text="详情" v-for="(item, index) in data1" :key="index" @tap="onTo(item.userId)"></trainning-item>
 				</view>
 				<view class="" v-show="current === 1">
 					<trainning-item :info="item" btn-text="报名" v-for="(item, index) in data2" :key="index" @tap="onTo(item.userId)">
 						<text slot="right">培训天数：{{item.count}}天</text>
 					</trainning-item>
 				</view>
-				<view class="" v-show="current === 2">
+				<!-- <view class="" v-show="current === 2">
 					<trainning-item :info="item" btn-text="签到" v-for="(item, index) in data3" :key="index">
 						<text slot="right">培训天数：{{item.count}}人</text>
 					</trainning-item>
@@ -20,7 +20,7 @@
 					<trainning-item :info="item" btn-text="查看详情" v-for="(item, index) in data4" :key="index">
 						<text slot="right">联系人：{{item.publisher}}</text>
 					</trainning-item>
-				</view>
+				</view> -->
 			</template>
 		</home-container>
 	</view>

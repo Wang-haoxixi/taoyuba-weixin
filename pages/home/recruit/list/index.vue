@@ -2,9 +2,9 @@
 	<!-- 招聘 -->
 	<view class="recruit-list-wrapper phonex-mb">
 		<view>
-			<!-- <view class="search-wrapper">
-				<u-search placeholder="搜索" v-model="form.content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
-			</view> -->
+			<view class="search-wrapper">
+				<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=1&keyword=${form.content}`"></static-search>
+			</view>
 			<view class="dropdown-wrapper">
 				<u-dropdown>
 					<u-dropdown-item v-model="form.positionId" title="职务" :options="options1" @change="(value) => {onChangeDrowdown('positionId', 'options1', value)}"></u-dropdown-item>
@@ -28,10 +28,12 @@
 	import jobItem from '@/pages/home/index/components/job-item.vue'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	import pageMixin from '@/pages/mixins/page.js'
+	import staticSearch from '@/pages/home/index/components/search.vue'
 	export default {
 		mixins: [dictMapMixin, pageMixin],
 		components: {
 			jobItem,
+			staticSearch
 		},
 		data () {
 			return {
@@ -51,6 +53,12 @@
 				data: []
 			}
 		},
+		onLoad (params) {
+			this.getList()
+			if (params.keyword) {
+				this.form.content = params.keyword
+			}
+		},
 		computed: {
 			options1 () {
 				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
@@ -61,9 +69,6 @@
 			options2 () {
 				return this.dictMap['salaryList']
 			}
-		},
-		onLoad () {
-			this.getList()
 		},
 		onPullDownRefresh () {
 			this.data = []

@@ -2,7 +2,7 @@
 	<!-- 培训机构 -->
 	<view class="recruit-list-wrapper phonex-mb">
 		<view class="search-wrapper">
-			<u-search placeholder="搜索" v-model="content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
+			<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=4&keyword=${form.content}`"></static-search>
 		</view>
 		<view class="dropdown-wrapper" ref="dropdown">
 		</view>
@@ -18,15 +18,19 @@
 <script>
 	import trainningItem from '@/pages/home/index/components/training-item.vue'
 	import pageMixin from '@/pages/mixins/page.js'
+	import staticSearch from '@/pages/home/index/components/search.vue'
 	export default {
 		mixins: [pageMixin],
 		components: {
 			trainningItem,
+			staticSearch
 		},
 		data () {
 			return {
 				status: 'loadmore',
-				content: '',
+				form: {
+					content: '',
+				},
 				data: [],
 			}
 		},
@@ -44,17 +48,20 @@
 				this.status = 'nomore'
 			}
 		},
-		onLoad () {
+		onLoad (params) {
+			if (params.keyword) {
+				this.form.content = params.keyword
+			}
 			this.getList()
 		},
 		methods: {
-			onSearch () {},
 			getList () {
-				this.$http.get('/tmlms/dept/pageForAll', {
-					params: {
+				let params = Object.assign({
 						size: this.page.size,
 						current: this.page.current
-					}
+					}, this.form)
+				this.$http.get('/tmlms/dept/pageForAll', {
+					params: params
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						let result = data.data

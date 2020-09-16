@@ -1,9 +1,9 @@
 <template>
 	<!-- 求职 -->
 	<view class="recruit-list-wrapper phonex-mb">
-		<!-- <view class="search-wrapper">
-			<u-search placeholder="搜索" v-model="form.content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
-		</view> -->
+		<view class="search-wrapper">
+			<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=2&keyword=${form.content}`"></static-search>
+		</view>
 		<view class="dropdown-wrapper">
 			<u-dropdown>
 				<u-dropdown-item v-model="form.salaryStart" title="经验" :options="options1" @change="(value) => {onChangeDrowdown('workExprience', 'options1', value)}"></u-dropdown-item>
@@ -28,10 +28,12 @@
 	import jobItem from '@/pages/home/index/components/job-item.vue'
 	import pageMixin from '@/pages/mixins/page.js'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
+	import staticSearch from '@/pages/home/index/components/search.vue'
 	export default {
 		mixins: [pageMixin, dictMapMixin],
 		components: {
-			jobItem
+			jobItem,
+			staticSearch
 		},
 		data () {
 			return {
@@ -50,6 +52,12 @@
 					{ label: '正序', value: 1 },
 					{ label: '倒叙', value: 2 }
 				],
+			}
+		},
+		onLoad (params) {
+			this.getList()
+			if (params.keyword) {
+				this.form.content = params.keyword
 			}
 		},
 		computed: {
@@ -79,9 +87,6 @@
 			this.data = []
 			this.page.current = 1
 			this.resetForm()
-			this.getList()
-		},
-		onLoad () {
 			this.getList()
 		},
 		methods: {

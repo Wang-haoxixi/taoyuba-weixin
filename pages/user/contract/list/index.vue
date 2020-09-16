@@ -11,15 +11,17 @@
 	import contractItem from './components/contract-item.vue'
 	import pageMixin from '@/pages/mixins/page.js'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
-		mixins: [pageMixin, dictMapMixin],
+		mixins: [pageMixin, dictMapMixin, userInfoMixin],
 		components: {
 			contractItem
 		},
 		data () {
 			return {
 				status: 'loadmore',
-				data: []
+				data: [],
+				idcard: undefined
 			}
 		},
 		onReachBottom() {
@@ -37,14 +39,18 @@
 			this.getList()
 		},
 		onReady () {
-			this.getList()
+			this.getUserInfoApi().then(() => {
+				this.idcard = this.userInfo.
+				this.getList()
+			})
 		},
 		methods: {
 			getList () {
 				this.$http.get('/tmlms/tybcontract/mycon', {
 					params: {
 						size: this.page.size,
-						current: this.page.current
+						current: this.page.current,
+						idcard: this.idcard
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {

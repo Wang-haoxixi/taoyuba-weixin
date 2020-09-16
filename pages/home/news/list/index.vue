@@ -1,5 +1,8 @@
 <template>
 	<view class="news-list-detail-container phonex-mb">
+		<view class="search-wrapper">
+			<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=0&keyword=${form.content}`"></static-search>
+		</view>
 		<view class="news-list-content">
 			<view v-for="item in data" :key="item.articleId" @tap="onTo(item)">
 				<news-item :info="item"></news-item>
@@ -12,14 +15,19 @@
 <script>
 	import pageMixin from '@/pages/mixins/page.js'
 	import newsItem from './components/news-item.vue'
+	import staticSearch from '@/pages/home/index/components/search.vue'
 	export default {
 		components: {
-			newsItem
+			newsItem,
+			staticSearch
 		},
 		mixins: [pageMixin],
 		data () {
 			return {
 				status: 'loadmore',
+				form: {
+					content: ''
+				},
 				data: []
 			}
 		},
@@ -37,16 +45,20 @@
 			this.page.current = 1
 			this.getList()
 		},
-		onLoad () {
+		onLoad (params) {
 			this.getList()
+			if (params.keyword) {
+				this.form.content = params.keyword
+			}
 		},
 		methods: {
 			getList () {
-				this.$http.get('/tybhrms/tybarticle/page', {
-					params: {
+				let params = Object.assign({
 						size: this.page.size,
 						current: this.page.current
-					}
+					}, this.form)
+				this.$http.get('/tybhrms/tybarticle/page', {
+					params: params
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						let result = data.data

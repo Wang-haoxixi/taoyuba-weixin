@@ -7,16 +7,18 @@
 			<u-tabs :list="list" active-color="#409EFF" :bold="false" :is-scroll="false" :current="current" @change="onChange"></u-tabs>
 		</view>
 		<view class="list-wrapper" v-show="current === 0">
-			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId)">
+			<view v-for="item in data1" :key="item.vedioId" @tap="onTo(item.vedioId)">
 				<video-item :info="item"></video-item>
 			</view>
+			<u-loadmore :status="status1" />
 		</view>
 		<view class="list-wrapper" v-show="current === 1">
-			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId)">
+			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
 				<video-item :info="item"></video-item>
 			</view>
+			<u-loadmore :status="status" />
 		</view>
-		<u-loadmore :status="status" />
+		
 	</view>
 </template>
 
@@ -37,29 +39,70 @@
 				],
 				current: 0,
 				status: 'loadmore',
+				status1: 'loadmore',
 				data: [],
-				data2: []
+				data1: [],
+				page1: {
+					total: 0,
+					current: 1,
+					size: 10
+				}
 			}
 		},
 		onReachBottom() {
-			if (this.page.total > this.page.current * this.page.size) {
-				this.status = 'loading'
-				this.page.current++
-				this.getList()
-			} else{
-				this.status = 'nomore'
+			if (this.current === 0) {
+				if (this.page1.total > this.page1.current * this.page1.size) {
+					this.status1 = 'loading'
+					this.page1.current++
+					this.getList1()
+				} else {
+					this.status1 = 'nomore'
+				}
+			} else {
+				if (this.page.total > this.page.current * this.page.size) {
+					this.status = 'loading'
+					this.page.current++
+					this.getList()
+				} else {
+					this.status = 'nomore'
+				}
 			}
 		},
 		onPullDownRefresh () {
-			this.data = []
-			this.page.current = 1
-			this.resetForm()
-			this.getList()
+			if (this.current === 0) {
+				this.data1 = []
+				this.page1.current = 1
+				this.getList1()
+			} else {
+				this.data = []
+				this.page.current = 1
+				this.getList()
+			}
+			
 		},
 		onLoad () {
 			this.getList()
+			this.getList1()
 		},
 		methods: {
+			getList1 () {
+				this.$http.get('/tybhrms/tyblessonvideo/page', {
+					params: {
+						size: this.page1.size,
+						current: this.page1.current
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let result = data.data
+						this.data1 = this.data1.concat(result.records)
+						this.page1.total = result.total
+						if (this.page1.total <= this.page1.size) {
+							this.status1 = 'nomore'
+						}
+					}
+					uni.stopPullDownRefresh()
+				})
+			},
 			getList () {
 				this.$http.get('/tybhrms/tyblessonvideo/page', {
 					params: {
@@ -78,10 +121,10 @@
 					uni.stopPullDownRefresh()
 				})
 			},
-			onTo (id) {
+			onTo (id, name) {
 				if (id) {
 					uni.navigateTo({
-						url: `/pages/home/video/detail/index?id=${id}`
+						url: name ? `/pages/home/video/detail/index?id=${id}` : `/pages/home/video/detail/index1?id=${id}`
 					});
 				}
 			},

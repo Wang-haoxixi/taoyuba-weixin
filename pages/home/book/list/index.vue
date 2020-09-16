@@ -1,5 +1,13 @@
 <template>
 	<view class="book-list-container">
+		<view class="tip-wrapper">
+			<view class="title">浙江省海洋渔业船舶交易服务中心专营</view>
+			<view class="text">订购电话：0571-89916991</view>
+			<view class="text">
+				<text class="name">联系人：申屠老师</text>
+				<text>周一-周五 9：00~17：00</text>
+			</view>
+		</view>
 		<view class="book-content">
 			<template v-for="item in data">
 				<book-item :key="item.id" :title="item.title" :info="item.info" :price="item.price" :imgUrl="item.bookImg"></book-item>
@@ -49,5 +57,23 @@
 	}
 </script>
 
-<style>
+<style scoped lang="scss">
+	.tip-wrapper {
+		padding: 30rpx;
+		background-color: #fff;
+		margin-bottom: 10rpx;
+		.title {
+			font-size: 32rpx;
+			color: #333;
+			margin-bottom: 10rpx;
+		}
+		.text {
+			font-size: 28rpx;
+			color: #999;
+			margin-bottom: 10rpx;
+			.name {
+				margin-right: 20rpx;
+			}
+		}
+	}
 </style>

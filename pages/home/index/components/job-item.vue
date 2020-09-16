@@ -6,7 +6,7 @@
 			</view>
 			<view class="content">
 				<text v-if="info.salary">￥{{info.salary}}</text>
-				<!-- <text class="price-type">{{info.priceType}}</text> -->
+				<text class="price-type" v-if="ageRequireLabel">年龄：{{ageRequireLabel}}</text>
 			</view>
 			<view class="time">
 				发布时间：{{getTime(info.createTime)}}
@@ -19,7 +19,6 @@
 			<view class="right-content">
 				<slot name="right"></slot>
 			</view>
-			
 		</view>
 	</view>
 </template>
@@ -38,6 +37,12 @@
 			hideBtn: {
 				type: Boolean,
 				default: false
+			},
+			dictMap: Object
+		},
+		computed: {
+			ageRequireLabel () {
+				return this.getDictLabel(this.dictMap['tyb_position_agerequirement'], this.info.ageRequire)
 			}
 		},
 		methods: {
@@ -48,6 +53,16 @@
 			getTime (time) {
 				return this.$tools.dateFormat('YYYY-mm-dd', new Date(time))
 			},
+			getDictLabel (data = [], value) {
+				let result = ''
+				for (let i = 0, len = data.length; i < len; i++) {
+					if (data[i].value === value) {
+						result = data[i].label
+						break
+					}
+				}
+				return result
+			}
 		}
 	}
 </script>
@@ -63,10 +78,11 @@
 			width: 100%;
 			overflow: hidden;
 			.title {
-				font-size: 28rpx;
+				font-size: 32rpx;
 				color: #666;
 				display: flex;
 				align-items: center;
+				margin-bottom: 10rpx;
 				.name {
 					max-width: 280rpx;
 					line-height: 1.2;
@@ -75,18 +91,19 @@
 				.address {
 					margin-left: 15rpx;
 					color: #999;
-					font-size: 24rpx;
+					font-size: 28rpx;
 				}
 			}
 			.content {
-				font-size: 26rpx;
+				font-size: 28rpx;
 				color: #409EFF;
 				.price-type {
-					margin-left:  15rpx;
+					color: #999;
+					margin-left: 20rpx;
 				}
 			}
 			.time {
-				font-size: 24rpx;
+				font-size: 28rpx;
 				color: #999;
 			}
 		}

@@ -6,13 +6,14 @@
 				<text class="text">舟山市</text>
 				<u-icon class="ic-right" name="arrow-down" size="28"></u-icon>
 			</view> -->
+			<view class="img-wrapper">
+				<image :src="`${imgUrl}/logo.png`" mode="scaleToFill"></image>
+			</view>
 			<view class="static-search-wrapper">
 				<static-search to="/pages/home/search/index" placeholder="搜索你感兴趣的内容"></static-search>
 			</view>
 			
-			<view class="img-wrapper">
-				<image :src="`${imgUrl}/v.png`" mode="scaleToFill"></image>
-			</view>
+			
 		</view>
 		<view class="content-wrapper">
 			<view class="swiper-wrapper">
@@ -101,7 +102,7 @@
 			}
 			.static-search-wrapper {
 				width: 100%;
-				margin-right: 30rpx;
+				margin-left: 30rpx;
 			}
 			.img-wrapper {
 				width: 78rpx;
