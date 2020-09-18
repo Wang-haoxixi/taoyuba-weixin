@@ -30,7 +30,7 @@
 					{ label: '设置', path: '/pages/user/setting/index' },
 				],
 				menu108: [
-					{ label: '我的合同', path: '/pages/user/contract/list/index' },
+					{ label: '我的渔船', path: '/pages/user/myship/ship/index' },
 					// { label: '合同解除', path: '/pages/user/contract/terminat-list/index' },
 					{ label: '我的评价', path: '' },
 					{ label: '船员招聘', path: '/pages/user/recruit/list/index' },

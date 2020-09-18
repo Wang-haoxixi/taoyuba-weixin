@@ -1,8 +1,8 @@
 export default {
 	data () {
 		return {
-			userInfo: {},
-			roles: []
+			userInfo: this.$cache.get('userInfo') || {},
+			roles: this.$cache.get('roles') || []
 		}
 	},
 	methods: {

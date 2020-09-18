@@ -8,7 +8,7 @@
 		</view>
 		<view class="content-wrapper">
 			<view class="item" v-for="(item, index) in data" :key="index">
-				<trainning-item :info="item" btn-text="查看详情" @to="onTo"></trainning-item>
+				<trainning-item :info="item" btn-text="详情" @to="onTo"></trainning-item>
 			</view>
 		</view>
 		<u-loadmore :status="status" />

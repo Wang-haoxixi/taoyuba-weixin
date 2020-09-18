@@ -2,16 +2,41 @@
 	<view class="news-detail-wrapper phonex-mb">
 		<view class="header-wrapper">
 			<view class="title">{{data.title}}</view>
-			<view class="time">{{data.createTime}}</view>
+			<view class="desc">
+				<text>{{data.source}}</text>
+				<text>{{data.createTime}}</text>
+			</view>
+			
 		</view>
 		<view class="content-wrapper">
 			<u-parse :html="data.articleContent"></u-parse>
 		</view>
+		<share-group></share-group>
 	</view>
 </template>
 
 <script>
+	import shareGroup from '@/pages/components/share/index.vue'
 	export default {
+		components: {
+			shareGroup
+		},
+		onShareAppMessage (res) {
+			console.log('onShareAppMessage', res)
+			return {
+				title: `${this.data.title}`,
+				path: `/pages/home/news/detail/index?id=${this.id}`,
+				imageUrl: this.data.image
+			}
+		},
+		onShareTimeline (res) {
+			console.log('onShareTimeline', res)
+			return {
+				title: `${this.data.title}`,
+				path: `/pages/home/news/detail/index?id=${this.id}`,
+				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+			}
+		},
 		data () {
 			return {
 				data: {}
@@ -54,10 +79,11 @@
 				font-size: 36rpx;
 				color: #666;
 			}
-			.time {
+			.desc {
 				font-size: 28rpx;
 				color: #999;
-				text-align: right;
+				display: flex;
+				justify-content: space-between;
 			}
 		}
 		.content-wrapper {

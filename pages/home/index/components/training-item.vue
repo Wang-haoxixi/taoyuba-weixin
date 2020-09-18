@@ -61,7 +61,7 @@
 			width: 100%;
 			overflow: hidden;
 			.title {
-				font-size: 28rpx;
+				font-size: 30rpx;
 				color: #666;
 				display: flex;
 				align-items: center;
@@ -73,11 +73,11 @@
 				.address {
 					margin-left: 15rpx;
 					color: #999;
-					font-size: 24rpx;
+					font-size: 28rpx;
 				}
 			}
 			.time {
-				font-size: 26rpx;
+				font-size: 28rpx;
 				color: #409EFF;
 				width: 100%;
 				overflow: hidden;
@@ -88,7 +88,7 @@
 			.info {
 				width: 100%;
 				overflow: hidden;
-				font-size: 24rpx;
+				font-size: 28rpx;
 				color: #999;
 			}
 		}
@@ -99,7 +99,7 @@
 			align-items: center;
 			justify-content: center;
 			.right-content {
-				font-size: 24rpx;
+				font-size: 28rpx;
 				color: #999;
 			}
 		}

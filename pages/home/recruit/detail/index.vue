@@ -4,7 +4,7 @@
 			<view class="title">{{positionIdLabel}}</view>
 			<view class="content">
 				<text class="price">￥{{data.salary || ''}}</text>
-				<text class="time">发布时间：{{data.createTime || ''}}</text>
+				<text class="time">发布时间：{{getTime}}</text>
 			</view>
 		</view>
 		<view class="content-wrapper">
@@ -33,27 +33,59 @@
 				</view>
 			</content-container>
 		</view>
+		<share-group></share-group>
 	</view>
 </template>
 
 <script>
 	import contentContainer from '@/pages/home/components/content-container.vue'
-	import infoMixin from '../../resume/mixins/info.js'
+	import infoMixin from '../mixins/info.js'
+	import shareGroup from '@/pages/components/share/index.vue'
 	export default {
 		mixins: [infoMixin],
 		components: {
-			contentContainer
+			contentContainer,
+			shareGroup
 		},
 		data () {
 			return {
 				data: {},
+				id: undefined,
 				cityLabel: ''
 			}
 		},
+		onShareAppMessage (res) {
+			console.log('onShareAppMessage', res)
+			return {
+				title: `招聘${this.positionIdLabel}职务`,
+				path: `/pages/home/recruit/detail/index?id=${this.id}`,
+				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+			}
+		},
+		onShareTimeline (res) {
+			console.log('onShareTimeline', res)
+			return {
+				title: `招聘${this.positionIdLabel}职务`,
+				path: `/pages/home/recruit/detail/index?id=${this.id}`,
+				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+			}
+		},
+		computed: {
+			getTime () {
+				if (this.data.createTime) {
+					console.log('this.data.createTime', this.data.createTime)
+					let time = +new Date(this.data.createTime)
+					return this.$tools.timestamp(time / 1000)
+				}
+				return ''
+			}
+		},
 		onLoad (params) {
+			this.id = params.id
 			this.getList(params.id)
 		},
 		methods: {
+			
 			getList (id) {
 				this.$http.get(`/tybhrms/tybrecruit/${id}`).then(({ data }) => {
 					if (data.code === 0) {
@@ -77,7 +109,7 @@
 			margin: 20rpx auto 0;
 			.title {
 				color: #333;
-				font-size: 34rpx;
+				font-size: 38rpx;
 			}
 			.content {
 				margin-top: 20rpx;
@@ -89,7 +121,7 @@
 					color: #409EFF;
 				}
 				.time {
-					font-size: 26rpx;
+					font-size: 28rpx;
 					color: #999;
 				}
 			}
@@ -104,3 +136,5 @@
 		}
 	}
 </style>
+
+ 

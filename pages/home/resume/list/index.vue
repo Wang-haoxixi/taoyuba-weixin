@@ -1,23 +1,23 @@
 <template>
 	<!-- 求职 -->
 	<view class="recruit-list-wrapper phonex-mb">
-		<view class="search-wrapper">
-			<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=2&keyword=${form.content}`"></static-search>
+		<view>
+			<view class="search-wrapper">
+				<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=1&keyword=${form.content}`"></static-search>
+			</view>
+			<view class="dropdown-wrapper">
+				<u-dropdown>
+					<u-dropdown-item v-model="form.positionId" title="职务" :options="options1" @change="(value) => {onChangeDrowdown('positionId', 'options1', value)}"></u-dropdown-item>
+					<u-dropdown-item v-model="form.salaryStart" title="薪水" :options="options2" @change="(value) => {onChangeDrowdown('salaryStart', 'options2', value)}"></u-dropdown-item>
+					<u-dropdown-item v-model="form.workMode" title="作业" :options="options3" @change="(value) => {onChangeDrowdown('workMode', 'options3', value)}"></u-dropdown-item>
+					<!-- <u-dropdown-item v-model="form.order" title="排序" :options="options4" @change="(value) => {onChangeDrowdown('order', 'options4', value)}"></u-dropdown-item> -->
+				</u-dropdown>
+			</view>
 		</view>
-		<view class="dropdown-wrapper">
-			<u-dropdown>
-				<u-dropdown-item v-model="form.salaryStart" title="经验" :options="options1" @change="(value) => {onChangeDrowdown('workExprience', 'options1', value)}"></u-dropdown-item>
-				<u-dropdown-item v-model="form.workMode" title="作业" :options="options2" @change="(value) => {onChangeDrowdown('workMode', 'options2', value)}"></u-dropdown-item>
-				<u-dropdown-item v-model="form.positionId" title="职务" :options="options3" @change="(value) => {onChangeDrowdown('positionId', 'options3', value)}"></u-dropdown-item>
-				<u-dropdown-item v-model="form.salaryStart" title="薪水" :options="options4" @change="(value) => {onChangeDrowdown('salaryStart', 'options4', value)}"></u-dropdown-item>
-				<!-- <u-dropdown-item v-model="form.order" title="排序" :options="options5" @change="(value) => {onChangeDrowdown('order', 'options5', value)}"></u-dropdown-item> -->
-			</u-dropdown>
-		</view>
-		<view class="content-wrapper">
+		
+		<view class="content-wrapper" id="contentWrapper">
 			<view class="item" v-for="(item, index) in data" :key="index">
-				<job-item :info="item" btnText="查看简历" @to="onTo">
-					<text slot="right">发布人：{{item.contactName}}</text>
-				</job-item>
+				<resume-item :info="item" @to="onTo" :dictMap="dictMap"></resume-item>
 			</view>
 		</view>
 		<u-loadmore :status="status" />
@@ -25,33 +25,32 @@
 </template>
 
 <script>
-	import jobItem from '@/pages/home/index/components/job-item.vue'
-	import pageMixin from '@/pages/mixins/page.js'
+	import resumeItem from './components/resume-item.vue'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
+	import pageMixin from '@/pages/mixins/page.js'
 	import staticSearch from '@/pages/home/index/components/search.vue'
 	export default {
-		mixins: [pageMixin, dictMapMixin],
+		mixins: [dictMapMixin, pageMixin],
 		components: {
-			jobItem,
+			resumeItem,
 			staticSearch
 		},
 		data () {
 			return {
 				status: 'loadmore',
+				options4: [
+					{ label: '正序', value: 1 },
+					{ label: '倒叙', value: 2 }
+				],
 				form: {
 					content: '',
 					positionId: '',
 					salaryStart: '',
 					salaryEnd: '',
-					workExprience: '',
 					workMode: '',
 					order: ''
 				},
-				data: [],
-				options5: [
-					{ label: '正序', value: 1 },
-					{ label: '倒叙', value: 2 }
-				],
+				data: []
 			}
 		},
 		onLoad (params) {
@@ -62,17 +61,20 @@
 		},
 		computed: {
 			options1 () {
-				return this.dictMap ? this.dictMap['tyb_work_exprience'] : []
-			},
-			options3 () {
 				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
 			},
-			options2 () {
+			options3 () {
 				return this.dictMap ? this.dictMap['tyb_resume_worktype'] : []
 			},
-			options4 () {
+			options2 () {
 				return this.dictMap['salaryList']
 			}
+		},
+		onPullDownRefresh () {
+			this.data = []
+			this.page.current = 1
+			this.resetForm()
+			this.getList()
 		},
 		onReachBottom() {
 			if (this.page.total > this.page.current * this.page.size) {
@@ -82,12 +84,6 @@
 			} else{
 				this.status = 'nomore'
 			}
-		},
-		onPullDownRefresh () {
-			this.data = []
-			this.page.current = 1
-			this.resetForm()
-			this.getList()
 		},
 		methods: {
 			onSearch () {},
@@ -160,7 +156,7 @@
 				if (row.idcard) {
 					uni.navigateTo({
 						url: `/pages/home/resume/detail/index?id=${row.idcard}`
-					});
+					})
 				}
 			}
 		}
@@ -174,11 +170,22 @@
 		}
 		.dropdown-wrapper {
 			background-color: #fff;
+			height: 80rpx;
+			// .dropdown-ref {
+			// 	background-color: #fff;
+			// 	top: 0;
+			// 	left: 0;
+			// 	right: 0;
+			// 	z-index: 10;
+			// 	::v-deep.__content {
+			// 		height: 100vh;
+			// 	}
+			// }
 		}
 		.content-wrapper {
-			margin-top: 0rpx;
+			// margin-top: 0rpx;
+			// margin-top: 184rpx;
 			background-color: #fff;
-			margin-bottom: 30rpx;
 			.item {
 				border-bottom: 1px solid #f6f6f6;
 			}

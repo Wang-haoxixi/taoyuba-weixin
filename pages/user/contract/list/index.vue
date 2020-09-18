@@ -40,7 +40,7 @@
 		},
 		onReady () {
 			this.getUserInfoApi().then(() => {
-				this.idcard = this.userInfo.
+				this.idcard = this.userInfo.idcard
 				this.getList()
 			})
 		},

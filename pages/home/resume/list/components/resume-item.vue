@@ -2,22 +2,14 @@
 	<view class="list-item-wrapper" @tap="onTo">
 		<view class="list-item_left">
 			<view class="title">
-				<text class="name ellipsis">{{info.positionIdLabel}}</text>
+				<text class="name ellipsis">{{info.realName}}</text>
 			</view>
 			<view class="content">
-				<text v-if="info.salary">￥{{info.salary}}</text>
-				<text class="price-type" v-if="ageRequireLabel">年龄：{{ageRequireLabel}}</text>
+				<text v-if="info.salary">薪资：{{info.salary}}</text>
+				<text class="price-type">职务：{{positionIdLabel}}</text>
 			</view>
 			<view class="time">
-				发布时间：{{getTime(info.createTime)}}
-			</view>
-		</view>
-		<view class="list-item_right" v-if="!hideBtn">
-			<view class="">
-				<u-button @click="onTo" :custom-style="{backgroundColor: 'rgba(64, 158, 255, 1)', height: '60rpx', lineHight: '60rpx', color: '#fff', fontSize: '26rpx', padding: '10rpx 20rpx'}">{{btnText}}</u-button>
-			</view>
-			<view class="right-content">
-				<slot name="right"></slot>
+				作业方式：{{workRequireLabel}}
 			</view>
 		</view>
 	</view>
@@ -41,47 +33,49 @@
 			dictMap: Object
 		},
 		computed: {
-			ageRequireLabel () {
-				return this.getDictLabel(this.dictMap['tyb_position_agerequirement'], this.info.ageRequire)
-			}
+			// 职务
+			positionIdLabel () {
+				let dict = this.dictMap['tyb_resume_position'] || []
+				return this.getDictLabel(this.info.positionId, dict)
+			},
+			// 作业方式
+			workRequireLabel () {
+				let dict = this.dictMap['tyb_resume_worktype'] || []
+				return this.getDictLabel(this.info.workRequire, dict)
+			},
 		},
 		methods: {
 			onTo () {
 				this.$emit('to', this.info)
 			},
-			// 获取时间
-			getTime (time) {
-				return this.$tools.dateFormat('YYYY-mm-dd', new Date(time))
-			},
-			getDictLabel (data = [], value) {
+			getDictLabel (val, data) {
+				if (val === '' || val == null) {
+					return
+				}
 				let result = ''
 				for (let i = 0, len = data.length; i < len; i++) {
-					if (data[i].value === value) {
+					if (data[i].value === val) {
 						result = data[i].label
-						break
 					}
 				}
 				return result
-			}
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.list-item-wrapper {
-		display: flex;
 		padding: 15px;
 		line-height: 2;
 		border-bottom: 1px solid #f6f6f6;
 		.list-item_left {
-			flex: 1 1 auto;
 			width: 100%;
 			overflow: hidden;
 			.title {
 				font-size: 30rpx;
 				color: #666;
 				display: flex;
-				align-items: center;
 				margin-bottom: 10rpx;
 				font-weight: 700;
 				.name {
@@ -105,17 +99,6 @@
 			}
 			.time {
 				font-size: 28rpx;
-				color: #999;
-			}
-		}
-		.list-item_right {
-			flex: 0 0 180rpx;
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			justify-content: center;
-			.right-content {
-				font-size: 24rpx;
 				color: #999;
 			}
 		}

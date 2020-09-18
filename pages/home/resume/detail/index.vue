@@ -19,8 +19,7 @@
 		<view class="content-wrapper">
 			<content-container title="基本信息">
 				<view>
-					<view class="text">应聘职务：{{newPositionIdLabel || ''}}</view>
-					<view class="text">原任职务：{{oldPositionIdLabel || ''}}</view>
+					<view class="text">应聘职务：{{positionIdLabel || ''}}</view>
 					<view class="text">作业方式：{{workRequireLabel || ''}}</view>
 					<view class="text">工作经验：{{workExprienceLabel || ''}}</view>
 					<view class="text">特殊技能：{{data.speciality || ''}}</view>
@@ -30,36 +29,62 @@
 			<content-container title="个人资料">
 				<view>
 					<view class="text">电话：{{data.contactPhone || ''}}</view>
+					<view class="text">性别：{{genderLabel || ''}}</view>
 					<view class="text">籍贯：{{cityLabel || ''}}</view>
 					<view class="text">出生日期：{{data.birthday || ''}}</view>
 					<view class="text">教育程度：{{eduDegreeLabel || ''}}</view>
-					<view class="text">外语水平：{{data.language || ''}}</view>
-					<view class="text">身高：{{data.height || ''}}</view>
+					<view class="text">民族：{{data.nation}}</view>
+					<view class="text">家庭地址：{{data.address}}</view>
+					<view class="text">家庭联系人：{{data.contactName}}</view>
+					<view class="text">家庭联系电话：{{data.contactPhone}}</view>
+					<view class="text">婚姻状态：{{maritalLabel || ''}}</view>
+					<view class="text">现住地址：{{data.preAddress}}</view>
 				</view>
 			</content-container>
-			<content-container title="补充说明">
-				<view class="text">{{data.remark || ''}}</view>
+			<content-container style="margin-top: 20rpx;color: #ba1b20;">
+				本站不能保证所有由第三方提供的信息完全准确，用户对这些信息的使用，需要经过进一步核实，对访问者未经自行核实误用相关信息造成的任何损失，本站不承担任何责任，求职招聘过程中请勿缴纳费用，谨防诈骗
 			</content-container>
 		</view>
+		<share-group></share-group>
 	</view>
 </template>
 
 <script>
 	import contentContainer from '@/pages/home/components/content-container.vue'
-	import infoMixin from '../mixins/info.js'
+	import infoMixin from '../../recruit/mixins/info.js'
+	import shareGroup from '@/pages/components/share/index.vue'
 	export default {
 		mixins: [infoMixin],
 		components: {
-			contentContainer
+			contentContainer,
+			shareGroup
+		},
+		onShareAppMessage (res) {
+			console.log('onShareAppMessage', res)
+			return {
+				title: `求职${this.data.realName}职务`,
+				path: `/pages/home/resume/detail/index?id=${this.id}`,
+				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+			}
+		},
+		onShareTimeline (res) {
+			console.log('onShareTimeline', res)
+			return {
+				title: `求职${this.data.realName}职务`,
+				path: `/pages/home/resume/detail/index?id=${this.id}`,
+				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+			}
 		},
 		data () {
 			return {
 				data: {},
 				cityLabel: '',
+				id: undefined,
 				image_url: this.$IMAGE_URL
 			}
 		},
 		onLoad (params) {
+			this.id = params.id
 			this.getList(params.id)
 		},
 		methods: {
@@ -136,4 +161,3 @@
 		}
 	}
 </style>
- 

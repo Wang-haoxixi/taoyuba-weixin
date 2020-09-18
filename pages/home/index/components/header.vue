@@ -21,7 +21,7 @@
 			</view>
 			<view class="menu-wrapper">
 				<u-grid :col="4" :border="false">
-					<u-grid-item v-for="(item, index) in menu" :key="index" class="" @click="onTo(item.path)">
+					<u-grid-item v-for="(item, index) in menu" :key="index" class="" @click="onTo(item)">
 						<view class="ic-wrapper" :style="{background: item.color}">
 							<u-icon :name="item.icon" size="45" color="#fff"></u-icon>
 						</view>
@@ -36,6 +36,9 @@
 <script>
 	import staticSearch from './search.vue'
 	export default {
+		props: {
+			roles: Array
+		},
 		components: {
 			staticSearch
 		},
@@ -53,24 +56,52 @@
 				],
 				imgUrl: this.$IMAGE_URL,
 				menu: [
-					{ path: '/pages/home/resume/list/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-zhaopin.png`, label: '招聘' },
-					{ path: '/pages/home/recruit/list/index', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-jianli.png`, label: '求职' },
+					{ path: '/pages/home/recruit/list/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-zhaopin.png`, label: '招聘' },
+					{ path: '/pages/home/resume/list/index', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-jianli.png`, label: '求职' },
 					{ path: '/pages/release/register/index', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '船员登记' },
-					{ path: '/pages/user/contract/list/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-hetong.png`, label: '合同' },
+					{ path: '', path2: '/pages/user/contract/list/index', path1: '/pages/user/myship/ship/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-hetong.png`, label: '合同' },
 					{ path: '/pages/home/training/list/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-peixunjigou.png`, label: '培训机构' },
 					{ path: '', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, label: '在线测试' },
-					{ path: '/pages/base/web?src=https://www.baidu.com', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-jinyuqi.png`, label: '进出港报告' },
+					{ path: '/pages/base/web?src=https://m.taoyu58.com/careerplanning', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-jinyuqi.png`, label: '进出港报告' },
 					{ path: '/pages/home/video/list/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '渔民学院' },
 				]
 			}
 		},
 		methods: {
-			onTo (path) {
-				if (path === '') {
-					return false
+			onTo (row) {
+				if (row.path1 && row.path2) {
+					console.log(this.roles, this.roles.length > 0, this.roles[1])
+					if (this.roles && this.roles.length > 0) {
+						if (this.roles[1] === 105) {
+							uni.navigateTo({
+								url: '/pages/user/contract/list/index'
+							})
+						} else if (this.roles[1] === 108) {
+							uni.navigateTo({
+								url: '/pages/user/myship/ship/index'
+							})
+						} else {
+							uni.navigateTo({
+								url: '/pages/home/contract/list/index'
+							})
+						}
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: '您还未登录，请先登录后查看'
+						})
+						this.$cache.clear()
+						uni.navigateTo({
+							url: '/pages/base/login'
+						})
+					}
+					return
+				}
+				if (row.path === '') {
+					return
 				}
 				uni.navigateTo({
-					url: path
+					url: row.path
 				})
 			},
 		}

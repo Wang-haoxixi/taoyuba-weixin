@@ -27,16 +27,19 @@
 				</view>
 			</view> -->
 		</view>
+		<share-group></share-group>
 	</view>
 </template>
 
 <script>
 	import curriculumItem from '@/pages/home/curriculum/list/components/curriculum-item.vue'
 	import contentContainer from '@/pages/home/components/content-container.vue'
+	import shareGroup from '@/pages/components/share/index.vue'
 	export default {
 		components: {
 			curriculumItem,
-			contentContainer
+			contentContainer,
+			shareGroup
 		},
 		data () {
 			return {

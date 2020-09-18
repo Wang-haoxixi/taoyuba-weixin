@@ -78,7 +78,7 @@
 			color: #666;
 		}
 		.time {
-			font-size: 26rpx;
+			font-size: 28rpx;
 			margin-top: 25rpx;
 			text-align: right;
 			color: #aaa;

@@ -5,7 +5,7 @@
 		</view>
 		<view class="item-right">
 			<view class="title u-line-2">{{info.title}}</view>
-			<view class="source text">来源{{info.source}}</view>
+			<view class="source text">来源：{{info.source}}</view>
 			<view class="time text">{{info.createTime}}</view>
 		</view>
 	</view>

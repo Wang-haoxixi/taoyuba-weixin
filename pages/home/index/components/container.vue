@@ -20,7 +20,6 @@
 		background-size: 100%;
 		.content-header {
 			height: 80rpx;
-			// width: 500rpx;
 		}
 		.content-body {
 			margin: 10rpx 30rpx 0;

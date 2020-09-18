@@ -87,12 +87,26 @@
 					}
 					this.historyList = this.historyList.slice(0, 10)
 					this.$cache.set('historySearchList', this.historyList)
-					// this.content = ''
-				} else {
-					this.$refs.uToast.show({
-						title: '搜索内容不能为空',
-						type: 'default'
+				}
+				let path = this.getPath(this.current)
+				if (path) {
+					uni.navigateTo({
+						url: path
 					})
+				}
+			},
+			getPath (type) {
+				switch (type) {
+					case 0:
+						return `/pages/home/news/list/index?keyword=${this.content}`
+					case 1:
+						return `/pages/home/recruit/list/index?keyword=${this.content}`
+					case 2:
+						return `/pages/home/resume/list/index?keyword=${this.content}`
+					case 3:
+						return ``
+					case 4:
+						return `/pages/home/training/list/index?keyword=${this.content}`
 				}
 			},
 			// 选择标签

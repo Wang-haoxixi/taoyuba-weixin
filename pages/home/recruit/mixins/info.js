@@ -61,6 +61,21 @@ export default {
 			let dict = this.dictMap['tyb_position_agerequirement'] || []
 			return this.getDictLabel(this.data.ageRequire, dict)
 		},
+		// 性别
+		genderLabel () {
+			let dict = this.dictMap['sex'] || []
+			return this.getDictLabel(this.data.gender, dict)
+		},
+		// 民族
+		nationLabel () {
+			let dict = this.dictMap['nationals'] || []
+			return this.getDictLabel(this.data.nation, dict)
+		},
+		// 婚姻状况
+		maritalLabel () {
+			let dict = this.dictMap['marital'] || []
+			return this.getDictLabel(this.data.maritalStatus, dict)
+		}
 	},
 	methods: {
 		getDictLabel (val, data) {

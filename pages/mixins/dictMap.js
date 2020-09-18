@@ -14,6 +14,13 @@ export default {
 					{ label: '人民币(RMB)', value: '1' },
 					{ label: '美元(USD)', value: '2' }
 				],
+				workStatus:[
+					{ label: '未用工', value: 0 },
+					{ label: '上船，已签合同', value: 1 },
+					{ label: '离船，未解除合同 ', value: 2 },
+					{ label: '上船，未签合同', value: 3 },
+					{ label: '离船，未签合同', value: 4 }
+				 ],
 				certLevel: [
 					{ value: '0', label: '--' },
 					{ value: '1', label: '一级' },

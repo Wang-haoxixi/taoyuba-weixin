@@ -16,19 +16,6 @@
 			}
 		},
 		{
-			"path": "pages/home/recruit/list/index",
-			"style": {
-				"navigationBarTitleText": "招聘",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/recruit/detail/index",
-			"style": {
-				"navigationBarTitleText": "招聘"
-			}
-		},
-		{
 			"path": "pages/home/resume/list/index",
 			"style": {
 				"navigationBarTitleText": "求职",
@@ -39,6 +26,19 @@
 			"path": "pages/home/resume/detail/index",
 			"style": {
 				"navigationBarTitleText": "求职"
+			}
+		},
+		{
+			"path": "pages/home/recruit/list/index",
+			"style": {
+				"navigationBarTitleText": "招聘",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/home/recruit/detail/index",
+			"style": {
+				"navigationBarTitleText": "招聘"
 			}
 		},
 		{
@@ -96,8 +96,7 @@
 		{
 			"path": "pages/home/contract/list/index",
 			"style": {
-				"navigationBarTitleText": "合同",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "合同"
 			}
 		},
 		{
@@ -227,6 +226,19 @@
 			"path": "pages/user/recruit/list/index",
 			"style": {
 				"navigationBarTitleText": "船员招聘",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user/myship/ship/index",
+			"style": {
+				"navigationBarTitleText": "我的渔船"
+			}
+		},
+		{
+			"path": "pages/user/myship/crew/list/index",
+			"style": {
+				"navigationBarTitleText": "船员管理",
 				"enablePullDownRefresh": true
 			}
 		},

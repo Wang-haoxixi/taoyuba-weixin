@@ -1,0 +1,83 @@
+<template>
+	<!-- 渔船 -->
+	<view class="user-ship-container phonex-mb">
+		<template v-if="data.length === 0">
+			<u-empty text="数据为空" mode="list"></u-empty>
+		</template>
+		<template v-else>
+			<view class="ship-item-wrapper" v-for="item in data" :key="item.shipId">
+				<view class="left-wrapper">
+					<view class="title">{{item.shipName}}</view>
+					<view class="text">渔船编号：{{item.shipNo}}</view>
+					<view class="text">持证人：{{item.shipowner}}</view>
+				</view>
+				<view class="right-wrapper">
+					<u-button @click="onTo(item)" class="btn">合同</u-button>
+					<u-button @click="onTo(item)">船员</u-button>
+				</view>
+			</view>
+		</template>
+	</view>
+</template>
+
+<script>
+	import userInfoMixin from '@/pages/mixins/user-info.js'
+	export default {
+		mixins: [userInfoMixin],
+		data () {
+			return {
+				data: [],
+			}
+		},
+		onLoad () {
+			this.getList()
+		},
+		methods: {
+			getList () {
+				this.$http.get(`/tmlms/tybshiphaver/getMyShip/${this.userInfo.userId}`).then(({ data }) => {
+					if (data.code === 0) {
+						this.data = data.data
+					}
+				})
+			},
+			onTo (row) {
+				if (row.shipId) {
+					uni.navigateTo({
+						url: `/pages/user/myship/crew/list/index?id=${row.shipId}`
+					})
+				}
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.user-ship-container {
+		.ship-item-wrapper {
+			background-color: #fff;
+			padding: 30rpx;
+			border-bottom: 1px solid #f6f6f6;
+			display: flex;
+			align-items: center;
+			.left-wrapper {
+				flex: 1 1 auto;
+				.title {
+					font-size: 32rpx;
+					color: #333;
+				}
+				.text {
+					margin-top: 15rpx;
+					color: #999;
+					font-size: 28rpx;
+				}
+			}
+			.right-wrapper {
+				flex: 0 0 100rpx;
+				margin-left: 20rpx;
+				.btn {
+					margin-bottom: 10rpx;
+				}
+			}
+		}
+	}
+</style>

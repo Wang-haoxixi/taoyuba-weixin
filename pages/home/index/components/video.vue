@@ -77,7 +77,7 @@
 				if (id) {
 					console.log('this.id', id)
 					uni.navigateTo({
-						url: `/pages/home/video/detail/index?id=${id}`
+						url: `/pages/home/video/detail/index1?id=${id}`
 					});
 				}
 			},

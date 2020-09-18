@@ -1,7 +1,7 @@
 <template>
 	<view class="home-container page-bottom">
 		<!-- 头部 菜单 -->
-		<home-header></home-header>
+		<home-header :roles="roles"></home-header>
 		<!-- 渔业资讯 政策法规 平台公告 -->
 		<home-notice ref="homeNotice"></home-notice>
 		<!-- 热门招聘 热门简历 禁渔期工作 -->
@@ -26,8 +26,9 @@
 	import homeInfo from './components/info.vue'
 	import tybTarbar from '@/pages/components/tarbar/index.vue'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
-		mixins: [dictMapMixin],
+		mixins: [dictMapMixin, userInfoMixin],
 		components: {
 			tybTarbar,
 			homeHeader,
@@ -36,6 +37,9 @@
 			homeTraining,
 			homeVideo,
 			homeInfo
+		},
+		onShow () {
+			this.roles = this.$cache.get('roles') || []
 		},
 		onReady () {
 			this.getDicMap().then(() => {

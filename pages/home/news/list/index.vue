@@ -30,7 +30,7 @@
 				},
 				data: []
 			}
-		},
+		}, 
 		onReachBottom() {
 			if (this.page.total > this.page.current * this.page.size) {
 				this.status = 'loading'
@@ -90,6 +90,11 @@
 
 <style scoped lang="scss">
 	.news-list-detail-container {
-		background-color: #fff;
+		.search-wrapper {
+			padding: 20rpx;
+		}
+		.news-list-content {
+			background-color: #fff;
+		}
 	}
 </style>
