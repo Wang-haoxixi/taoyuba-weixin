@@ -3,17 +3,22 @@
 		<home-container>
 			<u-tabs slot="header" font-size="32" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" :is-scroll="false" :current="current" @change="tabsChange"></u-tabs>
 			<template>
-				<view class="notice-content" v-show="current === 0" :class="data1.length !== 0 ? 'pt30' : ''">
+				<view v-if="data1.length" class="notice-content" v-show="current === 0" :class="data1.length !== 0 ? 'pt30' : ''">
 					<view v-for="(item, index) in data1" :key="index" @tap="onTo(item)">
-						<notice-item :info="item"></notice-item>
+						<news-item :info="item"></news-item>
 					</view>
+					<view class="more" @tap="onToList('/pages/home/news/list/index?type=1')">更多</view>
 				</view>
-				<view class="notice-content" v-show="current === 1" :class="data2.length !== 0 ? 'pt30' : ''">
-					<notice-item v-for="(item, index) in data2" :key="index" :info="item" @tap="onTo(item)"></notice-item>
+				<view  v-if="data2.length" class="notice-content" v-show="current === 1" :class="data2.length !== 0 ? 'pt30' : ''">
+					<view v-for="(item, index) in data2" :key="index" @tap="onTo(item)">
+						<news-item :info="item"></news-item>
+					</view>
+					<view class="more" @tap="onToList('/pages/home/news/list/index?type=2')">更多</view>
+					<!-- <notice-item v-for="(item, index) in data2" :key="index" :info="item" @tap="onTo(item)"></notice-item> -->
 				</view>
-				<view class="notice-content" v-show="current === 2" :class="data3.length !== 0 ? 'pt30' : ''">
+				<!-- <view class="notice-content" v-show="current === 2" :class="data3.length !== 0 ? 'pt30' : ''">
 					<notice-item v-for="(item, index) in data3" :key="index" :info="item" @tap="onTo(item)"></notice-item>
-				</view>
+				</view> -->
 			</template>
 		</home-container>
 	</view>
@@ -22,10 +27,12 @@
 <script>
 	import noticeItem from './notice-item.vue'
 	import homeContainer from './container.vue'
+	import newsItem from './news-item.vue'
 	export default {
 		components: {
 			noticeItem,
-			homeContainer
+			homeContainer,
+			newsItem
 		},
 		data () {
 			return {
@@ -94,6 +101,13 @@
 			tabsChange (index) {
 				this.current = index
 			},
+			onToList (path) {
+				if (path) {
+					uni.navigateTo({
+						url: path
+					})
+				}
+			},
 			onTo (row) {
 				if (row.isDispatch) {
 					if (row.httpSrc) {
@@ -116,6 +130,12 @@
 		.notice-content {
 			&.pt30 {
 				padding-top: 30rpx;
+			}
+			.more {
+				text-align: right;
+				font-size: 28rpx;
+				padding: 20rpx 30rpx;
+				color: $color-blue;
 			}
 		}
 	}

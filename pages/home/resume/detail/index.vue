@@ -24,9 +24,16 @@
 					<view class="text">工作经验：{{workExprienceLabel || ''}}</view>
 					<view class="text">特殊技能：{{data.speciality || ''}}</view>
 					<view class="text">期望月薪：<text class="money">{{data.salary || ''}}</text></view>
+					<view class="text">籍贯：{{cityLabel || ''}}</view>
+					<view class="text">年龄：{{ageLabel || ''}}</view>
 				</view>
 			</content-container>
-			<content-container title="个人资料">
+			<content-container title=" " v-if="show1">
+				<view style="margin-top: 20rpx;color: #ba1b20;">
+					船员的详细资料只有船东才可以查看。如果已是船东，请先登录！
+				</view>
+			</content-container>
+			<content-container title="个人资料" v-if="show">
 				<view>
 					<view class="text">电话：{{data.contactPhone || ''}}</view>
 					<view class="text">性别：{{genderLabel || ''}}</view>
@@ -75,8 +82,23 @@
 				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
 			}
 		},
+		computed: {
+			ageLabel () {
+				let birthday = this.data.birthday
+				if (birthday) {
+					let birthdayTime = +new Date(birthday)
+					let now = +new Date()
+					let time = (now - birthdayTime) / 1000 / 60 / 60 / 24 / 365
+					return Math.floor(time)
+					// console.log(birthday, new Date(birthday))
+				}
+				return ''
+			}
+		},
 		data () {
 			return {
+				show: false,
+				show1: false,
 				data: {},
 				cityLabel: '',
 				id: undefined,
@@ -85,9 +107,28 @@
 		},
 		onLoad (params) {
 			this.id = params.id
-			this.getList(params.id)
+			this.isLogin().then((data) => {
+				this.getList(params.id)
+				if (data.data) {
+					this.show = true
+					this.show1 = false
+				} else {
+					this.show1 = true
+					this.show2 = false
+				}
+			})
+			
 		},
 		methods: {
+			isLogin () {
+				return new Promise((resolve, reject) => {
+					this.$http.get('/tmlms/crew/checkUser').then(({ data }) => {
+						resolve(data.data)
+					}).catch(() => {
+						reject()
+					})
+				})
+			},
 			getList (id) {
 				this.$http.get(`/tmlms/crew/getCrewByidcard`, {
 					params: {
@@ -99,6 +140,9 @@
 						this.getCity(this.data.cityId)
 					}
 				})
+			},
+			getName (name) {
+				return this.$tools.textEncryption(name, 1, 100)
 			},
 		}
 	}

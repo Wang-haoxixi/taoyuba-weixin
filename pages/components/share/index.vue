@@ -51,7 +51,8 @@
 			}
 		}
 		.collection {
-			
+			border: 1px solid $color-blue;
+			color: $color-blue;
 		}
 		.share {
 			background-color: $color-blue;

@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash/cloneDeep'
 export default {
 	data () {
 		return {
@@ -115,14 +116,14 @@ export default {
 			return new Promise((resolve, 
 				reject) => {
 				let dictMap = this.$cache.get('dictMap') || {}
-				this.dictMap = Object.assign(this.dictMap, dictMap)
+				this.dictMap = cloneDeep(Object.assign(this.dictMap, dictMap))
 				if (dictMap && Object.keys(dictMap).length > 0) {
 					resolve()
 					return
 				}
 				
 				this.$http.get('/admin/dict/all_map').then(({ data }) => {
-					this.dictMap = Object.assign(this.dictMap, data)
+					this.dictMap = cloneDeep(Object.assign(this.dictMap, data))
 					this.$cache.set('dictMap', this.dictMap)
 					resolve()
 				})
@@ -130,10 +131,13 @@ export default {
 		},
 		getDictLabel (data, value) {
 			let result = ''
-			for (let i = 0, len = data.length; i < len; i++) {
-				if (data[i].value === value) {
-					result = data[i].label
-					break
+			console.log('value', value)
+			if (value) {
+				for (let i = 0, len = data.length; i < len; i++) {
+					if (data[i].value === value) {
+						result = data[i].label
+						break
+					}
 				}
 			}
 			return result

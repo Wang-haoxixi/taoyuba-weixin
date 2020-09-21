@@ -39,7 +39,7 @@
 				current: 0,
 				content: '',
 				list: [
-					{ name: '咨询', id: 0 },
+					{ name: '资讯', id: 0 },
 					{ name: '招聘', id: 1 },
 					{ name: '求职', id: 2 },
 					{ name: '培训信息', id: 3 },

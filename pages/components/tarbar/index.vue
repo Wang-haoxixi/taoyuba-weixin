@@ -61,8 +61,9 @@
 				let userInfo = this.$cache.get('userInfo')
 				let roles = this.$cache.get('roles')
 				if (userInfo.userId) {
+					console.log(roles, roles[1])
 					if (roles[1] === 108) {
-						if ( name === 'recruit') {
+						if (name === 'recruit') {
 							if (path !== '') {
 								uni.navigateTo({
 									url: path,
@@ -88,6 +89,11 @@
 							})
 						}
 					} else if (roles[1] == null) {
+						uni.showToast({
+							icon: 'none',
+							title: '无权限查看'
+						})
+					} else if (roles[1]) {
 						uni.showToast({
 							icon: 'none',
 							title: '无权限查看'

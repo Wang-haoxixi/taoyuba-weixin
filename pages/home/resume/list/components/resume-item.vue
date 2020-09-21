@@ -2,14 +2,14 @@
 	<view class="list-item-wrapper" @tap="onTo">
 		<view class="list-item_left">
 			<view class="title">
-				<text class="name ellipsis">{{info.realName}}</text>
+				<text class="name ellipsis">{{getName(info.realName)}}</text>
 			</view>
 			<view class="content">
 				<text v-if="info.salary">薪资：{{info.salary}}</text>
-				<text class="price-type">职务：{{positionIdLabel}}</text>
+				<text class="price-type">职务：{{positionIdLabel || ''}}</text>
 			</view>
 			<view class="time">
-				作业方式：{{workRequireLabel}}
+				作业方式：{{workRequireLabel || ''}}
 			</view>
 		</view>
 	</view>
@@ -45,6 +45,9 @@
 			},
 		},
 		methods: {
+			getName (name) {
+				return this.$tools.textEncryption(name, 1, 100)
+			},
 			onTo () {
 				this.$emit('to', this.info)
 			},
@@ -94,7 +97,9 @@
 				color: #409EFF;
 				.price-type {
 					color: #999;
-					margin-left: 20rpx;
+				}
+				text {
+					margin-right: 20rpx;
 				}
 			}
 			.time {

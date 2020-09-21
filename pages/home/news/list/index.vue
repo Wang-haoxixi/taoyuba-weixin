@@ -14,7 +14,7 @@
 
 <script>
 	import pageMixin from '@/pages/mixins/page.js'
-	import newsItem from './components/news-item.vue'
+	import newsItem from '@/pages/home/index/components/news-item.vue'
 	import staticSearch from '@/pages/home/index/components/search.vue'
 	export default {
 		components: {
@@ -26,7 +26,8 @@
 			return {
 				status: 'loadmore',
 				form: {
-					content: ''
+					content: '',
+					type: undefined
 				},
 				data: []
 			}
@@ -46,10 +47,14 @@
 			this.getList()
 		},
 		onLoad (params) {
-			this.getList()
 			if (params.keyword) {
 				this.form.content = params.keyword
 			}
+				
+			if (params.type) {
+				this.form.type = params.type
+			}
+			this.getList()
 		},
 		methods: {
 			getList () {

@@ -39,10 +39,10 @@
 					<view class="title">个人资料</view>
 					<view class="body-wrapper">
 						<u-form-item label="姓名" prop="realName" required>
-							<u-input v-model="form.realName" trim placeholder="请输入姓名" :disabled="form.realName"/>
+							<u-input v-model="form.realName" trim placeholder="请输入姓名"/>
 						</u-form-item>
 						<u-form-item label="身份证号" prop="idcard" required>
-							<u-input v-model="form.idcard" trim placeholder="请输入身份证号" :disabled="form.idcard"/>
+							<u-input v-model="form.idcard" trim placeholder="请输入身份证号"/>
 						</u-form-item>
 						<u-form-item label="性别" prop="genderLabel" required>
 							<u-input type="select" :select-open="genderShow" v-model="form.genderLabel" placeholder="请输入性别" @click="genderShow = true"/>
@@ -68,11 +68,11 @@
 						<u-form-item label="家庭联系人" prop="contactPhone" required>
 							<u-input placeholder="请输入家庭联系人" v-model="form.contactName"></u-input>
 						</u-form-item>
-						<u-form-item label="家庭联系电话" prop="contactName" required>
+						<u-form-item label="家庭联系电话" prop="contactName" required label-width="160">
 							<u-input placeholder="请输入家庭联系电话" trim v-model="form.contactPhone"></u-input>
 						</u-form-item>
 						<u-form-item label="身份证正面照片" required prop="photoFront" label-position="top">
-							<u-upload :show-progress="false" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/avatar`"></u-upload>
+							<u-upload :show-progress="false" @on-success="onSuccessPhotoFront" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/idcard`"></u-upload>
 						</u-form-item>
 						<u-form-item label="身份证反面照片" required prop="photoReverse" label-position="top">
 							<u-upload :show-progress="false" @on-remove="onRemovePhotoReverse" ref="uUpload2" :file-list="photoReverseList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/avatar`"></u-upload>
@@ -80,6 +80,12 @@
 						<u-form-item label="船员证书" required prop="certPhoto" label-position="top">
 							<u-upload :show-progress="false" @on-remove="onRemoveCertPhotoList" ref="uUpload3" :file-list="certPhotoList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/avatar`"></u-upload>
 						</u-form-item>
+					</view>
+				</view>
+				<view class="agreement">
+					<u-checkbox v-model="agreement" @change="checkboxChange"></u-checkbox>
+					<view class="agreement-text">
+						同意船东查看您的详细信息，包括姓名和手机号等
 					</view>
 				</view>
 				<view class="btn-wrapper">
@@ -121,6 +127,7 @@
 		mixins: [dictMapMixin, cityMixin],
 		data () {
 			return {
+				apiUrl: this.$API_URL,
 				editType: '',
 				photoFrontList: [],
 				photoReverseList: [],
@@ -143,6 +150,7 @@
 				isOpenShow: false,
 				genderShow: false,
 				imgURL: this.$IMAGE_URL,
+				agreement: true,
 				currentInfo: {},
 				btnStyle: {
 					backgroundColor: 'rgba(232, 103, 73, 1)',
@@ -160,6 +168,7 @@
 				],
 				districtIdDefaultSelector: [0, 0, 0],
 				form: {
+					isAgree: '', // 同意勾选
 					userId: '', 
 					photoFront: '', // 身份证正面照片
 					photoReverse: '', // 身份证反面照片
@@ -246,7 +255,7 @@
 						{ required: true, message: '请选择婚姻状态', trigger: 'change' }
 					],
 					photoFront: [
-						{ required: true, message: '请上传身份证正面照片', trigger: 'change' }
+						{ required: true, message: '请上传身份证正面照片', trigger: 'change, blur' }
 					],
 					photoReverse: [
 						{ required: true, message: '请上传身份证反面照片', trigger: 'change' }
@@ -467,6 +476,13 @@
 			onSubmit () {
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
+						if (!this.agreement) {
+							uni.showToast({
+								icon: 'none',
+								title: '您还未勾选同意船东查看您信息'
+							});
+							return
+						}
 						this.loading = true
 						if (this.editType === 'add') {
 							this.createApi()
@@ -479,7 +495,21 @@
 				})
 			},
 			onRemovePhotoFront (index, lists, name) {
+				this.form.photoFront = ''
 				this.photoFrontList = lists
+			},
+			onSuccessPhotoFront (data, index, lists, name) {
+				if (data.data.imageState === 'normal') {
+					let result = data.data
+					this.form.photoFront = result.url
+				} else {
+					uni.showToast({
+						icon: 'none',
+						title: data.data.nonIdcard || '无法识别'
+					});
+					this.form.photoFront = ''
+					this.photoFrontList.splice(0, 1)
+				}
 			},
 			onRemovePhotoReverse (index, lists, name) {
 				this.photoReverseList = lists
@@ -489,7 +519,10 @@
 			},
 			onConfirmNation (e) {
 				this.form['nation'] = e[0].label
-			}
+			},
+			checkboxChange(e) {
+				this.agreement = e.value
+			},
 		}
 	}
 </script>
@@ -520,6 +553,16 @@
 		}
 		.btn-wrapper {
 			margin: 30rpx;
+		}
+		.agreement {
+			display: flex;
+			align-items: center;
+			margin: 40rpx 10rpx;
+			font-size: 28rpx;
+			.agreement-text {
+				padding-left: 8rpx;
+				color: #999;
+			}
 		}
 	}
 </style>

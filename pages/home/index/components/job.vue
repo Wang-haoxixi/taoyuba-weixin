@@ -4,12 +4,12 @@
 			<u-tabs slot="header" font-size="32" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" :is-scroll="false" :current="current" @change="tabsChange"></u-tabs>
 			<template>
 				<view class="" v-show="current === 0">
-					<view class="job-item-content" v-for="(item, index) in data1" :key="item.recruitId">
+					<view class="job-item-content" v-for="(item, index) in data1" :key="index">
 						<job-item :info="item" @tap="onTo(item)" :dictMap="dictMap"></job-item>
 					</view>
 				</view>
 				<view class="news-content" v-show="current === 1">
-					<view class="news-item-wrapper" v-for="item in data2" :key="item.articleId" @tap="onTo(item)">
+					<view class="news-item-wrapper" v-for="(item, index) in data2" :key="index" @tap="onTo(item)">
 						<view class="title u-line-1">{{item.title}}</view>
 						<view class="desc u-line-1">{{item.description}}</view>
 					</view>

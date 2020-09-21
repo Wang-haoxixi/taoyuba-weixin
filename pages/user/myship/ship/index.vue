@@ -12,7 +12,7 @@
 					<view class="text">持证人：{{item.shipowner}}</view>
 				</view>
 				<view class="right-wrapper">
-					<u-button @click="onTo(item)" class="btn">合同</u-button>
+					<u-button @click="onToContract(item)" class="btn">合同</u-button>
 					<u-button @click="onTo(item)">船员</u-button>
 				</view>
 			</view>
@@ -39,6 +39,13 @@
 						this.data = data.data
 					}
 				})
+			},
+			onToContract (row) {
+				if (row.shipId) {
+					uni.navigateTo({
+						url: `/pages/user/contract/ship-list/index?shipNo=${row.shipNo}`
+					})
+				}
 			},
 			onTo (row) {
 				if (row.shipId) {
@@ -76,6 +83,7 @@
 				margin-left: 20rpx;
 				.btn {
 					margin-bottom: 10rpx;
+					display: inline-block;
 				}
 			}
 		}

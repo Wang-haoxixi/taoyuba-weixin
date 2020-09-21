@@ -15,8 +15,7 @@
 		</view>
 		<view class="content-wrapper">
 			<view class="item" v-for="(item, index) in data" :key="index">
-				<job-item :info="item" btnText="查看" @to="onTo" :dictMap="dictMap">
-				</job-item>
+				<job-item :info="item" btnText="查看" @to="onTo" :dictMap="dictMap"></job-item>
 			</view>
 		</view>
 		<u-loadmore :status="status" />
@@ -28,6 +27,7 @@
 	import pageMixin from '@/pages/mixins/page.js'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	import staticSearch from '@/pages/home/index/components/search.vue'
+	import cloneDeep from 'lodash/cloneDeep'
 	export default {
 		mixins: [pageMixin, dictMapMixin],
 		components: {
@@ -61,16 +61,16 @@
 		},
 		computed: {
 			options1 () {
-				return this.dictMap ? this.dictMap['tyb_work_exprience'] : []
+				return cloneDeep(this.dictMap['tyb_work_exprience']) || []
 			},
 			options3 () {
-				return this.dictMap ? this.dictMap['tyb_resume_position'] : [] 
+				return cloneDeep(this.dictMap['tyb_resume_position']) || [] 
 			},
 			options2 () {
-				return this.dictMap ? this.dictMap['tyb_resume_worktype'] : []
+				return cloneDeep(this.dictMap['tyb_resume_worktype']) || []
 			},
 			options4 () {
-				return this.dictMap['salaryList']
+				return cloneDeep(this.dictMap['salaryList']) || []
 			}
 		},
 		onReachBottom() {

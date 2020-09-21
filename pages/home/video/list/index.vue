@@ -89,7 +89,8 @@
 				this.$http.get('/tybhrms/tyblessonvideo/page', {
 					params: {
 						size: this.page1.size,
-						current: this.page1.current
+						current: this.page1.current,
+						type: 1
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {
@@ -107,7 +108,8 @@
 				this.$http.get('/tybhrms/tyblessonvideo/page', {
 					params: {
 						size: this.page.size,
-						current: this.page.current
+						current: this.page.current,
+						type: 2
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {

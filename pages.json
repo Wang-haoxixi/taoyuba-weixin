@@ -205,6 +205,13 @@
 			}
 		},
 		{
+			"path": "pages/user/contract/ship-list/index",
+			"style": {
+				"navigationBarTitleText": "合同管理",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path": "pages/user/contract/terminat-list/index",
 			"style": {
 				"navigationBarTitleText": "合同解除"

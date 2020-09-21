@@ -27,6 +27,7 @@
 			</view>
 		</view>
 		<face-recognition v-model="show" @end="onFaceEnd"></face-recognition>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -34,7 +35,9 @@
 	const TIME = 3 * 60
 	const INTERVAL_TIME = 5 * 60
 	import faceRecognition from '@/pages/components/face-recognition/index.vue'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
+		mixins: [userInfoMixin],
 		components: {
 			faceRecognition
 		},
@@ -52,7 +55,16 @@
 		},
 		onLoad (params) {
 			if (params.id) {
-				this.getList(params.id)
+				this.getUserInfoApi().then(() => {
+					if (this.roles[1] === 105) {
+						this.getList(params.id)
+					} else {
+						this.$refs.uToast.show({
+							title: '您无权利查看课程培训',
+							back: true
+						})
+					}
+				})
 			}
 			this.faceTime += this.initialTime
 			this.intervalTime += this.initialTime
