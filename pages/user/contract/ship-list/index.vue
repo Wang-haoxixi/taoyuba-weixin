@@ -1,9 +1,17 @@
 <template>
 	<view class="user-contract-container">
-		<view class="">
-			<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
-		</view>
-		<u-loadmore :status="status"/>
+		<template v-if="data.length > 0">
+			<view class="">
+				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
+			</view>
+			<!-- <u-loadmore :status="status"/> -->
+		</template>
+		<template v-else>
+			<view class="empty-wrapper">
+				<u-empty text="暂无合同" mode="list"></u-empty>
+			</view>
+		</template>
+		
 	</view>
 </template>
 
@@ -23,17 +31,18 @@
 			}
 		},
 		onReachBottom() {
-			if (this.page.total > this.page.current * this.page.size) {
-				this.status = 'loading'
-				this.page.current++
-				this.getList()
-			} else{
-				this.status = 'nomore'
-			}
+			this.getList()
+			// if (this.page.total > this.page.current * this.page.size) {
+			// 	this.status = 'loading'
+			// 	this.page.current++
+			// 	this.getList()
+			// } else{
+			// 	this.status = 'nomore'
+			// }
 		},
 		onPullDownRefresh () {
 			this.data = []
-			this.page.current = 1
+			// this.page.current = 1
 			this.getList()
 		},
 		onLoad (params) {
@@ -42,22 +51,25 @@
 		},
 		methods: {
 			getList (id) {
-				this.$http.get('/mlms/tybcontract/listByShipName', {
+				this.$http.get('/tmlms/tybcontract/listByShipName', {
 					params: {
-						size: this.page.size,
-						current: this.page.current,
+						// size: this.page.size,
+						// current: this.page.current,
 						shipNo: id
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						let result = data.data
-						this.data = this.data.concat(result.records)
-						this.page.total = result.total
-						if (this.page.total <= this.page.size) {
-							this.status = 'nomore'
-						}
+						this.data = result
+						console.log(this.data)
+						// this.data = this.data.concat(result.records)
+						// console.log(result, this.data)
+						// this.page.total = result.total
+						// if (this.page.total <= this.page.size) {
+						// 	this.status = 'nomore'
+						// }
 					}
-					uni.stopPullDownRefresh()
+					// uni.stopPullDownRefresh()
 				})
 			}
 		}
@@ -66,6 +78,8 @@
 
 <style scoped lang="scss">
 	.user-contract-container {
-		
+		.empty-wrapper {
+			padding-top: 100rpx;
+		}
 	}
 </style>

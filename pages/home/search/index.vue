@@ -104,7 +104,7 @@
 					case 2:
 						return `/pages/home/resume/list/index?keyword=${this.content}`
 					case 3:
-						return ``
+						return `/pages/home/training-info/list/index?keyword=${this.content}`
 					case 4:
 						return `/pages/home/training/list/index?keyword=${this.content}`
 				}

@@ -40,7 +40,7 @@
 	.btn-container {
 		display: flex;
 		justify-content: space-around;
-		margin-top: 20rpx;
+		margin-top: 40rpx;
 		button {
 			width: 50%;
 			background-color: #fff;

@@ -6,7 +6,7 @@
 					<image :src="`${image_url}/avatar.jpg`" mode="scaleToFill"></image>
 				</view>
 				<view class="content-wrapper">
-					<view class="name">{{data.realName || ''}}</view>
+					<view class="name">{{nameLabel || ''}}</view>
 					<!-- <view class="content">状态：在职-考虑机会</view> -->
 				</view>
 			</view>
@@ -60,8 +60,9 @@
 	import contentContainer from '@/pages/home/components/content-container.vue'
 	import infoMixin from '../../recruit/mixins/info.js'
 	import shareGroup from '@/pages/components/share/index.vue'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
-		mixins: [infoMixin],
+		mixins: [infoMixin, userInfoMixin],
 		components: {
 			contentContainer,
 			shareGroup
@@ -69,7 +70,7 @@
 		onShareAppMessage (res) {
 			console.log('onShareAppMessage', res)
 			return {
-				title: `求职${this.data.realName}职务`,
+				title: `${this.nameLabel}求职${this.positionIdLabel}职务`,
 				path: `/pages/home/resume/detail/index?id=${this.id}`,
 				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
 			}
@@ -77,7 +78,7 @@
 		onShareTimeline (res) {
 			console.log('onShareTimeline', res)
 			return {
-				title: `求职${this.data.realName}职务`,
+				title: `${this.nameLabel}求职${this.positionIdLabel}职务`,
 				path: `/pages/home/resume/detail/index?id=${this.id}`,
 				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
 			}
@@ -93,10 +94,18 @@
 					// console.log(birthday, new Date(birthday))
 				}
 				return ''
+			},
+			nameLabel () {
+				let result = ''
+				if (this.data.realName) {
+					result = this.nameShow ? this.data.realName : this.$tools.textEncryption(this.data.realName, 1, 100)
+				}
+				return result
 			}
 		},
 		data () {
 			return {
+				nameShow: false,
 				show: false,
 				show1: false,
 				data: {},
@@ -108,13 +117,24 @@
 		onLoad (params) {
 			this.id = params.id
 			this.isLogin().then((data) => {
-				this.getList(params.id)
+				console.log('data', data)
 				if (data.data) {
-					this.show = true
-					this.show1 = false
+					this.getUserInfoApi().then(() => {
+						this.getList(params.id)
+						if (this.roles[1] === 108) {
+							this.show = true
+							this.show1 = false
+							this.nameShow = true
+						} else {
+							this.show1 = true
+							this.show = false
+						}
+					})
+					
 				} else {
 					this.show1 = true
-					this.show2 = false
+					this.show = false
+					this.getList(params.id)
 				}
 			})
 			
@@ -123,7 +143,7 @@
 			isLogin () {
 				return new Promise((resolve, reject) => {
 					this.$http.get('/tmlms/crew/checkUser').then(({ data }) => {
-						resolve(data.data)
+						resolve(data)
 					}).catch(() => {
 						reject()
 					})

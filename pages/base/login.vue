@@ -157,7 +157,7 @@
 					this.$cache.set(TOKEN, data['access_token'])
 					this.$cache.set('refresh_token', data['refresh_token'])
 					uni.switchTab({
-						url: '/pages/user/index/index',
+						url: '/pages/home/index/index',
 						success: () => {
 							this.$http.get('/admin/user/info').then(({ data }) => {
 								if (data.code === 0) {

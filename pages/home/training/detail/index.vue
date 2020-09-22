@@ -18,37 +18,39 @@
 					<map :latitude="markers[0].latitude" :longitude="markers[0].longitude" :markers="markers"></map>
 				</view>
 			</content-container>
-			<!-- <view class="item">
+			<view class="item" v-if="list.length > 0">
 				<view class="title">培训信息</view>
 				<view class="info-wrapper">
-					<view class="item" v-for="(item, index) in data" :key="index">
-						<curriculum-item :info="item" hide-btn></curriculum-item>
+					<view class="item" v-for="(item, index) in list" :key="item.articleId">
+						<training-info-item :info="item"></training-info-item>
 					</view>
 				</view>
-			</view> -->
+			</view>
 		</view>
 		<share-group></share-group>
 	</view>
 </template>
 
 <script>
-	import curriculumItem from '@/pages/home/curriculum/list/components/curriculum-item.vue'
 	import contentContainer from '@/pages/home/components/content-container.vue'
+	import trainingInfoItem from '@/pages/home/index/components/training-info-item.vue'
 	import shareGroup from '@/pages/components/share/index.vue'
 	export default {
 		components: {
-			curriculumItem,
 			contentContainer,
-			shareGroup
+			shareGroup,
+			trainingInfoItem
 		},
 		data () {
 			return {
 				markers: [],
-				data: {}
+				data: {},
+				list: []
 			}
 		},
 		onLoad (params) {
 			this.getList(params.id)
+			this.getListInfo(params.id)
 		},
 		methods: {
 			getList (id) {
@@ -60,6 +62,18 @@
 					if (data.code === 0) {
 						this.data = data.data
 						this.markers = [{id: 1, latitude: this.data.lat, longitude: this.data.lng}]
+					}
+				})
+			},
+			getListInfo (id) {
+				this.$http.get(`/tybhrms/tybarticle/page`, {
+					params: {
+						size: 100,
+						userId: id
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.list = data.data.records
 					}
 				})
 			}

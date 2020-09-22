@@ -7,9 +7,12 @@
 					<trainning-item :info="item" btn-text="详情" v-for="(item, index) in data1" :key="index" @tap="onTo(item.userId)"></trainning-item>
 				</view>
 				<view class="" v-show="current === 1">
-					<trainning-item :info="item" btn-text="报名" v-for="(item, index) in data2" :key="index" @tap="onTo(item.userId)">
+					<!-- <trainning-item :info="item" btn-text="报名" v-for="(item, index) in data2" :key="index" @tap="onTo(item.userId)">
 						<text slot="right">培训天数：{{item.count}}天</text>
-					</trainning-item>
+					</trainning-item> -->
+					<view class="article-wrapper" v-for="(item, index) in data2" :key="item.articleId">
+						<training-info-item :info="item"></training-info-item>
+					</view>
 				</view>
 				<!-- <view class="" v-show="current === 2">
 					<trainning-item :info="item" btn-text="签到" v-for="(item, index) in data3" :key="index">
@@ -29,10 +32,12 @@
 <script>
 	import homeContainer from './container.vue'
 	import trainningItem from './training-item.vue'
+	import trainingInfoItem from './training-info-item.vue'
 	export default {
 		components: {
 			homeContainer,
-			trainningItem
+			trainningItem,
+			trainingInfoItem
 		},
 		data () {
 			return {
@@ -105,6 +110,9 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
+<style scoped lang="scss">
+	.article-wrapper {
+		border-bottom: 1px solid #f6f6f6;
+	}
 </style>
+

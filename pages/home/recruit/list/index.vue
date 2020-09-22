@@ -54,10 +54,10 @@
 			}
 		},
 		onLoad (params) {
-			this.getList()
 			if (params.keyword) {
 				this.form.content = params.keyword
 			}
+			this.getList()
 		},
 		computed: {
 			options1 () {

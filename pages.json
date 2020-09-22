@@ -74,6 +74,19 @@
 			}
 		},
 		{
+			"path": "pages/home/training-info/list/index",
+			"style": {
+				"navigationBarTitleText": "培训信息",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/home/training-info/detail/index",
+			"style": {
+				"navigationBarTitleText": "培训信息"
+			}
+		},
+		{
 			"path": "pages/home/news/list/index",
 			"style": {
 				"navigationBarTitleText": "新闻",
@@ -247,6 +260,12 @@
 			"style": {
 				"navigationBarTitleText": "船员管理",
 				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user/video/list/index",
+			"style": {
+				"navigationBarTitleText": "视频学习记录"
 			}
 		},
 		{

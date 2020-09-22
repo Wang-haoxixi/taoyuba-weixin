@@ -67,6 +67,9 @@
 						let result = data.data
 						this.data = this.data.concat(result.records)
 						this.page.total = result.total
+						if (this.page.total === 0) {
+							this.status = 'nomore'
+						}
 					}
 					uni.stopPullDownRefresh()
 				})

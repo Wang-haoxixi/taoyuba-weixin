@@ -89,7 +89,7 @@
 						this.data = data.data.records
 						if (this.data.length === 0) {
 							this.$refs.uToast.show({
-								title: '无此信息',
+								title: '查不到此条信息',
 							})
 						}
 					}

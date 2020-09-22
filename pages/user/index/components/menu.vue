@@ -26,7 +26,7 @@
 				menu105: [
 					{ label: '简历管理', path: '/pages/release/resume/edit' },
 					{ label: '我的合同', path: '/pages/user/contract/list/index' },
-					{ label: '我的培训', path: '' },
+					{ label: '我的培训', path: '/pages/user/video/list/index' },
 					{ label: '设置', path: '/pages/user/setting/index' },
 				],
 				menu108: [
