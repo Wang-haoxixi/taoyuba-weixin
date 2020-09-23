@@ -11,7 +11,7 @@
 				@timeupdate="onTimeupdate"
 				@pause="onPause"
 				@play="onPlay"
-				:enable-progress-gesture="false"
+				:enable-progress-gesture="true"
 				:show-progress="false"
 				:src="data.videoSrc"
 				:poster="data.videoImg"></video>
@@ -26,14 +26,14 @@
 				{{data.videoDescript || ''}}
 			</view>
 		</view>
-		<face-recognition v-model="show" @end="onFaceEnd"></face-recognition>
+		<face-recognition v-model="show" @end="onFaceEnd" :userInfo="userInfo"></face-recognition>
 		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
-	const TIME = 3 * 60
-	const INTERVAL_TIME = 5 * 60
+	const TIME = 3 * 5
+	const INTERVAL_TIME = 5 * 5
 	import faceRecognition from '@/pages/components/face-recognition/index.vue'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
@@ -45,15 +45,17 @@
 			return {
 				show: false,
 				once: true,
-				initialTime: 5,
+				initialTime: 0,
 				time: 0,
 				videoContext: null,
 				faceTime: TIME, // 活体识别间隔时间
 				intervalTime: INTERVAL_TIME, // 间隔记录时间
-				data: {}
+				data: {},
+				videoId: undefined
 			}
 		},
 		onLoad (params) {
+			this.videoId = params.id
 			if (params.id) {
 				this.getUserInfoApi().then(() => {
 					if (this.roles[1] === 105) {
@@ -75,19 +77,35 @@
 		},
 		onUnload () {
 			console.log('onUnload', this.time)
+			this.$http.post('/tybhrms/tybLearnRecord/save', {
+				learnTime: this.time,
+				userId: this.userInfo.userId,
+				videoId: this.videoId,
+				idcard: this.userInfo.idCard
+			})
 		},
 		methods: {
 			getList (id) {
 				this.$http.get(`/tybhrms/tyblessonvideo/${id}`).then(({ data }) => {
 					if (data.code === 0) {
 						this.data = data.data
+						this.initialTime = this.data.learnTime || 0
 					}
+				})
+			},
+			// 记录学习时间
+			setLearnTime () {
+				this.$http.post('/tybhrms/tybLearnRecord/save', {
+					learnTime: this.time,
+					userId: this.userInfo.userId,
+					videoId: this.videoId,
+					idcard: this.userInfo.idCard
 				})
 			},
 			onPlay (e) {
 				if (this.once) {
-					this.videoContext.pause()
-					this.show = true
+					// this.videoContext.pause()
+					// this.show = true
 					this.once = false
 				}
 			},
@@ -100,16 +118,17 @@
 			onTimeupdate (e) {
 				let currentTime = e.detail.currentTime
 				this.time = currentTime
-				if (this.faceTime < currentTime) {
-					this.videoContext.pause()
-					this.faceTime += TIME
-					this.intervalTime += INTERVAL_TIME
-					this.show = true
-					console.log('活体识别时间', currentTime, this.intervalTime)
-					return
-				}
+				// if (this.faceTime < currentTime) {
+				// 	this.videoContext.pause()
+				// 	this.faceTime += TIME
+				// 	this.intervalTime += INTERVAL_TIME
+				// 	this.show = true
+				// 	console.log('活体识别时间', currentTime, this.intervalTime)
+				// 	return
+				// }
 				if (currentTime > this.intervalTime) {
 					this.intervalTime += INTERVAL_TIME
+					this.setLearnTime()
 					console.log('记录时间', currentTime, this.intervalTime)
 				}
 			},

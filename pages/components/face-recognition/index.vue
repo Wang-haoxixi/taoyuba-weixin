@@ -15,7 +15,7 @@
 		<view class="btn-wrapper">
 			<u-button type="primary" @click="takePhoto" size="medium" :loading="loading">拍照</u-button>
 		</view>
-		
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -25,7 +25,8 @@
 			value: {
 				type: Boolean,
 				default: false
-			}
+			},
+			userInfo: Object
 		},
 		data () {
 			return {
@@ -133,12 +134,35 @@
 				 			quality: 'high',
 				 			success: (res) => {
 				 				this.phoneSrc = res.tempImagePath
-				 				setTimeout(() => {
-				 					this.loading = false
-				 					this.$emit('end')
-				 					this.phoneSrc = ''
-				 					this.close()
-				 				}, 2000)
+								// 图片转化为base64
+								uni.getFileSystemManager().readFile({
+								    filePath: this.phoneSrc, //选择图片返回的相对路径
+								    encoding: 'base64', //编码格式
+								    success: res => { //成功的回调
+								        let base64 = 'data:image/jpeg;base64,' + res.data //不加上这串字符，在页面无法显示的哦
+										// 活体识别
+										this.$http.post('/admin/file/person/verify', {
+								        	idcard: this.userInfo.idCard,
+								        	name: this.userInfo.realName,
+								        	file: base64
+								        }, {
+											header: {
+												'content-type': 'application/x-www-from-urlencoded' // 默认值
+											}
+										}).then(({ data }) => {
+								        	if (data.data) {
+								        		this.loading = false
+								        		this.phoneSrc = ''
+								        		this.close()
+								        	} else {
+								        		this.$refs.uToast.show({
+								        			title: '活体识别失败',
+								        			back: true
+								        		})
+								        	}
+								        })
+								    }
+								})
 				 			},
 				 			fail: () => {
 				 				this.loading = false

@@ -50,7 +50,9 @@
 	import getUser from '@/common/utils/user'
 	import { signin } from '@/common/utils/login.js'
 	import { TOKEN } from '@/common/config/index.js'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
+		mixins: [userInfoMixin],
 		data () {
 			return {
 				loading: false,
@@ -159,11 +161,7 @@
 					uni.switchTab({
 						url: '/pages/home/index/index',
 						success: () => {
-							this.$http.get('/admin/user/info').then(({ data }) => {
-								if (data.code === 0) {
-									this.$cache.set('userInfo', data.data.sysUser)
-								}
-							})
+							this.getUserInfoApi()
 						}
 					})
 					uni.hideLoading()

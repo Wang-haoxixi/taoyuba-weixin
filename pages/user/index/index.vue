@@ -80,9 +80,9 @@
 		// 	this.getUserInfo()
 		// },
 		onShow () {
-			this.userInfo = this.$cache.get('userInfo')
-			this.roles = this.$cache.get('roles')
-			
+			this.userInfo = this.$cache.get('userInfo') || {}
+			this.roles = this.$cache.get('roles') || []
+			this.text = ''
 			if (Object.keys(this.userInfo).length === 0) {
 				this.getUserInfo().then(() => {
 					this.init()
@@ -96,6 +96,7 @@
 			} else {
 				this.type = ''
 			}
+			console.log('type', this.roles, this.type)
 		},
 		methods: {
 			init () {
@@ -109,6 +110,8 @@
 					}).then(({ data }) => {
 						if(data.msg == '成功获取船员信息' && data.data.status == 1){
 						    this.text = "您的船员信息正在审核中..."
+						} else {
+							this.text = ''
 						}
 					})
 					this.$http.get('/tmlms/ship_owner/getDetail', {
@@ -119,6 +122,8 @@
 						if(data.data){
 							if(data.msg == 'success' && data.data.status === 1 && data.data.userId !== 0){
 							    this.text= '您的船东信息正在审核中...'
+							} else {
+								this.text = ''
 							}
 						}
 					})
