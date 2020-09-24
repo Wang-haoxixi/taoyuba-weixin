@@ -141,16 +141,17 @@
 								    success: res => { //成功的回调
 								        let base64 = 'data:image/jpeg;base64,' + res.data //不加上这串字符，在页面无法显示的哦
 										// 活体识别
-										this.$http.post('/admin/file/person/verify', {
+										// this.$tools.jsonForm
+										this.$http.post('/admin/file/person/verify', this.$tools.jsonForm({
 								        	idcard: this.userInfo.idCard,
 								        	name: this.userInfo.realName,
-								        	file: base64
-								        }, {
+								        	fileStr: base64
+								        }), {
 											header: {
-												'content-type': 'application/x-www-from-urlencoded' // 默认值
+												'Content-Type': 'application/x-www-from-urlencoded' // 默认值
 											}
 										}).then(({ data }) => {
-								        	if (data.data) {
+								        	if (data.data === '检测成功') {
 								        		this.loading = false
 								        		this.phoneSrc = ''
 								        		this.close()

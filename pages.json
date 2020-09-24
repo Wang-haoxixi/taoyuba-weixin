@@ -265,7 +265,8 @@
 		{
 			"path": "pages/user/video/list/index",
 			"style": {
-				"navigationBarTitleText": "视频学习记录"
+				"navigationBarTitleText": "视频学习记录",
+				"enablePullDownRefresh": true
 			}
 		},
 		{

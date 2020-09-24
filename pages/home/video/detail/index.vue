@@ -11,8 +11,8 @@
 				@timeupdate="onTimeupdate"
 				@pause="onPause"
 				@play="onPlay"
-				:enable-progress-gesture="true"
-				:show-progress="false"
+				:enable-progress-gesture="false"
+				:show-progress="true"
 				:src="data.videoSrc"
 				:poster="data.videoImg"></video>
 		</view>
@@ -32,8 +32,8 @@
 </template>
 
 <script>
-	const TIME = 3 * 5
-	const INTERVAL_TIME = 5 * 5
+	const TIME = 3 * 60
+	const INTERVAL_TIME = 5 * 60
 	import faceRecognition from '@/pages/components/face-recognition/index.vue'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
@@ -71,18 +71,21 @@
 			this.faceTime += this.initialTime
 			this.intervalTime += this.initialTime
 			this.time = this.initialTime
+			// console.log('this.faceTime:', this.faceTime, 'this.intervalTime:', this.intervalTime, 'this.time:', this.time)
 		},
 		onReady (res) {
 			this.videoContext = uni.createVideoContext('myVideo')
 		},
 		onUnload () {
 			console.log('onUnload', this.time)
-			this.$http.post('/tybhrms/tybLearnRecord/save', {
-				learnTime: this.time,
-				userId: this.userInfo.userId,
-				videoId: this.videoId,
-				idcard: this.userInfo.idCard
-			})
+			if (Math.floor(this.time)) {
+				this.$http.post('/tybhrms/tybLearnRecord/save', {
+					learnTime: this.time,
+					userId: this.userInfo.userId,
+					videoId: this.videoId,
+					idcard: this.userInfo.idCard
+				})
+			}
 		},
 		methods: {
 			getList (id) {
@@ -90,6 +93,8 @@
 					if (data.code === 0) {
 						this.data = data.data
 						this.initialTime = this.data.learnTime || 0
+						this.faceTime = +this.faceTime + (+this.initialTime)
+						this.intervalTime = +this.intervalTime + (+this.initialTime)
 					}
 				})
 			},
@@ -104,12 +109,13 @@
 			},
 			onPlay (e) {
 				if (this.once) {
-					// this.videoContext.pause()
-					// this.show = true
+					this.videoContext.pause()
+					this.show = true
 					this.once = false
 				}
 			},
 			onEnded (e) {
+				this.setLearnTime()
 				console.log('onEnded', e)
 			},
 			onPause (e) {
@@ -118,14 +124,15 @@
 			onTimeupdate (e) {
 				let currentTime = e.detail.currentTime
 				this.time = currentTime
-				// if (this.faceTime < currentTime) {
-				// 	this.videoContext.pause()
-				// 	this.faceTime += TIME
-				// 	this.intervalTime += INTERVAL_TIME
-				// 	this.show = true
-				// 	console.log('活体识别时间', currentTime, this.intervalTime)
-				// 	return
-				// }
+				// console.log('faceTime:', this.faceTime, 'currentTime:', currentTime, 'intervalTime:', this.intervalTime)
+				if (this.faceTime < currentTime) {
+					this.videoContext.pause()
+					this.faceTime += TIME
+					this.intervalTime += INTERVAL_TIME
+					this.show = true
+					console.log('活体识别时间', currentTime, this.intervalTime)
+					return
+				}
 				if (currentTime > this.intervalTime) {
 					this.intervalTime += INTERVAL_TIME
 					this.setLearnTime()

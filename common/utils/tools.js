@@ -222,5 +222,15 @@ export default {
 			}
 		}
 		return result
+	},
+	// jsonForm (json) {
+	// 	var str = [];
+	// 	for (var p in json) {
+	// 		str.push(encodeURIComponent(p) + "=" + encodeURIComponent(json[p]));
+	// 	}
+	// 	return str.join("&");
+	// },
+	jsonForm (obj) {
+		return Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&')
 	}
 }

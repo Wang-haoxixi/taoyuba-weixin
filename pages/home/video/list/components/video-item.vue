@@ -1,5 +1,5 @@
 <template>
-	<view class="video-item-wrapper phonex-mb">
+	<view class="video-item-wrapper ">
 		<view class="item-left">
 			<u-lazy-load :image="info.videoImg" height="200" img-mode="scaleToFill"></u-lazy-load>
 		</view>
