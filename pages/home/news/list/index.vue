@@ -1,7 +1,7 @@
 <template>
 	<view class="news-list-detail-container phonex-mb">
 		<view class="search-wrapper">
-			<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=0&keyword=${form.content}`"></static-search>
+			<static-search :placeholder="form.title || '搜索'" :to="`/pages/home/search/index?type=0&keyword=${form.title}`"></static-search>
 		</view>
 		<view class="news-list-content">
 			<view v-for="item in data" :key="item.articleId" @tap="onTo(item)">
@@ -26,7 +26,7 @@
 			return {
 				status: 'loadmore',
 				form: {
-					content: '',
+					title: '',
 					type: undefined
 				},
 				data: []
@@ -48,13 +48,18 @@
 		},
 		onLoad (params) {
 			if (params.keyword) {
-				this.form.content = params.keyword
+				this.form.title = params.keyword
 			}
 				
 			if (params.type) {
 				this.form.type = params.type
 			}
 			this.getList()
+		},
+		onUnload () {
+			uni.switchTab({
+				url: '/pages/home/index/index'
+			})
 		},
 		methods: {
 			getList () {

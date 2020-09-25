@@ -1,5 +1,5 @@
 <template>
-	<view class="news-detail-wrapper phonex-mb">
+	<view class="news-detail-wrapper phonex-mb mb150">
 		<view class="header-wrapper">
 			<view class="title">{{data.title}}</view>
 			<view class="desc">
@@ -26,7 +26,7 @@
 			return {
 				title: `${this.data.title}`,
 				path: `/pages/home/training-info/detail/index?id=${this.id}`,
-				imageUrl: this.data.image
+				// imageUrl: this.data.image
 			}
 		},
 		onShareTimeline (res) {
@@ -34,15 +34,17 @@
 			return {
 				title: `${this.data.title}`,
 				path: `/pages/home/training-info/detail/index?id=${this.id}`,
-				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+				// imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
 			}
 		},
 		data () {
 			return {
-				data: {}
+				data: {},
+				id: undefined
 			}
 		},
 		onLoad (params) {
+			this.id = params.id
 			if (params.id) {
 				this.getList(params.id)
 			}

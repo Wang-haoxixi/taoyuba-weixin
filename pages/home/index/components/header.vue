@@ -35,10 +35,9 @@
 
 <script>
 	import staticSearch from './search.vue'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
-		props: {
-			roles: Array
-		},
+		mixins: [userInfoMixin],
 		components: {
 			staticSearch
 		},
@@ -70,32 +69,34 @@
 		methods: {
 			onTo (row) {
 				if (row.path1 && row.path2) {
-					console.log(this.roles, this.roles.length > 0, this.roles[1])
-					if (this.roles && this.roles.length > 0) {
-						if (this.roles[1] === 105) {
-							uni.navigateTo({
-								url: '/pages/user/contract/list/index'
-							})
-						} else if (this.roles[1] === 108) {
-							uni.navigateTo({
-								url: '/pages/user/myship/ship/index'
-							})
+					// console.log(this.roles, this.roles.length > 0, this.roles[1])
+					this.getUserInfoApi().then(() => {
+						if (this.roles && this.roles.length > 0) {
+							if (this.roles[1] === 105) {
+								uni.navigateTo({
+									url: '/pages/user/contract/list/index'
+								})
+							} else if (this.roles[1] === 108) {
+								uni.navigateTo({
+									url: '/pages/user/myship/ship/index'
+								})
+							} else {
+								uni.navigateTo({
+									url: '/pages/home/contract/list/index'
+								})
+							}
 						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '您还未登录，请先登录后查看'
+							})
+							this.$cache.clear()
 							uni.navigateTo({
-								url: '/pages/home/contract/list/index'
+								url: '/pages/base/login'
 							})
 						}
-					} else {
-						uni.showToast({
-							icon: 'none',
-							title: '您还未登录，请先登录后查看'
-						})
-						this.$cache.clear()
-						uni.navigateTo({
-							url: '/pages/base/login'
-						})
-					}
-					return
+						return
+					})
 				}
 				if (row.path === '') {
 					return

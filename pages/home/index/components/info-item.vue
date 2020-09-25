@@ -19,6 +19,7 @@
 	.info-item-wrapper {
 		padding: 30rpx;
 		border-bottom: 1px solid #f6f6f6;
+		background-color: #fff;
 		.title {
 			font-size: 30rpx;
 			color: #666;

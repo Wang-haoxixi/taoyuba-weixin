@@ -1,5 +1,5 @@
 <template>
-	<view class="resume-detail-container phonex-mb">
+	<view class="resume-detail-container phonex-mb mb150">
 		<view class="header-wrapper">
 			<view class="header-top">
 				<view class="avatar">
@@ -72,7 +72,7 @@
 			return {
 				title: `${this.nameLabel}求职${this.positionIdLabel}职务`,
 				path: `/pages/home/resume/detail/index?id=${this.id}`,
-				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+				// imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
 			}
 		},
 		onShareTimeline (res) {
@@ -80,7 +80,7 @@
 			return {
 				title: `${this.nameLabel}求职${this.positionIdLabel}职务`,
 				path: `/pages/home/resume/detail/index?id=${this.id}`,
-				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+				// imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
 			}
 		},
 		computed: {

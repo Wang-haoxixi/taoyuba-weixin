@@ -9,14 +9,24 @@
 	export default {
 		props: {
 			placeholder: String,
-			to: String
+			to: String,
+			redirect: {
+				type: Boolean,
+				default: false
+			}
 		},
 		methods: {
 			onTo () {
 				if (this.to !== '') {
-					uni.navigateTo({
-						url: this.to
-					});
+					if (this.redirect) {
+						uni.redirectTo({
+							url: this.to
+						});
+					} else {
+						uni.navigateTo({
+							url: this.to
+						});
+					}
 				}
 			}
 		}

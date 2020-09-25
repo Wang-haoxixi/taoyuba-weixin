@@ -1,17 +1,20 @@
 <template>
 	<view class="user-contract-container">
-		<template v-if="data.length > 0">
+		<!-- <template v-if="data.length > 0">
 			<view class="">
 				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
 			</view>
-			<!-- <u-loadmore :status="status"/> -->
 		</template>
 		<template v-else>
 			<view class="empty-wrapper">
 				<u-empty text="暂无合同" mode="list"></u-empty>
 			</view>
-		</template>
-		
+		</template> -->
+		<list-layout :data="data" empty-text="暂无合同">
+			<view class="">
+				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
+			</view>
+		</list-layout>
 	</view>
 </template>
 
@@ -19,10 +22,12 @@
 	import contractItem from '../list/components/contract-item.vue'
 	import pageMixin from '@/pages/mixins/page.js'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
+	import listLayout from '@/pages/components/list-layout/index.vue'
 	export default {
 		mixins: [pageMixin, dictMapMixin],
 		components: {
-			contractItem
+			contractItem,
+			listLayout
 		},
 		data () {
 			return {

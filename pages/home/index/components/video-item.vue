@@ -57,6 +57,7 @@
 		height: 260rpx;
 		overflow: hidden;
 		border-radius: 8rpx;
+		background-color: #fff;
 		image {
 			width: 100%;
 			height: 100%;

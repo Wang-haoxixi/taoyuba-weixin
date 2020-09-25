@@ -73,6 +73,7 @@
 		padding: 15px;
 		line-height: 2;
 		border-bottom: 1px solid #f6f6f6;
+		background-color: #fff;
 		.list-item_left {
 			flex: 1 1 auto;
 			width: 100%;

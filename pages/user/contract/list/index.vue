@@ -1,9 +1,22 @@
 <template>
 	<view class="user-contract-container">
-		<view class="">
-			<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
-		</view>
-		<u-loadmore :status="status"/>
+		<!-- <template v-if="data.length">
+			<view class="">
+				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
+			</view>
+			<u-loadmore :status="status"/>
+		</template>
+		<template v-else>
+			<view class="empty-container">
+				<u-empty text="暂无合同" mode="list"></u-empty>
+			</view>
+		</template> -->
+		<list-layout :data="data" empty-text="暂无合同">
+			<view class="">
+				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
+			</view>
+			<u-loadmore :status="status"/>
+		</list-layout>
 	</view>
 </template>
 
@@ -12,10 +25,12 @@
 	import pageMixin from '@/pages/mixins/page.js'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
+	import listLayout from '@/pages/components/list-layout/index.vue'
 	export default {
 		mixins: [pageMixin, dictMapMixin, userInfoMixin],
 		components: {
-			contractItem
+			contractItem,
+			listLayout
 		},
 		data () {
 			return {
@@ -40,7 +55,7 @@
 		},
 		onReady () {
 			this.getUserInfoApi().then(() => {
-				this.idcard = this.userInfo.idcard
+				this.idcard = this.userInfo.idCard
 				this.getList()
 			})
 		},
@@ -70,6 +85,8 @@
 
 <style scoped lang="scss">
 	.user-contract-container {
-		
+		.empty-container {
+			padding-top: 100rpx;
+		}
 	}
 </style>

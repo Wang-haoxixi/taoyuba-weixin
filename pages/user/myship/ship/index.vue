@@ -1,10 +1,7 @@
 <template>
 	<!-- 渔船 -->
 	<view class="user-ship-container phonex-mb">
-		<template v-if="data.length === 0">
-			<u-empty text="数据为空" mode="list"></u-empty>
-		</template>
-		<template v-else>
+		<list-layout :data="data" empty-text="数据为空">
 			<view class="ship-item-wrapper" v-for="item in data" :key="item.shipId">
 				<view class="left-wrapper">
 					<view class="title">{{item.shipName}}</view>
@@ -16,13 +13,17 @@
 					<u-button @click="onTo(item)">船员</u-button>
 				</view>
 			</view>
-		</template>
+		</list-layout>
 	</view>
 </template>
 
 <script>
 	import userInfoMixin from '@/pages/mixins/user-info.js'
+	import listLayout from '@/pages/components/list-layout/index.vue'
 	export default {
+		components: {
+			listLayout
+		},
 		mixins: [userInfoMixin],
 		data () {
 			return {

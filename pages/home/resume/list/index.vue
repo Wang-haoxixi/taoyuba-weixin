@@ -3,7 +3,7 @@
 	<view class="recruit-list-wrapper phonex-mb">
 		<view>
 			<view class="search-wrapper">
-				<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=1&keyword=${form.content}`"></static-search>
+				<static-search :placeholder="form.realName || '搜索'" :to="`/pages/home/search/index?type=2&keyword=${form.realName}`"></static-search>
 			</view>
 			<view class="dropdown-wrapper">
 				<u-dropdown>
@@ -43,7 +43,7 @@
 					{ label: '倒叙', value: 2 }
 				],
 				form: {
-					content: '',
+					realName: '',
 					positionId: '',
 					salaryStart: '',
 					salaryEnd: '',
@@ -55,9 +55,14 @@
 		},
 		onLoad (params) {
 			if (params.keyword) {
-				this.form.content = params.keyword
+				this.form.realName = params.keyword
 			}
 			this.getList()
+		},
+		onUnload () {
+			uni.switchTab({
+				url: '/pages/home/index/index'
+			})
 		},
 		computed: {
 			options1 () {
@@ -144,7 +149,7 @@
 					scrollTop: 0
 				})
 			},
-			resetForm (ignore = ['content']) {
+			resetForm (ignore = ['realName']) {
 				let form = this.form
 				for (let key in form) {
 					if (ignore.findIndex(item => item === key) === -1) {

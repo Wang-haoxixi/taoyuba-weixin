@@ -1,7 +1,7 @@
 <template>
 	<view class="training-info-container">
 		<view class="search-wrapper">
-			<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=1&keyword=${form.content}`"></static-search>
+			<static-search :placeholder="form.title || '搜索'" :to="`/pages/home/search/index?type=1&keyword=${form.title}`"></static-search>
 		</view>
 		<view class="content-wrapper">
 			<view class="item" v-for="(item, index) in data" :key="index">
@@ -26,16 +26,21 @@
 			return {
 				status: 'loadmore',
 				form: {
-					content: ''
+					title: ''
 				},
 				data: []
 			}
 		},
 		onLoad (params) {
 			if (params.keyword) {
-				this.form.content = params.keyword
+				this.form.title = params.keyword
 			}
 			this.getList()
+		},
+		onUnload () {
+			uni.switchTab({
+				url: '/pages/home/index/index'
+			})
 		},
 		onPullDownRefresh () {
 			this.data = []
@@ -57,7 +62,7 @@
 					params: {
 						size: this.page.size,
 						current: this.page.current,
-						content: this.form.contentcontent
+						title: this.form.title
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {

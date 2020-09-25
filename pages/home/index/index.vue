@@ -1,7 +1,7 @@
 <template>
 	<view class="home-container page-bottom">
 		<!-- 头部 菜单 -->
-		<home-header :roles="roles"></home-header>
+		<home-header></home-header>
 		<!-- 渔业资讯 政策法规 平台公告 -->
 		<home-notice ref="homeNotice"></home-notice>
 		<!-- 热门招聘 热门简历 禁渔期工作 -->
@@ -38,9 +38,9 @@
 			homeVideo,
 			homeInfo
 		},
-		onShow () {
-			this.roles = this.$cache.get('roles') || []
-		},
+		// onShow () {
+		// 	this.roles = this.$cache.get('roles') || []
+		// },
 		onReady () {
 			this.getDicMap().then(() => {
 				this.$refs.homeJob.init()

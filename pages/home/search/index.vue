@@ -77,6 +77,7 @@
 			},
 			// 搜索
 			onSearch () {
+				console.log('this.content', this.content)
 				if (this.content.trim() !== '') {
 					let index = this.historyList.findIndex(item => item === this.content)
 					if (index === -1) {
@@ -88,26 +89,26 @@
 					this.historyList = this.historyList.slice(0, 10)
 					this.$cache.set('historySearchList', this.historyList)
 				}
-				let path = this.getPath(this.current)
+				let path = this.getPath(+this.current)
 				if (path) {
-					uni.navigateTo({
+					uni.redirectTo({
 						url: path
 					})
 				}
 			},
 			getPath (type) {
-				switch (type) {
-					case 0:
-						return `/pages/home/news/list/index?keyword=${this.content}`
-					case 1:
-						return `/pages/home/recruit/list/index?keyword=${this.content}`
-					case 2:
-						return `/pages/home/resume/list/index?keyword=${this.content}`
-					case 3:
-						return `/pages/home/training-info/list/index?keyword=${this.content}`
-					case 4:
-						return `/pages/home/training/list/index?keyword=${this.content}`
+				if (type === 0) {
+					return `/pages/home/news/list/index?keyword=${this.content}`
+				} else if (type === 1) {
+					return `/pages/home/recruit/list/index?keyword=${this.content}`
+				} else if (type === 2) {
+					return `/pages/home/resume/list/index?keyword=${this.content}`
+				} else if (type === 3) {
+					return `/pages/home/training-info/list/index?keyword=${this.content}`
+				} else if (type === 4) {
+					return `/pages/home/training/list/index?keyword=${this.content}`
 				}
+				return ''
 			},
 			// 选择标签
 			onChooseTag (content) {

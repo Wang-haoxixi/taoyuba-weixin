@@ -1,5 +1,5 @@
 <template>
-	<view class="recruit-detail-wrapper phonex-mb">
+	<view class="recruit-detail-wrapper phonex-mb mb150">
 		<view class="header-wrapper">
 			<view class="title">{{positionIdLabel}}</view>
 			<view class="content">
@@ -59,7 +59,7 @@
 			return {
 				title: `招聘${this.positionIdLabel}职务`,
 				path: `/pages/home/recruit/detail/index?id=${this.id}`,
-				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+				// imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
 			}
 		},
 		onShareTimeline (res) {
@@ -67,7 +67,7 @@
 			return {
 				title: `招聘${this.positionIdLabel}职务`,
 				path: `/pages/home/recruit/detail/index?id=${this.id}`,
-				imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
+				// imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
 			}
 		},
 		computed: {

@@ -65,6 +65,7 @@
 <style scoped lang="scss">
 	.notice-item-wrapper {
 		padding: 30rpx 30rpx 0;
+		background-color: #fff;
 		.text-wrapper {
 			padding-bottom: 30rpx;
 			border-bottom: 1px solid #f6f6f6;

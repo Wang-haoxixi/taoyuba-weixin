@@ -2,7 +2,7 @@
 	<!-- 培训机构 -->
 	<view class="recruit-list-wrapper phonex-mb">
 		<view class="search-wrapper">
-			<static-search :placeholder="form.content || '搜索'" :to="`/pages/home/search/index?type=4&keyword=${form.content}`"></static-search>
+			<static-search :placeholder="form.deptName || '搜索'" :to="`/pages/home/search/index?type=4&keyword=${form.deptName}`"></static-search>
 		</view>
 		<view class="dropdown-wrapper" ref="dropdown">
 		</view>
@@ -29,7 +29,7 @@
 			return {
 				status: 'loadmore',
 				form: {
-					content: '',
+					deptName: '',
 				},
 				data: [],
 			}
@@ -50,9 +50,14 @@
 		},
 		onLoad (params) {
 			if (params.keyword) {
-				this.form.content = params.keyword
+				this.form.deptName = params.keyword
 			}
 			this.getList()
+		},
+		onUnload () {
+			uni.switchTab({
+				url: '/pages/home/index/index'
+			})
 		},
 		methods: {
 			getList () {

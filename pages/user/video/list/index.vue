@@ -1,21 +1,28 @@
 <template>
 	<view class="user-video-list-container">
-		<view class="video-item-wrapper" v-for="info in data" :key="info.id" @tap="onTo(info)">
-			<view class="item-left">
-				<u-lazy-load :image="info.videoImg" height="150" img-mode="scaleToFill"></u-lazy-load>
+		<list-layout :data="data" empty-text="视频学习内容为空">
+			<view class="video-item-wrapper" v-for="info in data" :key="info.id" @tap="onTo(info)">
+				<view class="item-left">
+					<u-lazy-load :image="info.videoImg" height="150" img-mode="scaleToFill"></u-lazy-load>
+				</view>
+				<view class="item-right">
+					<view class="title u-line-1">{{info.vedioName}}</view>
+					<view class="text">已学习了{{getVideoTime(info.learnTime)}}</view>
+				</view>
 			</view>
-			<view class="item-right">
-				<view class="title u-line-1">{{info.vedioName}}</view>
-				<view class="text">已学习了{{getVideoTime(info.learnTime)}}</view>
-			</view>
-		</view>
-		<u-loadmore :status="status" />
+			<u-loadmore :status="status" />
+		</list-layout>
+		
 	</view>
 </template>
 
 <script>
 	import pageMixin from '@/pages/mixins/page.js'
+	import listLayout from '@/pages/components/list-layout/index.vue'
 	export default {
+		components: {
+			listLayout
+		},
 		mixins: [pageMixin],
 		data () {
 			return {
@@ -119,6 +126,9 @@
 			.text {
 				margin-top: 70rpx;
 			}
+		}
+		.empty-container {
+			padding-top: 100rpx;
 		}
 	}
 </style>

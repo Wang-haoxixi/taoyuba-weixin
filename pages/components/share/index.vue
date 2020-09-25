@@ -1,18 +1,55 @@
 <template>
 	<view class="btn-container">
-		<button type="default" class="collection" @tap="onCollection">收藏</button>
-		<button type="default" class="share" open-type="share">分享</button>
+		<button type="default" class="collection share-btn" :loading="loading" @tap="onCollection">{{name}}</button>
+		<button type="default" class="share share-btn" open-type="share">分享</button>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
+	const NO_COLLECTION = '收藏'
+	const COLLECTION = '已收藏'
 	export default {
 		props: {
-			info: Object
+			info: Object,
+			type: {
+				type: Number,
+				default: 1
+			},
+			title: String
+		},
+		data () {
+			return {
+				loading: false,
+				defaultType: 1
+			}
+		},
+		watch: {
+			type (newVal) {
+				this.defaultType = this.type
+			}
+		},
+		computed: {
+			name () {
+				return this.defaultType === 1 ? NO_COLLECTION : COLLECTION
+			}
 		},
 		methods: {
 			onCollection () {
-				this.$emit('collection')
+				return 
+				this.loading = true
+				this.$http.post('', {}).then(({ data }) => {
+					if (data.data) {
+						this.defaultType = 2
+						this.$refs.uToast.show({
+							title: '收藏成功',
+							position: 'bottom'
+						})
+					}
+					this.loading = false
+				}).catch(() => {
+					this.loading = false
+				})
 			},
 			onShare () {
 				uni.share({
@@ -41,6 +78,16 @@
 		display: flex;
 		justify-content: space-around;
 		margin-top: 40rpx;
+		padding: 20rpx 20rpx;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-color: #fff;
+		/* #ifndef APP-NVUE */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
 		button {
 			width: 50%;
 			background-color: #fff;
@@ -53,10 +100,15 @@
 		.collection {
 			border: 1px solid $color-blue;
 			color: $color-blue;
+			// border-top-left-radius: 36rpx;
+			// border-bottom-left-radius: 36rpx;
 		}
 		.share {
 			background-color: $color-blue;
 			color: #fff;
+		}
+		.share-btn {
+			line-height: 2;
 		}
 	}
 </style>

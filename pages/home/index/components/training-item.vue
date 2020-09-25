@@ -56,6 +56,7 @@
 		display: flex;
 		padding: 15px;
 		line-height: 2;
+		background-color: #fff;
 		.list-item_left {
 			flex: 1 1 auto;
 			width: 100%;

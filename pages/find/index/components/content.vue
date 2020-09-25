@@ -2,7 +2,7 @@
 	<view class="content-container">
 		<view class="title">证书查询</view>
 		<view class="">
-			<u-form :model="form" ref="uForm" label-width="100" :label-style="{color: '#999'}">
+			<u-form :model="form" ref="uForm" label-width="100" :label-style="{color: '#999'}" :border-bottom="false">
 				<u-form-item label="姓名" required prop="phone">
 					<u-input v-model="form.realName" border trim placeholder="请输入姓名"/>
 				</u-form-item>

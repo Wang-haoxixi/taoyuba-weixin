@@ -17,7 +17,7 @@
 					<view class="iconfont iconziliao"></view>
 					<text>个人资料</text>
 				</view>
-				<view class="item">
+				<view class="item" @tap="onTo('/pages/user/collection/index')">
 					<view class="iconfont iconshoucang other-ic"></view>
 					<text>我的收藏</text>
 				</view>

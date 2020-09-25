@@ -1,6 +1,6 @@
 <template>
 	<!-- 培训班 -->
-	<view class="training-detail-wrapper phonex-mb">
+	<view class="training-detail-wrapper phonex-mb mb150">
 		<view class="header-wrapper">
 			<view class="title">{{data.deptName || ''}}</view>
 			<view class="content">
@@ -45,10 +45,28 @@
 			return {
 				markers: [],
 				data: {},
-				list: []
+				list: [],
+				id: undefined
+			}
+		},
+		onShareAppMessage (res) {
+			console.log('onShareAppMessage', res)
+			return {
+				title: `${this.data.deptName}`,
+				path: `/pages/home/training/detail/index?id=${this.id}`,
+				// imageUrl: this.data.image
+			}
+		},
+		onShareTimeline (res) {
+			console.log('onShareTimeline', res)
+			return {
+				title: `${this.data.deptName}`,
+				path: `/pages/home/training/detail/index?id=${this.id}`,
+				// imageUrl: `${this.$IMAGE_URL}/blue-logo.png`
 			}
 		},
 		onLoad (params) {
+			this.id = params.id
 			this.getList(params.id)
 			this.getListInfo(params.id)
 		},
