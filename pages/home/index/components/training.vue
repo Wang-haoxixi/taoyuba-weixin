@@ -3,16 +3,20 @@
 		<home-container>
 			<u-tabs slot="header" font-size="32" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" is-scroll :current="current" @change="tabsChange"></u-tabs>
 			<template>
-				<view class="" v-show="current === 0">
-					<trainning-item :info="item" btn-text="详情" v-for="(item, index) in data1" :key="index" @tap="onTo(item.userId)"></trainning-item>
+				<view class="" v-show="current === 0"  v-if="data1.length">
+					<view class="trainning-item" v-for="(item, index) in data1" :key="index">
+						<trainning-item :info="item" btn-text="详情" @tap="onTo(item.userId)"></trainning-item>
+					</view>
+					<view class="more" @tap="onToList('/pages/home/training/list/index')">更多</view>
 				</view>
-				<view class="" v-show="current === 1">
+				<view class="" v-show="current === 1" v-if="data2.length">
 					<!-- <trainning-item :info="item" btn-text="报名" v-for="(item, index) in data2" :key="index" @tap="onTo(item.userId)">
 						<text slot="right">培训天数：{{item.count}}天</text>
 					</trainning-item> -->
 					<view class="article-wrapper" v-for="(item, index) in data2" :key="item.articleId">
 						<training-info-item :info="item"></training-info-item>
 					</view>
+					<view class="more" @tap="onToList('/pages/home/training-info/list/index')">更多</view>
 				</view>
 				<!-- <view class="" v-show="current === 2">
 					<trainning-item :info="item" btn-text="签到" v-for="(item, index) in data3" :key="index">
@@ -107,12 +111,28 @@
 					url: `/pages/home/training/detail/index?id=${id}`
 				})
 			},
+			onToList (path) {
+				if (path) {
+					uni.navigateTo({
+						url: path
+					})
+				}
+			},
 		}
 	}
 </script>
 <style scoped lang="scss">
 	.article-wrapper {
 		border-bottom: 1px solid #f6f6f6;
+	}
+	.trainning-item {
+		border-bottom: 1px solid #f6f6f6;
+	}
+	.more {
+		text-align: right;
+		font-size: 28rpx;
+		padding: 20rpx 30rpx;
+		color: $color-blue;
 	}
 </style>
 

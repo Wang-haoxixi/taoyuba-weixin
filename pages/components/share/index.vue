@@ -1,6 +1,6 @@
 <template>
 	<view class="btn-container">
-		<button type="default" class="collection share-btn" :loading="loading" @tap="onCollection">{{name}}</button>
+		<u-button type="default" :custom-style="customStyle" :hair-line="false" class="collection share-btn" :loading="loading" @click="onCollection">{{name}}</u-button>
 		<button type="default" class="share share-btn" open-type="share">分享</button>
 		<u-toast ref="uToast" />
 	</view>
@@ -9,40 +9,94 @@
 <script>
 	const NO_COLLECTION = '收藏'
 	const COLLECTION = '已收藏'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
+		mixins: [userInfoMixin],
 		props: {
 			info: Object,
+			// 收藏类型
 			type: {
-				type: Number,
-				default: 1
+				type: [Number, String],
+				default: ''
 			},
-			title: String
+			isCollection: false,
 		},
 		data () {
 			return {
 				loading: false,
-				defaultType: 1
+				defaultCollection: false,
+				customStyle: {
+					fontSize: '36rpx',
+					color: '#409EFF',
+					borderRadius: 0
+				}
 			}
 		},
 		watch: {
 			type (newVal) {
-				this.defaultType = this.type
+				this.defaultCollection = this.isCollection
 			}
 		},
 		computed: {
 			name () {
-				return this.defaultType === 1 ? NO_COLLECTION : COLLECTION
+				return this.defaultCollection ? COLLECTION : NO_COLLECTION
 			}
 		},
 		methods: {
 			onCollection () {
-				return 
 				this.loading = true
-				this.$http.post('', {}).then(({ data }) => {
+				this.$http.get('/tmlms/crew/checkUser').then(({ data }) => {
 					if (data.data) {
-						this.defaultType = 2
+						if (this.defaultCollection) {
+							this.onCancel()
+						} else {
+							this.onSubmit()
+						}
+					} else {
+						this.loading = false
+						this.$refs.uToast.show({
+							title: '请登录后收藏',
+							position: 'bottom'
+						})
+					}
+				}).catch(() => {
+					this.loading = false
+				})
+			},
+			onCancel () {
+				this.$http.post('/tmlms/crewCollect/remove', {
+					collectType: this.type,
+					collectedId: this.info.collectedId,
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.defaultCollection = false
+						this.$refs.uToast.show({
+							title: '收藏取消',
+							position: 'bottom'
+						})
+					}
+					this.loading = false
+				}).catch(() => {
+					this.loading = false
+				})
+			},
+			onSubmit () {
+				this.$http.post('/tmlms/crewCollect/create', {
+					collectType: this.type,
+					idcard: this.userInfo.idCard,
+					userId: this.userInfo.userId,
+					collectedId: this.info.collectedId,
+					collectedShowTitle: this.info.collectedShowTitle
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.defaultCollection = true
 						this.$refs.uToast.show({
 							title: '收藏成功',
+							position: 'bottom'
+						})
+					} else {
+						this.$refs.uToast.show({
+							title: '收藏失败',
 							position: 'bottom'
 						})
 					}
@@ -61,10 +115,10 @@
 					imageUrl:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595500268904&di=1510d1051962ddc7e308c37347ca5725&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201707%2F10%2F20170710210234_y3Kf5.jpeg',
 				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
 				    success: function (res) {
-				        console.log("success:" + JSON.stringify(res));
+				        console.log("success:" + JSON.stringify(res))
 				    },
 				    fail: function (err) {
-				        console.log("fail:" + JSON.stringify(err));
+				        console.log("fail:" + JSON.stringify(err))
 				    }
 				})
 			}
@@ -100,15 +154,18 @@
 		.collection {
 			border: 1px solid $color-blue;
 			color: $color-blue;
+			width: 100%;
 			// border-top-left-radius: 36rpx;
 			// border-bottom-left-radius: 36rpx;
 		}
 		.share {
 			background-color: $color-blue;
 			color: #fff;
+			width: 100%;
 		}
 		.share-btn {
 			line-height: 2;
+			font-size: 36rpx;
 		}
 	}
 </style>

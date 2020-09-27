@@ -33,7 +33,7 @@
 				</view>
 			</content-container>
 		</view>
-		<share-group></share-group>
+		<share-group type="2" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>
 
@@ -41,6 +41,7 @@
 	import contentContainer from '@/pages/home/components/content-container.vue'
 	import infoMixin from '../mixins/info.js'
 	import shareGroup from '@/pages/components/share/index.vue'
+	import cloneDeep from 'lodash/cloneDeep'
 	export default {
 		mixins: [infoMixin],
 		components: {
@@ -78,6 +79,12 @@
 					return this.$tools.timestamp(time / 1000)
 				}
 				return ''
+			},
+			collectionData () {
+				return {
+					collectedId: this.data.recruitId,
+					collectedShowTitle: this.positionIdLabel
+				}
 			}
 		},
 		onLoad (params) {
@@ -85,7 +92,6 @@
 			this.getList(params.id)
 		},
 		methods: {
-			
 			getList (id) {
 				this.$http.get(`/tybhrms/tybrecruit/${id}`).then(({ data }) => {
 					if (data.code === 0) {

@@ -1,6 +1,6 @@
 <template>
 	<view class="user-video-list-container">
-		<list-layout :data="data" empty-text="视频学习内容为空">
+		<list-layout :data="data" empty-text="视频学习记录为空" :loading="layoutLoading">
 			<view class="video-item-wrapper" v-for="info in data" :key="info.id" @tap="onTo(info)">
 				<view class="item-left">
 					<u-lazy-load :image="info.videoImg" height="150" img-mode="scaleToFill"></u-lazy-load>
@@ -27,10 +27,12 @@
 		data () {
 			return {
 				status: 'loadmore',
+				layoutLoading: false,
 				data: []
 			}
 		},
 		onReady () {
+			this.layoutLoading = true
 			this.getList()
 		},
 		onReachBottom() {
@@ -43,6 +45,7 @@
 			}
 		},
 		onPullDownRefresh () {
+			this.layoutLoading = true
 			this.data = []
 			this.page.current = 1
 			this.getList()
@@ -64,6 +67,9 @@
 						}
 					}
 					uni.stopPullDownRefresh()
+					this.layoutLoading = false
+				}).catch(() => {
+					this.layoutLoading = false
 				})
 			},
 			getVideoTime (time) {

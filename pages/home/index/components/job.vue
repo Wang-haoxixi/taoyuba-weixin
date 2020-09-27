@@ -3,16 +3,18 @@
 		<home-container>
 			<u-tabs slot="header" font-size="32" :list="list" inactive-color="#fff" bg-color="transparent" active-color="#fff" :bold="false" :bar-style="{background: '#c29799'}" :is-scroll="false" :current="current" @change="tabsChange"></u-tabs>
 			<template>
-				<view class="" v-show="current === 0">
+				<view class="" v-show="current === 0" v-if="data1.length">
 					<view class="job-item-content" v-for="(item, index) in data1" :key="index">
 						<job-item :info="item" @tap="onTo(item)" :dictMap="dictMap"></job-item>
 					</view>
+					<view class="more" @tap="onToList('/pages/home/recruit/list/index')">更多</view>
 				</view>
-				<view class="news-content" v-show="current === 1">
+				<view class="news-content" v-show="current === 1" v-if="data2.length">
 					<view class="news-item-wrapper" v-for="(item, index) in data2" :key="index" @tap="onTo(item)">
 						<view class="title u-line-1">{{item.title}}</view>
 						<view class="desc u-line-1">{{item.description}}</view>
 					</view>
+					<view class="more" @tap="onToList('/pages/home/recruit/list/index?type=6')">更多</view>
 				</view>
 			</template>
 		</home-container>
@@ -110,7 +112,14 @@
 						})
 					}
 				}
-			}
+			},
+			onToList (path) {
+				if (path) {
+					uni.navigateTo({
+						url: path
+					})
+				}
+			},
 		}
 	}
 </script>
@@ -135,6 +144,12 @@
 				color: #aaa;
 				margin-top: 20rpx;
 			}
+		}
+		.more {
+			text-align: right;
+			font-size: 28rpx;
+			padding: 20rpx 30rpx;
+			color: $color-blue;
 		}
 	}
 </style>

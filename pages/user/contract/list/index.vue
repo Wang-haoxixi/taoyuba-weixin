@@ -11,7 +11,7 @@
 				<u-empty text="暂无合同" mode="list"></u-empty>
 			</view>
 		</template> -->
-		<list-layout :data="data" empty-text="暂无合同">
+		<list-layout :data="data" empty-text="暂无合同" :loading="layoutLoading">
 			<view class="">
 				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
 			</view>
@@ -36,7 +36,8 @@
 			return {
 				status: 'loadmore',
 				data: [],
-				idcard: undefined
+				idcard: undefined,
+				layoutLoading: false
 			}
 		},
 		onReachBottom() {
@@ -54,6 +55,7 @@
 			this.getList()
 		},
 		onReady () {
+			this.layoutLoading = true
 			this.getUserInfoApi().then(() => {
 				this.idcard = this.userInfo.idCard
 				this.getList()
@@ -77,6 +79,7 @@
 						}
 					}
 					uni.stopPullDownRefresh()
+					this.layoutLoading = false
 				})
 			}
 		}

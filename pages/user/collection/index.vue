@@ -4,9 +4,44 @@
 			<u-tabs-swiper ref="uTabs" :list="list" :current="current" @change="tabsChange" swiperWidth="750" :is-scroll="false"></u-tabs-swiper>
 		</view>
 		<swiper :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
-			<swiper-item class="swiper-item" v-for="(item, index) in 5" :key="index">
-				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom">
-					index:{{index}}
+			<!-- 求职 -->
+			<swiper-item class="swiper-item">
+				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(1)">
+					<view class="view" @tap="onTo(item, 1)" v-for="item in data1" :key="item.id">
+						1
+					</view>
+				</scroll-view>
+			</swiper-item>
+			<!-- 招聘 -->
+			<swiper-item class="swiper-item">
+				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(2)">
+					<view class="view" @tap="onTo(item, 2)" v-for="item in data2" :key="item.id">
+						<view class="title">{{item.collectedShowTitle}}</view>
+					</view>
+				</scroll-view>
+			</swiper-item>
+			<!-- 资讯 -->
+			<swiper-item class="swiper-item">
+				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(3)">
+					<view class="view" @tap="onTo(item, 3)" v-for="item in data3" :key="item.id">
+						3
+					</view>
+				</scroll-view>
+			</swiper-item>
+			<!-- 培训机构 -->
+			<swiper-item class="swiper-item">
+				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(4)">
+					<view class="view" @tap="onTo(item, 4)" v-for="item in data4" :key="item.id">
+						4
+					</view>
+				</scroll-view>
+			</swiper-item>
+			<!-- 培训信息 -->
+			<swiper-item class="swiper-item">
+				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(5)">
+					<view class="view" @tap="onTo(item, 5)" v-for="item in data5" :key="item.id">
+						5
+					</view>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -15,7 +50,9 @@
 
 <script>
 	import listLayout from '@/pages/components/list-layout/index.vue'
+	import pageMixin from '@/pages/mixins/page.js'
 	export default {
+		mixins: [pageMixin],
 		components: {
 			listLayout
 		},
@@ -29,10 +66,85 @@
 					{ name: '资讯', type: 3 },
 					{ name: '培训机构', type: 4 },
 					{ name: '培训信息', type: 5 }
-				]
+				],
+				data1: [],
+				data2: [],
+				data3: [],
+				data4: [],
+				data5: [],
+				once: {
+					one: true,
+					two: false,
+					three: false,
+					four: false,
+					five: false
+				},
+				page1: {
+					total: 0,
+					current: 1,
+					size: 10
+				},
+				page2: {
+					total: 0,
+					current: 1,
+					size: 10
+				},
+				page3: {
+					total: 0,
+					current: 1,
+					size: 10
+				},
+				page4: {
+					total: 0,
+					current: 1,
+					size: 10
+				},
+				page5: {
+					total: 0,
+					current: 1,
+					size: 10
+				}
+			}
+		},
+		onLoad () {
+			this.getList(1)
+		},
+		watch: {
+			current (newVal) {
+				if (newVal === 0 && !this.once.one) {
+					this.once.one = true
+					this.getList(1)
+				} else if (newVal === 1 && !this.once.two) {
+					this.once.two = true
+					this.getList(2)
+				} else if (newVal === 2 && !this.once.three) {
+					this.once.three = true
+					this.getList(3)
+				} else if (newVal === 3 && !this.once.four) {
+					this.once.four = true
+					this.getList(4)
+				} else if (newVal === 4 && !this.once.five) {
+					this.once.five = true
+					this.getList(5)
+				}
 			}
 		},
 		methods: {
+			getList (index) {
+				this.$http.get('/tmlms/crewCollect/getPage', {
+					params: {
+						size: this[`page${index}`].size,
+						current: this[`page${index}`].current,
+						collectType: index
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let result = data.data
+						this[`data${index}`] = this[`data${index}`].concat(result.records)
+						this[`page${index}`].total = result.total
+					}
+				})
+			},
 			// tabs通知swiper切换
 			tabsChange (index) {
 				this.swiperCurrent = index;
@@ -51,7 +163,32 @@
 				this.current = current;
 			},
 			// scroll-view到底部加载更多
-			onreachBottom () {
+			onreachBottom (index) {
+				if (index === 1) {
+					
+				} else if (index === 2) {
+					this.getList(2)
+				}
+			},
+			onTo(row, index) {
+				let path = ''
+				// 求职 1，招聘 2，资讯 3，培训机构 4，培训信息 5 
+				if (index === 1) {
+					path = `/pages/home/resume/detail/index?id=${row.collectedId}`
+				} else if (index === 2) {
+					path = `/pages/home/recruit/detail/index?id=${row.collectedId}`
+				} else if (index === 3) {
+					path = `/pages/home/news/detail/index?id=${row.collectedId}`
+				} else if (index === 4) {
+					path = `/pages/home/training/detail/index?id=${row.collectedId}`
+				} else if (index === 5) {
+					path = `/pages/home/training-info/detail/index?id=${row.collectedId}`
+				}
+				if (path) {
+					uni.navigateTo({
+						url: path
+					})
+				}
 				
 			}
 		}
@@ -59,4 +196,11 @@
 </script>
 
 <style lang="scss" scoped>
+	.view {
+		padding: 30rpx;
+		background-color: #fff;
+		font-size: 32rpx;
+		color: #333;
+		border-bottom: 1px solid #f6f6f6;
+	}
 </style>

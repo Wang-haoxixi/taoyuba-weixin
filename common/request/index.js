@@ -44,7 +44,9 @@ http.validateStatus = (statusCode) => {
 
 http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
 	uni.showLoading({
-		title: '加载中'
+		icon: 'none',
+		title: '加载中',
+		mask: true,
 	});
 	config.header = {
 		...config.header,
@@ -83,6 +85,10 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 	if (response.statusCode === 401) {
 		uni.navigateTo({
 			url: '/pages/base/login'
+		})
+		uni.showToast({
+			icon: 'none',
+			title: '请登录后再查看'
 		})
 		cache.clear()
 		return

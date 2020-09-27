@@ -96,7 +96,7 @@
 			} else {
 				this.type = ''
 			}
-			console.log('type', this.roles, this.type)
+			// console.log('type', this.roles, this.type)
 		},
 		methods: {
 			init () {
