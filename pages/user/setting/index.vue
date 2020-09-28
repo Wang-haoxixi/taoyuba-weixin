@@ -25,7 +25,7 @@
 						uni.navigateTo({
 							url: '/pages/base/login'
 						})
-						this.$cache.clear()
+						this.$tools.clear()
 					}
 					this.loading = false
 				}).catch(e => {

@@ -11,7 +11,7 @@
 		<view class="content-wrapper">
 			<u-parse :html="data.articleContent"></u-parse>
 		</view>
-		<share-group></share-group>
+		<share-group type="4" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>
 
@@ -41,6 +41,14 @@
 			return {
 				data: {},
 				id: undefined
+			}
+		},
+		computed: {
+			collectionData () {
+				return {
+					collectedId: this.data.articleId,
+					collectedShowTitle: this.data.title
+				}
 			}
 		},
 		onLoad (params) {

@@ -1,6 +1,5 @@
-import {
-	API_URL
-} from '@/env'
+import { API_URL } from '@/env'
+import cache from './cache.js'
 export default {
 	/**
 	 * fn：检测图片协议，主要用于检测海报图片协议。
@@ -223,14 +222,15 @@ export default {
 		}
 		return result
 	},
-	// jsonForm (json) {
-	// 	var str = [];
-	// 	for (var p in json) {
-	// 		str.push(encodeURIComponent(p) + "=" + encodeURIComponent(json[p]));
-	// 	}
-	// 	return str.join("&");
-	// },
 	jsonForm (obj) {
 		return Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&')
+	},
+	clear () {
+		cache.remove('dictMap')
+		cache.remove('taoyuba-token')
+		cache.remove('refresh_token')
+		cache.remove('userInfo')
+		cache.remove('roles')
 	}
 }
+

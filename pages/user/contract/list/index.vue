@@ -11,7 +11,7 @@
 				<u-empty text="暂无合同" mode="list"></u-empty>
 			</view>
 		</template> -->
-		<list-layout :data="data" empty-text="暂无合同" :loading="layoutLoading">
+		<list-layout :data="data" empty-text="暂无合同" :loading="false">
 			<view class="">
 				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
 			</view>

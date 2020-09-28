@@ -7,6 +7,18 @@
 		<view class="">
 			<u-tabs :bold="false" active-color="#ff9999" :bar-style="{background: '#ff9999'}" :list="list" :is-scroll="false" :current="current" @change="onChange"></u-tabs>
 		</view>
+		<view class="content-wrapper">
+			<!-- 历史记录 -->
+			<view class="history-wrapper" v-if="historyList.length">
+				<view class="title">
+					<text>历史搜索</text>
+					<u-icon name="trash" size="38" color="#999" @tap="onClear"></u-icon>
+				</view>
+				<view class="content">
+					<u-tag @click="onChooseTag(item)" :text="item" class="item" type="info" mode="plain" v-for="(item, index) in historyList" :key="index"/>
+				</view>
+			</view>
+		</view>
 		<!-- 热门搜索 -->
 		<!-- <view class="hot-wrapper">
 			<view class="title">热门搜索</view>
@@ -14,19 +26,7 @@
 				<u-tag :text="item" @tap="onChooseTag(item)" v-for="(item, index) in hotList" :key="index" bg-color="#f4f4f4" border-color="#f4f4f4" type="info" class="item"/>
 			</view>
 		</view> -->
-		<!-- 历史记录 -->
-		<view class="history-wrapper" v-if="historyList.length">
-			<view class="title">
-				<text>历史搜索</text>
-				<u-icon name="trash" size="38" color="#999" @tap="onClear"></u-icon>
-			</view>
-			<view class="content">
-				<view class="item" v-for="(item, index) in historyList" :key="index">
-					<text class="text u-line-1">{{item}}</text>
-					<u-icon name="close" class="close" @click="onClose(index)"></u-icon>
-				</view>
-			</view>
-		</view>
+		
 		<u-modal show-cancel-button :show-title="false" v-model="showHistory" mask-close-able cancel-color="#666" confirm-color="#ff632a" content="确定删除吗" @confirm="onConfirm"></u-modal>
 		<u-toast ref="uToast" />
 	</view>
@@ -39,15 +39,25 @@
 				current: 0,
 				content: '',
 				list: [
-					{ name: '资讯', id: 0 },
-					{ name: '招聘', id: 1 },
-					{ name: '求职', id: 2 },
-					{ name: '培训信息', id: 3 },
-					{ name: '培训机构', id: 4 }
+					{ name: '资讯', id: 1 },
+					{ name: '招聘', id: 2 },
+					{ name: '求职', id: 3 },
+					{ name: '培训信息', id: 4 },
+					{ name: '培训机构', id: 5 }
 				],
+				historyNews: this.$cache.get('historyNews') || [], // 咨询
+				historyRecruit: this.$cache.get('historyRecruit') ||[], // 招聘
+				historyResume: this.$cache.get('historyResume') ||[], // 求职
+				historyTraining: this.$cache.get('historyTraining') ||[], // 培训机构
+				historyTrainingInfo: this.$cache.get('historyTrainingInfo') ||[], // 培训信息
 				hotList: [],
-				historyList: [],
 				showHistory: false
+			}
+		},
+		computed: {
+			historyList () {
+				let name = this.findHistoryName()
+				return this[name] || []
 			}
 		},
 		onLoad (params) {
@@ -71,41 +81,60 @@
 			onClear () {
 				this.showHistory = true
 			},
+			// 同意删除
 			onConfirm () {
-				this.historyList = []
-				this.$cache.set('historySearchList', this.historyList)
+				let name = this.findHistoryName()
+				if (name) {
+					this[name] = []
+					this.$cache.set(name, this[name])
+				}
+			},
+			findHistoryName () {
+				let current = this.current
+				if (current === 0) {
+					return 'historyNews'
+				} else if (current === 1) {
+					return 'historyRecruit'
+				} else if (current === 2) {
+					return 'historyResume'
+				} else if (current === 3) {
+					return 'historyTraining'
+				} else if (current === 4) {
+					return 'historyTrainingInfo'
+				}
+				return ''
 			},
 			// 搜索
 			onSearch () {
-				console.log('this.content', this.content)
 				if (this.content.trim() !== '') {
 					let index = this.historyList.findIndex(item => item === this.content)
+					let name = this.findHistoryName()
 					if (index === -1) {
-						this.historyList.unshift(this.content)
+						this[name].unshift(this.content)
 					} else if (index > 0) {
-						this.historyList.splice(index, 1)
-						this.historyList.unshift(this.content)
+						this[name].splice(index, 1)
+						this[name].unshift(this.content)
 					}
-					this.historyList = this.historyList.slice(0, 10)
-					this.$cache.set('historySearchList', this.historyList)
+					this[name] = this[name].slice(0, 10)
+					this.$cache.set(name, this[name])
 				}
-				let path = this.getPath(+this.current)
+				let path = this.getPath()
 				if (path) {
 					uni.redirectTo({
 						url: path
 					})
 				}
 			},
-			getPath (type) {
-				if (type === 0) {
+			getPath () {
+				if (this.current === 0) {
 					return `/pages/home/news/list/index?keyword=${this.content}`
-				} else if (type === 1) {
+				} else if (this.current === 1) {
 					return `/pages/home/recruit/list/index?keyword=${this.content}`
-				} else if (type === 2) {
+				} else if (this.current === 2) {
 					return `/pages/home/resume/list/index?keyword=${this.content}`
-				} else if (type === 3) {
+				} else if (this.current === 3) {
 					return `/pages/home/training-info/list/index?keyword=${this.content}`
-				} else if (type === 4) {
+				} else if (this.current === 4) {
 					return `/pages/home/training/list/index?keyword=${this.content}`
 				}
 				return ''
@@ -115,10 +144,10 @@
 				this.content = content
 				this.onSearch()
 			},
-			onClose (index) {
-				this.historyList.splice(index, 1)
-				this.$cache.set('historySearchList', this.historyList)
-			}
+			// onClose (index) {
+			// 	this.historyList.splice(index, 1)
+			// 	this.$cache.set('historySearchList', this.historyList)
+			// }
 		}
 	}
 </script>
@@ -164,25 +193,10 @@
 				color: #999;
 				width: 100%;
 				overflow: hidden;
+				padding: 20rpx 20rpx 5rpx;
 				.item {
-					width: 100%;
-					overflow: hidden;
-					display: flex;
-					padding: 30rpx 30rpx;
-					box-sizing: border-box;
-					font-size: 28rpx;
-					justify-content: space-between;
-					border-bottom: 1px solid #f6f6f6;
-					.text {
-						// width: 100%;
-						display: block;
-						flex: 1 1 auto;
-					}
-					.close {
-						text-align: center;
-						flex: 0 0 40rpx;
-						margin-left: 20rpx;
-					}
+					margin: 0 15rpx 15rpx 0;
+					display: inline-block;
 				}
 			}
 		}

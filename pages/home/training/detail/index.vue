@@ -27,7 +27,7 @@
 				</view>
 			</view>
 		</view>
-		<share-group></share-group>
+		<share-group type="5" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>
 
@@ -69,6 +69,14 @@
 			this.id = params.id
 			this.getList(params.id)
 			this.getListInfo(params.id)
+		},
+		computed: {
+			collectionData () {
+				return {
+					collectedId: this.data.userId,
+					collectedShowTitle: this.data.deptName
+				}
+			}
 		},
 		methods: {
 			getList (id) {

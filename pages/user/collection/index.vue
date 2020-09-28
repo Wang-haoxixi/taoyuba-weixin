@@ -3,45 +3,55 @@
 		<view>
 			<u-tabs-swiper ref="uTabs" :list="list" :current="current" @change="tabsChange" swiperWidth="750" :is-scroll="false"></u-tabs-swiper>
 		</view>
-		<swiper :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<!-- 求职 -->
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(1)">
-					<view class="view" @tap="onTo(item, 1)" v-for="item in data1" :key="item.id">
-						1
-					</view>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom(1)">
+					<list-layout :data="data1" empty-text="暂无收藏">
+						<view class="view" @tap="onTo(item, 1)" v-for="item in data1" :key="item.id">
+							<view class="title u-line-1">{{item.collectedShowTitle}}</view>
+						</view>
+					</list-layout>
 				</scroll-view>
 			</swiper-item>
 			<!-- 招聘 -->
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(2)">
-					<view class="view" @tap="onTo(item, 2)" v-for="item in data2" :key="item.id">
-						<view class="title">{{item.collectedShowTitle}}</view>
-					</view>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom(2)">
+					<list-layout :data="data2" empty-text="暂无收藏">
+						<view class="view" @tap="onTo(item, 2)" v-for="item in data2" :key="item.id">
+							<view class="title u-line-1">{{item.collectedShowTitle}}</view>
+						</view>
+					</list-layout>
 				</scroll-view>
 			</swiper-item>
 			<!-- 资讯 -->
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(3)">
-					<view class="view" @tap="onTo(item, 3)" v-for="item in data3" :key="item.id">
-						3
-					</view>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom(3)">
+					<list-layout :data="data3" empty-text="暂无收藏">
+						<view class="view" @tap="onTo(item, 3)" v-for="item in data3" :key="item.id">
+							<view class="title u-line-1">{{item.collectedShowTitle}}</view>
+						</view>
+					</list-layout>
 				</scroll-view>
 			</swiper-item>
 			<!-- 培训机构 -->
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(4)">
-					<view class="view" @tap="onTo(item, 4)" v-for="item in data4" :key="item.id">
-						4
-					</view>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom(4)">
+					<list-layout :data="data4" empty-text="暂无收藏">
+						<view class="view" @tap="onTo(item, 4)" v-for="item in data4" :key="item.id">
+							<view class="title u-line-1">{{item.collectedShowTitle}}</view>
+						</view>
+					</list-layout>
 				</scroll-view>
 			</swiper-item>
 			<!-- 培训信息 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%; min-height: 1500rpx;" @scrolltolower="onreachBottom(5)">
-					<view class="view" @tap="onTo(item, 5)" v-for="item in data5" :key="item.id">
-						5
-					</view>
+					<list-layout :data="data5" empty-text="暂无收藏">
+						<view class="view" @tap="onTo(item, 5)" v-for="item in data5" :key="item.id">
+							<view class="title u-line-1">{{item.collectedShowTitle}}</view>
+						</view>
+					</list-layout>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -67,6 +77,11 @@
 					{ name: '培训机构', type: 4 },
 					{ name: '培训信息', type: 5 }
 				],
+				status1: 'loadmore',
+				status2: 'loadmore',
+				status3: 'loadmore',
+				status4: 'loadmore',
+				status5: 'loadmore',
 				data1: [],
 				data2: [],
 				data3: [],
@@ -79,35 +94,18 @@
 					four: false,
 					five: false
 				},
-				page1: {
-					total: 0,
-					current: 1,
-					size: 10
-				},
-				page2: {
-					total: 0,
-					current: 1,
-					size: 10
-				},
-				page3: {
-					total: 0,
-					current: 1,
-					size: 10
-				},
-				page4: {
-					total: 0,
-					current: 1,
-					size: 10
-				},
-				page5: {
-					total: 0,
-					current: 1,
-					size: 10
-				}
+				page1: { total: 0, current: 1, size: 20 },
+				page2: { total: 0, current: 1, size: 20 },
+				page3: { total: 0, current: 1, size: 20 },
+				page4: { total: 0, current: 1, size: 20 },
+				page5: { total: 0, current: 1, size: 20 },
 			}
 		},
-		onLoad () {
-			this.getList(1)
+		onShow () {
+			let current = this.current +  1
+			this[`data${current}`] = []
+			this[`page${current}`].current = 1
+			this.getList(current)
 		},
 		watch: {
 			current (newVal) {
@@ -164,10 +162,12 @@
 			},
 			// scroll-view到底部加载更多
 			onreachBottom (index) {
-				if (index === 1) {
-					
-				} else if (index === 2) {
-					this.getList(2)
+				console.log('onreachBottom 到底部加载更多')
+				let current = this.current +  1
+				if (this[`page${current}`].total > this[`page${current}`].current * this[`page${current}`].size) {
+					this[`status${current}`] = 'loading'
+					this[`page${current}`].current++
+					this.getList(current)
 				}
 			},
 			onTo(row, index) {
@@ -196,11 +196,23 @@
 </script>
 
 <style lang="scss" scoped>
+	.user-collection-container {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - var(--window-top));
+		width: 100%;
+	}
+	.swiper-box {
+		flex: 1;
+	}
 	.view {
 		padding: 30rpx;
 		background-color: #fff;
 		font-size: 32rpx;
 		color: #333;
 		border-bottom: 1px solid #f6f6f6;
+	}
+	.swiper-item {
+		height: 100%;
 	}
 </style>

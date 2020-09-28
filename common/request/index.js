@@ -1,7 +1,8 @@
 import Request from '@/utils/luch-request/index.js'
 import { API_URL } from '@/env.js'
 import { TOKEN } from '@/common/config/index.js'
-import cache from '@/common/utils/cache'
+// import cache from '@/common/utils/cache'
+import tools from '@/common/utils/tools'
 
 const errorCode = {
 	"401": "当前操作没有权限或者登入过期",
@@ -90,7 +91,7 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 			icon: 'none',
 			title: '请登录后再查看'
 		})
-		cache.clear()
+		tools.clear()
 		return
 	}
 	return response

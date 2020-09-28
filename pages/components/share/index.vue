@@ -33,8 +33,8 @@
 			}
 		},
 		watch: {
-			type (newVal) {
-				this.defaultCollection = this.isCollection
+			isCollection (newVal) {
+				this.defaultCollection = newVal
 			}
 		},
 		computed: {
