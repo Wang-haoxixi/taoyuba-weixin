@@ -46,18 +46,30 @@
 					{ name: '培训机构', id: 5 }
 				],
 				historyNews: this.$cache.get('historyNews') || [], // 咨询
-				historyRecruit: this.$cache.get('historyRecruit') ||[], // 招聘
-				historyResume: this.$cache.get('historyResume') ||[], // 求职
-				historyTraining: this.$cache.get('historyTraining') ||[], // 培训机构
-				historyTrainingInfo: this.$cache.get('historyTrainingInfo') ||[], // 培训信息
+				historyRecruit: this.$cache.get('historyRecruit') || [], // 招聘
+				historyResume: this.$cache.get('historyResume') || [], // 求职
+				historyTraining: this.$cache.get('historyTraining') || [], // 培训机构
+				historyTrainingInfo: this.$cache.get('historyTrainingInfo') || [], // 培训信息
 				hotList: [],
+				historyList: [],
 				showHistory: false
 			}
 		},
-		computed: {
-			historyList () {
-				let name = this.findHistoryName()
-				return this[name] || []
+		// computed: {
+		// 	historyList () {
+				// let name = this.findHistoryName()
+				// console.log('historyList', this.current, name)
+				// return this[name] || []
+		// 	}
+		// },
+		watch: {
+			current: {
+				handler (newVal) {
+					let name = this.findHistoryName()
+					this.historyList = this[name]
+				},
+				deep: true,
+				immediate: true
 			}
 		},
 		onLoad (params) {
@@ -65,13 +77,12 @@
 				this.content = params.keyword
 			}
 			if (params.type) {
-				this.current = params.type
+				this.current = +params.type
 			}
 			let historyList = this.$cache.get('historySearchList') 
 			if (historyList) {
 				this.historyList = historyList
 			}
-			console.log('this.historyList', this.historyList)
 		},
 		methods: {
 			onChange (index) {
@@ -84,9 +95,11 @@
 			// 同意删除
 			onConfirm () {
 				let name = this.findHistoryName()
+				console.log('同意删除', name)
 				if (name) {
 					this[name] = []
 					this.$cache.set(name, this[name])
+					this.historyList = []
 				}
 			},
 			findHistoryName () {
@@ -119,6 +132,7 @@
 					this.$cache.set(name, this[name])
 				}
 				let path = this.getPath()
+				console.log('path', path, this.current)
 				if (path) {
 					uni.redirectTo({
 						url: path

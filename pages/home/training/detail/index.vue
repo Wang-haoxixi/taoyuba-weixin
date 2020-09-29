@@ -27,7 +27,7 @@
 				</view>
 			</view>
 		</view>
-		<share-group type="5" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
+		<share-group type="4" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>
 

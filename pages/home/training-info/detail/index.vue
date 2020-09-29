@@ -11,7 +11,7 @@
 		<view class="content-wrapper">
 			<u-parse :html="data.articleContent"></u-parse>
 		</view>
-		<share-group type="4" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
+		<share-group type="5" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>
 
