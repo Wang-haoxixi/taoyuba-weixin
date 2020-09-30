@@ -6,7 +6,6 @@
 				<text>{{data.source}}</text>
 				<text>{{data.createTime}}</text>
 			</view>
-			
 		</view>
 		<view class="content-wrapper">
 			<u-parse :html="data.articleContent"></u-parse>

@@ -62,7 +62,8 @@
 					params: {
 						size: this.page.size,
 						current: this.page.current,
-						title: this.form.title
+						title: this.form.title,
+						type: 8
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {

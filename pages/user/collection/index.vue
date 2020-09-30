@@ -180,16 +180,15 @@
 				} else if (index === 3) {
 					path = `/pages/home/news/detail/index?id=${row.collectedId}`
 				} else if (index === 4) {
-					path = `/pages/home/training-info/detail/index?id=${row.collectedId}`
-				} else if (index === 5) {
 					path = `/pages/home/training/detail/index?id=${row.collectedId}`
+				} else if (index === 5) {
+					path = `/pages/home/training-info/detail/index?id=${row.collectedId}`
 				}
 				if (path) {
 					uni.navigateTo({
 						url: path
 					})
 				}
-				
 			}
 		}
 	}

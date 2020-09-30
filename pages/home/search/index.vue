@@ -95,7 +95,6 @@
 			// 同意删除
 			onConfirm () {
 				let name = this.findHistoryName()
-				console.log('同意删除', name)
 				if (name) {
 					this[name] = []
 					this.$cache.set(name, this[name])
@@ -157,11 +156,7 @@
 			onChooseTag (content) {
 				this.content = content
 				this.onSearch()
-			},
-			// onClose (index) {
-			// 	this.historyList.splice(index, 1)
-			// 	this.$cache.set('historySearchList', this.historyList)
-			// }
+			}
 		}
 	}
 </script>

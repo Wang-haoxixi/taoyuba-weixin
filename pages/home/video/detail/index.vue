@@ -33,7 +33,7 @@
 
 <script>
 	const TIME = 3 * 60
-	const INTERVAL_TIME = 5 * 60
+	const INTERVAL_TIME = 4 * 60
 	import faceRecognition from '@/pages/components/face-recognition/index.vue'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
@@ -95,6 +95,11 @@
 						this.initialTime = this.data.learnTime || 0
 						this.faceTime = +this.faceTime + (+this.initialTime)
 						this.intervalTime = +this.intervalTime + (+this.initialTime)
+						this.videoContext.pause()
+						this.show = true
+						// if (this.once) {
+						// 	this.once = false
+						// }
 					}
 				})
 			},
@@ -108,11 +113,7 @@
 				})
 			},
 			onPlay (e) {
-				if (this.once) {
-					this.videoContext.pause()
-					this.show = true
-					this.once = false
-				}
+				
 			},
 			onEnded (e) {
 				this.setLearnTime()
@@ -124,19 +125,18 @@
 			onTimeupdate (e) {
 				let currentTime = e.detail.currentTime
 				this.time = currentTime
-				// console.log('faceTime:', this.faceTime, 'currentTime:', currentTime, 'intervalTime:', this.intervalTime)
 				if (this.faceTime < currentTime) {
 					this.videoContext.pause()
 					this.faceTime += TIME
 					this.intervalTime += INTERVAL_TIME
 					this.show = true
-					console.log('活体识别时间', currentTime, this.intervalTime)
+					// console.log('活体识别时间', currentTime, this.intervalTime)
 					return
 				}
 				if (currentTime > this.intervalTime) {
 					this.intervalTime += INTERVAL_TIME
 					this.setLearnTime()
-					console.log('记录时间', currentTime, this.intervalTime)
+					// console.log('记录时间', currentTime, this.intervalTime)
 				}
 			},
 			onFaceEnd () {
