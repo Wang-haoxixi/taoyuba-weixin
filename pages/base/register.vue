@@ -193,16 +193,14 @@
 				})
 				onRegister(this.form).then((data) => {
 					if (data.code === 0 && data.data === true) {
-						uni.showToast({
-							icon: 'none',
+						this.$refs.uToast.show({
 							title: data.msg || '注册成功'
 						})
 						uni.navigateTo({
 							url: '/pages/base/login'
 						})
 					} else {
-						uni.showToast({
-							icon: 'none',
+						this.$refs.uToast.show({
 							title: data.msg || '注册失败'
 						})
 					}

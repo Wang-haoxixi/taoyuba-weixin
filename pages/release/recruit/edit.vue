@@ -49,8 +49,8 @@
 				<view class="content-container">
 					<view class="title">其他信息</view>
 					<view class="body-wrapper">
-						<u-form-item label="船长">
-							<u-input v-model="form.hullLength" trim placeholder="请输入船长"/>
+						<u-form-item label="船长(m)">
+							<u-input v-model="form.hullLength" type="number" trim placeholder="请输入船长"/>
 						</u-form-item>
 						<u-form-item label="主机总功率">
 							<u-input v-model="form.totalPower" trim placeholder="请输入主机总功率"/>

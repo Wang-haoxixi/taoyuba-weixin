@@ -119,8 +119,7 @@
 				}
 				let reg = /^[a-zA-Z0-9]{6,16}$/
 				if (!reg.test(this.form.newPassword)) {
-					uni.showToast({
-						icon: 'none',
+					this.$refs.uToast.show({
 						title: `密码为6-16位、数字或字母`
 					})
 					return false
@@ -160,16 +159,14 @@
 				})
 				forgetForm(this.form).then((data) => {
 					if (data.code === 0) {
-						uni.showToast({
-							icon: 'none',
-							title: data.msg || '修改成功'
+						this.$refs.uToast.show({
+							title: data.msg || '修改成功',
 						})
 						uni.navigateTo({
 							url: '/pages/base/login'
 						})
 					} else {
-						uni.showToast({
-							icon: 'none',
+						this.$refs.uToast.show({
 							title: data.msg || '修改失败'
 						})
 					}

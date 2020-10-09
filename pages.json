@@ -81,6 +81,19 @@
 			}
 		},
 		{
+			"path": "pages/home/examination/detail/index",
+			"style": {
+				"navigationBarTitleText": "模拟考试"
+			}
+		},
+		{
+			"path": "pages/home/examination/list/index",
+			"style": {
+				"navigationBarTitleText": "模拟考试",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path": "pages/home/training-info/detail/index",
 			"style": {
 				"navigationBarTitleText": "培训信息"

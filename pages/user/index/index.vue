@@ -28,7 +28,7 @@
 				<view class="item" v-if="!roles[1]" @click="onChoose">
 					<view class="iconfont iconchengyuan other-ic"></view>
 					<text>我要成为</text>
-					<u-select v-model="show" :list="list" @confirm="onConfirm"></u-select>
+					<u-select v-if="show" v-model="show" mode="single-column" :list="list" @confirm="onConfirm"></u-select>
 				</view>
 			</view>
 		</view>
@@ -61,7 +61,7 @@
 				list: [
 					{ value: 1, label: '船员' },
 					{ value: 2, label: '船东' },
-				]
+				],
 			}
 		},
 		computed: {

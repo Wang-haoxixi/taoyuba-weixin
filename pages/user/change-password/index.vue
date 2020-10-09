@@ -11,6 +11,7 @@
 		<view class="btn-wrapper">
 			<u-button @click="onSubmit" type="default" :custom-style="{backgroundColor: '#409EFF', color: '#fff'}" hover-class="none" shape="circle" :loading="loading">提交</u-button>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -39,8 +40,7 @@
 					return false
 				}
 				if (this.form.newpwd !== this.form.newpwd2) {
-					uni.showToast({
-						icon: 'none',
+					this.$refs.uToast.show({
 						title: `新密码与确认新密码不一致`
 					})
 					return false
@@ -53,38 +53,34 @@
 				}
 				this.$http.put('/admin/user/edit', form).then(({ data }) => {
 					if (data.code === 0 && data.data === true) {
-						uni.showToast({
-							icon: 'none',
-							title: `密码修改成功`
+						this.$refs.uToast.show({
+							title: '密码修改成功'
 						})
-						uni.navigateTo({
+						uni.switchTab({
 							url: '/pages/user/index/index'
 						})
 					} else {
-						uni.showToast({
-							icon: 'none',
-							title: `密码修改失败`
-						})
+						// console.log(1)
+						// this.$refs.uToast.show({
+						// 	title: data.msg || '密码修改失败'
+						// })
 					}
 				}).catch(() => {
-					uni.showToast({
-						icon: 'none',
-						title: `密码修改失败`
+					this.$refs.uToast.show({
+						title: '密码修改失败'
 					})
 				})
 			},
 			validatePassword (value, name) {
 				if (value === '') {
-					uni.showToast({
-						icon: 'none',
+					this.$refs.uToast.show({
 						title: `${name}不能为空`
 					})
 					return false
 				}
 				let reg = /^[a-zA-Z0-9]{6,16}$/
 				if (!reg.test(value)) {
-					uni.showToast({
-						icon: 'none',
+					this.$refs.uToast.show({
 						title: `${name}为6-16位、数字或字母`
 					})
 					return false

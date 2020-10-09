@@ -1,6 +1,7 @@
 <template>
 	<view class="setting-container">
 		<u-button @click="onSignOut" type="default" :custom-style="{backgroundColor: '#409EFF', color: '#fff'}" hover-class="none" shape="circle" :loading="loading">退出登录</u-button>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -17,8 +18,7 @@
 				this.loading = true
 				logout().then((data) => {
 					if (!(data.code === 0 && data.data === true)) {
-						uni.showToast({
-							icon: 'none',
+						this.$refs.uToast.show({
 							title: '退出登录失败'
 						})
 					} else {
@@ -29,8 +29,7 @@
 					}
 					this.loading = false
 				}).catch(e => {
-					uni.showToast({
-						icon: 'none',
+					this.$refs.uToast.show({
 						title: '退出登录失败'
 					})
 					this.loading = false

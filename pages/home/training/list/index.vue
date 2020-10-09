@@ -72,7 +72,7 @@
 						let result = data.data
 						this.data = this.data.concat(result.records)
 						this.page.total = result.total
-						if (this.page.total === 0) {
+						if (this.page.total <= this.page.size) {
 							this.status = 'nomore'
 						}
 					}
