@@ -5,7 +5,7 @@
 		<view class="">
 			<u-form ref="uForm">
 				<u-form-item>
-					<u-radio-group wrap v-model="defaultValue" @change="radioGroupChange">
+					<u-radio-group wrap :disabled="disabled" v-model="defaultValue" @change="radioGroupChange">
 						<view class="radio" v-for="(item, index) in info.optionsJson" :key="index">
 							<u-radio
 								class="clearfix "
@@ -25,7 +25,11 @@
 	export default {
 		props: {
 			info: Object,
-			value: String
+			value: String,
+			disabled: {
+				type: Boolean,
+				default: false
+			}
 		},
 		data () {
 			return {

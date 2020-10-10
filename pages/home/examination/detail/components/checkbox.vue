@@ -3,7 +3,7 @@
 	<view class="radio-wrapper">
 		<view class="title">{{data.title}}</view>
 		<view class="">
-			<u-checkbox-group wrap @change="checkboxGroupChange">
+			<u-checkbox-group :disabled="disabled" wrap @change="checkboxGroupChange">
 				<view class="radio" v-for="(item, index) in data.optionsJson" :key="index">
 					<u-checkbox
 						class="clearfix"
@@ -22,7 +22,11 @@
 	export default {
 		props: {
 			info: Object,
-			value: [String, Array]
+			value: [String, Array],
+			disabled: {
+				type: Boolean,
+				default: false
+			}
 		},
 		data () {
 			return {
