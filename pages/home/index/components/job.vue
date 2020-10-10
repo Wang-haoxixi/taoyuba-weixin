@@ -5,7 +5,7 @@
 			<template>
 				<view class="" v-show="current === 0" v-if="data1.length">
 					<view class="job-item-content" v-for="(item, index) in data1" :key="index">
-						<job-item :info="item" @tap="onTo(item)" :dictMap="dictMap"></job-item>
+						<job-item :info="item" @tap="onTo(item)" :dictMap="dictMap" @to="onTo(item)"></job-item>
 					</view>
 					<view class="more" @tap="onToList('/pages/home/recruit/list/index')">更多</view>
 				</view>

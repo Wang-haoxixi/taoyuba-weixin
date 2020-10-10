@@ -51,21 +51,29 @@
 					password: this.form.oldpwd,
 					username: this.userInfo.username
 				}
+				this.loading = true
 				this.$http.put('/admin/user/edit', form).then(({ data }) => {
 					if (data.code === 0 && data.data === true) {
 						this.$refs.uToast.show({
-							title: '密码修改成功'
+							title: '密码修改成功',
+							duration: 1000,
+							callback: () => {
+								this.loading = false
+								uni.switchTab({
+									url: '/pages/user/index/index'
+								})
+							}
 						})
-						uni.switchTab({
-							url: '/pages/user/index/index'
-						})
+						
 					} else {
 						// console.log(1)
 						// this.$refs.uToast.show({
 						// 	title: data.msg || '密码修改失败'
 						// })
+						this.loading = false
 					}
 				}).catch(() => {
+					this.loading = false
 					this.$refs.uToast.show({
 						title: '密码修改失败'
 					})

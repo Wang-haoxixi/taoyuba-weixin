@@ -106,7 +106,6 @@
 				})
 			},
 			onTo (id) {
-				console.log('id', id)
 				uni.navigateTo({
 					url: `/pages/home/training/detail/index?id=${id}`
 				})

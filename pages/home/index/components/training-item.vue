@@ -45,7 +45,10 @@
 		},
 		methods: {
 			onTo () {
-				this.$emit('to', this.info.userId)
+				uni.navigateTo({
+					url: `/pages/home/training/detail/index?id=${this.info.userId}`
+				})
+				// this.$emit('to', this.info.userId)
 			}
 		}
 	}

@@ -1,9 +1,7 @@
 <template>
 	<view class="examination-detail-container">
-		<view class="header">
-			<view class="time">考试时间：{{timeLabel}}</view>
-			<view class="list"><u-icon name="more-circle" size="40"></u-icon></view>
-		</view>
+		<view class="status_bar"></view>
+		<u-navbar :title="timeLabel" :custom-back="onEnd"></u-navbar>
 		<view class="examination-item">
 			<view class="item-header">
 				<view class="item-left">{{quesTypeLabel}}<text class="text">（本题{{info.grade}}分）</text></view>
@@ -11,27 +9,39 @@
 			</view>
 			<view class="item-body">
 				<tyb-radio
-					@next="onNext(key)"
+					:value="value"
+					@choose="getResult"
 					v-if="info.examQuestionVO.type === 'RADIO'"
 					:info="info.examQuestionVO">
 				</tyb-radio>
-				<tyb-radio
-					@next="onNext(key)"
+				<tyb-checked
+					:value="value"
+					@choose="getResult"
 					v-else-if="info.examQuestionVO.type === 'CHECKED'"
 					:info="info.examQuestionVO">
-				</tyb-radio>
+				</tyb-checked>
 				<tyb-checkbox
-					@next="onNext(key)"
+					:value="value"
+					@choose="getResult"
 					v-else-if="info.examQuestionVO.type === 'CHECKBOX'"
 					:info="info.examQuestionVO">
 				</tyb-checkbox>
 			</view>
 		</view>
 		<view class="exam-bottom">
+			<view class="order" @tap="show = true">
+				<view class="list"><u-icon name="order" size="50"></u-icon></view>
+				<view class="text">
+					答题卡
+				</view>
+			</view>
 			<u-button :disabled="current <= 1" @click="onPrev" throttle-time="200">上一题</u-button>
-			<u-button @click="onEnd">结束</u-button>
+			<u-button @click="onEnd">交卷</u-button>
 			<u-button :disabled="current >= total" @click="onNext" throttle-time="200">下一题</u-button>
 		</view>
+		<u-popup v-model="show" mode="bottom" safe-area-inset-bottom border-radius="30">
+			<tyb-subject :info="data" :current="current" :answerList="answerList" @choose="onChoose"></tyb-subject>
+		</u-popup>
 	</view>
 </template>
 
@@ -40,19 +50,25 @@
 	import tybRadio from './components/radio.vue'
 	import tybChecked from './components/checked.vue'
 	import tybCheckbox from './components/checkbox.vue'
+	import tybSubject from './components/subject.vue'
+	import cloneDeep from 'lodash/cloneDeep'
 	export default {
 		components: {
 			tybRadio,
 			tybChecked,
-			tybCheckbox
+			tybCheckbox,
+			tybSubject
 		},
 		data () {
 			return {
-				data: [],
+				show: false,
+				data: {},
 				time: 0,
 				total: 0,
 				current: 0,
-				info: {}
+				info: {},
+				answerList: [],
+				value: ''
 			}
 		},
 		computed: {
@@ -83,14 +99,22 @@
 			this.getList()
 		},
 		methods: {
+			openSubject () {
+				this.show = true
+			},
 			getList () {
 				this.data = data
 				this.setCheckbox()
 				this.info = this.data.examAnswerVOList[0]
 				this.time = +this.data.answerTime * 60
 				this.total = this.data.examAnswerVOList.length
-				console.log('this.data', this.data)
 				this.current = 1
+				
+				let len = this.data.examAnswerVOList.length
+				for (let i = 0; len > i; i++) {
+					this.answerList.push('')
+				}
+				
 				this.initSetTime()
 			},
 			setCheckbox () {
@@ -130,17 +154,54 @@
 			// 上一题
 			onPrev () {
 				this.current = this.current - 1
-				this.info = this.data.examAnswerVOList[this.current - 1]
-				console.log('prev', this.info)
+				this.info = cloneDeep(this.data.examAnswerVOList[this.current - 1])
+				this.value = this.info.examQuestionVO.type === 'CHECKBOX' ? this.answerList[this.current - 1] : ''
+				setTimeout(() => {
+					this.value = this.answerList[this.current - 1] || 'empty'
+					// console.log('prev', this.current, this.value)
+				}, 20)
+				
 			},
 			// 下一题
 			onNext () {
 				this.current = this.current + 1
-				this.info = this.data.examAnswerVOList[this.current - 1]
-				console.log('next', this.info)
+				this.info = cloneDeep(this.data.examAnswerVOList[this.current - 1])
+				this.value = this.info.examQuestionVO.type === 'CHECKBOX' ? this.answerList[this.current - 1] : ''
+				setTimeout(() => {
+					this.value = this.answerList[this.current - 1] || 'empty'
+					// console.log('next', this.current, this.value)
+				}, 20)
+				
 			},
 			onEnd () {
-				
+				uni.showModal({
+					title: '您确定要交卷吗？',
+					showCancel: true,
+					success: ({confirm, cancel}) => {
+						if (confirm) {
+							uni.navigateBack({
+								delta: 1
+							})
+						}
+					}
+				})
+			},
+			// 选择题目
+			onChoose (index) {
+				this.current = +index
+				this.info = cloneDeep(this.data.examAnswerVOList[this.current - 1])
+				this.show = false
+				this.value = this.info.examQuestionVO.type === 'CHECKBOX' ? this.answerList[this.current - 1] : ''
+				setTimeout(() => {this.value = this.answerList[this.current - 1] || 'empty'}, 20)
+			},
+			// 获取对应选项结果
+			getResult (value) {
+				// console.log('result', value, this.current)
+				// this.answerList[this.current - 1] = value
+				this.answerList.splice(this.current - 1, 1, value)
+				// console.log(value, this.answerList)
+				// this.answerList = cloneDeep(this.answerList)
+				// console.log('this.answerList', this.answerList)
 			}
 		}
 	}
@@ -152,15 +213,24 @@
 </style>
 <style scoped lang="scss">
 	.examination-detail-container {
+		.status_bar {
+			height: var(--status-bar-height);
+			line-height: var(--status-bar-height);
+			width: 100%;
+		}
 		margin-bottom: 200rpx;
+		
 		.header {
-			display: flex;
+			// display: flex;
 			padding: 10rpx 30rpx;
-			border-bottom: 1px solid #f6f6f6;
-			justify-content: space-between;
-			.list {
-				text-align: right;
+			// justify-content: space-between;
+			.time {
+				text-align: center;
+				font-size: 32rpx;
 			}
+			// .list {
+			// 	text-align: right;
+			// }
 		}
 		.exam-bottom {
 			padding: 30rpx;
@@ -177,6 +247,17 @@
 				padding: 10rpx 0;
 				display: flex;
 				justify-content: space-between;
+			}
+		}
+		.order {
+			text-align: center;
+			.list {
+				margin: 0 auto;
+				color: #999;
+			}
+			.text {
+				color: #666;
+				font-size: 26rpx;
 			}
 		}
 	}

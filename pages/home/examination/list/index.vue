@@ -5,14 +5,14 @@
 			<view class="title u-line-2">标题</view>
 			<view class="number">参与人数：500人</view>
 			<view class="btn-wrapper">
-				<u-button plain size="mini" :custom-style="customStyle">立即参与</u-button>
+				<u-button plain size="mini" :custom-style="customStyle" @tap="openExam">立即参与</u-button>
 			</view>
 		</view>
 		<view class="item">
 			<view class="title u-line-2">标题</view>
 			<view class="number">参与人数：500人</view>
 			<view class="btn-wrapper">
-				<u-button plain size="mini" :custom-style="customStyle">立即参与</u-button>
+				<u-button plain size="mini" :custom-style="customStyle" @tap="openExam">立即参与</u-button>
 			</view>
 		</view>
 	</view>
@@ -29,6 +29,9 @@
 					borderColor: '#409EFF'
 				}
 			}
+		},
+		onShow () {
+			console.log('onShow', 'onShow')
 		},
 		methods: {
 			openExam (id) {

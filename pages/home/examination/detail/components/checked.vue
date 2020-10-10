@@ -9,7 +9,7 @@
 						class="clearfix "
 						active-color="#409EFF"
 						:name="item.key">
-						{{item.key}}.  {{item.value}}
+						{{item.value}}
 					</u-radio>
 				</view>
 			</u-radio-group>
@@ -29,16 +29,18 @@
 			}
 		},
 		watch: {
-			value (newVal) {
-				if (newVal) {
-					this.defaultValue = newVal
-				}
-			}
+			value: {
+				handler (newVal) {
+					this.defaultValue = newVal ? (newVal === 'empty' ? '' : newVal.trim()) : ''
+				},
+				deep: true,
+				immediate: true
+			} 
 		},
 		methods: {
 			radioGroupChange (name) {
-				// this.$emit('next', name)
-			}
+				this.$emit('choose', name)
+			},
 		}
 	}
 </script>

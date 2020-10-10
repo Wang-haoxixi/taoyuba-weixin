@@ -11,7 +11,7 @@
 				</u-form-item>
 			</u-form>
 			<view class="btn-wrapper">
-				<u-button size="default" hover-class="none" :loading="loading" :custom-style="btnStyle" @click="onSubmit">申请</u-button>
+				<u-button size="default" hover-class="none" :loading="loading" :custom-style="btnStyle" @click="onSubmit">查询</u-button>
 			</view>
 			<view class="content-wrapper" v-if="data.length">
 				<view class="item" v-for="item in data" :key="item.certId">

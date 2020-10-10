@@ -9,6 +9,7 @@
 					<view class="content">
 						<text class="name">{{userInfo.realName}}</text>
 						<text class="phone">{{userInfo.username}}</text>
+						<text class="phone" v-if="role">{{role}}</text>
 					</view>
 				</view>
 			</view>
@@ -57,6 +58,7 @@
 				roles: this.$cache.get('roles'),
 				imageUrl: this.$IMAGE_URL,
 				type: 0,
+				role: '',
 				show: false,
 				list: [
 					{ value: 1, label: '船员' },
@@ -131,6 +133,13 @@
 				}
 			},
 			onToUser () {
+				if (this.text) {
+					uni.showToast({
+						icon: 'none',
+						title: this.text
+					})
+					return
+				}
 				if (this.type === 108) {
 					this.onTo('/pages/release/shipowner-resume/edit')
 				} else {

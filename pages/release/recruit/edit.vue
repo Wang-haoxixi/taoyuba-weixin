@@ -52,7 +52,7 @@
 						<u-form-item label="船长(m)">
 							<u-input v-model="form.hullLength" type="number" trim placeholder="请输入船长"/>
 						</u-form-item>
-						<u-form-item label="主机总功率">
+						<u-form-item label="主机总功率(kw)">
 							<u-input v-model="form.totalPower" trim placeholder="请输入主机总功率"/>
 						</u-form-item>
 						<u-form-item label="姓名">

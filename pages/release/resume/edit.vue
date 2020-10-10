@@ -13,7 +13,7 @@
 							<u-input type="select" :select-open="positionIdShow" v-model="form.positionIdLabel" placeholder="请选择应聘职务" @click="positionIdShow = true"></u-input>
 						</u-form-item>
 						<u-form-item label="婚姻状态">
-							<u-input type="select" :select-open="maritalStatusShow" v-model="form.maritalStatusLabel" placeholder="请选择应聘职务" @click="maritalStatusShow = true"></u-input>
+							<u-input type="select" :select-open="maritalStatusShow" v-model="form.maritalStatusLabel" placeholder="请选择婚姻状态" @click="maritalStatusShow = true"></u-input>
 						</u-form-item>
 						<u-form-item label="作业方式">
 							<u-input type="select" :select-open="workRequireShow" v-model="form.workRequireLabel" placeholder="请选择作业方式" @click="workRequireShow = true"></u-input>
@@ -22,7 +22,7 @@
 							<u-input type="select" :select-open="workExprienceShow" v-model="form.workExprienceLabel" placeholder="请选择工作经验" @click="workExprienceShow = true"></u-input>
 						</u-form-item>
 						<u-form-item label="文化程度">
-							<u-input type="select" :select-open="eduDegreeShow" v-model="form.eduDegreeLabel" placeholder="请选择教育程度" @click="eduDegreeShow = true"></u-input>
+							<u-input type="select" :select-open="eduDegreeShow" v-model="form.eduDegreeLabel" placeholder="请选择文化程度" @click="eduDegreeShow = true"></u-input>
 						</u-form-item>
 						<u-form-item label="期望月薪">
 							<u-input v-model="form.salary" trim placeholder="请输入期望月薪" type="number"/>
@@ -63,12 +63,12 @@
 							<u-input placeholder="请输入家庭地址" trim v-model="form.address"></u-input>
 						</u-form-item>
 						<u-form-item label="联系电话" prop="phone" required>
-							<u-input placeholder="请输入联系电话" trim :disabled="form.phone" v-model="form.phone" type="number"></u-input>
+							<u-input placeholder="请输入联系电话" trim v-model="form.phone" type="number"></u-input>
 						</u-form-item>
-						<u-form-item label="家庭联系人" prop="contactPhone" required>
+						<u-form-item label="家庭联系人" prop="contactName" required>
 							<u-input placeholder="请输入家庭联系人" v-model="form.contactName"></u-input>
 						</u-form-item>
-						<u-form-item label="家庭联系电话" prop="contactName" required label-width="160">
+						<u-form-item label="家庭联系电话" prop="contactPhone" required label-width="160">
 							<u-input placeholder="请输入家庭联系电话" trim v-model="form.contactPhone"></u-input>
 						</u-form-item>
 						<u-form-item label="身份证正面照片" required prop="photoFront" label-position="top">
@@ -203,7 +203,7 @@
 				},
 				rules: {
 					idcard: [
-						{ required: true, message: '请选择职务', trigger: ['change', 'blur'] },
+						{ required: true, message: '请填写身份证号', trigger: ['change', 'blur'] },
 						{
 							pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
 							transform(value) {
@@ -237,7 +237,7 @@
 						{ required: true, message: '请选择籍贯地区', trigger: 'change' }
 					],
 					nationality: [
-						{ required: true, message: '请填写籍贯', trigger: 'blur' }
+						{ required: true, message: '请填写国籍', trigger: 'blur' }
 					],
 					nationLabel:  [
 						{ required: true, message: '请选择民族', trigger: 'change' }
