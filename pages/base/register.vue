@@ -194,7 +194,7 @@
 				onRegister(this.form).then((data) => {
 					if (data.code === 0 && data.data === true) {
 						this.$refs.uToast.show({
-							title: data.msg || '注册成功'
+							title: '注册成功'
 						})
 						uni.navigateTo({
 							url: '/pages/base/login'

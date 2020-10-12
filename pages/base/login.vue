@@ -51,8 +51,9 @@
 	import { signin } from '@/common/utils/login.js'
 	import { TOKEN } from '@/common/config/index.js'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
+	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	export default {
-		mixins: [userInfoMixin],
+		mixins: [userInfoMixin, dictMapMixin],
 		data () {
 			return {
 				loading: false,
@@ -155,7 +156,7 @@
 						uni.hideLoading()
 						return
 					}
-					
+					this.getDicMap()
 					this.$cache.set(TOKEN, data['access_token'])
 					this.$cache.set('refresh_token', data['refresh_token'])
 					uni.switchTab({

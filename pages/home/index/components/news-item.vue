@@ -1,7 +1,8 @@
 <template>
 	<view class="news-item-wrapper">
 		<view class="item-left">
-			<u-lazy-load :image="info.image" height="160" img-mode="scaleToFill"></u-lazy-load>
+			<u-image width="240rpx" height="160rpx" :src="info.image || noImg" :error-icon="errorImg" mode="scaleToFill"></u-image>
+			<!-- <u-lazy-load :image="info.image || noImg" height="160" img-mode="scaleToFill" :error-img="errorImg"></u-lazy-load> -->
 		</view>
 		<view class="item-right">
 			<view class="title u-line-2">{{info.title}}</view>
@@ -15,6 +16,12 @@
 	export default {
 		props: {
 			info: Object
+		},
+		data () {
+			return {
+				errorImg: '/static/image/img/img.jpg',
+				noImg: '/static/image/img/img.jpg'
+			}
 		}
 	}
 </script>
@@ -41,7 +48,7 @@
 				font-size: 28rpx;
 			}
 			.text {
-				margin-top: 10rpx;
+				margin-top: 20rpx;
 			}
 		}
 	}

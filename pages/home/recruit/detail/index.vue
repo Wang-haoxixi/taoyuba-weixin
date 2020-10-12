@@ -26,8 +26,8 @@
 			</content-container>
 			<content-container title="其他信息">
 				<view>
-					<view class="text">船长：{{data.hullLength || ''}}</view>
-					<view class="text">主机总功率：{{data.totalPower || ''}}</view>
+					<view class="text">船长(m)：{{data.hullLength || ''}}</view>
+					<view class="text">主机总功率(kw)：{{data.totalPower || ''}}</view>
 					<view class="text">联系人：{{data.contactName || ''}}</view>
 					<view class="text">联系电话：{{data.contactPhone || ''}}</view>
 				</view>

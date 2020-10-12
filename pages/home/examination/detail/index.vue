@@ -180,7 +180,7 @@
 					success: ({confirm, cancel}) => {
 						if (confirm) {
 							uni.navigateBack({
-								delta: 1
+								delta: '1'
 							})
 						}
 					}

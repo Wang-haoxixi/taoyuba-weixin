@@ -9,7 +9,7 @@
 					<view class="content">
 						<text class="name">{{userInfo.realName}}</text>
 						<text class="phone">{{userInfo.username}}</text>
-						<text class="phone" v-if="role">{{role}}</text>
+						<text class="phone">{{roleLabel}}</text>
 					</view>
 				</view>
 			</view>
@@ -58,7 +58,6 @@
 				roles: this.$cache.get('roles'),
 				imageUrl: this.$IMAGE_URL,
 				type: 0,
-				role: '',
 				show: false,
 				list: [
 					{ value: 1, label: '船员' },
@@ -76,11 +75,17 @@
 					result = value.label
 				}
 				return result
+			},
+			roleLabel () {
+				let result = ''
+				
+				if (Array.isArray(this.roles)) {
+					console.log('this.roles', this.roles)
+					result = this.roles[1] === 108 ? '船东' : (this.roles[1] === 105 ? '船员' : '')
+				}
+				return result
 			}
 		},
-		// onReady () {
-		// 	this.getUserInfo()
-		// },
 		onShow () {
 			this.userInfo = this.$cache.get('userInfo') || {}
 			this.roles = this.$cache.get('roles') || []

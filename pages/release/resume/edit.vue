@@ -105,7 +105,7 @@
 		<u-select safe-area-inset-bottom mode="single-column" :list="workRequireList" v-model="workRequireShow" @confirm="(e) => onConfirm(e, 'workRequire')"></u-select>
 		<!-- 期望月薪 -->
 		<u-select safe-area-inset-bottom mode="single-column" :list="workExprienceList" v-model="workExprienceShow" @confirm="(e) => onConfirm(e, 'workExprience')"></u-select>
-		<!-- 籍贯 -->
+		<!-- 籍贯地区 -->
 		<u-picker safe-area-inset-bottom mode="multiSelector" :default-selector="districtIdDefaultSelector" @confirm="onConfirmDistrictId" v-model="districtIdShow" range-key="shortName" @columnchange="onColumnChangeNationality" :range="cityAddressList"></u-picker>
 		<!-- 出生日期 -->
 		<u-picker safe-area-inset-bottom mode="time" v-model="birthdayShow" @confirm="birthdayConfirm" :params="{year: true, month: true, day: true, hour: false, minute: false, second: false}"></u-picker>
@@ -386,26 +386,26 @@
 				this.districtIdDefaultSelector = val
 				let third = this.cityAddressList[2]
 				if (third && third.length > 0) {
-					let nationality = third[val[2]].areaCode
-					let nationalityLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}-${this.cityAddressList[2][val[2]].shortName}`
-					this.$set(this.form, 'nationalityLabel', nationalityLabel)
-					this.$set(this.form, 'nationality', nationality)
+					let districtId = third[val[2]].areaCode
+					let districtIdLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}-${this.cityAddressList[2][val[2]].shortName}`
+					this.$set(this.form, 'districtIdLabel', districtIdLabel)
+					this.$set(this.form, 'districtId', districtId)
 					return
 				} 
 				let second = this.cityAddressList[1]
 				if (second && second.length > 0) {
-					let nationality = second[val[1]].areaCode
-					let nationalityLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}`
-					this.$set(this.form, 'nationalityLabel', nationalityLabel)
-					this.$set(this.form, 'nationality', nationality)
+					let districtId = second[val[1]].areaCode
+					let districtIdLabel = `${this.cityAddressList[0][val[0]].shortName}-${this.cityAddressList[1][val[1]].shortName}`
+					this.$set(this.form, 'districtIdLabel', districtIdLabel)
+					this.$set(this.form, 'districtId', districtId)
 					return
 				} 
 				let first = this.cityAddressList[0]
 				if (first && first.length > 0) {
-					let nationality = first[val[0]].areaCode
-					let nationalityLabel = `${this.cityAddressList[0][val[0]].shortName}`
-					this.$set(this.form, 'nationalityLabel', nationalityLabel)
-					this.$set(this.form, 'nationality', nationality)
+					let districtId = first[val[0]].areaCode
+					let districtIdLabel = `${this.cityAddressList[0][val[0]].shortName}`
+					this.$set(this.form, 'districtIdLabel', districtIdLabel)
+					this.$set(this.form, 'districtId', districtId)
 				} 
 			},
 			openDistrictId () {
