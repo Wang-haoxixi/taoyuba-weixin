@@ -10,7 +10,7 @@
 						v-model="item.checked"
 						:name="item.key"
 						active-color="#409EFF"
-					>{{item.key}}.  {{item.value}}-{{item.checked}}</u-checkbox>
+					>{{item.key}}.  {{item.value}}</u-checkbox>
 				</view>
 			</u-checkbox-group>
 		</view>
@@ -36,7 +36,6 @@
 		watch: {
 			info: {
 				handler (newVal) {
-					console.log('checkbox newVal', this.value)
 					let data =  cloneDeep(newVal)
 					data.optionsJson.forEach(item => {
 						if (Array.isArray(this.value)) {
@@ -55,6 +54,7 @@
 		},
 		methods: {
 			checkboxGroupChange (e) {
+				console.log('e', e)
 				this.$emit('choose', e)
 			}
 		}

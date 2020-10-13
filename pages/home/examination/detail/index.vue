@@ -42,6 +42,7 @@
 		<u-popup v-model="show" mode="bottom" safe-area-inset-bottom border-radius="30">
 			<tyb-subject :info="data" :current="current" :answerList="answerList" @choose="onChoose"></tyb-subject>
 		</u-popup>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -68,7 +69,8 @@
 				current: 0,
 				info: {},
 				answerList: [],
-				value: ''
+				value: '',
+				examId: undefined
 			}
 		},
 		computed: {
@@ -95,27 +97,49 @@
 				return result
 			}
 		},
-		onReady () {
-			this.getList()
+		onUnload() {
+			this.onSubmit()
+		},
+		onLoad (params) {
+			if (params.id) {
+				this.examId = params.id
+				this.getList(params.id)
+			} else {
+				this.$refs.uToast.show({
+					title: '找不到考试内容',
+					back : true
+				})
+			}
 		},
 		methods: {
 			openSubject () {
 				this.show = true
 			},
-			getList () {
-				this.data = data
-				this.setCheckbox()
-				this.info = this.data.examAnswerVOList[0]
-				this.time = +this.data.answerTime * 60
-				this.total = this.data.examAnswerVOList.length
-				this.current = 1
+			getList (id) {
+				this.$http.get(`/tmlms/exam_answer/continue_test_pager/${id}`).then(({ data }) => {
+					if (data.code === 0) {
+						this.data = data.data
+						this.setCheckbox()
+						this.info = this.data.examAnswerVOList[0]
+						let time = this.data.remainingTime.split('-')
+						for (let i = 0, len = time.length; i < len; i++) {
+							if (i === 0) {
+								this.time = (+time[0]) * 60 
+							} else if (i === 1) {
+								this.time += (+time[1])
+							}
+						}
+						this.total = this.data.examAnswerVOList.length
+						this.current = this.info.questionNum
+						console.log(this.current, 'current')
+						let len = this.data.examAnswerVOList.length
+						for (let i = 0; len > i; i++) {
+							this.answerList.push('')
+						}
+						this.initSetTime()
+					}
+				})
 				
-				let len = this.data.examAnswerVOList.length
-				for (let i = 0; len > i; i++) {
-					this.answerList.push('')
-				}
-				
-				this.initSetTime()
 			},
 			setCheckbox () {
 				let result = this.data.examAnswerVOList
@@ -147,12 +171,14 @@
 				let timer = setInterval(() => {
 					if (this.time <= 0) {
 						clearInterval(timer)
+						this.onSubmit()
 					}
 					this.time--
 				}, 1000)
 			},
 			// 上一题
 			onPrev () {
+				this.onSubmitExam()
 				this.current = this.current - 1
 				this.info = cloneDeep(this.data.examAnswerVOList[this.current - 1])
 				this.value = this.info.examQuestionVO.type === 'CHECKBOX' ? this.answerList[this.current - 1] : ''
@@ -164,6 +190,7 @@
 			},
 			// 下一题
 			onNext () {
+				this.onSubmitExam()
 				this.current = this.current + 1
 				this.info = cloneDeep(this.data.examAnswerVOList[this.current - 1])
 				this.value = this.info.examQuestionVO.type === 'CHECKBOX' ? this.answerList[this.current - 1] : ''
@@ -179,9 +206,7 @@
 					showCancel: true,
 					success: ({confirm, cancel}) => {
 						if (confirm) {
-							uni.navigateBack({
-								delta: '1'
-							})
+							this.onSubmit()
 						}
 					}
 				})
@@ -202,6 +227,56 @@
 				// console.log(value, this.answerList)
 				// this.answerList = cloneDeep(this.answerList)
 				// console.log('this.answerList', this.answerList)
+			},
+			// 提交当前题目答案
+			onSubmitExam () {
+				let userAnswer = this.answerList[this.current - 1]
+				
+				if (userAnswer === '') {
+					return
+				}
+				if (Array.isArray(userAnswer) && userAnswer.length === 0) {
+					return
+				}
+				if (Array.isArray(userAnswer)) {
+					userAnswer = `[${userAnswer.toString()}]`
+				}
+				// console.log('userAnswer', userAnswer, this.examId, this.current)
+				this.$http.post('/tmlms/exam_answer/answer_question', {
+					examId: this.examId,
+					questionNum: this.current,
+					userAnswer: userAnswer
+				})
+			},
+			onSubmitApi () {
+				this.onSubmitExam()
+				return new Promise((resolve) => {
+					this.$http.post('/tmlms/exam_answer/commit_paper', {
+						examinationId: this.data.examinationId,
+						examId: this.examId,
+						answerTime: '00-00',
+						remainingTime: '00-00'
+					}).then(({ data }) => {
+						resolve(data)
+					})
+				})
+				
+			},
+			// 交卷
+			onSubmit () {
+				this.onSubmitApi().then((data) => {
+					if (data.code === 0) {
+						this.$refs.uToast.show({
+							title: '考试结束',
+							back: true
+						})
+					} else {
+						this.$refs.uToast.show({
+							title: '考试交卷失败',
+							back: true
+						})
+					}
+				})
 			}
 		}
 	}

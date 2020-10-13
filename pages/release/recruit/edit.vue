@@ -52,7 +52,7 @@
 						<u-form-item label="船长(m)">
 							<u-input v-model="form.hullLength" type="number" trim placeholder="请输入船长"/>
 						</u-form-item>
-						<u-form-item label="主机总功率(kw)">
+						<u-form-item label="主机总功率(kw)" label-width="210">
 							<u-input v-model="form.totalPower" trim placeholder="请输入主机总功率"/>
 						</u-form-item>
 						<u-form-item label="姓名">
@@ -184,7 +184,11 @@
 						if (this.form.city) {
 							this.initCityLabel(this.form.city)
 						}
-						this.initForm()
+						setTimeout(() => {
+							this.initForm()
+						}, 500)
+						
+						
 						this.form.salary = this.form.salary + ''
 						this.form.recruitNo = this.form.recruitNo + ''
 					}
@@ -200,9 +204,10 @@
 				this.getDictLabel('workExprience', this.form.workExprience, this.workExprienceList)
 			},
 			getDictLabel (prop, value, data) {
+				// console.log(prop, data)
 				for (let i = 0, len = data.length; i < len; i++) {
 					if (data[i].value === value) {
-						this.form[`${prop}Label`] = data[i].label
+						this.$set(this.form, `${prop}Label`, data[i].label)
 						break
 					}
 				}

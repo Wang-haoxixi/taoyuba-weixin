@@ -1,7 +1,7 @@
 <template>
 	<view class="news-item-wrapper">
 		<view class="item-left">
-			<u-image width="240rpx" height="160rpx" :src="info.image || noImg" :error-icon="errorImg" mode="scaleToFill"></u-image>
+			<u-image width="240rpx" height="160rpx" :loading-icon="loadingIcon" :src="info.image || noImg" :error-icon="errorImg" mode="scaleToFill"></u-image>
 			<!-- <u-lazy-load :image="info.image || noImg" height="160" img-mode="scaleToFill" :error-img="errorImg"></u-lazy-load> -->
 		</view>
 		<view class="item-right">
@@ -19,6 +19,7 @@
 		},
 		data () {
 			return {
+				loadingIcon: '/static/image/img/img.jpg',
 				errorImg: '/static/image/img/img.jpg',
 				noImg: '/static/image/img/img.jpg'
 			}

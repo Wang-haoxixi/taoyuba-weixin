@@ -84,12 +84,15 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 		return
 	}
 	if (response.statusCode === 401) {
-		uni.navigateTo({
-			url: '/pages/base/login'
-		})
 		uni.showToast({
 			icon: 'none',
-			title: '请登录后再查看'
+			title: '请登录后再查看',
+			duration: 1000,
+			success: () => {
+				uni.navigateTo({
+					url: '/pages/base/login'
+				})
+			}
 		})
 		tools.clear()
 		return
