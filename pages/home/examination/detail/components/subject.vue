@@ -8,9 +8,16 @@
 				<view class="title">{{item.label}}</view>
 				<view class="content">
 					<template v-for="n in item.end">
-						<view class="circle" @tap="onChoose(n + 1)" :key="n" v-if="(n+1) >= item.start" :class="current === (n + 1) ? 'current' : (answerList[n] ? 'used' : '')">
-							<view class="item">{{n+1}}</view>
-						</view>
+						<template v-if="!disabled">
+							<view class="circle" @tap="onChoose(n + 1)" :key="n" v-if="(n+1) >= item.start" :class="current === (n + 1) ? 'current' : (answerList[n] ? 'used' : '')">
+								<view class="item">{{n+1}}</view>
+							</view>
+						</template>
+						<template v-else>
+							<view class="circle" @tap="onChoose(n + 1)" :key="n" v-if="(n+1) >= item.start" :class="isSame(n) ? 'used' : 'current'">
+								<view class="item">{{n+1}}</view>
+							</view>
+						</template>
 					</template>
 				</view>
 			</view>
@@ -26,9 +33,23 @@
 				type: Number,
 				default: 0
 			},
-			answerList: Array
+			disabled: Boolean,
+			answerList: Array,
+			resultList: Array
+		},
+		data () {
+			return {
+				isError: false
+			}
 		},
 		methods: {
+			getClassName (n) {
+				if (this.disabled) {
+					return this.isSame()
+				} else {
+					return this.current === (n + 1) ? 'current' : (this.answerList[n] ? 'used' : '')
+				}
+			},
 			getQuestionTypeLabel (type) {
 				let label = ''
 				let quesType = this.info.quesType
@@ -44,6 +65,28 @@
 			},
 			onChoose (index) {
 				this.$emit('choose', index)
+			},
+			// 判断答案和结果是否一致
+			isSame (n) {
+				let current = n
+				let result = this.resultList[current]
+				let answer = this.answerList[current]
+				if (Array.isArray(result)) {
+					let errorStatus = true
+					if (result.length) {
+						for (let i = 0, len = answer.length; i < len; i++) {
+							if (!result.includes(answer[i])) {
+								errorStatus = false
+								break
+							}
+						}
+					} else {
+						errorStatus = false
+					}
+					return errorStatus
+				} else {
+					return result === answer
+				}
 			}
 		}
 	}

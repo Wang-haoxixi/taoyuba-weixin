@@ -4,7 +4,7 @@
 		<view class="title">{{data.title}}</view>
 		<view class="">
 			<u-checkbox-group :disabled="disabled" wrap @change="checkboxGroupChange">
-				<view class="radio" v-for="(item, index) in data.optionsJson" :key="index">
+				<view class="radio" width="100%" v-for="(item, index) in data.optionsJson" :key="index">
 					<u-checkbox
 						class="clearfix"
 						v-model="item.checked"
@@ -71,6 +71,6 @@
 		
 	}
 	.radio {
-		margin-bottom: 20rpx;
+		margin-bottom: 40rpx;
 	}
 </style>

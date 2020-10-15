@@ -1,24 +1,34 @@
 <template>
 	<!-- 在线测试 -->
 	<view class="examination-container page-base phonex-mb">
-		<view class="item" @tap="openExam(item)" v-for="item in data" :key="item.id">
+		<view class="item" @tap="openExam(item)" v-for="(item, index) in data" :key="index">
 			<view class="title u-line-2">{{item.examName}}</view>
-			<view class="number">参与人数：{{ item.testNumber || 0}}人</view>
+			<!-- <view class="number">参与人数：{{ item.testNumber || 0}}人</view> -->
+			<view class="number">
+				考试内容：
+			</view>
+			<view class="number u-line-2">
+				<text v-for="(n, index) in item.list">{{n.examName}}{{n === item.list.length - 1 ? '' : '，'}}</text>
+			</view>
 			<view class="btn-wrapper">
 				<u-button plain size="mini" :custom-style="customStyle" @click="openExam(item)">立即参与</u-button>
 			</view>
 		</view>
 		<u-loadmore :status="status" />
 		<u-toast ref="uToast" />
+		<u-select v-model="show" :list="list" v-if="show" @confirm="onConfirm"></u-select>
 	</view>
 </template>
 
 <script>
 	import pageMixin from '@/pages/mixins/page.js'
+	import cloneDeep from 'lodash/cloneDeep'
 	export default {
 		mixins: [pageMixin],
 		data () {
 			return {
+				show: false,
+				list: [],
 				data: [],
 				status: 'loadmore',
 				customStyle: {
@@ -66,14 +76,32 @@
 					uni.stopPullDownRefresh()
 				})
 			},
+			setList (data) {
+				this.list = []
+				let list = []
+				for (let i = 0, len = data.length; i < len; i++) {
+					let obj = {
+						label: data[i].examName,
+						value: data[i].id
+					}
+					list.push(obj)
+				}
+				this.list = cloneDeep(list)
+			},
 			openExam (row) {
+				console.log('openExam', row)
+				this.setList(row.list)
+				this.show = true
+			},
+			onConfirm (e) {
+				let id = e[0].value
 				uni.showModal({
 					title: '您确定参加模拟考试么',
 					showCancel: true,
 					success: ({confirm, cancel}) => {
 						if (confirm) {
 							this.$http.post('/tmlms/exam_answer/create_test_pager', {
-								examinationId: row.id
+								examinationId: id
 							}).then(({ data }) => {
 								if (data.code === 0) {
 									uni.navigateTo({

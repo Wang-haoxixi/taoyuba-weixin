@@ -3,7 +3,7 @@
 	<view class="radio-wrapper">
 		<view class="title">{{info.title}}</view>
 		<view class="">
-			<u-radio-group wrap :disabled="disabled" v-model="defaultValue" @change="radioGroupChange">
+			<u-radio-group wrap width="100%" :disabled="disabled" v-model="defaultValue" @change="radioGroupChange">
 				<view class="radio" v-for="(item, index) in info.optionsJson" :key="index">
 					<u-radio
 						class="clearfix "
@@ -59,6 +59,6 @@
 		
 	}
 	.radio {
-		margin-bottom: 20rpx;
+		margin-bottom: 40rpx;
 	}
 </style>

@@ -88,12 +88,12 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 			icon: 'none',
 			title: '请登录后再查看',
 			duration: 1000,
-			success: () => {
-				uni.navigateTo({
-					url: '/pages/base/login'
-				})
-			}
 		})
+		setTimeout(() => {
+			uni.navigateTo({
+				url: '/pages/base/login'
+			})
+		}, 1000)
 		tools.clear()
 		return
 	}
