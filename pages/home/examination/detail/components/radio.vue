@@ -1,7 +1,7 @@
 <template>
 	<!-- 单选题 -->
 	<view class="radio-wrapper">
-		<view class="title">{{info.title}}</view>
+		<view class="title">{{info.title || ''}}</view>
 		<view class="">
 			<u-form ref="uForm">
 				<u-form-item>
@@ -52,7 +52,11 @@
 		}
 	}
 </script>
-
+<style>
+	::v-deep .u-radio__label {
+		width: 100%;
+	}
+</style>
 <style scoped lang="scss">
 	.radio-wrapper {
 		margin-top: 20rpx;

@@ -40,7 +40,7 @@
 				content: '',
 				list: [
 					{ name: '资讯', id: 1 },
-					{ name: '招聘', id: 2 },
+					// { name: '招聘', id: 2 },
 					{ name: '求职', id: 3 },
 					{ name: '培训信息', id: 4 },
 					{ name: '培训机构', id: 5 }
@@ -106,12 +106,11 @@
 				if (current === 0) {
 					return 'historyNews'
 				} else if (current === 1) {
-					return 'historyRecruit'
-				} else if (current === 2) {
+					// return 'historyRecruit'
 					return 'historyResume'
-				} else if (current === 3) {
+				} else if (current === 2) {
 					return 'historyTraining'
-				} else if (current === 4) {
+				} else if (current === 3) {
 					return 'historyTrainingInfo'
 				}
 				return ''
@@ -142,12 +141,11 @@
 				if (this.current === 0) {
 					return `/pages/home/news/list/index?keyword=${this.content}`
 				} else if (this.current === 1) {
-					return `/pages/home/recruit/list/index?keyword=${this.content}`
-				} else if (this.current === 2) {
+					// return `/pages/home/recruit/list/index?keyword=${this.content}`
 					return `/pages/home/resume/list/index?keyword=${this.content}`
-				} else if (this.current === 3) {
+				} else if (this.current === 2) {
 					return `/pages/home/training-info/list/index?keyword=${this.content}`
-				} else if (this.current === 4) {
+				} else if (this.current === 3) {
 					return `/pages/home/training/list/index?keyword=${this.content}`
 				}
 				return ''

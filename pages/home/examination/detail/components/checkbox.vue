@@ -1,7 +1,7 @@
 <template>
 	<!-- 多选题 -->
 	<view class="radio-wrapper">
-		<view class="title">{{data.title}}</view>
+		<view class="title">{{data.title || ''}}</view>
 		<view class="">
 			<u-checkbox-group :disabled="disabled" wrap @change="checkboxGroupChange">
 				<view class="radio" width="100%" v-for="(item, index) in data.optionsJson" :key="index">

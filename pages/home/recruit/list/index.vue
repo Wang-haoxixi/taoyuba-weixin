@@ -1,9 +1,9 @@
 <template>
 	<!-- 招聘 -->
 	<view class="recruit-list-wrapper phonex-mb">
-		<view class="search-wrapper">
+		<!-- <view class="search-wrapper">
 			<static-search :placeholder="form.contactName || '搜索'" :to="`/pages/home/search/index?type=1&keyword=${form.contactName}`"></static-search>
-		</view>
+		</view> -->
 		<view class="dropdown-wrapper">
 			<u-dropdown>
 				<u-dropdown-item v-model="form.workExprience" title="经验" :options="options1" @change="(value) => {onChangeDrowdown('workExprience', 'options1', value)}"></u-dropdown-item>

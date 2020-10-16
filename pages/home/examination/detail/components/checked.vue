@@ -1,7 +1,7 @@
 <template>
 	<!-- 判断题 -->
 	<view class="radio-wrapper">
-		<view class="title">{{info.title}}</view>
+		<view class="title">{{info.title || ''}}</view>
 		<view class="">
 			<u-radio-group wrap width="100%" :disabled="disabled" v-model="defaultValue" @change="radioGroupChange">
 				<view class="radio" v-for="(item, index) in info.optionsJson" :key="index">
@@ -48,7 +48,11 @@
 		}
 	}
 </script>
-
+<style>
+	/deep/.u-radio .u-radio__label {
+		width: 100%;
+	}
+</style>
 <style scoped lang="scss">
 	.radio-wrapper {
 		margin-top: 20rpx;

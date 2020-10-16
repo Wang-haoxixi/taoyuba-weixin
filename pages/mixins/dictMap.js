@@ -34,7 +34,7 @@ export default {
 					{ value: '3',label: '5千到7千', salaryStart: '5000', salaryEnd: '7000' }, 
 					{ value: '4', label: '7千到1万', salaryStart: '7000', salaryEnd: '10000' }, 
 					{ value: '5', label: '1万到1.5万', salaryStart: '10000', salaryEnd: '15000' }, 
-					{ value: '6', label: '1.5万以上', salaryStart: '15000', salaryEnd: '99999' },
+					{ value: '6', label: '1.5万以上', salaryStart: '15000', salaryEnd: '999999' },
 				],
 				sex: [
 					{ label: '男', value: 1 },

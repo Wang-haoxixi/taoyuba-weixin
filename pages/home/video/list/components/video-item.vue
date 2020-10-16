@@ -6,7 +6,7 @@
 		<view class="item-right">
 			<view class="title u-line-1">{{info.vedioName}}</view>
 			<view class="text">{{info.source}}</view>
-			<view class="text">{{info.videoViewerNum}}人学过</view>
+			<view class="text">{{info.videoViewerNum}}人次学过</view>
 			<view class="text">免费</view>
 		</view>
 	</view>
