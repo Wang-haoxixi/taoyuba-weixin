@@ -4,7 +4,7 @@
 		<u-navbar :title="timeLabel" :custom-back="onBack"></u-navbar>
 		<view class="examination-item">
 			<view class="item-header">
-				<view class="item-left">{{quesTypeLabel}}<text class="text">（本题{{info.grade}}分）</text></view>
+				<view class="item-left" v-if="quesTypeLabel">{{quesTypeLabel}}<text class="text">（本题{{info.grade}}分）</text></view>
 				<view class="item-right">{{current}}/{{total}}</view>
 			</view>
 			<view class="item-body">
@@ -36,7 +36,7 @@
 				{{isError ? '正确' : '错误'}}
 			</view>
 			<view class="">
-				答案:{{resultList[current - 1]}}
+				答案:{{info.examQuestionVO.type === 'CHECKED' ? (resultList[current - 1] === 'A' ? '对' : '错') : resultList[current - 1]}}
 			</view>
 		</view>
 		<view class="exam-bottom">

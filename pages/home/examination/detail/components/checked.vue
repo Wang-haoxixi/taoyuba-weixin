@@ -63,6 +63,6 @@
 		
 	}
 	.radio {
-		margin-bottom: 40rpx;
+		margin-bottom: 50rpx;
 	}
 </style>

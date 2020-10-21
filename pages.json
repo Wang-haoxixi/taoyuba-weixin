@@ -195,8 +195,8 @@
 		{
 			"path": "pages/message/index/index",
 			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": ""
+				// "enablePullDownRefresh": true
 			}
 		},
 		{
@@ -207,6 +207,12 @@
 		},
 		{
 			"path": "pages/message/detail/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/message/detail1/index",
 			"style": {
 				"navigationBarTitleText": ""
 			}

@@ -6,7 +6,6 @@
 		</view>
 		<view class="content-wrapper">
 			您于2019.10.20申请的“关于挖掘机的工作”已通过。感谢您的关注。
-			<view class="more" @click="onTo">详情</view>
 		</view>
 	</view>
 </template>
@@ -29,11 +28,6 @@
 					if (data.code === 0) {
 						this.data = data.data
 					}
-				})
-			},
-			onTo () {
-				uni.navigateTo({
-					url: '/pages/message/detail1/index'
 				})
 			}
 		}
@@ -67,11 +61,6 @@
 			color: #999;
 			font-size: 28rpx;
 			line-height: 1.6;
-		}
-		.more {
-			margin-top: 20rpx;
-			color: $color-blue;
-			text-align: right;
 		}
 	}
 </style>

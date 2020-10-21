@@ -1,6 +1,5 @@
 <template>
 	<view class="list-wrapper">
-		<view class="title" v-if="title">{{title}}</view>
 		<view class="content-wrapper">
 			<u-cell-item :value="item.time" v-for="(item, index) in list" :key="index" @tap="onTo(item)">
 				<view slot="title" class="content u-line-1">{{item.content}}
@@ -14,14 +13,13 @@
 <script>
 	export default {
 		props: {
-			title: String,
 			list: Array
 		},
 		methods: {
 			onTo (row) {
 				uni.navigateTo({
 					url: `/pages/message/detail/index?type=${row.id}`
-				});
+				})
 			}
 		}
 	}

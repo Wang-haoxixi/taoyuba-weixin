@@ -23,9 +23,6 @@ const getTokenStorage = () => {
 
 const http = new Request()
 http.setConfig((config) => { /* 设置全局配置 */
-	// config.baseUrl = 'http://192.168.0.250:9999/'
-	// config.baseUrl = 'http://183.131.134.242:10026/'
-	// config.baseUrl = 'https://www.woneng.net/api/ '
 	config.baseUrl = API_URL /* 根域名不同 */
 	config.header = {
 		...config.header,

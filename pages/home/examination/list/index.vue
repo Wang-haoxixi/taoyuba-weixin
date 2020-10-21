@@ -2,13 +2,13 @@
 	<!-- 在线测试 -->
 	<view class="examination-container page-base phonex-mb">
 		<view class="item" @tap="openExam(item)" v-for="(item, index) in data" :key="index">
-			<view class="title u-line-2">{{item.examName}}</view>
+			<view class="title u-line-2">{{item.kind || ''}}</view>
 			<!-- <view class="number">参与人数：{{ item.testNumber || 0}}人</view> -->
 			<view class="number">
-				考试内容：
+				职务等级：
 			</view>
 			<view class="number u-line-2">
-				<text v-for="(n, index) in item.list">{{n.examName}}{{n === item.list.length - 1 ? '' : '，'}}</text>
+				<text v-for="(n, index) in item.list">{{n.level ? n.level : n.examName}}{{index === (item.list.length - 1) ? '' : '，'}}</text>
 			</view>
 			<view class="btn-wrapper">
 				<u-button plain size="mini" :custom-style="customStyle" @click="openExam(item)">立即参与</u-button>
@@ -81,7 +81,7 @@
 				let list = []
 				for (let i = 0, len = data.length; i < len; i++) {
 					let obj = {
-						label: data[i].examName,
+						label: data[i].level ? data[i].level : data[i].examName,
 						value: data[i].id
 					}
 					list.push(obj)

@@ -3,20 +3,16 @@
 	<view class="radio-wrapper">
 		<view class="title">{{info.title || ''}}</view>
 		<view class="">
-			<u-form ref="uForm">
-				<u-form-item>
-					<u-radio-group wrap width="100%" :disabled="disabled" v-model="defaultValue" @change="radioGroupChange">
-						<view class="radio" v-for="(item, index) in info.optionsJson" :key="index">
-							<u-radio
-								class="clearfix "
-								active-color="#409EFF"
-								:name="item.key">
-								{{item.key}}.  {{item.value}}
-							</u-radio>
-						</view>
-					</u-radio-group>
-				</u-form-item>
-			</u-form>
+			<u-radio-group wrap width="100%" :disabled="disabled" v-model="defaultValue" @change="radioGroupChange">
+				<view class="radio" v-for="(item, index) in info.optionsJson" :key="index">
+					<u-radio
+						class="clearfix "
+						active-color="#409EFF"
+						:name="item.key">
+						{{item.key}}.  {{item.value}}
+					</u-radio>
+				</view>
+			</u-radio-group>
 		</view>
 	</view>
 </template>
@@ -67,6 +63,6 @@
 		
 	}
 	.radio {
-		margin-bottom: 40rpx;
+		margin-bottom: 50rpx;
 	}
 </style>

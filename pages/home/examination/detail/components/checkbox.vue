@@ -30,7 +30,7 @@
 		},
 		data () {
 			return {
-				data: {}
+				data: {},
 			}
 		},
 		watch: {
@@ -71,6 +71,6 @@
 		
 	}
 	.radio {
-		margin-bottom: 40rpx;
+		margin-bottom: 50rpx;
 	}
 </style>
