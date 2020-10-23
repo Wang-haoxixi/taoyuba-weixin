@@ -266,7 +266,6 @@
 			margin-right: 24rpx;
 			color: $u-content-color;
 			font-size: 30rpx;
-			width: 100%;
 			&--disabled {
 				color: #c8c9cc;
 			}

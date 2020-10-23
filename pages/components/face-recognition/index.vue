@@ -55,36 +55,36 @@
 					this.getAuthSetting(res)
 				},
 				fail: () => {
-					console.log('一开始 fail')
+					// console.log('一开始 fail')
 				}
 			})
 		},
 		methods: {
 			getAuthSetting (res) {
-				console.log('getAuthSetting', res.authSetting['scope.camera'])
+				// console.log('getAuthSetting', res.authSetting['scope.camera'])
 				if (!res.authSetting['scope.camera']) {
 					uni.authorize({
 						scope:'scope.camera',
 						success: () => {
-							console.log('成功', this.showCamera)
+							// console.log('成功', this.showCamera)
 							this.showCamera = true
 						},
 						fail: () => {
-							console.log('失败', this.showCamera)
+							// console.log('失败', this.showCamera)
 							uni.showModal({
 							 	icon: 'none',
 								title: '提示',
 								content: '尚未进行授权，请打开相机权限',
 								success: (res) => {
 									if (res.confirm) {
-										console.log('重新获取')
+										// console.log('重新获取')
 										uni.openSetting({
 											success: (res) => {
 												this.getAuthSetting(res)
 											}
 										})
 									} else {
-										console.log('重新开始')
+										// console.log('重新开始')
 										uni.getSetting({
 											success: (res) => {
 												this.getAuthSetting(res)
@@ -97,7 +97,7 @@
 									
 								},
 								fail: () => {
-									console.log('重新开始')
+									// console.log('重新开始')
 									uni.getSetting({
 										success: (res) => {
 											this.getAuthSetting(res)

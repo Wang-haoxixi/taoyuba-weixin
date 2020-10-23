@@ -1,12 +1,12 @@
 <template>
 	<view class="message-detail-container phonex-mb">
 		<view class="header-wrapper">
-			<view class="title">您的申请已通过</view>
-			<view class="time">2019.10.20</view>
+			<view class="title">{{data.name}}</view>
+			<view class="time">{{data.time}}</view>
 		</view>
 		<view class="content-wrapper">
-			您于2019.10.20申请的“关于挖掘机的工作”已通过。感谢您的关注。
-			<view class="more" @click="onTo">详情</view>
+			{{data.content}}
+			<view class="more" @click="onTo" v-if="data.type === '2'">详情</view>
 		</view>
 	</view>
 </template>
@@ -19,22 +19,30 @@
 			}
 		},
 		onLoad (params) {
+			console.log('params', params)
 			if (params.id) {
 				this.getList(params.id)
 			}
 		},
 		methods: {
 			getList (id) {
-				this.$http.get().then(({ data }) => {
+				this.$http.get(`/tmlms/sysMsg/${id}`).then(({ data }) => {
 					if (data.code === 0) {
 						this.data = data.data
 					}
 				})
 			},
 			onTo () {
-				uni.navigateTo({
-					url: '/pages/message/detail1/index'
-				})
+				// 等于合同时跳转至合同页面,其他的跳转至例外页面
+				if (this.data.type === '2') {
+					uni.navigateTo({
+						url: `/pages/base/web?src=https://m.taoyu58.com/api/tmlms/downLoad/intoContractHtml&contractId=${this.data.dataId}`
+					})
+				} else {
+					// uni.navigateTo({
+					// 	url: '/pages/message/detail1/index'
+					// })
+				}
 			}
 		}
 	}

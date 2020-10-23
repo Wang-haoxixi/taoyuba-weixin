@@ -2,8 +2,8 @@
 	<view class="list-wrapper">
 		<view class="content-wrapper">
 			<u-cell-item :value="item.time" v-for="(item, index) in list" :key="index" @tap="onTo(item)">
-				<view slot="title" class="content u-line-1">{{item.content}}
-					<u-badge :is-dot="true" type="error" class="dot" v-if="item.dot"></u-badge>
+				<view slot="title" class="content u-line-1">{{item.name}}
+					<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0'"></u-badge>
 				</view>
 			</u-cell-item>
 		</view>
@@ -17,8 +17,9 @@
 		},
 		methods: {
 			onTo (row) {
+				row.isRead = '1'
 				uni.navigateTo({
-					url: `/pages/message/detail/index?type=${row.id}`
+					url: `/pages/message/detail/index?id=${row.id}`
 				})
 			}
 		}

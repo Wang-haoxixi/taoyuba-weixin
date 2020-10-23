@@ -3,7 +3,7 @@
 		<view class="title-header">
 			答题卡
 		</view>
-		<scroll-view class="content" scroll-y>
+		<scroll-view class="content-wrapper" scroll-y>
 			<view class="subject-item" v-for="(item, index) in (info.quesType || [])" :key="index">
 				<view class="title">{{item.label}}</view>
 				<view class="content">
@@ -103,7 +103,7 @@
 			margin-bottom: 30rpx;
 			color: #333;
 		}
-		.content {
+		.content-wrapper {
 			max-height: 900rpx;
 			overflow-y: auto;
 			overflow-x: hidden;

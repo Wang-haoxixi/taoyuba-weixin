@@ -2,7 +2,7 @@
 	<view class="info-item-wrapper">
 		<view class="title u-line-1">
 			<u-icon name="file-text" size="36" class="ic"></u-icon>
-			{{info.examName}}
+			{{info.kind}}
 		</view>
 	</view>
 </template>
