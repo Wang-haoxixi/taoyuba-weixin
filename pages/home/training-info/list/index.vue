@@ -1,7 +1,7 @@
 <template>
 	<view class="training-info-container">
 		<view class="search-wrapper">
-			<static-search :placeholder="form.title || '搜索'" :to="`/pages/home/search/index?type=1&keyword=${form.title}`"></static-search>
+			<static-search :placeholder="form.title || '搜索'" :to="`/pages/home/search/index?type=5&keyword=${form.title}`"></static-search>
 		</view>
 		<view class="content-wrapper">
 			<view class="item" v-for="(item, index) in data" :key="index">
@@ -38,9 +38,10 @@
 			this.getList()
 		},
 		onUnload () {
-			uni.switchTab({
-				url: '/pages/home/index/index'
-			})
+			uni.navigateBack({delta: 1})
+			// uni.switchTab({
+			// 	url: '/pages/home/index/index'
+			// })
 		},
 		onPullDownRefresh () {
 			this.data = []

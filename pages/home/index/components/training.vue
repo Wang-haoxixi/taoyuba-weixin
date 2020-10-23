@@ -70,7 +70,7 @@
 			tabsChange (index) {
 				if (index === 2) {
 					uni.navigateTo({
-						url: `/pages/base/web?src=https://www.baidu.com`
+						url: `/pages/base/web?src=https://m.taoyu58.com/careerplanning`
 					})
 				} else if (index === 3) {
 					uni.navigateTo({

@@ -77,7 +77,21 @@
 				this.content = params.keyword
 			}
 			if (params.type) {
-				this.current = +params.type
+				let type = +params.type
+				this.current = type
+				if (type >= 2) {
+					this.current = type - 1
+				}
+				
+				if (type === 3) {
+					this.current = 0
+				} else if (type === 1) {
+					this.current = 1
+				} else if (type === 5) {
+					this.current = 2
+				} else if (type === 4) {
+					this.current = 3
+				}
 			}
 			let historyList = this.$cache.get('historySearchList') 
 			if (historyList) {

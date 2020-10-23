@@ -55,9 +55,10 @@
 			this.getList()
 		},
 		onUnload () {
-			uni.switchTab({
-				url: '/pages/home/index/index'
-			})
+			uni.navigateBack({delta: 1})
+			// uni.switchTab({
+			// 	url: '/pages/home/index/index'
+			// })
 		},
 		methods: {
 			getList () {

@@ -12,7 +12,29 @@ const errorCode = {
 	"426": "用户名不存在或密码错误",
 	"429": "请求过频繁",
 	"428": "验证码错误,请重新输入",
-};
+}
+
+const ignoreUrl = [
+	'/tybhrms/tybarticle/page',
+	'/tmlms/dept/pageForAll',
+	'/tybhrms/tyblessonvideo/page',
+	'/tmlms/exam_examination/page',
+	'/tybhrms/tybrecruit/',
+	'/admin/region/getinfo/',
+	'/tmlms/crew/xsPage',
+	'/tmlms/crew/checkUser',
+	'/tmlms/dept/pageForAll',
+	'/tmlms/dept/detail',
+	'/tybhrms/tybarticle/page',
+	'/tmlms/exam_examination/page',
+	'/tybhrms/tyblessonvideo/page',
+	'/tybhrms/tyblessonvideo/',
+	'/tmlms/crew_cert/newPage',
+	'/tybhrms/tybbook/page',
+	'/admin/dict/all_map',
+	'/tmlms/crew/idcardcheck',
+	'/tmlms/crew/createByWx'
+]
 const getTokenStorage = () => {
 	let token = ''
 	try {
@@ -41,6 +63,7 @@ http.validateStatus = (statusCode) => {
 }
 
 http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
+// console.log('config', config)
 	uni.showLoading({
 		icon: 'none',
 		title: '加载中',
@@ -49,7 +72,16 @@ http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
 	config.header = {
 		...config.header,
 	}
-	let token = getTokenStorage()
+	let status = true
+	ignoreUrl.forEach((item) => {
+		let url = config.url
+		if (url.indexOf(item) === 0) {
+			status = false
+			return false
+		}
+	})
+	console.log(config.url, status)
+	let token = status ? getTokenStorage() : ''
 	if (token) {
 		config.header.Authorization = 'Bearer ' + token
 	}

@@ -2,7 +2,7 @@
 	<view class="info-wrapper">
 		<home-container>
 			<view class="title" slot="header">模拟考试</view>
-			<view class="">
+			<view class="" v-if="data.length">
 				<info-item v-for="(item, index) in data" v-if="index < 6" :key="item.id" :info="item" @tap="onTo(item)"></info-item>
 				<view class="more" @tap="onTo">更多</view>
 			</view>

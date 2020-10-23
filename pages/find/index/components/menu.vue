@@ -2,7 +2,7 @@
 	<view class="menu-container">
 		<view class="menu-wrapper">
 			<u-grid :col="4" :border="false">
-				<u-grid-item bg-color="rgba(255, 255, 255, .5)" v-for="(item, index) in menu" :key="index" class="grid-item" @click="onTo(item.path)">
+				<u-grid-item bg-color="rgba(255, 255, 255, .5)" v-for="(item, index) in menu" :key="index" class="grid-item" @click="onTo(item)">
 					<view class="ic-wrapper" :style="{background: item.color}">
 						<u-icon :name="item.icon" size="40" color="#fff"></u-icon>
 					</view>
@@ -14,7 +14,9 @@
 </template>
 
 <script>
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
+		mixins: [userInfoMixin],
 		data () {
 			return {
 				menu: [
@@ -23,21 +25,51 @@
 					{ path: '/pages/release/register/index', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '船员登记' },
 					{ path: '', path2: '/pages/user/contract/list/index', path1: '/pages/user/myship/ship/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-hetong.png`, label: '合同' },
 					{ path: '/pages/home/training/list/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-peixunjigou.png`, label: '培训机构' },
-					{ path: '/pages/home/examination/list/index', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, label: '模拟考试' },
-					{ path: '/pages/base/web?src=https://m.taoyu58.com/careerplanning', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-jinyuqi.png`, label: '进出港报告' },
+					{ path: '/pages/home/examination/list/index', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, label: '模拟考试',  },
 					{ path: '/pages/home/video/list/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '渔民学院' },
+					{ path: '', color: '#d7d7d7', icon: `${this.$IMAGE_URL}/home-jinyuqi.png`, label: '进出港报告' },
 				]
 			}
 		},
 		methods: {
-			onTo (path) {
-				if (path === '' || path == null) {
+			onTo (row) {
+				if (row.path1 && row.path2) {
+					// console.log(this.roles, this.roles.length > 0, this.roles[1])
+					this.getUserInfoApi().then(() => {
+						if (this.roles && this.roles.length > 0) {
+							if (this.roles[1] === 105) {
+								uni.navigateTo({
+									url: '/pages/user/contract/list/index'
+								})
+							} else if (this.roles[1] === 108) {
+								uni.navigateTo({
+									url: '/pages/user/myship/ship/index'
+								})
+							} else {
+								uni.navigateTo({
+									url: '/pages/home/contract/list/index'
+								})
+							}
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '您还未登录，请先登录后查看'
+							})
+							this.$cache.clear()
+							uni.navigateTo({
+								url: '/pages/base/login'
+							})
+						}
+						return
+					})
+				}
+				if (row.path === '') {
 					return
 				}
 				uni.navigateTo({
-					url: path
-				});
-			}
+					url: row.path
+				})
+			},
 		}
 	}
 </script>

@@ -45,12 +45,10 @@
 			return {
 				list: [
 					{
-						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
+						image: this.$IMAGE_URL + '/banner1.jpg',
 					},
 					{
-						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
+						image: this.$IMAGE_URL + '/banner2.jpg'
 					}
 				],
 				imgUrl: this.$IMAGE_URL,
@@ -61,8 +59,8 @@
 					{ path: '', path2: '/pages/user/contract/list/index', path1: '/pages/user/myship/ship/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-hetong.png`, label: '合同' },
 					{ path: '/pages/home/training/list/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-peixunjigou.png`, label: '培训机构' },
 					{ path: '/pages/home/examination/list/index', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, label: '模拟考试',  },
-					{ path: '/pages/base/web?src=https://m.taoyu58.com/careerplanning', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-jinyuqi.png`, label: '进出港报告' },
 					{ path: '/pages/home/video/list/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '渔民学院' },
+					{ path: '', color: '#d7d7d7', icon: `${this.$IMAGE_URL}/home-jinyuqi.png`, label: '进出港报告' },
 				]
 			}
 		},

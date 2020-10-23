@@ -4,7 +4,7 @@
 		<view class="form-wrapper">
 			<u-form :model="form" ref="uForm" :rules="rules" label-width="150" :label-style="{color: '#999'}">
 				<u-form-item prop="photoFront" label-position="top">
-					<u-upload custom-btn width="500" :show-progress="false" @on-success="onSuccessPhotoFront" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/idcard`">
+					<u-upload custom-btn width="500" :show-progress="false" @on-success="onSuccessPhotoFront" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :action="`${apiUrl}/admin/file/upload/idcard`">
 						<view class="img-wrapper" slot="addBtn">
 							<image :src="`${imgUrl}/homo-face.png`" mode="aspectFit"></image>
 						</view>
@@ -41,9 +41,9 @@
 			return {
 				photoFrontList: [],
 				contactNameShow: false,
-				header: {
-					'Authorization': 'Bearer ' + uni.getStorageSync(TOKEN)
-				},
+				// header: {
+				// 	'Authorization': 'Bearer ' + uni.getStorageSync(TOKEN)
+				// },
 				imgUrl: this.$IMAGE_URL,
 				apiUrl: this.$API_URL, 
 				loading: false,

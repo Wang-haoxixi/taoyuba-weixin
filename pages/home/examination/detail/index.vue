@@ -61,6 +61,7 @@
 			</tyb-subject>
 		</u-popup>
 		<u-toast ref="uToast" />
+		<u-modal v-model="modelShow" :content="content" title="成绩"></u-modal>
 	</view>
 </template>
 
@@ -94,7 +95,9 @@
 				isEnd: false,
 				endLoading: false,
 				scroe: '',
-				isError: false
+				isError: false,
+				modelShow: false,
+				content: ''
 			}
 		},
 		computed: {
@@ -322,6 +325,9 @@
 					}).then(({ data }) => {
 						resolve(data)
 					}).catch(() => {
+						this.$refs.uToast.show({
+							title: '交卷失败'
+						})
 						this.endLoading = false
 					})
 				})
@@ -369,6 +375,9 @@
 						this.getRightKey()
 						this.isSame()
 						this.value = this.answerList[this.current - 1]
+						// 成绩弹窗显示
+						this.modelShow = true
+						this.content = `最终得分${this.scroe}分。正确率${this.scroe}%。`
 					}
 				})
 			},

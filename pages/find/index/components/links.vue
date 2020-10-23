@@ -16,11 +16,11 @@
 		data () {
 			return {
 				data: [
-					{ label: '台风预报', path: 'http://typhoon.zjwater.gov.cn/default.aspx' },
-					{ label: '潮汐预报', path: 'http://www.chaoxb.com/?choice=1' },
-					{ label: '近岸预报', path: 'http://weather.haishangtong.com/' },
-					{ label: '渔区气象', path: 'http://m.nmc.cn/publish/marine/newcoastal.html' },
-					{ label: '大风预报', path: 'http://m.nmc.cn/publish/marine/sea-wind.htm' }
+					{ label: '台风预报', path: '' }, // http://typhoon.zjwater.gov.cn/default.aspx
+					{ label: '潮汐预报', path: '' }, // http://www.chaoxb.com/?choice=1
+					{ label: '近岸预报', path: '' }, // http://weather.haishangtong.com/
+					{ label: '渔区气象', path: '' }, // http://m.nmc.cn/publish/marine/newcoastal.html
+					{ label: '大风预报', path: '' } // http://m.nmc.cn/publish/marine/sea-wind.htm
 				]
 			}
 		},
