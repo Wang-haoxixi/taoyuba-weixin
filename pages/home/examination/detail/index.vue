@@ -337,7 +337,8 @@
 				this.onSubmitApi().then((data) => {
 					if (data.code === 0) {
 						this.$refs.uToast.show({
-							title: '考试结束'
+							title: '考试结束',
+							position: 'bottom'
 						})
 					} else {
 						this.$refs.uToast.show({
