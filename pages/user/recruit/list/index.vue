@@ -58,6 +58,8 @@
 						}
 					}
 					uni.stopPullDownRefresh()
+				}).catch(() => {
+					
 				})
 			},
 			onTo (path) {

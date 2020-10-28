@@ -31,8 +31,8 @@
 				</tyb-checkbox>
 			</view>
 		</view>
-		<view class="result-wrapper" v-if="isEnd">
-			<view class="text" :class="isError ? 'success' : 'error'">
+		<view class="result-wrapper" v-if="isEnd" :class="isError ? 'success' : 'error'">
+			<view class="text">
 				{{isError ? '正确' : '错误'}}
 			</view>
 			<view class="">
@@ -378,7 +378,7 @@
 						this.value = this.answerList[this.current - 1]
 						// 成绩弹窗显示
 						this.modelShow = true
-						this.content = `最终得分${this.scroe}分。正确率${this.scroe}%。`
+						this.content = `最终得分${this.scroe}分。正确率${this.scroe}%。成绩${this.data.result}`
 					}
 				})
 			},
@@ -458,6 +458,7 @@
 		.examination-item {
 			padding: 30rpx;
 			.item-header {
+				font-size: 36rpx;
 				padding: 10rpx 0;
 				display: flex;
 				justify-content: space-between;
@@ -478,11 +479,15 @@
 			margin: 30rpx;
 			background-color: #f6f6f6;
 			padding: 30rpx 20rpx;
-			.success {
+			font-size: 32rpx;
+			border-radius: 10rpx;
+			&.success {
 				color: #3bd588;
+				background-color: #f0fbf3;
 			}
-			.error {
+			&.error {
 				color: #f74536;
+				background-color: #fff6f6;
 			}
 			.text {
 				margin-bottom: 20rpx;

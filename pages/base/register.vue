@@ -106,7 +106,7 @@
 					return
 				}
 				if(!(/^1[3456789]\d{9}$/.test(this.form.phone))) {
-					console.log('this.form.phone',111)
+					// console.log('this.form.phone',111)
 					this.$refs.uToast.show({
 						title: '请输入正确的手机号',
 						type: 'error'

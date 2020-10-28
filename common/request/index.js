@@ -19,7 +19,8 @@ const ignoreUrl = [
 	'/tmlms/dept/pageForAll',
 	'/tybhrms/tyblessonvideo/page',
 	'/tmlms/exam_examination/page',
-	'/tybhrms/tybrecruit/',
+	'/tybhrms/tybrecruit/page',
+	'/tybhrms/tybrecruit/:id',
 	'/admin/region/getinfo/',
 	'/tmlms/crew/xsPage',
 	'/tmlms/crew/checkUser',
@@ -73,15 +74,42 @@ http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
 		...config.header,
 	}
 	let status = true
+	let url = config.url
 	ignoreUrl.forEach((item) => {
-		let url = config.url
-		if (url.indexOf(item) === 0) {
-			status = false
-			return false
+		
+		let isNum = new RegExp('[0-9]').test(url)
+		// 判断是否含有数字
+		if (isNum) {
+			let itemIndex = item.indexOf(':id')
+			if (itemIndex > -1) {
+				let newItem = item.slice(0, itemIndex)
+				let reg = /[0-9]+/g
+				let newUrl = url.replace(reg, '')
+				// console.log(newItem, newUrl)
+				if (newUrl === newItem) {
+					status = false
+					return false
+				}
+			} else {
+				if (url.indexOf(item) === 0) {
+					status = false
+					return false
+				}
+			}
+			// let value = url.slice(index)
+			// status = !tools.isRealNum(value)
+			// console.log(url, value, status)
+		} else {
+			if (url.indexOf(item) === 0) {
+				status = false
+				return false
+			}
 		}
 	})
-	console.log(config.url, status)
+	
+	// console.log(config.url, status)
 	let token = status ? getTokenStorage() : ''
+	// console.log('token', token)
 	if (token) {
 		config.header.Authorization = 'Bearer ' + token
 	}

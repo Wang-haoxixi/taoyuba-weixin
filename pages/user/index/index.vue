@@ -90,23 +90,26 @@
 			this.userInfo = this.$cache.get('userInfo') || {}
 			this.roles = this.$cache.get('roles') || []
 			this.text = ''
-			if (Object.keys(this.userInfo).length === 0) {
-				this.getUserInfo().then(() => {
-					this.init()
-				})
-			} else {
+			this.getUserInfo().then(() => {
 				this.init()
-			}
+			})
+			// if (Object.keys(this.userInfo).length === 0) {
+			// 	this.getUserInfo().then(() => {
+			// 		this.init()
+			// 	})
+			// } else {
+			// 	this.init()
+			// }
 			
 			if (this.roles && this.roles.length > 0) {
 				this.type = this.roles[1] || ''
 			} else {
 				this.type = ''
 			}
-			// console.log('type', this.roles, this.type)
 		},
 		methods: {
 			init () {
+				console.log('init 验证')
 				let userInfo = this.userInfo
 				if (userInfo && userInfo.idCard) {
 					// 判断是否已注册船员
@@ -121,20 +124,32 @@
 							this.text = ''
 						}
 					})
-					this.$http.get('/tmlms/ship_owner/getDetail', {
-						params: {
-							idcard: userInfo.idCard
-						}
-					}).then(({ data }) => {
-						if(data.data){
-							if(data.msg == 'success' && data.data.status === 1 && data.data.userId !== 0){
-							    this.text= '您的船东信息正在审核中...'
+					
+				}
+				if (userInfo && userInfo.userId) {
+					this.$http.get(`/tmlms/tybshiphaver/userShip/${userInfo.userId}`).then(({ data }) => {
+						if (data.code === 0) {
+							// 判断是否已注册船东
+							if(data.data[data.data.length - 1].status === 0){
+								this.text= '您的船东信息正在审核中...'
 							} else {
 								this.text = ''
 							}
+							// this.$http.get('/tmlms/ship_owner/getDetail', {
+							// 	params: {
+							// 		idcard: data.data[data.data.length - 1].idcard
+							// 	}
+							// }).then(({ data }) => {
+							// 	if(data.data){
+							// 		if(data.msg == 'success' && data.data.status === 1 && data.data.userId !== 0){
+							// 		    this.text= '您的船东信息正在审核中...'
+							// 		} else {
+							// 			this.text = ''
+							// 		}
+							// 	}
+							// })
 						}
 					})
-					// 判断是否已注册船东
 				}
 			},
 			onToUser () {

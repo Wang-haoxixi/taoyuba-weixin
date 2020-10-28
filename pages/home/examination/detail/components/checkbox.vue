@@ -3,7 +3,7 @@
 	<view class="radio-wrapper">
 		<view class="title">{{data.title || ''}}</view>
 		<view class="">
-			<u-checkbox-group :disabled="disabled" wrap @change="checkboxGroupChange">
+			<u-checkbox-group :disabled="disabled" wrap @change="checkboxGroupChange" label-size="36">
 				<view class="radio" width="100%" v-for="(item, index) in data.optionsJson" :key="index">
 					<u-checkbox
 						class="clearfix"
@@ -67,6 +67,7 @@
 		font-size: 32rpx;
 		.title {
 			margin-bottom: 30rpx;
+			font-size: 36rpx;
 		}
 		
 	}

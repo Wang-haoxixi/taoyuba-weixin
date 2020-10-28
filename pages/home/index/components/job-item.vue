@@ -9,7 +9,7 @@
 				<text class="price-type" v-if="ageRequireLabel">年龄：{{ageRequireLabel}}</text>
 			</view>
 			<view class="time">
-				发布时间：{{getTime(info.createTime)}}
+				发布时间：{{info.updateTime}}
 			</view>
 		</view>
 		<view class="list-item_right" v-if="!hideBtn">
@@ -51,7 +51,8 @@
 			},
 			// 获取时间
 			getTime (time) {
-				return this.$tools.dateFormat('YYYY-mm-dd', new Date(time))
+				return this.$tools.timestamp(+new Date(time) / 1000)
+				// return this.$tools.dateFormat('YYYY-mm-dd', new Date(time))
 			},
 			getDictLabel (data = [], value) {
 				let result = ''

@@ -231,6 +231,17 @@ export default {
 		cache.remove('refresh_token')
 		cache.remove('userInfo')
 		cache.remove('roles')
+	},
+	// 判断是否是数字
+	isRealNum (val){
+	　　if(val === "" || val ==null){
+	        return false
+	　　}
+	   if(!isNaN(val)){　　　　
+	　　　 return true;
+	　　} else{ 
+	　　　　return false;
+	　　} 
 	}
 }
 

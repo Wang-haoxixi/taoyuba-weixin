@@ -96,9 +96,11 @@
 									title: '您的申请已提交，请等待审核！'
 								})
 								this.getUserInfoApi()
-								uni.switchTab({
-									url: '/pages/user/index/index'
-								})
+								setTimeout(() => {
+									uni.switchTab({
+										url: '/pages/user/index/index'
+									})
+								}, 1500)
 							}
 						}).catch(() => {
 							this.loading = false

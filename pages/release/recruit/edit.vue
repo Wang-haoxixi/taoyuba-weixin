@@ -30,9 +30,9 @@
 						<u-form-item label="作业方式" prop="workMode" required>
 							<u-input type="select" :select-open="workModeShow" v-model="form.workModeLabel" placeholder="请选择作业方式" @click="workModeShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="上船地点" prop="cityLabel" required>
+						<!-- <u-form-item label="上船地点" prop="cityLabel" required>
 							<u-input type="select" :select-open="cityShow" v-model="form.cityLabel" placeholder="请选择上船地点" @click="openCity"></u-input>
-						</u-form-item>
+						</u-form-item> -->
 					</view>
 				</view>
 				<view class="content-container">
@@ -53,7 +53,7 @@
 							<u-input v-model="form.hullLength" type="number" trim placeholder="请输入船长"/>
 						</u-form-item>
 						<u-form-item label="主机总功率(kw)" label-width="210">
-							<u-input v-model="form.totalPower" trim placeholder="请输入主机总功率"/>
+							<u-input v-model="form.totalPower" type="number" trim placeholder="请输入主机总功率"/>
 						</u-form-item>
 						<u-form-item label="姓名">
 							<u-input v-model="form.contactName" trim placeholder="请输入姓名"/>
@@ -121,7 +121,7 @@
 					certTitle: '', // 证书职务
 					certLevel: '', // 证书等级
 					workMode: '', // 作业方式
-					city: [], // 上船地点
+					// city: [], // 上船地点
 					ageRequire: '', // 年龄要求
 					workExprience: '', // 工作经验
 					hullLength: '', // 船长

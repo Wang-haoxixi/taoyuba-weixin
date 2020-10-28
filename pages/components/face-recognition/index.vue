@@ -20,6 +20,7 @@
 </template>
 
 <script>
+	import { TOKEN } from '@/common/config/index.js'
 	export default {
 		props: {
 			value: {
@@ -133,6 +134,7 @@
 				 		ctx.takePhoto({
 				 			quality: 'high',
 				 			success: (res) => {
+								// console.log('res', res)
 				 				this.phoneSrc = res.tempImagePath
 								// 图片转化为base64
 								uni.getFileSystemManager().readFile({
@@ -142,15 +144,22 @@
 								        let base64 = 'data:image/jpeg;base64,' + res.data //不加上这串字符，在页面无法显示的哦
 										// 活体识别
 										// this.$tools.jsonForm
-										this.$http.post('/admin/file/person/verify', this.$tools.jsonForm({
-								        	idcard: this.userInfo.idCard,
-								        	name: this.userInfo.realName,
-								        	fileStr: base64
-								        }), {
-											header: {
-												'Content-Type': 'application/x-www-from-urlencoded' // 默认值
+										this.$http.upload(`/admin/file/person/verify`,
+											{
+												// params: this.$tools.jsonForm({
+												// 	idcard: this.userInfo.idCard,
+												// 	name: this.userInfo.realName,
+												// 	fileStr: base64
+												// })
+												formData: {
+													idcard: this.userInfo.idCard,
+													name: this.userInfo.realName,
+													fileStr: base64
+												},
+												filePath: this.phoneSrc,
+												name: 'file'
 											}
-										}).then(({ data }) => {
+										).then(({ data }) => {
 								        	if (data.data === '检测成功') {
 								        		this.loading = false
 								        		this.phoneSrc = ''
