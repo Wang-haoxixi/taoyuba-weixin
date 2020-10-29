@@ -5,13 +5,15 @@
 		<view class="">
 			<u-radio-group wrap size="40" width="100%" :disabled="disabled" v-model="defaultValue" @change="radioGroupChange" >
 				<view class="radio" v-for="(item, index) in info.optionsJson" :key="index">
-					<u-radio
-						label-size="36"
-						class="clearfix "
-						active-color="#409EFF"
-						:name="item.key">
-						{{item.key}}.  {{item.value}}
-					</u-radio>
+					<view class="radio-item-wrapper">
+						<u-radio
+							label-size="36"
+							class="clearfix "
+							active-color="#409EFF"
+							:name="item.key">
+							{{item.key}}.  {{item.value}}
+						</u-radio>
+					</view>
 				</view>
 			</u-radio-group>
 		</view>
@@ -61,10 +63,17 @@
 		.title {
 			margin-bottom: 30rpx;
 			font-size: 36rpx;
+			line-height: 1.8;
 		}
 		
 	}
 	.radio {
 		margin-bottom: 50rpx;
+	}
+	.radio-item-wrapper {
+		background-color: #fafbfd;
+		border-radius: 20rpx;
+		padding: 20rpx;
+		border: 1px solid #f6f7f9;
 	}
 </style>

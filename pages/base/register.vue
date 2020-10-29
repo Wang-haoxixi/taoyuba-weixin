@@ -120,13 +120,23 @@
 						mask: true
 					})
 					console.log(this.form.phone)
-					getMobileCode(this.form.phone).then((msg) => {
+					getMobileCode(this.form.phone).then((data) => {
 						uni.hideLoading()
+						this.$refs.uToast.show({
+							title: data.msg || '手机号已注册',
+							duration: 2000
+						})
+						if (data.data) {
+							this.$refs.uCode.start()
+						}
 						// this.$u.toast(msg || '验证码已发送')
-						this.$refs.uCode.start()
-					}).catch((msg) => {
+					}).catch((data) => {
 						uni.hideLoading()
-						// this.$u.toast(msg || '手机号已注册')
+						this.$refs.uToast.show({
+							title: data.msg || '手机号已注册',
+							duration: 2000
+						})
+						// this.$u.toast(msg || '')
 					})
 				} else {
 					this.$u.toast('倒计时结束后再发送')
@@ -138,43 +148,37 @@
 			onSubmit () {
 				if (this.form.phone === '') {
 					this.$refs.uToast.show({
-						title: '请输入手机号',
-						type: 'error'
+						title: '请输入手机号'
 					})
 					return
 				}
 				if(!(/^1[3456789]\d{9}$/.test(this.form.phone))) {
 					this.$refs.uToast.show({
-						title: '请输入正确的手机号',
-						type: 'error'
+						title: '请输入正确的手机号'
 					})
 					return
 				}
 				if (this.form.password === '') {
 					this.$refs.uToast.show({
-						title: '请输入密码',
-						type: 'error'
+						title: '请输入密码'
 					})
 					return
 				}
 				if (this.form.apassword === '') {
 					this.$refs.uToast.show({
-						title: '请输入确认密码',
-						type: 'error'
+						title: '请输入确认密码'
 					})
 					return
 				}
 				if (this.form.apassword !== this.form.password) {
 					this.$refs.uToast.show({
-						title: '密码和确认密码不一样',
-						type: 'error'
+						title: '密码和确认密码不一样'
 					})
 					return
 				}
 				if (this.form.code === '') {
 					this.$refs.uToast.show({
-						title: '请输入验证码',
-						type: 'error'
+						title: '请输入验证码'
 					})
 					return
 				}
@@ -192,7 +196,8 @@
 					mask: true
 				})
 				onRegister(this.form).then((data) => {
-					if (data.code === 0 && data.data === true) {
+					uni.hideLoading()
+					if (data.data === true) {
 						this.$refs.uToast.show({
 							title: '注册成功'
 						})
@@ -201,10 +206,11 @@
 						})
 					} else {
 						this.$refs.uToast.show({
-							title: data.msg || '注册失败'
+							title: data.msg || '注册失败',
+							duration: 2000
 						})
 					}
-					uni.hideLoading()
+					
 				}).catch(() => {
 					uni.hideLoading()
 				})

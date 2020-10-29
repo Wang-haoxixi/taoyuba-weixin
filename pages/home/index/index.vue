@@ -12,7 +12,8 @@
 		<home-video ref="homeVideo"></home-video>
 		<!-- 职务 科目 证书 考场信息 -->
 		<home-info></home-info>
-		
+		<home-autograph v-model="show"></home-autograph>
+		<!-- <u-button @click="open">签名</u-button> -->
 		<tyb-tarbar :currentIndex="0"></tyb-tarbar>
 	</view>
 </template>
@@ -27,9 +28,11 @@
 	import tybTarbar from '@/pages/components/tarbar/index.vue'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
+	import homeAutograph from '@/pages/components/autograph/index.vue'
 	export default {
 		mixins: [dictMapMixin, userInfoMixin],
 		components: {
+			homeAutograph,
 			tybTarbar,
 			homeHeader,
 			homeNotice,
@@ -41,6 +44,16 @@
 		// onShow () {
 		// 	this.roles = this.$cache.get('roles') || []
 		// },
+		data () {
+			return {
+				show: false
+			}
+		},
+		methods: {
+			open () {
+				this.show = true
+			}
+		},
 		onReady () {
 			this.getDicMap().then(() => {
 				this.$refs.homeJob.init()

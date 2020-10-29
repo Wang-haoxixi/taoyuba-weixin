@@ -3,10 +3,24 @@
 		<view class="menu-wrapper">
 			<u-grid :col="4" :border="false">
 				<u-grid-item bg-color="rgba(255, 255, 255, .5)" v-for="(item, index) in menu" :key="index" class="grid-item" @click="onTo(item)">
-					<view class="ic-wrapper" :style="{background: item.color}">
-						<u-icon :name="item.icon" size="40" color="#fff"></u-icon>
-					</view>
-					<view class="text">{{item.label}}</view>
+					<template v-if="item.outreach">
+						 <navigator 
+						 target="miniProgram" 
+						 open-type="navigate" 
+						 app-id="wxd43c7f6f30974960" 
+						 version="release">
+							 <view class="ic-wrapper" :style="{background: item.color}">
+								<u-icon :name="item.icon" size="45" color="#fff"></u-icon>
+							 </view>
+							 <view class="text">{{item.label}}</view>
+						 </navigator>
+					</template>
+					<template v-else>
+						<view class="ic-wrapper" :style="{background: item.color}">
+							<u-icon :name="item.icon" size="45" color="#fff"></u-icon>
+						</view>
+						<view class="text">{{item.label}}</view>
+					</template>
 				</u-grid-item>
 			</u-grid>
 		</view>
@@ -97,6 +111,7 @@
 				justify-content: center;
 				display: flex;
 				align-items: center;
+				margin: 0 auto;
 			}
 			.text {
 				display: block;

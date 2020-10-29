@@ -36,7 +36,6 @@
 </template>
 
 <script>
-	import getUser from '@/common/utils/user'
 	import { getForgetCode, forgetForm } from '@/common/utils/login.js'
 	export default {
 		data () {
@@ -64,7 +63,7 @@
 				if (this.form.phone === '') {
 					this.$refs.uToast.show({
 						title: '请输入手机号',
-						type: 'error'
+						// type: 'error'
 					})
 					return
 				}
@@ -81,9 +80,17 @@
 						title: '正在获取验证码',
 						mask: true
 					})
-					getForgetCode(this.form.phone).then((msg) => {
+					getForgetCode(this.form.phone).then((data) => {
+						// console.log('data', data)
 						uni.hideLoading()
-						this.$refs.uCode.start()
+						this.$refs.uToast.show({
+							title: data.msg || '已发送',
+							duration: 2000
+						})
+						if (data.data) {
+							this.$refs.uCode.start()
+						}
+						
 					}).catch((msg) => {
 						uni.hideLoading()
 					})
@@ -98,14 +105,14 @@
 				if (this.form.phone === '') {
 					this.$refs.uToast.show({
 						title: '请输入手机号',
-						type: 'error'
+						// type: 'error'
 					})
 					return
 				}
 				if(!(/^1[3456789]\d{9}$/.test(this.form.phone))) {
 					this.$refs.uToast.show({
 						title: '请输入正确的手机号',
-						type: 'error'
+						// type: 'error'
 					})
 					return
 				}
@@ -113,7 +120,7 @@
 				if (this.form.newPassword === '') {
 					this.$refs.uToast.show({
 						title: '请输入密码',
-						type: 'error'
+						// type: 'error'
 					})
 					return
 				}
@@ -135,21 +142,21 @@
 				if (this.form.rePassword === '') {
 					this.$refs.uToast.show({
 						title: '请输入确认密码',
-						type: 'error'
+						// type: 'error'
 					})
 					return
 				}
 				if (this.form.newPassword !== this.form.rePassword) {
 					this.$refs.uToast.show({
 						title: '密码和确认密码不一样',
-						type: 'error'
+						// type: 'error'
 					})
 					return
 				}
 				if (this.form.vCode === '') {
 					this.$refs.uToast.show({
 						title: '请输入验证码',
-						type: 'error'
+						// type: 'error'
 					})
 					return
 				}
@@ -158,7 +165,8 @@
 					mask: true
 				})
 				forgetForm(this.form).then((data) => {
-					if (data.code === 0) {
+					console.log('data', data)
+					if (data.data) {
 						this.$refs.uToast.show({
 							title: data.msg || '修改成功',
 						})
@@ -174,9 +182,6 @@
 				}).catch((e) => {
 					uni.hideLoading()
 				})
-				setTimeout(() => {
-					uni.hideLoading()
-				}, 2000)
 			},
 		}
 	}

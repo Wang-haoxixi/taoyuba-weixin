@@ -57,7 +57,10 @@
             "es6" : true,
             "minified" : true,
             "postcss" : true
-        }
+        },
+		"navigateToMiniProgramAppIdList": [
+			"wxd43c7f6f30974960"
+		]
     },
     "h5" : {
         "router" : {

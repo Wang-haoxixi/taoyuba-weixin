@@ -68,6 +68,7 @@
 		.title {
 			margin-bottom: 30rpx;
 			font-size: 36rpx;
+			line-height: 1.8;
 		}
 		
 	}

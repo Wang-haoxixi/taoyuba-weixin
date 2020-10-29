@@ -49,19 +49,13 @@ export const validatePhone = (phone) => {
 export const getMobileCode = (phone) => {
 	return new Promise((resolve, reject) => {
 		$http.get(`/admin/mobile/${phone}`).then(({ data }) => {
-			if (data.code === 0 && data.data === true) {
-				uni.showToast({
-					icon: 'none',
-					title: data.msg || '发送成功'
-				})
-				resolve(data.msg)
-			} else {
-				uni.showToast({
-					icon: 'none',
-					title: data.msg || '发送失败'
-				})
-				reject(data.msg)
-			}
+			resolve(data)
+		}).catch((e) => {
+			// uni.showToast({
+			// 	icon: 'none',
+			// 	title: data.msg || '注册失败'
+			// })
+			reject(e)
 		})
 	})
 }
@@ -72,10 +66,10 @@ export const onRegister = (form) => {
 		$http.post('/admin/user/register', form).then(({ data }) => {
 			resolve(data)
 		}).catch((e) => {
-			uni.showToast({
-				icon: 'none',
-				title: data.msg || '注册失败'
-			})
+			// uni.showToast({
+			// 	icon: 'none',
+			// 	title: data.msg || '注册失败'
+			// })
 			reject(e)
 		})
 	})
@@ -84,19 +78,9 @@ export const onRegister = (form) => {
 export const getForgetCode = (phone) => {
 	return new Promise((resolve, reject) => {
 		$http.get(`/admin/mobile/edit/${phone}`).then(({ data }) => {
-			if (data.code === 0 && data.data === true) {
-				uni.showToast({
-					icon: 'none',
-					title: data.msg || '修改成功'
-				})
-				resolve(data.msg)
-			} else {
-				uni.showToast({
-					icon: 'none',
-					title: data.msg || '修改失败'
-				})
-				reject(data.msg)
-			}
+			resolve(data)
+		}).catch(e => {
+			reject(e)
 		})
 	})
 }
