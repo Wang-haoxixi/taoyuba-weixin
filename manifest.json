@@ -58,9 +58,8 @@
             "minified" : true,
             "postcss" : true
         },
-		"navigateToMiniProgramAppIdList": [
-			"wxd43c7f6f30974960"
-		]
+        "navigateToMiniProgramAppIdList" : [ "wxd43c7f6f30974960" ],
+        "permission" : {}
     },
     "h5" : {
         "router" : {

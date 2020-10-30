@@ -5,8 +5,8 @@
 			<!-- <view class="text">船名：{{info.shipName}}</view> -->
 			<view class="text">合同状态：{{statusLabel}}</view>
 			<view class="text">
-				<text>舶拥有者：{{info.shipownerName}}</text>
-				<text>雇员：{{info.employeeName}}</text>
+				<text>船舶拥有者：{{info.shipownerName}}</text>
+				<text style="margin-left: 20rpx;">雇员：{{info.employeeName}}</text>
 			</view>
 			<view class="text">创建日期：{{info.createTime}}</view>
 		</view>
