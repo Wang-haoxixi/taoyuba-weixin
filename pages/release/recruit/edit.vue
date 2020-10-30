@@ -68,7 +68,7 @@
 					</view>
 				</view>
 				<view class="btn-wrapper">
-					<u-button size="default" hover-class="none" :loading="loading" :custom-style="btnStyle" @click="onSubmit">发布招聘</u-button>
+					<u-button size="default" hover-class="none" :loading="loading" :custom-style="btnStyle" @click="onSubmit">免费发布招聘</u-button>
 				</view>
 			</u-form>
 		</view>

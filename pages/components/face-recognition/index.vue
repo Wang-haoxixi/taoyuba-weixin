@@ -144,6 +144,7 @@
 								        let base64 = 'data:image/jpeg;base64,' + res.data //不加上这串字符，在页面无法显示的哦
 										// 活体识别
 										// this.$tools.jsonForm
+										// console.log('base64', base64)
 										this.$http.upload(`/admin/file/person/verify`,
 											{
 												// params: this.$tools.jsonForm({
