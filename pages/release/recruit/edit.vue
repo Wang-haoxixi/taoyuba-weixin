@@ -16,11 +16,12 @@
 							<u-input v-model="form.recruitNo" placeholder="请输入招聘人数" type="number"/>
 						</u-form-item>
 						<u-form-item label="月薪" prop="salary" required>
-							<u-input v-model="form.salary" placeholder="请输入月薪" type="number"/>
+							<u-input type="select" :select-open="salaryShow" v-model="form.salaryLabel" placeholder="请选择月薪" @click="salaryShow = true"></u-input>
+							<!-- <u-input v-model="form.salary" placeholder="请输入月薪" type="number"/> -->
 						</u-form-item>
-						<u-form-item label="货币种类" prop="salaryCurrency" required>
+						<!-- <u-form-item label="货币种类" prop="salaryCurrency" required>
 							<u-input type="select" :select-open="salaryCurrencyShow" v-model="form.salaryCurrencyLabel" placeholder="请选择货币种类" @click="salaryCurrencyShow = true"></u-input>
-						</u-form-item>
+						</u-form-item> -->
 						<u-form-item label="证书职务" prop="certTitle" required>
 							<u-input type="select" :select-open="certTitleShow" v-model="form.certTitleLabel" placeholder="请选择证书职务" @click="certTitleShow = true"></u-input>
 						</u-form-item>
@@ -49,6 +50,9 @@
 				<view class="content-container">
 					<view class="title">其他信息</view>
 					<view class="body-wrapper">
+						<u-form-item label="船名">
+							<u-input v-model="form.shipName" trim placeholder="请输入船名" @blur="onBlur"/>
+						</u-form-item>
 						<u-form-item label="船长(m)">
 							<u-input v-model="form.hullLength" type="number" trim placeholder="请输入船长"/>
 						</u-form-item>
@@ -74,8 +78,8 @@
 		<u-select mode="single-column" safe-area-inset-bottom :list="workExprienceList" v-model="workExprienceShow" @confirm="(e) => onConfirm(e, 'workExprience')"></u-select>
 		<!-- 招聘岗位 -->
 		<u-select mode="single-column" safe-area-inset-bottom :list="positionIdList" v-model="positionIdShow" @confirm="(e) => onConfirm(e, 'positionId')"></u-select>
-		<!-- 货币种类 -->
-		<u-select mode="single-column" safe-area-inset-bottom :list="salaryCurrencyList" v-model="salaryCurrencyShow" @confirm="(e) => onConfirm(e, 'salaryCurrency')"></u-select>
+		<!-- 月薪 -->
+		<u-select mode="single-column" safe-area-inset-bottom :list="salaryList" v-model="salaryShow" @confirm="(e) => onConfirm(e, 'salary')"></u-select>
 		<!-- 证书职务 -->
 		<u-select mode="single-column" safe-area-inset-bottom :list="certTitleList" v-model="certTitleShow" @confirm="(e) => onConfirm(e, 'certTitle')"></u-select>
 		<!-- 证书等级 -->
@@ -98,7 +102,7 @@
 				id: '',
 				loading: false,
 				positionIdShow: false,
-				salaryCurrencyShow: false,
+				salaryShow: false,
 				certTitleShow: false,
 				certLevelShow: false,
 				workModeShow: false,
@@ -150,8 +154,8 @@
 			workExprienceList () {
 				return cloneDeep(this.dictMap)['tyb_work_exprience'] || []
 			},
-			salaryCurrencyList () {
-				return cloneDeep(this.dictMap)['salaryCurrency']
+			salaryList () {
+				return cloneDeep(this.dictMap)['salaryList1']
 			},
 			certTitleList () {
 				return cloneDeep(this.dictMap)['tyb_crew_cert_title'] || []
@@ -177,6 +181,20 @@
 			}
 		},
 		methods: {
+			onBlur (value) {
+				if (value) {
+					this.$http.get(`/tybship/tybship/findmyship/${value}`).then(({ data }) => {
+						if (data.code === 0) {
+							let result = data.data
+							this.$set(this.form, 'contactName', result.shipowner) // 联系人
+							this.$set(this.form, 'contactPhone', result.mobile) // 联系电话
+							this.$set(this.form, 'hullLength', result.hullLength) // 船长
+							this.$set(this.form, 'totalPower', result.engineTotalPower) // 主机总功率
+						}
+					})
+				}
+				console.log('value', value)
+			},
 			getList (id) {
 				this.$http.get(`/tybhrms/tybrecruit/getdetail/${id}`).then(({ data }) => {
 					if (data.code === 0) {
@@ -196,7 +214,7 @@
 			},
 			initForm () {
 				this.getDictLabel('positionId', this.form.positionId, this.positionIdList)
-				this.getDictLabel('salaryCurrency', this.form.salaryCurrency, this.salaryCurrencyList)
+				this.getDictLabel('salary', this.form.salary, this.salaryList)
 				this.getDictLabel('certTitle', this.form.certTitle, this.certTitleList)
 				this.getDictLabel('certLevel', this.form.certLevel, this.certLevelList)
 				this.getDictLabel('workMode', this.form.workMode, this.workModeList)
@@ -296,6 +314,7 @@
 						this.loading = true
 						this.form.salary = +this.form.salary
 						this.form.recruitNo = +this.form.recruitNo
+						this.form.salaryCurrency = '1'
 						if (this.id) {
 							this.updateApi()
 						} else {

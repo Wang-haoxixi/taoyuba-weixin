@@ -36,6 +36,14 @@ export default {
 					{ value: '5', label: '1万到1.5万', salaryStart: '10000', salaryEnd: '15000' }, 
 					{ value: '6', label: '1.5万以上', salaryStart: '15000', salaryEnd: '999999' },
 				],
+				salaryList1: [
+					{ label: '面议', value: '1' },
+					{ label: '4K以下', value: '2' },
+					{ label: '4-6K', value: '3' },
+					{ label: '6-8K', value: '4' },
+					{ label: '8K-10K', value: '5' },
+					{ label: '10K及以上', value: '6' }
+				],
 				sex: [
 					{ label: '男', value: 1 },
 					{ label: '女', value: 2 }
