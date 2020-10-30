@@ -2,7 +2,7 @@
 	<view class="video-wrapper">
 		<home-container>
 			<view class="video-title" slot="header">
-				<text class="text">热门视频</text>
+				<text class="text">渔民学院</text>
 				<!-- <view class="reload" @tap="onReload">
 					<u-icon name="reload" size="30"></u-icon>
 					<text>换一批</text>
