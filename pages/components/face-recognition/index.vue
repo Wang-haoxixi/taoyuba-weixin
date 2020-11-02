@@ -136,11 +136,46 @@
 				 			success: (res) => {
 								// console.log('res', res)
 				 				this.phoneSrc = res.tempImagePath
+								console.log(res)
+								console.log(this.phoneSrc)
+								this.$http.upload('/admin/file/upload/avatar', {
+									filePath: this.phoneSrc,
+									name: 'file'
+								}).then(({ data }) => {
+									if (data.code === 0) {
+										let filePath = data.data.url
+										console.log('filePath', filePath)
+										this.$http.upload(`/admin/file/person/verify`,
+											{
+												formData: {
+													idcard: this.userInfo.idCard,
+													name: this.userInfo.realName,
+													file: filePath
+												},
+												filePath: this.phoneSrc,
+												name: 'file'
+											}
+										).then(({ data }) => {
+								        	if (data.data === '检测成功') {
+								        		this.loading = false
+								        		this.phoneSrc = ''
+								        		this.close()
+								        	} else {
+								        		this.$refs.uToast.show({
+								        			title: '活体识别失败',
+								        			back: true
+								        		})
+								        	}
+								        })
+									}
+								})
+								return
 								// 图片转化为base64
 								uni.getFileSystemManager().readFile({
 								    filePath: this.phoneSrc, //选择图片返回的相对路径
 								    encoding: 'base64', //编码格式
 								    success: res => { //成功的回调
+										// console.log(res.data)
 								        let base64 = 'data:image/jpeg;base64,' + res.data //不加上这串字符，在页面无法显示的哦
 										// 活体识别
 										// this.$tools.jsonForm
