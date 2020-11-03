@@ -323,6 +323,12 @@
 				"navigationStyle": "custom",
 				"navigationBarTextStyle": "white"
 			}
+		},
+		{
+			"path": "pages/home/info/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
 	],
 	"tabBar": {

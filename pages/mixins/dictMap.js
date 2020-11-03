@@ -11,6 +11,13 @@ export default {
 					{ label: '合同解除', value: 4 },
 					{ label: '合同过期', value: 5 }
 				],
+				contactNameList: [
+					{ value: '妻子', label: '妻子' },
+					{ value: '父母', label: '父母' },
+					{ value: '子女', label: '子女' },
+					{ value: '兄弟', label: '兄弟' },
+					{ value: '姐妹', label: '姐妹' },
+				],
 				salaryCurrency: [
 					{ label: '人民币(RMB)', value: '1' },
 					{ label: '美元(USD)', value: '2' }

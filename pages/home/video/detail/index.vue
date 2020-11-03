@@ -12,7 +12,7 @@
 				@pause="onPause"
 				@play="onPlay"
 				:enable-progress-gesture="false"
-				:show-progress="true"
+				:show-progress="false"
 				:src="data.videoSrc"
 				:poster="data.videoImg"></video>
 		</view>
@@ -26,14 +26,14 @@
 				{{data.videoDescript || ''}}
 			</view>
 		</view>
-		<face-recognition v-model="show" @end="onFaceEnd" :userInfo="userInfo"></face-recognition>
+		<face-recognition v-model="show" @end="onFaceEnd" :userInfo="userInfo" :isFirst="isFirst"></face-recognition>
 		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
-	const TIME = 3 * 60
-	const INTERVAL_TIME = 4 * 60
+	const TIME = 3 * 10
+	const INTERVAL_TIME = 2 * 60
 	import faceRecognition from '@/pages/components/face-recognition/index.vue'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
@@ -44,14 +44,14 @@
 		data () {
 			return {
 				show: false,
-				once: true,
 				initialTime: 0,
 				time: 0,
 				videoContext: null,
 				faceTime: TIME, // 活体识别间隔时间
 				intervalTime: INTERVAL_TIME, // 间隔记录时间
 				data: {},
-				videoId: undefined
+				videoId: undefined,
+				isFirst: false
 			}
 		},
 		onLoad (params) {
@@ -62,7 +62,7 @@
 						this.getList(params.id)
 					} else {
 						this.$refs.uToast.show({
-							title: '您无权利查看课程培训',
+							title: '请确认您的身份是船员',
 							back: true
 						})
 					}
@@ -77,7 +77,7 @@
 			this.videoContext = uni.createVideoContext('myVideo')
 		},
 		onUnload () {
-			console.log('onUnload', this.time)
+			// console.log('onUnload', this.time)
 			if (Math.floor(this.time)) {
 				this.$http.post('/tybhrms/tybLearnRecord/save', {
 					learnTime: this.time,
@@ -96,10 +96,24 @@
 						this.faceTime = +this.faceTime + (+this.initialTime)
 						this.intervalTime = +this.intervalTime + (+this.initialTime)
 						this.videoContext.pause()
-						this.show = true
-						// if (this.once) {
-						// 	this.once = false
-						// }
+						this.$http.get('/tmlms/crew/getCrewByidcard', {
+							params: {
+								idcard: this.userInfo.idCard
+							}
+						}).then(({ data }) => {
+							if (data.code === 0) {
+								let facePhoto = data.data.facePhoto
+								if (facePhoto === '' || facePhoto.indexOf('2019') > -1) {
+									this.isFirst = true
+								}
+								this.show = true
+							}
+						}).catch(() => {
+							uni.navigateBack({
+								delta: 1
+							})
+						})
+						// this.show = true
 					}
 				})
 			},
@@ -130,6 +144,7 @@
 					this.faceTime += TIME
 					this.intervalTime += INTERVAL_TIME
 					this.show = true
+					this.setLearnTime()
 					// console.log('活体识别时间', currentTime, this.intervalTime)
 					return
 				}

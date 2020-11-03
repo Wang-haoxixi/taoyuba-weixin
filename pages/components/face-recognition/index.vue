@@ -27,7 +27,8 @@
 				type: Boolean,
 				default: false
 			},
-			userInfo: Object
+			userInfo: Object,
+			isFirst: Boolean
 		},
 		data () {
 			return {
@@ -37,7 +38,8 @@
 				showNumber: false,
 				number: 3,
 				phoneSrc: '',
-				loading: false
+				loading: false,
+				_isFirst: false
 			}
 		},
 		watch: {
@@ -47,6 +49,9 @@
 				} else {
 					this.close()
 				}
+			},
+			isFirst (newVal) {
+				this._isFirst = newVal
 			}
 		},
 		created () {
@@ -122,8 +127,31 @@
 				this.visibleSync = false
 			},
 			takePhoto () {
-				this.showNumber = true
 				this.loading = true
+				if (this._isFirst) {
+					uni.showModal({
+						content: '为了更好的向你提供船员便利服务，当前采集的信息只为验证是否为本人。同意采集请继续，否则请退出',
+						cancelText: '退出',
+						success: ({ confirm, cancel }) => {
+							if (confirm) {
+								this.showNumber = true
+								this.onPhone()
+								return
+							}
+							if (cancel) {
+								uni.navigateBack({
+									delta: 1
+								})
+							}
+						}
+					})
+				} else {
+					this.showNumber = true
+					this.onPhone()
+				}
+				
+			},
+			onPhone () {
 				this.timer = setInterval(() => {
 				 	this.number--
 				 	if (this.number <= 0) {
@@ -145,69 +173,45 @@
 									if (data.code === 0) {
 										let filePath = data.data.url
 										console.log('filePath', filePath)
-										this.$http.upload(`/admin/file/person/verify`,
+										this.$http.upload(`/tmlms/crew/faceMatch`,
 											{
 												formData: {
 													idcard: this.userInfo.idCard,
-													name: this.userInfo.realName,
+													// name: this.userInfo.realName,
 													file: filePath
 												},
 												filePath: this.phoneSrc,
 												name: 'file'
 											}
 										).then(({ data }) => {
-								        	if (data.data === '检测成功') {
-								        		this.loading = false
-								        		this.phoneSrc = ''
-								        		this.close()
-								        	} else {
-								        		this.$refs.uToast.show({
-								        			title: '活体识别失败',
-								        			back: true
-								        		})
-								        	}
+											let msg = data.data
+											if (this._isFirst) {
+												if (msg === '检测成功') {
+													this._isFirst = false
+													this.loading = false
+													this.phoneSrc = ''
+													this.close()
+												} else {
+													this.$refs.uToast.show({
+														title: '你当前的信息和系统数据不匹配，请重新验证'
+													})
+													this.loading = false
+													this.phoneSrc = ''
+												}
+											} else {
+												if (msg === '检测成功') {
+													this.loading = false
+													this.phoneSrc = ''
+													this.close()
+												} else {
+													this.$refs.uToast.show({
+														title: '你当前的信息和系统数据不匹配，请重新验证',
+														back: true
+													})
+												}
+											}
 								        })
 									}
-								})
-								return
-								// 图片转化为base64
-								uni.getFileSystemManager().readFile({
-								    filePath: this.phoneSrc, //选择图片返回的相对路径
-								    encoding: 'base64', //编码格式
-								    success: res => { //成功的回调
-										// console.log(res.data)
-								        let base64 = 'data:image/jpeg;base64,' + res.data //不加上这串字符，在页面无法显示的哦
-										// 活体识别
-										// this.$tools.jsonForm
-										// console.log('base64', base64)
-										this.$http.upload(`/admin/file/person/verify`,
-											{
-												// params: this.$tools.jsonForm({
-												// 	idcard: this.userInfo.idCard,
-												// 	name: this.userInfo.realName,
-												// 	fileStr: base64
-												// })
-												formData: {
-													idcard: this.userInfo.idCard,
-													name: this.userInfo.realName,
-													fileStr: base64
-												},
-												filePath: this.phoneSrc,
-												name: 'file'
-											}
-										).then(({ data }) => {
-								        	if (data.data === '检测成功') {
-								        		this.loading = false
-								        		this.phoneSrc = ''
-								        		this.close()
-								        	} else {
-								        		this.$refs.uToast.show({
-								        			title: '活体识别失败',
-								        			back: true
-								        		})
-								        	}
-								        })
-								    }
 								})
 				 			},
 				 			fail: () => {

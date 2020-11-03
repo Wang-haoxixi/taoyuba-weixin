@@ -7,7 +7,7 @@
 					<view class="trainning-item" v-for="(item, index) in data1" :key="index">
 						<trainning-item :info="item" btn-text="详情" @tap="onTo(item.userId)"></trainning-item>
 					</view>
-					<view class="more" @tap="onToList('/pages/home/training/list/index')">更多</view>
+					<view class="more" @tap="onToList('/pages/home/info/index')">更多</view>
 				</view>
 				<view class="" v-show="current === 1" v-if="data2.length">
 					<!-- <trainning-item :info="item" btn-text="报名" v-for="(item, index) in data2" :key="index" @tap="onTo(item.userId)">

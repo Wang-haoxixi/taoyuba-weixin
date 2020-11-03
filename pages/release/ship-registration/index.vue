@@ -70,7 +70,8 @@
 				shipNameList: [
 					{ value: '浙岱渔', label: '浙岱渔' },
 					{ value: '浙岱渔运', label: '浙岱渔运' },
-					{ value: '浙岱渔冷', label: '浙岱渔冷' }
+					{ value: '浙岱渔冷', label: '浙岱渔冷' },
+					{ value: '浙岱渔休', label: '浙岱渔休' }
 				],
 				rules: {
 					photoFront: [{ required: true, message: '请上传你的身份证', trigger: ['change', 'blur'] }],

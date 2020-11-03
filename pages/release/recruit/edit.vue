@@ -51,7 +51,8 @@
 					<view class="title">其他信息</view>
 					<view class="body-wrapper">
 						<u-form-item label="船名">
-							<u-input v-model="form.shipName" trim placeholder="请输入船名" @blur="onBlur"/>
+							<u-input type="select" :select-open="shipNameShow" v-model="form.shipName" placeholder="请选择船名" @click="shipNameShow = true"></u-input>
+							<!-- <u-input v-model="form.shipName" trim placeholder="请输入船名" @blur="onBlur"/> -->
 						</u-form-item>
 						<u-form-item label="船长(m)">
 							<u-input v-model="form.hullLength" type="number" trim placeholder="请输入船长"/>
@@ -72,6 +73,8 @@
 				</view>
 			</u-form>
 		</view>
+		<!-- 渔船 -->
+		<u-select mode="single-column" safe-area-inset-bottom :list="shipNameList" v-model="shipNameShow" @confirm="(e) => onShipNameConfirm(e)"></u-select>
 		<!-- 年龄要求 -->
 		<u-select mode="single-column" safe-area-inset-bottom :list="ageRequireList" v-model="ageRequireShow" @confirm="(e) => onConfirm(e, 'ageRequire')"></u-select>
 		<!-- 工作经验 -->
@@ -95,8 +98,9 @@
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	import cityMixin from '@/pages/mixins/city.js'
 	import cloneDeep from 'lodash/cloneDeep'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
-		mixins: [dictMapMixin, cityMixin],
+		mixins: [dictMapMixin, cityMixin, userInfoMixin],
 		data () {
 			return {
 				id: '',
@@ -109,8 +113,10 @@
 				cityShow: false,
 				ageRequireShow: false,
 				workExprienceShow: false,
+				shipNameShow: false,
 				imgURL: this.$IMAGE_URL,
 				cityDefaultSelector: [0, 0, 0],
+				shipNameList: [],
 				btnStyle: {
 					backgroundColor: 'rgba(232, 103, 73, 1)',
 					color: '#fff',
@@ -179,8 +185,28 @@
 				this.id = params.id
 				this.getList(params.id)	
 			}
+			this.getShipList()
 		},
 		methods: {
+			// 获取名下船只
+			getShipList () {
+				this.$http.get(`/tmlms/tybshiphaver/getMyShip/${this.userInfo.userId}`).then(({ data }) => {
+					if (data.code === 0) {
+						let result = []
+						data.data.forEach((item) => {
+							let obj = {}
+							obj.label = item.shipName
+							obj.value = item.shipName
+							result.push(obj)
+						})
+						this.shipNameList = result
+					}
+				})
+			},
+			onShipNameConfirm (e) {
+				this.form['shipName'] = e[0].value
+				this.onBlur(this.form['shipName'])
+			},
 			onBlur (value) {
 				if (value) {
 					this.$http.get(`/tybship/tybship/findmyship/${value}`).then(({ data }) => {
@@ -193,7 +219,6 @@
 						}
 					})
 				}
-				console.log('value', value)
 			},
 			getList (id) {
 				this.$http.get(`/tybhrms/tybrecruit/getdetail/${id}`).then(({ data }) => {

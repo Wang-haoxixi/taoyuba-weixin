@@ -12,32 +12,35 @@
 						<u-form-item label="应聘职务" prop="positionId" required>
 							<u-input type="select" :select-open="positionIdShow" v-model="form.positionIdLabel" placeholder="请选择应聘职务" @click="positionIdShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="婚姻状态">
+						<!-- <u-form-item label="婚姻状态">
 							<u-input type="select" :select-open="maritalStatusShow" v-model="form.maritalStatusLabel" placeholder="请选择婚姻状态" @click="maritalStatusShow = true"></u-input>
-						</u-form-item>
-						<u-form-item label="作业方式">
+						</u-form-item> -->
+						<!-- <u-form-item label="作业方式">
 							<u-input type="select" :select-open="workRequireShow" v-model="form.workRequireLabel" placeholder="请选择作业方式" @click="workRequireShow = true"></u-input>
-						</u-form-item>
+						</u-form-item> -->
 						<u-form-item label="工作经验">
 							<u-input type="select" :select-open="workExprienceShow" v-model="form.workExprienceLabel" placeholder="请选择工作经验" @click="workExprienceShow = true"></u-input>
 						</u-form-item>
-						<u-form-item label="文化程度">
+						<!-- <u-form-item label="文化程度">
 							<u-input type="select" :select-open="eduDegreeShow" v-model="form.eduDegreeLabel" placeholder="请选择文化程度" @click="eduDegreeShow = true"></u-input>
-						</u-form-item>
+						</u-form-item> -->
 						<u-form-item label="期望月薪">
 							<u-input v-model="form.salary" trim placeholder="请输入期望月薪" type="number"/>
 						</u-form-item>
-						<u-form-item label="现住地址" >
+						<!-- <u-form-item label="现住地址" >
 							<u-input v-model="form.preAddress" trim placeholder="请输入现住地址"/>
-						</u-form-item>
-						<u-form-item label="特长">
+						</u-form-item> -->
+						<!-- <u-form-item label="特长">
 							<u-input v-model="form.speciality" trim placeholder="请输入特长"/>
-						</u-form-item>
+						</u-form-item> -->
 					</view>
 				</view>
 				<view class="content-container">
 					<view class="title">个人资料</view>
 					<view class="body-wrapper">
+						<u-form-item label="身份证正面照片" required prop="photoFront" label-position="top">
+							<u-upload :show-progress="false" @on-success="onSuccessPhotoFront" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/idcard`"></u-upload>
+						</u-form-item>
 						<u-form-item label="姓名" prop="realName" required>
 							<u-input v-model="form.realName" trim placeholder="请输入姓名"/>
 						</u-form-item>
@@ -45,7 +48,7 @@
 							<u-input v-model="form.idcard" trim placeholder="请输入身份证号"/>
 						</u-form-item>
 						<u-form-item label="性别" prop="genderLabel" required>
-							<u-input type="select" :select-open="genderShow" v-model="form.genderLabel" placeholder="请输入性别" @click="genderShow = true"/>
+							<u-input type="select" :select-open="genderShow" v-model="form.genderLabel" placeholder="请选择性别" @click="genderShow = true"/>
 						</u-form-item>
 						<u-form-item label="籍贯地区" prop="districtIdLabel" required>
 							<u-input type="select" :select-open="districtIdShow" v-model="form.districtIdLabel" placeholder="请选择籍贯" @click="openDistrictId"></u-input>
@@ -65,21 +68,18 @@
 						<u-form-item label="联系电话" prop="phone" required>
 							<u-input placeholder="请输入联系电话" trim v-model="form.phone" type="number"></u-input>
 						</u-form-item>
-						<u-form-item label="家庭联系人" prop="contactName" required>
-							<u-input placeholder="请输入家庭联系人" v-model="form.contactName"></u-input>
+						<u-form-item label="家属" prop="contactName" required>
+							<u-input type="select" :select-open="contactNameShow" v-model="form.contactName" placeholder="请选择家属" @click="contactNameShow = true"/>
 						</u-form-item>
-						<u-form-item label="家庭联系电话" prop="contactPhone" required label-width="160">
-							<u-input placeholder="请输入家庭联系电话" trim v-model="form.contactPhone"></u-input>
+						<u-form-item label="家属手机" prop="contactPhone" required label-width="160">
+							<u-input placeholder="请输入家属手机" trim v-model="form.contactPhone"></u-input>
 						</u-form-item>
-						<u-form-item label="身份证正面照片" required prop="photoFront" label-position="top">
-							<u-upload :show-progress="false" @on-success="onSuccessPhotoFront" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/idcard`"></u-upload>
-						</u-form-item>
-						<u-form-item label="身份证反面照片" required prop="photoReverse" label-position="top">
+						<!-- <u-form-item label="身份证反面照片" required prop="photoReverse" label-position="top">
 							<u-upload :show-progress="false" @on-remove="onRemovePhotoReverse" ref="uUpload2" :file-list="photoReverseList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/avatar`"></u-upload>
-						</u-form-item>
-						<u-form-item label="船员证书" required prop="certPhoto" label-position="top">
+						</u-form-item> -->
+						<!-- <u-form-item label="船员证书" required prop="certPhoto" label-position="top">
 							<u-upload :show-progress="false" @on-remove="onRemoveCertPhotoList" ref="uUpload3" :file-list="certPhotoList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/avatar`"></u-upload>
-						</u-form-item>
+						</u-form-item> -->
 					</view>
 				</view>
 				<view class="agreement">
@@ -93,6 +93,8 @@
 				</view>
 			</u-form>
 		</view>
+		<!-- 家属 -->
+		<u-select safe-area-inset-bottom mode="single-column" :list="contactNameList" v-model="contactNameShow" @confirm="(e) => onConfirm(e, 'contactName')"></u-select>
 		<!-- 婚姻状态 -->
 		<u-select safe-area-inset-bottom mode="single-column" :list="maritalStatusList" v-model="maritalStatusShow" @confirm="(e) => onConfirm(e, 'maritalStatus')"></u-select>
 		<!-- 民族 -->
@@ -123,8 +125,9 @@
 	import cityMixin from '@/pages/mixins/city.js'
 	import { TOKEN } from '@/common/config/index.js'
 	import cloneDeep from 'lodash/cloneDeep'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
-		mixins: [dictMapMixin, cityMixin],
+		mixins: [dictMapMixin, cityMixin, userInfoMixin],
 		data () {
 			return {
 				apiUrl: this.$API_URL,
@@ -136,6 +139,7 @@
 					'Authorization': 'Bearer ' + uni.getStorageSync(TOKEN)
 				},
 				loading: false,
+				contactNameShow: false,
 				districtIdShow: false,
 				positionIdShow: false,
 				maritalStatusShow: false,
@@ -243,7 +247,7 @@
 						{ required: true, message: '请选择民族', trigger: 'change' }
 					],
 					contactName: [
-						{ required: true, message: '请填写家庭联系人', trigger: 'blur' }
+						{ required: true, message: '请选择家庭联系人', trigger: 'blur, change' }
 					],
 					contactPhone: [
 						{ required: true, message: '请填写家庭联系电话', trigger: 'blur' }
@@ -273,6 +277,9 @@
 			}
 		},
 		computed: {
+			contactNameList () {
+				return cloneDeep(this.dictMap)['contactNameList'] || []
+			},
 			maritalStatusList () {
 				return cloneDeep(this.dictMap)['marital'] || []
 			},
@@ -347,7 +354,11 @@
 			},
 			// 获取当前用户信息
 			getCurrentInfo () {
-				this.$http.get('/tmlms/crew/myInfo').then(({ data }) => {
+				this.$http.get('/tmlms/crew/getCrewByidcard', {
+					params: {
+						idcard: this.userInfo.idCard
+					}
+				}).then(({ data }) => {
 					if (data.code === 0) {
 						if (Object.keys(data.data).length === 0) {
 							return
@@ -435,7 +446,7 @@
 					} else {
 						uni.showToast({
 							icon: 'none',
-							title: '修改失败'
+							title: data.msg || '修改失败'
 						})
 					}
 					this.loading = false
@@ -460,7 +471,7 @@
 					} else {
 						uni.showToast({
 							icon: 'none',
-							title: '新增失败'
+							title: data.msg || '新增失败'
 						})
 					}
 					this.loading = false
@@ -499,9 +510,54 @@
 				this.photoFrontList = lists
 			},
 			onSuccessPhotoFront (data, index, lists, name) {
+				console.log(data)
 				if (data.data.imageState === 'normal') {
 					let result = data.data
+					this.form.realName = result.name
+					this.form.idcard = result.idcard
+					this.form.idcard = result.idcard
+					this.form.gender = result.sex === '男' ? 1 : 2
+					this.form.genderLabel = result.sex
 					this.form.photoFront = result.url
+					this.form.nationality = '中国'
+					this.form.address = result.address
+					// 匹配出生日期
+					let birth = result.birth.split('')
+					birth.splice(6, 0, '-')
+					birth.splice(4, 0, '-')
+					this.form.birthday = birth.join('')
+					// 匹配民族
+					this.dictMap.nationals.forEach((item) => {
+						if (item.label.indexOf(result.nation) > -1) {
+							this.form.nation = item.label
+							this.form.nationLabel = item.label
+							return false
+						}
+					})
+					// 籍贯
+					let cardMsg = {}
+					cardMsg.provinceId = parseInt(result.idcard.substring(0,2)+'0000000000')
+					cardMsg.cityId = parseInt(result.idcard.substring(0,4)+'00000000')
+					cardMsg.districtId = parseInt(result.idcard.substring(0,6)+'000000')
+					this.form.provinceId = cardMsg.provinceId
+					this.form.cityId = cardMsg.cityId
+					this.form.districtId = cardMsg.districtId
+					this.$http.get(`/admin/region/wholeInfo?areaCode=${cardMsg.districtId}`).then(({ data }) => {
+						if (data.code === 0) {
+							let val = []
+							let child1 = data.data
+							if (child1.name) {
+								val.push(child1.name)
+								let child2 = child1.child
+								if (child2.name) {
+									val.push(child2.name)
+									let child3 = child2.child
+									val.push(child3.name)
+								}
+							}
+							this.form.districtIdLabel = val.join('-')
+						}
+					})
 				} else {
 					uni.showToast({
 						icon: 'none',
