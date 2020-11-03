@@ -26,9 +26,9 @@
 					{ label: '政策法规', path: '/pages/home/news/list/index?type=2' },
 					{ label: '船东招聘', path: '/pages/home/recruit/list/index' },
 					{ label: '企业招聘', path: '/pages/home/recruit/list/index?type=6' },
-					{ label: '培训信息', path: '/pages/home/training-info/list/index' },
+					{ label: '培训信息', path: '/pages/home/info/index?index=1' },
 					{ label: '职业规划', path: '/pages/base/web?src=https://m.taoyu58.com/careerplanning' },
-					{ label: '教材订购', path: '/pages/home/book/list/index' },
+					{ label: '教材订购', path: '/pages/home/info/index?index=3' },
 				]
 			}
 		},

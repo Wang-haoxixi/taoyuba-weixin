@@ -23,7 +23,6 @@ const ignoreUrl = [
 	'/tybhrms/tybrecruit/:id',
 	'/admin/region/getinfo/',
 	'/tmlms/crew/xsPage',
-	'/tmlms/crew/checkUser',
 	'/tmlms/dept/pageForAll',
 	'/tmlms/dept/detail',
 	'/tybhrms/tybarticle/page',

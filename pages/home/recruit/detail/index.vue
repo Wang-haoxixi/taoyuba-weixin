@@ -4,7 +4,7 @@
 			<view class="title">{{positionIdLabel}}</view>
 			<view class="content">
 				<text class="price">￥{{data.salary || ''}}</text>
-				<text class="time">发布时间：{{getTime}}</text>
+				<text class="time">发布时间：{{data.createTime}}</text>
 			</view>
 		</view>
 		<view class="content-wrapper">

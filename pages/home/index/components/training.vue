@@ -16,7 +16,7 @@
 					<view class="article-wrapper" v-for="(item, index) in data2" :key="item.articleId">
 						<training-info-item :info="item"></training-info-item>
 					</view>
-					<view class="more" @tap="onToList('/pages/home/training-info/list/index')">更多</view>
+					<view class="more" @tap="onToList('/pages/home/info/index?index=1')">更多</view>
 				</view>
 				<!-- <view class="" v-show="current === 2">
 					<trainning-item :info="item" btn-text="签到" v-for="(item, index) in data3" :key="index">
@@ -74,7 +74,7 @@
 					})
 				} else if (index === 3) {
 					uni.navigateTo({
-						url: '/pages/home/book/list/index'
+						url: '/pages/home/info/index?index=3'
 					})
 				} else{
 					this.current = index

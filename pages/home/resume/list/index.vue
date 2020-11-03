@@ -8,7 +8,7 @@
 			<view class="dropdown-wrapper">
 				<u-dropdown>
 					<u-dropdown-item v-model="form.positionId" title="职务" :options="options1" @change="(value) => {onChangeDrowdown('positionId', 'options1', value)}"></u-dropdown-item>
-					<u-dropdown-item v-model="form.salaryStart" title="薪水" :options="options2" @change="(value) => {onChangeDrowdown('salaryStart', 'options2', value)}"></u-dropdown-item>
+					<u-dropdown-item v-model="form.salary" title="薪水" :options="options2" @change="(value) => {onChangeDrowdown('salaryStart', 'options2', value)}"></u-dropdown-item>
 					<u-dropdown-item v-model="form.workMode" title="作业" :options="options3" @change="(value) => {onChangeDrowdown('workMode', 'options3', value)}"></u-dropdown-item>
 					<!-- <u-dropdown-item v-model="form.order" title="排序" :options="options4" @change="(value) => {onChangeDrowdown('order', 'options4', value)}"></u-dropdown-item> -->
 				</u-dropdown>
@@ -45,6 +45,7 @@
 				form: {
 					realName: '',
 					positionId: '',
+					salary: '',
 					salaryStart: '',
 					salaryEnd: '',
 					workMode: '',
@@ -134,7 +135,7 @@
 				return data
 			},
 			onChangeDrowdown (label, options, value) {
-				this.resetForm()
+				// this.resetForm()
 				this.page.current = 1
 				if (label === 'salaryStart') {
 					let result = this.$tools.getDictItem(value, this[options])

@@ -5,7 +5,7 @@
 		<!-- 一系类预报 -->
 		<find-links></find-links>
 		<!-- 证书 -->
-		<find-content></find-content>
+		<find-content ref="content"></find-content>
 		<tyb-tarbar :currentIndex="1"></tyb-tarbar>
 	</view>
 </template>
@@ -21,6 +21,9 @@
 			findMenu,
 			findLinks,
 			findContent
+		},
+		onHide () {
+			this.$refs.content.clearData() 
 		}
 	}
 </script>

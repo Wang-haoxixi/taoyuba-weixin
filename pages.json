@@ -327,7 +327,8 @@
 		{
 			"path": "pages/home/info/index",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true
 			}
 		}
 	],

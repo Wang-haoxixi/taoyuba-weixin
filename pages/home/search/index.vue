@@ -158,9 +158,11 @@
 					// return `/pages/home/recruit/list/index?keyword=${this.content}`
 					return `/pages/home/resume/list/index?keyword=${this.content}`
 				} else if (this.current === 2) {
-					return `/pages/home/training-info/list/index?keyword=${this.content}`
+					// return `/pages/home/training-info/list/index?keyword=${this.content}`
+					return `/pages/home/info/index?title=${this.content}&index=1`
 				} else if (this.current === 3) {
-					return `/pages/home/training/list/index?keyword=${this.content}`
+					// return `/pages/home/training/list/index?keyword=${this.content}`
+					return `/pages/home/info/index?deptName=${this.content}&index=0`
 				}
 				return ''
 			},

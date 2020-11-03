@@ -44,6 +44,9 @@
 			}
 		},
 		methods: {
+			clearData () {
+				this.data = []
+			},
 			getCertTypeLabel (type) {
 				let dict = cloneDeep(this.dictMap)['tyb_crew_cert_type'] || []
 				return this.getDictLabel(dict, type) || ''
@@ -76,7 +79,6 @@
 					})
 					return
 				}
-				console.log(this.form)
 				this.loading = true
 				this.data = []
 				this.$http.get('/tmlms/crew_cert/newPage', {
@@ -87,6 +89,8 @@
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						this.data = data.data.records
+						this.form.idcard = ''
+						this.form.realName = ''
 						if (this.data.length === 0) {
 							this.$refs.uToast.show({
 								title: '查不到此条信息',

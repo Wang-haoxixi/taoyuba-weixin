@@ -9,7 +9,7 @@ export default {
 				{ path: '', path2: '/pages/user/contract/list/index', path1: '/pages/user/myship/ship/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-hetong.png`, label: '合同' },
 				{ path: '', outreach: true, color: '#e9b174', icon: `${this.$IMAGE_URL}/home-jinyuqi.png`, label: '进出港报告' },
 				{ path: '/pages/release/register/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '船员登记' },
-				{ path: '/pages/home/training/list/index', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-peixunjigou.png`, label: '培训机构' },
+				{ path: '/pages/home/info/index', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-peixunjigou.png`, label: '培训机构' },
 			]
 		}
 	}
