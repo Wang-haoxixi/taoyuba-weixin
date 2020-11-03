@@ -109,7 +109,9 @@
 		},
 		methods: {
 			init () {
-				console.log('init 验证')
+				if (this.roles.length > 1) {
+					return
+				}
 				let userInfo = this.userInfo
 				if (userInfo && userInfo.idCard) {
 					// 判断是否已注册船员
