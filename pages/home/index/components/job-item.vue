@@ -5,7 +5,7 @@
 				<text class="name ellipsis">{{info.positionIdLabel}}</text>
 			</view>
 			<view class="content">
-				<text v-if="info.salary">￥{{info.salary}}</text>
+				<text v-if="info.salary">月薪：{{salaryLabel}}</text>
 				<text class="price-type" v-if="ageRequireLabel">年龄：{{ageRequireLabel}}</text>
 			</view>
 			<view class="time">
@@ -43,6 +43,9 @@
 		computed: {
 			ageRequireLabel () {
 				return this.getDictLabel(this.dictMap['tyb_position_agerequirement'], this.info.ageRequire)
+			},
+			salaryLabel () {
+				return this.getDictLabel(this.dictMap['salaryList1'], this.info.salary)
 			}
 		},
 		methods: {

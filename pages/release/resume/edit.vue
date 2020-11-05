@@ -9,7 +9,7 @@
 				<view class="content-container">
 					<view class="title">基本信息</view>
 					<view class="body-wrapper">
-						<u-form-item label="应聘职务" prop="positionId" required>
+						<u-form-item label="船员职务" prop="positionId" required>
 							<u-input type="select" :select-open="positionIdShow" v-model="form.positionIdLabel" placeholder="请选择应聘职务" @click="positionIdShow = true"></u-input>
 						</u-form-item>
 						<!-- <u-form-item label="婚姻状态">
@@ -66,7 +66,7 @@
 							<u-input placeholder="请输入家庭地址" trim v-model="form.address"></u-input>
 						</u-form-item>
 						<u-form-item label="联系电话" prop="phone" required>
-							<u-input placeholder="请输入联系电话" trim v-model="form.phone" type="number"></u-input>
+							<u-input placeholder="请输入联系电话" trim v-model="form.phone" type="number" :disabled="form.phone"></u-input>
 						</u-form-item>
 						<u-form-item label="家属" prop="contactName" required>
 							<u-input type="select" :select-open="contactNameShow" v-model="form.contactName" placeholder="请选择家属" @click="contactNameShow = true"/>
@@ -220,7 +220,7 @@
 						{ required: true, message: '请选择性别', trigger: ['change', 'blur'] }
 					],
 					positionId: [
-						{ required: true, message: '请选择职务', trigger: ['change', 'blur'] }
+						{ required: true, message: '请选择船员职务', trigger: ['change', 'blur'] }
 					],
 					workRequire: [
 						{ required: true, message: '请选择作业方式', trigger: 'change' }
@@ -250,7 +250,18 @@
 						{ required: true, message: '请选择家庭联系人', trigger: 'blur, change' }
 					],
 					contactPhone: [
-						{ required: true, message: '请填写家庭联系电话', trigger: 'blur' }
+						{ required: true, message: '请填写家庭联系电话', trigger: 'blur' },
+						{
+							// 自定义验证函数，见上说明
+							validator: (rule, value, callback) => {
+								// 上面有说，返回true表示校验通过，返回false表示不通过
+								// this.$u.test.mobile()就是返回true或者false的
+								return this.$u.test.mobile(value);
+							},
+							message: '手机号码不正确',
+							// 触发器可以同时用blur和change
+							trigger: ['change','blur'],
+						}
 					],
 					birthday: [
 						{ required: true, message: '请选择出生日期', trigger: 'change' }
@@ -265,7 +276,7 @@
 						{ required: true, message: '请上传身份证反面照片', trigger: 'change' }
 					],
 					certPhoto: [
-						{ required: true, message: '请上传船员证书', trigger: 'change' }
+						{ required: true, message: '请上传船员证书', trigger: 'change' },
 					]
 					// eduDegree: [
 					// 	{ required: true, message: '请选择教育程度', trigger: 'change' }
@@ -380,6 +391,7 @@
 						if (this.form.certPhoto) {
 							this.certPhotoList = [{url: this.form.certPhoto}]
 						}
+						this.form.phone = this.userInfo.phone
 					}
 				})
 			},
@@ -508,13 +520,50 @@
 			onRemovePhotoFront (index, lists, name) {
 				this.form.photoFront = ''
 				this.photoFrontList = lists
+				this.$set(this.form, 'realName','')
+				this.$set(this.form, 'idcard','')
+				this.$set(this.form, 'gender','')
+				this.$set(this.form, 'genderLabel','')
+				this.$set(this.form, 'nationality','')
+				this.$set(this.form, 'address','')
+				this.$set(this.form, 'birth','')
+				this.$set(this.form, 'birthday','')
+				this.$set(this.form, 'nation','')
+				this.$set(this.form, 'nationLabel','')
+				this.$set(this.form, 'provinceId','')
+				this.$set(this.form, 'cityId','')
+				this.$set(this.form, 'districtId','')
+				this.$set(this.form, 'districtIdLabel','')
+				// this.$set(this.form, ,'')
+				// this.form.realName = ''
+				// this.form.idcard = ''
+				// this.form.gender = ''
+				// this.form.genderLabel = ''
+				// this.form.nationality = ''
+				// this.form.address = ''
+				// this.form.birth = ''
+				// this.form.birthday = ''
+				// this.form.nation = ''
+				// this.form.nationLabel = ''
+				// this.form.provinceId = ''
+				// this.form.cityId = ''
+				// this.form.districtId = ''
+				// this.form.districtIdLabel = ''
 			},
 			onSuccessPhotoFront (data, index, lists, name) {
 				console.log(data)
+				if (data.data.user) {
+					uni.showToast({
+						icon: 'none',
+						title: data.data.nonIdcard || '身份证已被使用'
+					});
+					this.form.photoFront = ''
+					this.photoFrontList.splice(0, 1)
+					return
+				}
 				if (data.data.imageState === 'normal') {
 					let result = data.data
 					this.form.realName = result.name
-					this.form.idcard = result.idcard
 					this.form.idcard = result.idcard
 					this.form.gender = result.sex === '男' ? 1 : 2
 					this.form.genderLabel = result.sex
@@ -555,7 +604,8 @@
 									val.push(child3.name)
 								}
 							}
-							this.form.districtIdLabel = val.join('-')
+							this.$set(this.form, 'districtIdLabel', val.join('-'))
+							// this.form.districtIdLabel = val.join('-')
 						}
 					})
 				} else {

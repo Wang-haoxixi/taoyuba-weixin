@@ -48,9 +48,9 @@
 					</view>
 				</view>
 				<view class="content-container">
-					<view class="title">其他信息</view>
+					<view class="title">基本信息</view>
 					<view class="body-wrapper">
-						<u-form-item label="船名">
+						<u-form-item label="船名" prop="shipName" required>
 							<u-input type="select" :select-open="shipNameShow" v-model="form.shipName" placeholder="请选择船名" @click="shipNameShow = true"></u-input>
 							<!-- <u-input v-model="form.shipName" trim placeholder="请输入船名" @blur="onBlur"/> -->
 						</u-form-item>
@@ -140,6 +140,7 @@
 					contactPhone: '', // 联系电话
 				},
 				rules: {
+					shipName: [ { required: true, message: '请选择渔船', trigger: 'change' } ],
 					positionId: [ { required: true, message: '请选择招聘岗位', trigger: 'change' } ],
 					recruitNo: [ { required: true, message: '请输入招聘人数', trigger: 'blur,change' } ],
 					salary: [ { required: true, message: '请输入月薪', trigger: ['blur', 'change'] } ],
