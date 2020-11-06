@@ -2,7 +2,7 @@
 	<view class="menu-wrapper">
 		<view class="tip-wrapper" v-if="text">{{text}}</view>
 		<u-cell-group>
-			<u-cell-item v-for="(item, index) in menu" :title="item.label" :key="index" @click="onTo(item.path)"></u-cell-item>
+			<u-cell-item v-for="(item, index) in menu" :title="item.label" v-if="item.show !== false" :key="index" @click="onTo(item.path)"></u-cell-item>
 		</u-cell-group>
 	</view>
 </template>
@@ -16,6 +16,8 @@
 				default: 0
 			},
 			text: String,
+			// 是否是船东持证人
+			isShipOwer: Boolean
 		},
 		data () {
 			return {
@@ -29,19 +31,22 @@
 					{ label: '我的培训', path: '/pages/user/video/list/index' },
 					{ label: '设置', path: '/pages/user/setting/index' },
 				],
-				menu108: [
-					{ label: '我的渔船', path: '/pages/user/myship/ship/index' },
-					// { label: '合同解除', path: '/pages/user/contract/terminat-list/index' },
-					// { label: '我的评价', path: '' },
-					{ label: '船员招聘', path: '/pages/user/recruit/list/index' },
-					{ label: '设置', path: '/pages/user/setting/index' },
-				]
 			}
 		},
 		computed: {
 			menu () {
 				return this.type === 105 ? this.menu105 : (this.type === 108 ? this.menu108 : this.menu0)
-			}
+			},
+			menu108 () {
+				return [
+					{ label: '我的渔船', path: '/pages/user/myship/ship/index' },
+					// { label: '合同解除', path: '/pages/user/contract/terminat-list/index' },
+					// { label: '我的评价', path: '' },
+					{ label: '渔船登记', path: '/pages/release/ship/index?type=1', show: this.isShipOwer },
+					{ label: '船员招聘', path: '/pages/user/recruit/list/index' },
+					{ label: '设置', path: '/pages/user/setting/index' },
+				]
+			} 
 		},
 		methods: {
 			onTo (path) {

@@ -34,7 +34,7 @@
 			</view>
 		</view>
 		<!-- 菜单 -->
-		<user-menu :type="type" :text="text"></user-menu>
+		<user-menu :type="type" :text="text" :isShipOwer="isShipOwer"></user-menu>
 		<tyb-tarbar :current-index="4"></tyb-tarbar>
 	</view>
 </template>
@@ -54,6 +54,7 @@
 		data () {
 			return {
 				text: '',
+				isShipOwer: false,
 				userInfo: this.$cache.get('userInfo'),
 				roles: this.$cache.get('roles'),
 				imageUrl: this.$IMAGE_URL,
@@ -80,7 +81,7 @@
 				let result = ''
 				
 				if (Array.isArray(this.roles)) {
-					console.log('this.roles', this.roles)
+					// console.log('this.roles', this.roles)
 					result = this.roles[1] === 108 ? '船东' : (this.roles[1] === 105 ? '船员' : '')
 				}
 				return result
@@ -91,6 +92,7 @@
 			this.roles = this.$cache.get('roles') || []
 			this.text = ''
 			this.getUserInfo().then(() => {
+				this.getShipOwer()
 				this.init()
 			})
 			// if (Object.keys(this.userInfo).length === 0) {
@@ -108,6 +110,21 @@
 			}
 		},
 		methods: {
+			// 获取船东是否是持证人信息
+			getShipOwer () {
+				if (this.roles[1] === 108) {
+					this.$http.get('/tmlms/ship_owner/getDetail', {
+						params: {
+							idcard: this.userInfo.idCard
+						}
+					}).then(({ data }) => {
+						if (data.data && data.data.type == 1) {
+							this.isShipOwer = true
+						}
+						
+					})
+				}
+			},
 			init () {
 				if (this.roles.length > 1) {
 					return
@@ -164,7 +181,7 @@
 				}
 				if (this.type === 108) {
 					this.onTo('/pages/release/shipowner-resume/edit')
-				} else {
+				} else if (this.type === 105) {
 					this.onTo('/pages/release/resume/edit')
 				}
 			},

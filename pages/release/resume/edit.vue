@@ -117,6 +117,7 @@
 		<u-select safe-area-inset-bottom mode="single-column" :list="languageList" v-model="languageShow" @confirm="(e) => onConfirm(e, 'language')"></u-select>
 		<!-- 是否公开 -->
 		<u-select safe-area-inset-bottom mode="single-column" :list="isOpenList" v-model="isOpenShow" @confirm="(e) => onConfirm(e, 'isOpen')"></u-select>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -553,10 +554,9 @@
 			onSuccessPhotoFront (data, index, lists, name) {
 				console.log(data)
 				if (data.data.user) {
-					uni.showToast({
-						icon: 'none',
-						title: data.data.nonIdcard || '身份证已被使用'
-					});
+					this.$refs.uToast.show({
+						title: data.data.nonIdcard || '当前船员已与别的用户绑定',
+					})
 					this.form.photoFront = ''
 					this.photoFrontList.splice(0, 1)
 					return

@@ -28,7 +28,7 @@ const ignoreUrl = [
 	'/tybhrms/tybarticle/page',
 	'/tmlms/exam_examination/page',
 	'/tybhrms/tyblessonvideo/page',
-	'/tybhrms/tyblessonvideo/',
+	// '/tybhrms/tyblessonvideo/',
 	'/tmlms/crew_cert/newPage',
 	'/tybhrms/tybbook/page',
 	'/admin/dict/all_map',

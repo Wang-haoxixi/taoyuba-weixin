@@ -190,6 +190,7 @@
 													this._isFirst = false
 													this.loading = false
 													this.phoneSrc = ''
+													this.$emit('end')
 													this.close()
 												} else {
 													this.$refs.uToast.show({
@@ -202,6 +203,7 @@
 												if (msg === '检测成功') {
 													this.loading = false
 													this.phoneSrc = ''
+													this.$emit('end')
 													this.close()
 												} else {
 													this.$refs.uToast.show({

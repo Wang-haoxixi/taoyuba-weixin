@@ -32,11 +32,18 @@
 				rules: {
 					shipName: [{ required: true, message: '请输入渔船名称', trigger: 'blur' }],
 					shipOwner: [{ required: true, message: '请输入持证人姓名', trigger: 'blur' }]
-				}
+				},
+				type: ''
 			}
 		},
 		onReady () {
 			this.$refs.uForm.setRules(this.rules)
+		},
+		onLoad (params) {
+			console.log(params)
+			if (params.type) {
+				this.type = params.type
+			}
 		},
 		methods: {
 			onSubmit () {
@@ -50,9 +57,9 @@
 							if (data.data) {
 								let userInfo = this.$cache.get('userInfo')
 								let userId = userInfo.userId
-								console.log()
+								
 								uni.navigateTo({
-									url: `/pages/release/identity/index?shipId=${data.data.shipId}&userId=${userId}`
+									url: `/pages/release/identity/index?shipId=${data.data.shipId}&userId=${userId}${this.type ? '&type='+this.type : ''}`
 								})
 							} else {
 								uni.showToast({

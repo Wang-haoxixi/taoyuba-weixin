@@ -1,7 +1,7 @@
 <template>
 	<view class="identity-container">
 		<u-form :model="form" ref="uForm" :rules="rules" label-width="150" :label-style="{color: '#999'}">
-			<u-form-item label="你的身份" prop="bindTypeLabel" required>
+			<u-form-item label="你的身份" prop="bindTypeLabel" required v-if="!type">
 				<u-input type="select" :select-open="bindTypeShow" v-model="form.bindTypeLabel" placeholder="请选择你的身份" @click="bindTypeShow = true"></u-input>
 			</u-form-item>
 			<u-form-item label="身份证图片" required prop="idcardPhoto" label-position="top">
@@ -11,7 +11,7 @@
 					</view>
 				</u-upload>
 			</u-form-item>
-			<u-form-item label="渔船所有权登记证书" required prop="certPhoto" label-position="top">
+			<u-form-item label="渔船所有权登记证书" prop="certPhoto" label-position="top">
 				<u-upload :show-progress="false"  @on-success="onSuccessCertPhoto" @on-remove="onRemoveCertPhoto" ref="uUpload2" :file-list="certPhotoList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/avatar`"></u-upload>
 			</u-form-item>
 		</u-form>
@@ -20,6 +20,7 @@
 		</view>
 		<!-- 你的身份 -->
 		<u-select safe-area-inset-bottom mode="single-column" :list="areaList" v-model="bindTypeShow" @confirm="(e) => onConfirm(e, 'bindType')"></u-select>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -30,6 +31,7 @@
 		mixins: [userInfoMixin],
 		data () {
 			return {
+				type: '',
 				imgUrl: this.$IMAGE_URL,
 				apiUrl: this.$API_URL, 
 				header: {
@@ -66,10 +68,13 @@
 					fontSize: '32rpx',
 					lineHeight: '100rpx'
 				},
-				rules: {
-					bindTypeLabel: [{ required: true, message: '请选择你的身份', trigger: ['change', 'blur'] }],
+			}
+		},
+		computed: {
+			rules () {				
+				return {
+					bindTypeLabel: [{ required: !this.type, message: '请选择你的身份', trigger: ['change', 'blur'] }],
 					idcardPhoto: [{ required: true, message: '请上传身份证图片', trigger: 'change' }],
-					certPhoto: [{ required: true, message: '请上传渔船所有权登记证', trigger: 'change' }]
 				}
 			}
 		},
@@ -79,7 +84,10 @@
 			this.certPhotoList = this.$refs.uUpload2.lists
 		},
 		onLoad (params) {
-			console.log('params', params)
+			if (params.type) {
+				this.type = params.type
+				this.form.bindType = +params.type
+			}
 			this.form.userId = params.userId
 			this.form.shipId = params.shipId
 		},
@@ -91,8 +99,7 @@
 						this.$http.post('/tmlms/tybshiphaver/save', this.form).then(({ data }) => {
 							this.loading = false
 							if(data.data){
-								uni.showToast({
-									icon: 'none',
+								this.$refs.uToast.show({
 									title: '您的申请已提交，请等待审核！'
 								})
 								this.getUserInfoApi()
@@ -101,6 +108,10 @@
 										url: '/pages/user/index/index'
 									})
 								}, 1500)
+							} else {
+								this.$refs.uToast.show({
+									title: data.msg || '失败'
+								})
 							}
 						}).catch(() => {
 							this.loading = false
