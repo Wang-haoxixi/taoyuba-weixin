@@ -235,6 +235,7 @@
 		left: 0;
 		right: 0;
 		top: 0;
+		z-index: 10000;
 		.face-recognition-wrapper {
 			// position: absolute;
 			// bottom: 0;

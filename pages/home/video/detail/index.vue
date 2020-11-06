@@ -140,6 +140,7 @@
 				let currentTime = e.detail.currentTime
 				this.time = currentTime
 				if (this.faceTime < currentTime) {
+					this.videoContext.exitFullScreen()
 					this.videoContext.pause()
 					this.faceTime += TIME
 					this.intervalTime += INTERVAL_TIME

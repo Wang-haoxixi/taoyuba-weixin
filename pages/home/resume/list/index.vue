@@ -104,7 +104,8 @@
 				this.$http.get('/tmlms/crew/xsPage', {
 					params: Object.assign({
 						size: this.page.size,
-						current: this.page.current
+						current: this.page.current,
+						workStatus: 9
 					}, form)
 				}).then(({ data }) => {
 					if (data.code === 0) {

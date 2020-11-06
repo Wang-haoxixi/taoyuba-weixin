@@ -15,7 +15,7 @@
 						<u-form-item label="招聘人数" prop="recruitNo" required>
 							<u-input v-model="form.recruitNo" placeholder="请输入招聘人数" type="number"/>
 						</u-form-item>
-						<u-form-item label="月薪" prop="salary" required>
+						<u-form-item label="月薪" prop="salaryLabel" required>
 							<u-input type="select" :select-open="salaryShow" v-model="form.salaryLabel" placeholder="请选择月薪" @click="salaryShow = true"></u-input>
 							<!-- <u-input v-model="form.salary" placeholder="请输入月薪" type="number"/> -->
 						</u-form-item>
@@ -143,7 +143,7 @@
 					shipName: [ { required: true, message: '请选择渔船', trigger: 'change' } ],
 					positionId: [ { required: true, message: '请选择招聘岗位', trigger: 'change' } ],
 					recruitNo: [ { required: true, message: '请输入招聘人数', trigger: 'blur,change' } ],
-					salary: [ { required: true, message: '请输入月薪', trigger: ['blur', 'change'] } ],
+					salaryLabel: [ { required: true, message: '请选择月薪', trigger: ['change'] } ],
 					salaryCurrency: [ { required: true, message: '请选择货币种类', trigger: 'change' } ],
 					certTitle: [ { required: true, message: '请选择证书职务', trigger: 'change' } ],
 					certLevel: [ { required: true, message: '请选择证书等级', trigger: 'change' } ],
@@ -280,7 +280,10 @@
 			},
 			onConfirm (e, prop) {
 				this.form[prop] = e[0].value
+				// this.$set(this.form, `${prop}Label`, e[0].label)
 				this.form[`${prop}Label`] = e[0].label
+				console.log(this.form)
+				// console.log(prop, this.form[prop], this.form[`${prop}Label`])
 			},
 			updateApi () {
 				this.$http.post('/tybhrms/tybrecruit/update', this.form).then(({ data }) => {
