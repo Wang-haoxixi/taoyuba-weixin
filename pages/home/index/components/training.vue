@@ -47,7 +47,7 @@
 			return {
 				current: 0,
 				list: [
-					{ name: '培训机构' },
+					{ name: '培训服务' },
 					{ name: '培训信息' },
 					{ name: '职业规划' },
 					{ name: '教程订购' }

@@ -78,7 +78,7 @@ export default {
 		}
 	},
 	methods: {
-		getDictLabel (val, data) {
+		getDictLabel (val, data = []) {
 			if (val === '' || val == null) {
 				return
 			}
@@ -93,7 +93,7 @@ export default {
 		getCity (id) {
 			this.$http.get(`/admin/region/getinfo/${id}`).then(({ data }) => {
 				if (data.code === 0) {
-					this.cityLabel = data.data.mergerName
+					this.cityLabel = data.data ? data.data.mergerName : ''
 				}
 			})
 		}

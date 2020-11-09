@@ -3,7 +3,7 @@
 		<view class="header-wrapper">
 			<view class="title">{{positionIdLabel}}</view>
 			<view class="content">
-				<text class="price">￥{{data.salary || ''}}</text>
+				<text class="price">￥{{salaryLabel || ''}}</text>
 				<text class="time">发布时间：{{data.createTime}}</text>
 			</view>
 		</view>
@@ -15,7 +15,7 @@
 					<view class="text">证书职务：{{certTitleLabel || ''}}</view>
 					<view class="text">证书等级：{{certLevelLabel || ''}}</view>
 					<view class="text">作业方式：{{workModeLabel || ''}}</view>
-					<view class="text">上船地点：{{cityLabel || ''}}</view>
+					<!-- <view class="text">上船地点：{{cityLabel || ''}}</view> -->
 				</view>
 			</content-container>
 			<content-container title="其他要求">
@@ -32,7 +32,13 @@
 					<view class="text">联系电话：{{data.contactPhone || ''}}</view>
 				</view>
 			</content-container>
+			<content-container style="margin-top: 20rpx;color: #ba1b20;">
+				本站不能保证所有由第三方提供的信息完全准确，用户对这些信息的使用，需要经过进一步核实，对访问者未经自行核实误用相关信息造成的任何损失，本站不承担任何责任，求职招聘过程中请勿缴纳费用，谨防诈骗
+			</content-container>
 		</view>
+		<!-- <content-container style="margin-top: 20rpx;color: #ba1b20;">
+			本站不能保证所有由第三方提供的信息完全准确，用户对这些信息的使用，需要经过进一步核实，对访问者未经自行核实误用相关信息造成的任何损失，本站不承担任何责任，求职招聘过程中请勿缴纳费用，谨防诈骗
+		</content-container> -->
 		<share-group type="2" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>
@@ -85,6 +91,9 @@
 					collectedId: this.data.recruitId,
 					collectedShowTitle: this.positionIdLabel
 				}
+			},
+			salaryLabel () {
+				return this.getDictLabel(this.data.salary, this.dictMap.salaryList1)
 			}
 		},
 		onLoad (params) {

@@ -43,7 +43,7 @@
 					// { name: '招聘', id: 2 },
 					{ name: '求职', id: 3 },
 					{ name: '培训信息', id: 4 },
-					{ name: '培训机构', id: 5 }
+					{ name: '培训服务', id: 5 }
 				],
 				historyNews: this.$cache.get('historyNews') || [], // 咨询
 				historyRecruit: this.$cache.get('historyRecruit') || [], // 招聘

@@ -2,7 +2,7 @@
 	<view class="user-recruit-item-wrapper">
 		<view class="item-left">
 			<view class="positionId">{{positionIdLabel}}</view>
-			<view class="content">￥{{info.salary === 0 ? '面议' : info.salary}} <text class="text">{{ageRequireLabel}}</text></view>
+			<view class="content">￥{{salaryLabel}} <text class="text">{{ageRequireLabel}}</text></view>
 		</view>
 		<view class="item-right">
 			{{updateTimeLabel}}
@@ -18,6 +18,9 @@
 			info: Object
 		},
 		computed: {
+			salaryLabel () {
+				return this.getDictLabel(this.dictMap.salaryList1, this.info.salary)
+			},
 			positionIdLabel () {
 				let result = ''
 				if (this.info.positionId) {

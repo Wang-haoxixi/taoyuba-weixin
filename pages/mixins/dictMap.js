@@ -144,9 +144,9 @@ export default {
 				})
 			})
 		},
-		getDictLabel (data, value) {
+		getDictLabel (data = [], value) {
 			let result = ''
-			console.log('value', value)
+			// console.log('value', value)
 			if (value) {
 				for (let i = 0, len = data.length; i < len; i++) {
 					if (data[i].value === value) {
