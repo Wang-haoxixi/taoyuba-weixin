@@ -4,7 +4,7 @@ const ENV_API_URL = {
 	// development: 'https://m.taoyu58.com/api', //开发环境
 	// production: 'https://m.taoyu58.com/api', //生产环境
 	development: 'http://testpc.taoyu58.com:6888/api', //开发环境 http://testpc.taoyu58.com:6888/api
-	production: 'http://testpc.taoyu58.com:6888/api', //生产环境 // https://m.taoyu58.com/api
+	production: 'https://m.taoyu58.com/api', //生产环境 https://m.taoyu58.com/api
 }
 // const ENV_BASE_URL = {
 // 	development: 'http://m.taoyu58.com/api', //开发环境

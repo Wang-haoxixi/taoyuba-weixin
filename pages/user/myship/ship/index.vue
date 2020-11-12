@@ -42,7 +42,7 @@
 				})
 			},
 			onToContract (row) {
-				if (row.shipId) {
+				if (row.shipNo) {
 					uni.navigateTo({
 						url: `/pages/user/contract/ship-list/index?shipNo=${row.shipNo}`
 					})

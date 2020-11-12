@@ -295,9 +295,21 @@
 			}
 		},
 		{
-			"path": "pages/user/search/index/index",
+			"path": "pages/user/ship/list/index",
 			"style": {
-				"navigationBarTitleText": "一船一档查询",
+				"navigationBarTitleText": "一船一档查询"
+			}
+		},
+		{
+			"path": "pages/user/ship/crew/list/index",
+			"style": {
+				"navigationBarTitleText": "船员"
+			}
+		},
+		{
+			"path": "pages/user/ship/contract/list/index",
+			"style": {
+				"navigationBarTitleText": "合同",
 				"enablePullDownRefresh": true
 			}
 		},

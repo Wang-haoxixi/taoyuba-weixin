@@ -44,7 +44,7 @@
 					{ label: '我的渔船', path: '/pages/user/myship/ship/index', show: this.roles.includes(this.rolesType.shipowner.type) },
 					{ label: '渔船登记', path: '/pages/release/ship/index?type=1', show: this.roles.includes(this.rolesType.shipowner.type) && this.isShipOwer },
 					{ label: '船员招聘', path: '/pages/user/recruit/list/index',  show: this.roles.includes(this.rolesType.shipowner.type) },
-					{ label: '一船一档查询', path: '/pages/user/search/index/index', show: this.roles.includes(this.rolesType.police.type) },
+					{ label: '一船一档查询', path: '/pages/user/ship/list/index', show: this.roles.includes(this.rolesType.police.type) }, // this.roles.includes(this.rolesType.police.type)
 					{ label: '设置', path: '/pages/user/setting/index' },
 				]
 				// if (this.type === 105) {

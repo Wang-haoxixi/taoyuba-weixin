@@ -1,35 +1,36 @@
 <template>
 	<!-- 船员 -->
 	<view class="user-my-ship-crew-list-container phonex-mb">
-		<template v-if="data.length === 0">
-			<u-empty text="数据为空" mode="list"></u-empty>
-		</template>
-		<template v-else>
+		<list-layout :data="data" empty-text="暂无船员数据">
 			<view class="my-ship-crew-list-wrapper">
 				<view class="item" v-for="item in data" :key="item.id">
-					<view class="title">{{item.realName}}</view>
+					<view class="title">{{item.employeeName}}</view>
 					<view class="text">
-						<text>{{getPositionIdLabel(item.positionId)}}</text>
-						<text>{{item.phone}}</text>
+						职务：{{getPositionIdLabel(item.employeePosition)}}
 					</view>
-					<view class="text">{{item.idcard}}</view>
-					<view class="text">用工状态：{{getWorkStatusLabel(item.workStatus)}}</view>
+					<view class="text">
+						手机号码：{{item.employeePhone}}
+					</view>
+					<view class="text">身份证号码：{{item.employeeIdcard}}</view>
 				</view>
 			</view>
 			<u-loadmore :status="status" />
-		</template>
+		</list-layout>
 	</view>
 </template>
 
 <script>
 	import pageMixin from '@/pages/mixins/page.js'
 	import infoMixin from '@/pages/home/recruit/mixins/info.js'
+	import listLayout from '@/pages/components/list-layout/index.vue'
 	export default {
 		mixins: [pageMixin, infoMixin],
+		components: { listLayout },
 		data () {
 			return {
 				status: 'loadmore',
-				data: []
+				data: [],
+				shipNo: ''
 			}
 		},
 		onReachBottom() {
@@ -47,23 +48,20 @@
 			this.getList()
 		},
 		onLoad (params) {
-			this.getList(params.id)
+			this.shipNo = params.shipNo
+			this.getList()
 		},
 		methods: {
-			getWorkStatusLabel (val) {
-				let dict = this.dictMap['workStatus'] || []
-				return this.getDictLabel(val, dict)
-			},
 			getPositionIdLabel (val) {
 				let dict = this.dictMap['tyb_resume_position'] || []
 				return this.getDictLabel(val, dict)
 			},
-			getList (id) {
-				this.$http.get('/tybship/tybshipcrew/page', {
+			getList () {
+				this.$http.get('/tmlms/tybcontract/villagePage', {
 					params: {
 						size: this.page.size,
 						current: this.page.current,
-						shipId: id,
+						shipNo: this.shipNo,
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {
