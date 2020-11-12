@@ -5,7 +5,7 @@
 		</view>
 		
 		<view class="content-wrapper">
-			<list-layout :data="data" empty-text="请搜索查询渔船信息">
+			<list-layout :data="data" empty-text="暂无数据">
 				<view class="item" v-for="item in data" :key="item.id">
 					<view class="text">渔船名：{{item.shipName}}</view>
 					<view class="text">持证人：{{item.shipowner}}</view>
@@ -15,7 +15,7 @@
 					<view class="text">主机总功率(kw)：{{item.engineTotalPower}}</view>
 					<view class="text">船长(m)：{{item.hullLength}}</view>
 					<view class="text">作业类型：{{getDictLabel(activityTypeList, item.activityType)}}</view>
-					<view class="text">合同/人数：{{item.contractCount}}/{{item.crewCount}}</view>
+					<view class="text">合同/人数：{{item.contractCount || 0}}/{{item.crewCount || 0}}</view>
 					<view class="btn-wrapper">
 						<u-button style="margin-right: 20rpx;" @click="onTo(item)">船员</u-button>
 						<u-button @click="onToContract(item)">合同</u-button>
@@ -31,6 +31,7 @@
 	import pageMixin from '@/pages/mixins/page.js'
 	import listLayout from '@/pages/components/list-layout/index.vue'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
+	import cloneDeep from 'lodash/cloneDeep'
 	export default {
 		components: { listLayout },
 		mixins: [dictMapMixin, pageMixin],
@@ -49,10 +50,6 @@
 			} else{
 				this.status = 'nomore'
 			}
-		},
-		mounted () {
-			this.shipName = '11'
-			this.onSearch()
 		},
 		computed: {
 			activityTypeList () {
@@ -76,6 +73,7 @@
 							this.status = 'nomore'
 						}
 					}
+					console.log(this.data)
 					uni.stopPullDownRefresh()
 				})
 			},
