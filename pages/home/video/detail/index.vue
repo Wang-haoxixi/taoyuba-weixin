@@ -58,7 +58,7 @@
 			this.videoId = params.id
 			if (params.id) {
 				this.getUserInfoApi().then(() => {
-					if (this.roles[1] === 105) {
+					if (this.roles.includes(this.rolesType.crew.type)) {
 						this.getList(params.id)
 					} else {
 						this.$refs.uToast.show({
@@ -107,6 +107,11 @@
 									this.isFirst = true
 								}
 								this.show = true
+								
+							} else {
+								uni.navigateBack({
+									delta: 1
+								})
 							}
 						}).catch(() => {
 							uni.navigateBack({

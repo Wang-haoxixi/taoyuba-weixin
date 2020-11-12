@@ -59,24 +59,11 @@
 					return
 				}
 				let userInfo = this.$cache.get('userInfo')
-				let roles = this.$cache.get('roles')
+				this.roles = this.$cache.get('roles')
 				if (userInfo.userId) {
-					console.log(roles, roles[1])
-					if (roles[1] === 108) {
-						if (name === 'recruit') {
-							if (path !== '') {
-								uni.navigateTo({
-									url: path,
-								})
-							}
-						} else {
-							uni.showToast({
-								icon: 'none',
-								title: '只有船员能填写简历'
-							})
-						}
-					} else if (roles[1] === 105) {
-						if (name === 'resume') {
+					if (name === 'recruit') {
+						console.log(name, this.roles, this.rolesType.shipowner.type, this.roles.includes(this.rolesType.shipowner.type))
+						if (this.roles.includes(this.rolesType.shipowner.type)) {
 							if (path !== '') {
 								uni.navigateTo({
 									url: path,
@@ -88,12 +75,21 @@
 								title: '只有船东能进行招聘'
 							})
 						}
-					} else if (roles[1] == null) {
-						uni.showToast({
-							icon: 'none',
-							title: '无权限查看'
-						})
-					} else if (roles[1]) {
+					} else if (name === 'resume') {
+						console.log(name, this.roles, this.rolesType.crew.type, this.roles.includes(this.rolesType.crew.type))
+						if (this.roles.includes(this.rolesType.crew.type)) {
+							if (path !== '') {
+								uni.navigateTo({
+									url: path,
+								})
+							}
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '只有船员能填写简历'
+							})
+						}
+					} else if (!this.roles.includes(this.rolesType.crew.type) || !this.roles.includes(this.rolesType.shipowner.type)) {
 						uni.showToast({
 							icon: 'none',
 							title: '无权限查看'
@@ -106,8 +102,7 @@
 						uni.navigateTo({
 							url: '/pages/base/login',
 						})
-					}
-					
+					}					
 				} else {
 					this.getUserInfoApi().then(({ data }) => {
 						if (path !== '') {

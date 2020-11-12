@@ -14,7 +14,7 @@
 				</view>
 			</view>
 			<view class="content-wrapper">
-				<view class="item" @tap="onToUser">
+				<view class="item" @tap="onToUser" v-if="!roles.includes(rolesType.police.type)">
 					<view class="iconfont iconziliao"></view>
 					<text>个人资料</text>
 				</view>
@@ -26,7 +26,7 @@
 					<view class="iconfont iconmima other-ic"></view>
 					<text>密码修改</text>
 				</view>
-				<view class="item" v-if="!roles[1]" @click="onChoose">
+				<view class="item" v-if="isBecome" @click="onChoose">
 					<view class="iconfont iconchengyuan other-ic"></view>
 					<text>我要成为</text>
 					<u-select v-if="show" v-model="show" mode="single-column" :list="list" @confirm="onConfirm"></u-select>
@@ -34,8 +34,14 @@
 			</view>
 		</view>
 		<!-- 菜单 -->
-		<user-menu :type="type" :text="text" :isShipOwer="isShipOwer"></user-menu>
+		<user-menu :text="text" :isShipOwer="isShipOwer" :roles="roles"></user-menu>
 		<tyb-tarbar :current-index="4"></tyb-tarbar>
+		<u-modal v-model="modalShow" @cancel="modalShow = false" title="个人资料" :mask-close-able="true" :show-confirm-button="false" show-cancel-button cancel-text="取消">
+			<view class="slot-content" style="padding: 30rpx 10rpx;display: flex;justify-content: center;">
+				<u-button @click="onToPath('/pages/release/shipowner-resume/edit')" style="margin-right: 20rpx;">船东简历</u-button>
+				<u-button type="primary" @click="onToPath('/pages/release/resume/edit')">船员简历</u-button>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -54,11 +60,11 @@
 		data () {
 			return {
 				text: '',
+				modalShow: false,
 				isShipOwer: false,
 				userInfo: this.$cache.get('userInfo'),
 				roles: this.$cache.get('roles'),
 				imageUrl: this.$IMAGE_URL,
-				type: 0,
 				show: false,
 				list: [
 					{ value: 1, label: '船员' },
@@ -67,24 +73,31 @@
 			}
 		},
 		computed: {
-			getLabel () {
-				let result= ''
-				let value = this.list.find((item) => {
-					return item.value === this.type
-				})
-				if (value) {
-					result = value.label
+			isBecome () {
+				if (this.roles.includes(this.rolesType.shipowner.type)) {
+					return false
 				}
-				return result
+				if (this.roles.includes(this.rolesType.crew.type)) {
+					return false
+				}
+				if (this.roles.includes(this.rolesType.police.type)) {
+					return false
+				}
+				return true
 			},
 			roleLabel () {
-				let result = ''
+				let result = []
 				
 				if (Array.isArray(this.roles)) {
 					// console.log('this.roles', this.roles)
-					result = this.roles[1] === 108 ? '船东' : (this.roles[1] === 105 ? '船员' : '')
+					for (let key in this.rolesType) {
+						if (this.roles.includes(this.rolesType[key].type)) {
+							result.push(this.rolesType[key].label)
+						}
+					}
+					// result = this.roles[1] === 108 ? '船东' : (this.roles[1] === 105 ? '船员' : '')
 				}
-				return result
+				return result.join('/')
 			}
 		},
 		onShow () {
@@ -102,17 +115,11 @@
 			// } else {
 			// 	this.init()
 			// }
-			
-			if (this.roles && this.roles.length > 0) {
-				this.type = this.roles[1] || ''
-			} else {
-				this.type = ''
-			}
 		},
 		methods: {
 			// 获取船东是否是持证人信息
 			getShipOwer () {
-				if (this.roles[1] === 108) {
+				if (this.roles.includes(this.rolesType.shipowner.type)) {
 					this.$http.get('/tmlms/ship_owner/getDetail', {
 						params: {
 							idcard: this.userInfo.idCard
@@ -179,9 +186,18 @@
 					})
 					return
 				}
-				if (this.type === 108) {
+				let status = {
+					shipowner: false,
+					crew: false
+				}
+				status.shipowner = this.roles.includes(this.rolesType.shipowner.type)
+				status.crew = this.roles.includes(this.rolesType.crew.type)
+				console.log(this.roles, status.shipowner, status.crew)
+				if (status.shipowner && status.crew) {
+					this.modalShow = true
+				} else if (status.shipowner) {
 					this.onTo('/pages/release/shipowner-resume/edit')
-				} else if (this.type === 105) {
+				} else if (status.crew) {
 					this.onTo('/pages/release/resume/edit')
 				}
 			},
@@ -193,9 +209,6 @@
 							this.$cache.set('userInfo', this.userInfo)
 							this.roles = data.data.roles
 							this.$cache.set('roles', this.roles)
-							if (this.roles && this.roles.length > 0) {
-								this.type = this.roles[1]
-							}
 							resolve()
 						}
 					})
@@ -206,6 +219,14 @@
 					uni.navigateTo({
 						url: path
 					});
+				}
+			},
+			onToPath (path) {
+				if (path) {
+					uni.navigateTo({
+						url: path
+					})
+					this.modalShow = false
 				}
 			},
 			onChoose () {

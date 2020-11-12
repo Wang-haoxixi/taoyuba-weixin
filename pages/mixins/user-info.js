@@ -1,6 +1,20 @@
 export default {
 	data () {
 		return {
+			rolesType: {
+				shipowner: {
+					type: 108,
+					label: '船东'
+				}, // 船东
+				crew: {
+					type: 105,
+					label: '船员'
+				}, // 船员
+				police: {
+					type: 115,
+					label: '公安边防'
+				}, // 公安
+			},
 			userInfo: this.$cache.get('userInfo') || {},
 			roles: this.$cache.get('roles') || []
 		}

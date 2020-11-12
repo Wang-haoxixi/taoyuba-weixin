@@ -44,6 +44,12 @@
 				</u-grid>
 			</view>
 		</view>
+		<u-modal v-model="modalShow" @cancel="modalShow = false" title="合同" :mask-close-able="true" :show-confirm-button="false" show-cancel-button cancel-text="取消">
+			<view class="slot-content" style="padding: 30rpx 10rpx;display: flex;justify-content: center;">
+				<u-button @click="onToPath('/pages/user/myship/ship/index')" style="margin-right: 20rpx;">船东合同</u-button>
+				<u-button type="primary" @click="onToPath('/pages/user/contract/list/index')">船员合同</u-button>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -58,6 +64,7 @@
 		},
 		data () {
 			return {
+				modalShow: false,
 				list: [
 					{
 						image: this.$IMAGE_URL + '/banner1.jpg',
@@ -70,16 +77,26 @@
 			}
 		},
 		methods: {
+			onToPath (path) {
+				if (path) {
+					uni.navigateTo({
+						url: path
+					})
+					this.modalShow = false
+				}
+			},
 			onTo (row) {
 				if (row.path1 && row.path2) {
 					// console.log(this.roles, this.roles.length > 0, this.roles[1])
 					this.getUserInfoApi().then(() => {
 						if (this.roles && this.roles.length > 0) {
-							if (this.roles[1] === 105) {
+							if (this.roles.includes(this.rolesType.crew.type) && this.roles.includes(this.rolesType.shipowner.type)) {
+								this.modalShow = true
+							} else if (this.roles.includes(this.rolesType.crew.type)) {
 								uni.navigateTo({
 									url: '/pages/user/contract/list/index'
 								})
-							} else if (this.roles[1] === 108) {
+							} else if (this.roles.includes(this.rolesType.shipowner.type)) {
 								uni.navigateTo({
 									url: '/pages/user/myship/ship/index'
 								})

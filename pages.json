@@ -295,6 +295,13 @@
 			}
 		},
 		{
+			"path": "pages/user/search/index/index",
+			"style": {
+				"navigationBarTitleText": "一船一档查询",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path": "pages/base/web",
 			"style": {
 				"navigationBarTitleText": ""
