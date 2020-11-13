@@ -34,7 +34,7 @@
 			</view>
 		</view>
 		<!-- 菜单 -->
-		<user-menu :text="text" :isShipOwer="isShipOwer" :roles="roles"></user-menu>
+		<user-menu :text="text" :isShipOwer="isShipOwer" :role="roles"></user-menu>
 		<tyb-tarbar :current-index="4"></tyb-tarbar>
 		<u-modal v-model="modalShow" @cancel="modalShow = false" title="个人资料" :mask-close-able="true" :show-confirm-button="false" show-cancel-button cancel-text="取消">
 			<view class="slot-content" style="padding: 30rpx 10rpx;display: flex;justify-content: center;">
@@ -62,8 +62,8 @@
 				text: '',
 				modalShow: false,
 				isShipOwer: false,
-				userInfo: this.$cache.get('userInfo'),
-				roles: this.$cache.get('roles'),
+				userInfo: this.$cache.get('userInfo') || {},
+				roles: this.$cache.get('roles') || [],
 				imageUrl: this.$IMAGE_URL,
 				show: false,
 				list: [

@@ -12,7 +12,11 @@
 						手机号码：{{item.employeePhone}}
 					</view>
 					<view class="text">身份证号码：{{item.employeeIdcard}}</view>
+					<view class="btn-wrapper">
+						<u-button size="medium" @click="onToContract(item.contractId)">合同</u-button>
+					</view>
 				</view>
+				
 			</view>
 			<u-loadmore :status="status" />
 		</list-layout>
@@ -74,6 +78,11 @@
 					}
 					uni.stopPullDownRefresh()
 				})
+			},
+			onToContract (id) {
+				uni.navigateTo({
+					url: `/pages/base/web?src=https://m.taoyu58.com/api/tmlms/downLoad/intoContractHtml&contractId=${id}`
+				})
 			}
 		}
 	}
@@ -95,7 +104,14 @@
 					font-size: 28rpx;
 					color: #999;
 					margin-top: 15rpx;
-				}	
+				}
+				
+			}
+			.btn-wrapper {
+				padding: 20rpx;
+				padding-bottom: 0;
+				display: flex;
+				justify-content: flex-end;
 			}
 		}
 	}

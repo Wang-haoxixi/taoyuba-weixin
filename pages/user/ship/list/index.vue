@@ -1,7 +1,28 @@
 <template>
 	<view class="user-search-container">
 		<view class="search-wrapper">
-			<u-search placeholder="渔船名" clear v-model="shipName" @search="onSearch" @custom="onSearch"></u-search>
+			<view style="border-radius: 40rpx;overflow: hidden;border: 1px solid #dcdfe6;padding-left: 20rpx;">
+				<u-input v-model="shipName" trim focus type="number" :maxlength="5" placeholder="请输入渔船名,如:00000"/>
+			</view>
+			<view class="search-result" v-show="shipNameShow">
+				<view class="item" v-for="item in shipNameList" :key="item.shipId" @click="onSearch(item.shipName)">
+					<text>{{item.shipName}}</text>
+					<i class="iconfont iconicon-"></i>
+				</view>
+				<!-- <template v-if="shipNameList.length">
+					<view class="item" v-for="item in shipNameList" :key="item.shipId" @click="onSearch(item.shipName)">
+						<text>{{item.shipName}}</text>
+						<i class="iconfont iconicon-"></i>
+					</view>
+				</template>
+				<template v-else>
+					<view class="empty item">
+						查无此船
+					</view>
+				</template> -->
+				
+			</view>
+			<!-- <u-search placeholder="请输入渔船名,如:11001" focus :maxlength="5" :show-action="false" clear v-model="shipName"></u-search> -->
 		</view>
 		
 		<view class="content-wrapper">
@@ -21,7 +42,7 @@
 						<u-button @click="onToContract(item)">合同</u-button>
 					</view>
 				</view>
-				<u-loadmore :status="status" />
+				<!-- <u-loadmore :status="status" /> -->
 			</list-layout>
 		</view>
 	</view>
@@ -39,51 +60,81 @@
 			return {
 				status: 'loadmore',
 				shipName: '',
+				shipNameList: [],
+				shipNameShow: false,
 				data: []
 			}
 		},
-		onReachBottom() {
-			if (this.page.total > this.page.current * this.page.size) {
-				this.status = 'loading'
-				this.page.current++
-				this.getList()
-			} else{
-				this.status = 'nomore'
-			}
-		},
+		// onReachBottom() {
+		// 	if (this.page.total > this.page.current * this.page.size) {
+		// 		this.status = 'loading'
+		// 		this.page.current++
+		// 		this.getList()
+		// 	} else{
+		// 		this.status = 'nomore'
+		// 	}
+		// },
 		computed: {
 			activityTypeList () {
 				return cloneDeep(this.dictMap)['tyb_resume_worktype'] || []
 			}
 		},
+		watch: {
+			'shipName': {
+				handler (newVal) {
+					if (newVal.length === 5) {
+						this.getShip()
+					} else {
+						this.shipNameList = []
+						this.shipNameShow = false
+					}
+				},
+				deep: true,
+				immediate: true
+			}
+		},
 		methods: {
+			getShip () {
+				this.$http.get(`/tybship/tybship/findship/${this.shipName}`).then(({ data }) => {
+					this.shipNameShow = true
+					if (data.data) {
+						this.shipNameList = data.data
+					} else {
+						this.shipNameShow = false
+					}
+				})
+			},
 			getList () {
+				let shipName = this.shipName
+				this.shipName = ''
 				this.$http.get('/tybship/tybship/newpage', {
 					params: {
-						shipName: this.shipName,
+						shipName: shipName,
 						size: this.page.size,
 						current: this.page.current,
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {
+						this.data = []
 						let result = data.data
-						this.data = this.data.concat(result.records)
+						this.data = result.records
 						this.page.total = result.total
-						if (this.page.total <= this.page.size) {
-							this.status = 'nomore'
-						}
+						// if (this.page.total <= this.page.size) {
+						// 	this.status = 'nomore'
+						// }
 					}
 					console.log(this.data)
-					uni.stopPullDownRefresh()
+					// uni.stopPullDownRefresh()
 				})
 			},
 			trim (value) {
 				return value.replace(/^\s+/, '').replace(/\s+$/, '');
 			},
-			onSearch () {
-				if (this.trim(this.shipName)) {
-					this.getList()
-				}
+			onSearch (shipName) {
+				this.shipNameShow = false
+				this.shipNameList = []
+				this.shipName = shipName
+				this.getList()
 			},
 			onToContract (row) {
 				if (row.shipNo) {
@@ -109,6 +160,35 @@
 		.search-wrapper {
 			background-color: #fff;
 			padding: 10rpx 20rpx;
+			position: relative;
+			.search-result {
+				position: absolute;
+				top: 94rpx;
+				background-color: #fff;
+				left: 0;
+				right: 0;
+				height: calc(100vh - 100rpx);
+				background-color: #fff;
+				z-index: 1000;
+				.item {
+					display: flex;
+					justify-content: space-between;
+					padding: 20rpx;
+					width: 100%;bottom-top: 1px solid #dcdfe6;
+					font-size: 28rpx;
+					.iconfont {
+						color: #999;
+						font-size: 40rpx;
+					}
+				}
+				// .empty {
+				// 	text-align: center;
+				// 	font-size: 30rpx;
+				// 	display: block;
+				// 	width: 100%;
+				// 	color: #999;
+				// }
+			}
 		}
 		.content-wrapper {
 			.item {

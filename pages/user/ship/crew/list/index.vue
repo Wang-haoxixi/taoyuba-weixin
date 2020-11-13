@@ -11,7 +11,11 @@
 					</view>
 					<view class="text">身份证号码：{{item.idcard}}</view>
 					<view class="text">用工状态：{{getWorkStatusLabel(item.workStatus)}}</view>
+					<view class="btn-wrapper">
+						<u-button size="medium" @click="onToContract(item)">合同</u-button>
+					</view>
 				</view>
+				
 			</view>
 		</list-layout>
 	</view>
@@ -51,6 +55,15 @@
 						this.data = result
 					}
 				})
+			},
+			onToContract (row) {
+				this.$http.get(`/tmlms/tybcontract/shipcrew/${row.idcard}`).then(({ data }) => {
+					if (data.code === 0) {
+						uni.navigateTo({
+							url: `/pages/base/web?src=https://m.taoyu58.com/api/tmlms/downLoad/intoContractHtml&contractId=${data.data.contractId}`
+						})
+					}
+				})
 			}
 		}
 	}
@@ -73,6 +86,13 @@
 					color: #999;
 					margin-top: 15rpx;
 				}	
+				
+			}
+			.btn-wrapper {
+				padding: 20rpx;
+				padding-bottom: 0;
+				display: flex;
+				justify-content: flex-end;
 			}
 		}
 	}
