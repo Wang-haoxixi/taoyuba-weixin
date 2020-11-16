@@ -90,10 +90,14 @@
 				if (m) {
 					format.m = m < 10 ? '0' + m : m,
 					result = result + format.m + ':'
+				} else {
+					return + '00:'
 				}
 				if (s) {
 					format.s = s < 10 ? '0' + s : s,
 					result += format.s
+				} else {
+					result += '00'
 				}
 				return result ? result : '00:00'
 			},

@@ -29,7 +29,8 @@
 		data () {
 			return {
 				status: 'loadmore',
-				data: []
+				data: [],
+				id: '',
 			}
 		},
 		onReachBottom() {
@@ -47,7 +48,8 @@
 			this.getList()
 		},
 		onLoad (params) {
-			this.getList(params.id)
+			this.id = params.id
+			this.getList()
 		},
 		methods: {
 			getWorkStatusLabel (val) {
@@ -58,12 +60,12 @@
 				let dict = this.dictMap['tyb_resume_position'] || []
 				return this.getDictLabel(val, dict)
 			},
-			getList (id) {
+			getList () {
 				this.$http.get('/tybship/tybshipcrew/page', {
 					params: {
 						size: this.page.size,
 						current: this.page.current,
-						shipId: id,
+						shipId: this.id,
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {

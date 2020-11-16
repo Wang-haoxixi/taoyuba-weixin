@@ -13,6 +13,12 @@
 			<u-loadmore :status="status1" />
 		</view>
 		<view class="list-wrapper" v-show="current === 1">
+			<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
+				<video-item :info="item"></video-item>
+			</view>
+			<u-loadmore :status="status" />
+		</view>
+		<view class="list-wrapper" v-show="current === 2">
 			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
 				<video-item :info="item"></video-item>
 			</view>
@@ -35,7 +41,7 @@
 		data () {
 			return {
 				list: [
-					{ name: '安全教育', type: 1 }, { name: '课程培训', type: 2 }
+					{ name: '安全教育', type: 1 }, { name: '渔业知识', type: 3 },  { name: '课程培训', type: 2 }
 				],
 				current: 0,
 				status: 'loadmore',
@@ -43,6 +49,12 @@
 				data: [],
 				data1: [],
 				page1: {
+					total: 0,
+					current: 1,
+					size: 10
+				},
+				data2: [],
+				page2: {
 					total: 0,
 					current: 1,
 					size: 10
@@ -58,7 +70,15 @@
 				} else {
 					this.status1 = 'nomore'
 				}
-			} else {
+			} else if (this.current === 0) {
+				if (this.page2.total > this.page2.current * this.page2.size) {
+					this.status2 = 'loading'
+					this.page2.current++
+					this.getList2()
+				} else {
+					this.status1 = 'nomore'
+				}
+			}else {
 				if (this.page.total > this.page.current * this.page.size) {
 					this.status = 'loading'
 					this.page.current++
@@ -73,6 +93,10 @@
 				this.data1 = []
 				this.page1.current = 1
 				this.getList1()
+			} else if (this.current === 1) {
+				this.data2 = []
+				this.page2.current = 1
+				this.getList2()
 			} else {
 				this.data = []
 				this.page.current = 1
@@ -83,8 +107,28 @@
 		onLoad () {
 			this.getList()
 			this.getList1()
+			this.getList2()
 		},
 		methods: {
+			getList2 () {
+				this.$http.get('/tybhrms/tyblessonvideo/page', {
+					params: {
+						size: this.page1.size,
+						current: this.page1.current,
+						type: 3
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let result = data.data
+						this.data2 = this.data2.concat(result.records)
+						this.page2.total = result.total
+						if (this.page2.total <= this.page2.size) {
+							this.status2 = 'nomore'
+						}
+					}
+					uni.stopPullDownRefresh()
+				})
+			},
 			getList1 () {
 				this.$http.get('/tybhrms/tyblessonvideo/page', {
 					params: {

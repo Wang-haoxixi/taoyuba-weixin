@@ -36,7 +36,7 @@
 			}
 		},
 		onReachBottom() {
-			this.getList()
+			// this.getList()
 			// if (this.page.total > this.page.current * this.page.size) {
 			// 	this.status = 'loading'
 			// 	this.page.current++

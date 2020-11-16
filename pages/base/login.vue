@@ -107,6 +107,7 @@
 				this.codeTips = text
 			},
 			onSubmit () {
+				console.log('submit')
 				// if (this.form.phone === '') {
 				// 	this.$refs.uToast.show({
 				// 		title: '请输入手机号',
@@ -121,6 +122,7 @@
 				// 	})
 				// 	return
 				// }
+				console.log('this.form', this.form)
 				if (this.form.username === '') {
 					this.$refs.uToast.show({
 						title: '请输入用户名',

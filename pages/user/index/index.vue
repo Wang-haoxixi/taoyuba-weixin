@@ -103,6 +103,7 @@
 		onShow () {
 			this.userInfo = this.$cache.get('userInfo') || {}
 			this.roles = this.$cache.get('roles') || []
+			console.log('this.userInfo', this.userInfo, 'this.roles', this.roles)
 			this.text = ''
 			this.getUserInfo().then(() => {
 				this.getShipOwer()

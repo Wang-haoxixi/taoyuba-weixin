@@ -1,12 +1,14 @@
 <template>
 	<view class="info-container phonex-mb">
 		<view class="tab-wrapper">
-			<u-tabs :list="list" :is-scroll="false" :current="current" @change="change" active-color="#409EFF"></u-tabs>
+			 <!-- active-color="#409EFF" -->
+			<u-tabs :list="list" :is-scroll="false" inactive-color="#fff" active-color="#fff" bg-color="transparent" :current="current" @change="change"></u-tabs>
 		</view>
 		<view style="height: 80rpx;"></view>
 		<view class="content-wrapper">
 			<page-training-info :keyword="title" :data="data1" v-show="current === 1" ref="trainingInfo"></page-training-info>
 			<page-training :keyword="deptName" :data="data0" v-show="current === 0" ref="training"></page-training>
+			<page-content v-show="current === 2"></page-content>
 			<page-book v-show="current === 3" ref="book"></page-book>
 		</view>
 	</view>
@@ -16,11 +18,13 @@
 	import pageBook from '../book/list/index'
 	import pageTraining from '../training/list/index1'
 	import pageTrainingInfo from '../training-info/list/index1'
+	import pageContent from '@/pages/find/index/components/content'
 	export default {
 		components: {
 			pageBook,
 			pageTraining,
-			pageTrainingInfo
+			pageTrainingInfo,
+			pageContent
 		},
 		data () {
 			return {
@@ -28,7 +32,7 @@
 				list: [
 					{ name: '培训机构' },
 					{ name: '培训信息' },
-					{ name: '职业规划' },
+					{ name: '证书查询' },
 					{ name: '教材订购' }
 				],
 				deptName: '',
@@ -144,12 +148,12 @@
 				})
 			},
 			change(index) {
-				if (index === 2) {
-					uni.navigateTo({
-						url: `/pages/base/web?src=https://m.taoyu58.com/careerplanning`
-					})
-					return
-				}
+				// if (index === 2) {
+				// 	uni.navigateTo({
+				// 		url: `/pages/base/web?src=https://m.taoyu58.com/careerplanning`
+				// 	})
+				// 	return
+				// }
 				this.current = index
 			}
 		}
@@ -163,7 +167,7 @@
 			top: 0;
 			left: 0;
 			right: 0;
-			background-color: #fff;
+			background: #fff url('#{$img-url}/home-bg1.png') no-repeat;
 			z-index: 10;
 		}
 	}

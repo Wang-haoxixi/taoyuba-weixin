@@ -58,16 +58,18 @@
 			this.videoId = params.id
 			if (params.id) {
 				this.getUserInfoApi().then(() => {
-					if (this.roles.includes(this.rolesType.crew.type)) {
-						this.getList(params.id)
-					} else {
-						this.$refs.uToast.show({
-							title: '请确认您的身份是船员',
-							back: true
-						})
-					}
+					this.getList(params.id)
+					// if (this.roles.includes(this.rolesType.crew.type)) {
+					// 	this.getList(params.id)
+					// } else {
+					// 	this.$refs.uToast.show({
+					// 		title: '请确认您的身份是船员',
+					// 		back: true
+					// 	})
+					// }
 				})
 			}
+			// this.getList(params.id)
 			this.faceTime += this.initialTime
 			this.intervalTime += this.initialTime
 			this.time = this.initialTime
@@ -96,28 +98,57 @@
 						this.faceTime = +this.faceTime + (+this.initialTime)
 						this.intervalTime = +this.intervalTime + (+this.initialTime)
 						this.videoContext.pause()
-						this.$http.get('/tmlms/crew/getCrewByidcard', {
-							params: {
-								idcard: this.userInfo.idCard
-							}
-						}).then(({ data }) => {
-							if (data.code === 0) {
-								let facePhoto = data.data.facePhoto
-								if (facePhoto === '' || facePhoto.indexOf('2019') > -1) {
-									this.isFirst = true
+						if (this.roles.includes(this.rolesType.crew.type)) {
+							this.$http.get('/tmlms/crew/getCrewByidcard', {
+								params: {
+									idcard: this.userInfo.idCard
 								}
-								this.show = true
-								
-							} else {
+							}).then(({ data }) => {
+								if (data.code === 0) {
+									let facePhoto = data.data.facePhoto
+									if (facePhoto === '' || facePhoto.indexOf('2019') > -1) {
+										this.isFirst = true
+									}
+									this.show = true
+									
+								} else {
+									uni.navigateBack({
+										delta: 1
+									})
+								}
+							}).catch(() => {
 								uni.navigateBack({
 									delta: 1
 								})
-							}
-						}).catch(() => {
-							uni.navigateBack({
-								delta: 1
 							})
-						})
+							
+						} else {
+							this.show = false
+						}
+						
+						
+						// this.$http.get('/tmlms/crew/getCrewByidcard', {
+						// 	params: {
+						// 		idcard: this.userInfo.idCard
+						// 	}
+						// }).then(({ data }) => {
+						// 	if (data.code === 0) {
+						// 		let facePhoto = data.data.facePhoto
+						// 		if (facePhoto === '' || facePhoto.indexOf('2019') > -1) {
+						// 			this.isFirst = true
+						// 		}
+						// 		this.show = true
+								
+						// 	} else {
+						// 		uni.navigateBack({
+						// 			delta: 1
+						// 		})
+						// 	}
+						// }).catch(() => {
+						// 	uni.navigateBack({
+						// 		delta: 1
+						// 	})
+						// })
 						// this.show = true
 					}
 				})
@@ -144,16 +175,19 @@
 			onTimeupdate (e) {
 				let currentTime = e.detail.currentTime
 				this.time = currentTime
-				if (this.faceTime < currentTime) {
-					this.videoContext.exitFullScreen()
-					this.videoContext.pause()
-					this.faceTime += TIME
-					this.intervalTime += INTERVAL_TIME
-					this.show = true
-					this.setLearnTime()
-					// console.log('活体识别时间', currentTime, this.intervalTime)
-					return
+				if (this.roles.includes(this.rolesType.crew.type)) {
+					if (this.faceTime < currentTime) {
+						this.videoContext.exitFullScreen()
+						this.videoContext.pause()
+						this.faceTime += TIME
+						this.intervalTime += INTERVAL_TIME
+						this.show = true
+						this.setLearnTime()
+						// console.log('活体识别时间', currentTime, this.intervalTime)
+						return
+					}
 				}
+				
 				if (currentTime > this.intervalTime) {
 					this.intervalTime += INTERVAL_TIME
 					this.setLearnTime()
