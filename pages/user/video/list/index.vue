@@ -19,11 +19,12 @@
 <script>
 	import pageMixin from '@/pages/mixins/page.js'
 	import listLayout from '@/pages/components/list-layout/index.vue'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
 		components: {
 			listLayout
 		},
-		mixins: [pageMixin],
+		mixins: [pageMixin, userInfoMixin],
 		data () {
 			return {
 				status: 'loadmore',
@@ -55,7 +56,8 @@
 				this.$http.get('/tybhrms/tybLearnRecord/page', {
 					params: {
 						size: this.page.size,
-						current: this.page.current
+						current: this.page.current,
+						userId: this.userInfo.userId
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {
@@ -91,7 +93,7 @@
 					format.m = m < 10 ? '0' + m : m,
 					result = result + format.m + ':'
 				} else {
-					return + '00:'
+					result += '00:'
 				}
 				if (s) {
 					format.s = s < 10 ? '0' + s : s,

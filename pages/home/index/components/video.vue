@@ -39,6 +39,7 @@
 						</u-col>
 					</u-row>
 				</view>
+				<view class="more" @tap="onToList('/pages/home/video/list/index')">更多</view>
 			</view>
 		</home-container>
 	</view>
@@ -75,9 +76,15 @@
 			},
 			onTo (id) {
 				if (id) {
-					console.log('this.id', id)
 					uni.navigateTo({
 						url: `/pages/home/video/detail/index1?id=${id}`
+					});
+				}
+			},
+			onToList (path) {
+				if (path) {
+					uni.navigateTo({
+						url: path
 					});
 				}
 			},
@@ -121,6 +128,14 @@
 		}
 		.video-content-bottom {
 			margin-top: 20rpx;
+		}
+		.more {
+			text-align: right;
+			font-size: 28rpx;
+			margin-top: 20rpx;
+			padding: 10rpx 30rpx 0;
+			border-top: 1px solid #f6f6f6;
+			color: $color-blue;
 		}
 	}
 </style>

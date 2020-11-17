@@ -9,128 +9,128 @@
 				"navigationBarTitleText": ""
 			}
 		},
-		{
-			"path": "pages/home/search/index",
-			"style": {
-				"navigationBarTitleText": "搜索"
-			}
-		},
-		{
-			"path": "pages/home/resume/list/index",
-			"style": {
-				"navigationBarTitleText": "求职",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/resume/detail/index",
-			"style": {
-				"navigationBarTitleText": "求职"
-			}
-		},
-		{
-			"path": "pages/home/recruit/list/index",
-			"style": {
-				"navigationBarTitleText": "招聘",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/recruit/detail/index",
-			"style": {
-				"navigationBarTitleText": "招聘"
-			}
-		},
-		{
-			"path": "pages/home/video/list/index",
-			"style": {
-				"navigationBarTitleText": "渔民学院",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/video/detail/index",
-			"style": {
-				"navigationBarTitleText": "渔民学院"
-			}
-		},
-		{
-			"path": "pages/home/video/detail/index1",
-			"style": {
-				"navigationBarTitleText": "渔民学院"
-			}
-		},
-		{
-			"path": "pages/home/training/list/index",
-			"style": {
-				"navigationBarTitleText": "培训机构",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/training/detail/index",
-			"style": {
-				"navigationBarTitleText": "培训机构"
-			}
-		},
-		{
-			"path": "pages/home/training-info/list/index",
-			"style": {
-				"navigationBarTitleText": "培训信息"
-			}
-		},
-		{
-			"path": "pages/home/examination/detail/index",
-			"style": {
-				"navigationBarTitleText": "模拟考试",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/home/examination/list/index",
-			"style": {
-				"navigationBarTitleText": "模拟考试",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/training-info/detail/index",
-			"style": {
-				"navigationBarTitleText": "培训信息"
-			}
-		},
-		{
-			"path": "pages/home/news/list/index",
-			"style": {
-				"navigationBarTitleText": "新闻",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/news/detail/index",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/home/book/list/index",
-			"style": {
-				"navigationBarTitleText": "教材订购",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/contract/list/index",
-			"style": {
-				"navigationBarTitleText": "合同"
-			}
-		},
-		{
-			"path": "pages/home/contract/detail/index",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
+		// {
+		// 	"path": "pages/home/search/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "搜索"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/resume/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "求职",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/resume/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "求职"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/recruit/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "招聘",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/recruit/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "招聘"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/video/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/video/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/video/detail/index1",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/training/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "培训机构",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/training/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "培训机构"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/training-info/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "培训信息"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/examination/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "模拟考试",
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/examination/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "模拟考试",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/training-info/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "培训信息"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/news/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "新闻",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/news/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": ""
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/book/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "教材订购",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/contract/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "合同"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/contract/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": ""
+		// 	}
+		// },
 		{
 			"path": "pages/find/index/index",
 			"style": {
@@ -239,8 +239,7 @@
 		{
 			"path": "pages/user/contract/ship-list/index",
 			"style": {
-				"navigationBarTitleText": "合同管理",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "合同管理"
 			}
 		},
 		{
@@ -304,6 +303,12 @@
 			"path": "pages/user/ship/crew/list/index",
 			"style": {
 				"navigationBarTitleText": "船员"
+			}
+		},
+		{
+			"path": "pages/user/ship/crew/detail/index",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		},
 		{

@@ -2,17 +2,21 @@
 	<!-- 渔船 -->
 	<view class="user-ship-container phonex-mb">
 		<list-layout :data="data" empty-text="数据为空">
-			<view class="ship-item-wrapper" v-for="item in data" :key="item.shipId">
-				<view class="left-wrapper">
-					<view class="title">{{item.shipName}}</view>
-					<view class="text">渔船编号：{{item.shipNo}}</view>
-					<view class="text">持证人：{{item.shipowner}}</view>
+			<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="item in data" :key="item.shipId">
+				<view class="ship-item-wrapper" slot="body">
+					<view class="left-wrapper">
+						<view class="title">{{item.shipName}}</view>
+						<view class="text">渔船编号：{{item.shipNo}}</view>
+						<view class="text">持证人：{{item.shipowner}}</view>
+					</view>
 				</view>
-				<view class="right-wrapper">
-					<u-button @click="onToContract(item)" class="btn">合同</u-button>
-					<u-button @click="onTo(item)">船员</u-button>
+				<view slot="foot">
+					<view class="btn-wrapper">
+						<u-button size="medium" @click="onToContract(item)" class="btn">合同</u-button>
+						<u-button size="medium" @click="onTo(item)">船员</u-button>
+					</view>
 				</view>
-			</view>
+			</u-card>
 		</list-layout>
 	</view>
 </template>
@@ -63,8 +67,6 @@
 	.user-ship-container {
 		.ship-item-wrapper {
 			background-color: #fff;
-			padding: 30rpx;
-			border-bottom: 1px solid #f6f6f6;
 			display: flex;
 			align-items: center;
 			.left-wrapper {
@@ -79,13 +81,14 @@
 					font-size: 28rpx;
 				}
 			}
-			.right-wrapper {
-				flex: 0 0 100rpx;
-				margin-left: 20rpx;
-				.btn {
-					margin-bottom: 10rpx;
-					display: inline-block;
-				}
+			
+		}
+		.btn-wrapper {
+			display: flex;
+			justify-content: flex-end;
+			.btn {
+				display: inline-block;
+				margin-right: 10rpx;
 			}
 		}
 	}

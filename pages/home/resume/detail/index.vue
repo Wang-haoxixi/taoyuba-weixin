@@ -25,6 +25,7 @@
 					<view class="text">特殊技能：{{data.speciality || ''}}</view>
 					<view class="text">期望月薪：<text class="money">{{data.salary || ''}}</text></view>
 					<view class="text">籍贯：{{cityLabel || ''}}</view>
+					<view class="text">民族：{{data.nation}}</view>
 					<view class="text">年龄：{{ageLabel || ''}}</view>
 				</view>
 			</content-container>
@@ -37,10 +38,8 @@
 				<view>
 					<view class="text">电话：{{data.contactPhone || ''}}</view>
 					<view class="text">性别：{{genderLabel || ''}}</view>
-					<view class="text">籍贯：{{cityLabel || ''}}</view>
 					<view class="text">出生日期：{{data.birthday || ''}}</view>
 					<view class="text">教育程度：{{eduDegreeLabel || ''}}</view>
-					<view class="text">民族：{{data.nation}}</view>
 					<view class="text">家庭地址：{{data.address}}</view>
 					<view class="text">家庭联系人：{{data.contactName}}</view>
 					<view class="text">家庭联系电话：{{data.contactPhone}}</view>

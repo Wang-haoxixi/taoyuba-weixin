@@ -1,23 +1,22 @@
 <template>
 	<!-- 船员 -->
 	<view class="user-my-ship-crew-list-container phonex-mb">
-		<template v-if="data.length === 0">
-			<u-empty text="数据为空" mode="list"></u-empty>
-		</template>
-		<template v-else>
+		<list-layout :data="data" empty-text="暂无数据">
 			<view class="my-ship-crew-list-wrapper">
-				<view class="item" v-for="item in data" :key="item.id">
-					<view class="title">{{item.realName}}</view>
-					<view class="text">
-						<text>{{getPositionIdLabel(item.positionId)}}</text>
-						<text>{{item.phone}}</text>
+				<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="item in data" :key="item.id">
+					<view class="item" slot="body">
+						<view class="title">{{item.realName}}</view>
+						<view class="text">
+							<text>{{getPositionIdLabel(item.positionId)}}</text>
+							<text>{{item.phone}}</text>
+						</view>
+						<view class="text">{{item.idcard}}</view>
+						<view class="text">用工状态：{{getWorkStatusLabel(item.workStatus)}}</view>
 					</view>
-					<view class="text">{{item.idcard}}</view>
-					<view class="text">用工状态：{{getWorkStatusLabel(item.workStatus)}}</view>
-				</view>
+				</u-card>
 			</view>
-			<u-loadmore :status="status" />
-		</template>
+			<u-loadmore :status="status" bg-color="tranparent"/>
+		</list-layout>
 	</view>
 </template>
 
@@ -86,11 +85,7 @@
 <style scoped lang="scss">
 	.user-my-ship-crew-list-container {
 		.my-ship-crew-list-wrapper {
-			background-color: #fff;
-			border-bottom: 1px solid #f6f6f6;
 			.item {
-				padding: 30rpx;
-				border-bottom: 1px solid #f6f6f6;
 				.title {
 					font-size: 32rpx;
 					color: #333;

@@ -28,15 +28,19 @@
 		<view class="content-wrapper">
 			<list-layout :data="data" empty-text="暂无数据">
 				<view class="item" v-for="item in data" :key="item.id">
-					<view class="text">渔船名：{{item.shipName}}</view>
-					<view class="text">持证人：{{item.shipowner}}</view>
-					<view class="text">持证人身份证：{{item.shipownerIdcard}}</view>
-					<view class="text">地址：{{item.address}}</view>
-					<view class="text">渔船证书：{{item.shipNo}}</view>
-					<view class="text">主机总功率(kw)：{{item.engineTotalPower}}</view>
-					<view class="text">船长(m)：{{item.hullLength}}</view>
-					<view class="text">作业类型：{{getDictLabel(activityTypeList, item.activityType)}}</view>
-					<view class="text">合同/人数：{{item.contractCount || 0}}/{{item.crewCount || 0}}</view>
+					<view class="text"><text class="name">渔船名：</text>{{item.shipName}}</view>
+					<view class="text"><text class="name">持证人：</text>{{item.shipowner}}</view>
+					<view class="text"><text class="name">持证人身份证：</text>{{item.shipownerIdcard}}</view>
+					<view class="text"><text class="name">地址：</text>{{item.address}}</view>
+					<view class="text"><text class="name">渔船编码：</text>{{item.shipNo}}</view>
+					<view class="text"><text class="name">主机总功率(kw)：</text>{{item.engineTotalPower}}</view>
+					<view class="text"><text class="name">船长(m)：</text>{{item.hullLength}}</view>
+					<view class="text"><text class="name">作业类型：</text>{{item.activityType}}</view>
+					<view class="text"><text class="name">合同/人数：</text>{{item.contractCount || 0}}/{{item.crewCount || 0}}</view>
+					<view class="text" v-if="item.licensesOwnerShip"><text class="name">所有权登记证：</text>{{item.licensesOwnerShip}}</view>
+					<view class="text" v-if="item.licensesFishingNo"><text class="name">捕捞许可证：</text>{{item.licensesFishingNo}}</view>
+					<view class="text" v-if="item.licensesNationalNo"><text class="name">国籍证：</text>{{item.licensesNationalNo}}</view>
+					<view class="text" v-if="item.licensesInspectionNo"><text class="name">船舶检验证：</text>{{item.licensesInspectionNo}}</view>
 					<view class="btn-wrapper">
 						<u-button style="margin-right: 20rpx;" @click="onTo(item)">船员</u-button>
 						<u-button @click="onToContract(item)">合同</u-button>
@@ -197,7 +201,11 @@
 				margin-bottom: 20rpx;
 				.text {
 					font-size: 30rpx;
-					margin-bottom: 20rpx;
+					line-height: 1.8;
+					// margin-bottom: 20rpx;
+					.name {
+						color: #999;
+					}
 				}
 				.btn-wrapper {
 					display: flex;

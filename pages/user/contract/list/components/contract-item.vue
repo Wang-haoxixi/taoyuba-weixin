@@ -1,19 +1,26 @@
 <template>
-	<view class="contract-item-wrapper">
-		<view class="left-item">
-			<view class="title">{{info.shipName}}</view>
-			<!-- <view class="text">船名：{{info.shipName}}</view> -->
-			<view class="text">合同状态：{{statusLabel}}</view>
-			<view class="text">
-				<text>船舶拥有者：{{info.shipownerName}}</text>
-				<text style="margin-left: 20rpx;">雇员：{{info.employeeName}}</text>
+	<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7">
+		<view slot="body">
+			<view class="contract-item-wrapper">
+				<view class="left-item">
+					<view class="title">{{info.shipName}}</view>
+					<!-- <view class="text">船名：{{info.shipName}}</view> -->
+					<view class="text">合同状态：{{statusLabel}}</view>
+					<view class="text">
+						<text>船舶拥有者：{{info.shipownerName}}</text>
+						<text style="margin-left: 20rpx;">雇员：{{info.employeeName}}</text>
+					</view>
+					<view class="text">创建日期：{{info.createTime}}</view>
+				</view>
 			</view>
-			<view class="text">创建日期：{{info.createTime}}</view>
 		</view>
-		<view class="right-item">
-			<u-button size="default" @click="onTo(info.contractId)">查看</u-button>
+		<view slot="foot">
+			<view class="btn-wrapper">
+				<u-button size="medium" @click="onTo(info.contractId)">查看</u-button>
+			</view>
 		</view>
-	</view>
+	</u-card>
+	
 </template>
 
 <script>
@@ -56,10 +63,8 @@
 <style scoped lang="scss">
 	.contract-item-wrapper {
 		background-color: #fff;
-		padding: 30rpx 30rpx;
 		color: #999;
 		font-size: 28rpx;
-		border-bottom: 1px solid #f6f6f6;
 		font-size: 26rpx;
 		line-height: 1.7;
 		display: flex;
@@ -68,12 +73,10 @@
 			font-size: 32rpx;
 			color: #666;
 		}
-		.left-item {
-			flex: 1 1 auto;
-		}
-		.right-item {
-			margin-left: 20rpx;
-			flex: 1 0 60rpx;
-		}
+		
+	}
+	.btn-wrapper {
+		display: flex;
+		justify-content: flex-end;
 	}
 </style>

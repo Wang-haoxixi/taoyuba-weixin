@@ -3,19 +3,25 @@
 	<view class="user-my-ship-crew-list-container phonex-mb">
 		<list-layout :data="data" empty-text="暂无船员数据">
 			<view class="my-ship-crew-list-wrapper">
-				<view class="item" v-for="item in data" :key="item.id">
-					<view class="title">{{item.realName}}</view>
-					<view class="text">
-						<text>职务：{{getPositionIdLabel(item.positionId)}}</text>
-						<text>手机号码：{{item.phone}}</text>
+				<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="item in data" :key="item.id">
+					<view class="item" slot="body">
+						<view class="title">{{item.realName}}</view>
+						<view class="text">
+							<text>职务：{{getPositionIdLabel(item.positionId)}}</text>
+						</view>
+						<view class="text">
+							<text>手机号码：{{item.phone}}</text>
+						</view>
+						<view class="text">身份证号码：{{item.idcard}}</view>
+						<view class="text">用工状态：{{getWorkStatusLabel(item.workStatus)}}</view>
 					</view>
-					<view class="text">身份证号码：{{item.idcard}}</view>
-					<view class="text">用工状态：{{getWorkStatusLabel(item.workStatus)}}</view>
-					<view class="btn-wrapper">
-						<u-button size="medium" @click="onToContract(item)">合同</u-button>
+					<view slot="foot">
+						<view class="btn-wrapper">
+							<u-button size="medium" @click="onTo(item)" style="margin-right: 10rpx;">详情</u-button>
+							<u-button size="medium" @click="onToContract(item)">合同</u-button>
+						</view>
 					</view>
-				</view>
-				
+				</u-card>
 			</view>
 		</list-layout>
 	</view>
@@ -64,6 +70,14 @@
 						})
 					}
 				})
+			},
+			onTo (row) {
+				if (row.idcard) {
+					uni.navigateTo({
+						url: `/pages/user/ship/crew/detail/index?idcard=${row.idcard}`
+					})
+				}
+				
 			}
 		}
 	}
@@ -72,11 +86,10 @@
 <style scoped lang="scss">
 	.user-my-ship-crew-list-container {
 		.my-ship-crew-list-wrapper {
-			background-color: #fff;
+			
 			border-bottom: 1px solid #f6f6f6;
 			.item {
-				padding: 30rpx;
-				border-bottom: 1px solid #f6f6f6;
+				background-color: #fff;
 				.title {
 					font-size: 32rpx;
 					color: #333;
@@ -89,8 +102,6 @@
 				
 			}
 			.btn-wrapper {
-				padding: 20rpx;
-				padding-bottom: 0;
 				display: flex;
 				justify-content: flex-end;
 			}

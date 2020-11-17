@@ -10,9 +10,27 @@
 				<u-empty text="暂无合同" mode="list"></u-empty>
 			</view>
 		</template> -->
-		<list-layout :data="data" empty-text="暂无合同">
+		<view class="dropdown-wrapper">
+			<u-tabs active-color="#ff9999" :bar-style="{background: '#ff9999'}" :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs>
+		</view>
+		<list-layout :data="data1" empty-text="暂无合同成立数据" v-show="current === 0">
 			<view class="">
-				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
+				<contract-item v-for="item in data1" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
+			</view>
+		</list-layout>
+		<list-layout :data="data4" empty-text="暂无合同解除数据" v-show="current === 1">
+			<view class="">
+				<contract-item v-for="item in data4" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
+			</view>
+		</list-layout>
+		<list-layout :data="data5" empty-text="暂无合同过期数据" v-show="current === 2">
+			<view class="">
+				<contract-item v-for="item in data5" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
+			</view>
+		</list-layout>
+		<list-layout :data="data6" empty-text="暂无无纸质合同数据" v-show="current === 3">
+			<view class="">
+				<contract-item v-for="item in data6" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
 			</view>
 		</list-layout>
 	</view>
@@ -32,50 +50,47 @@
 		data () {
 			return {
 				status: 'loadmore',
-				data: []
+				current: 0,
+				data1: [],
+				data4: [],
+				data5: [],
+				data6: [],
+				form: {
+					status: '',
+					shipNo: ''
+				},
+				shipNo: '',
+				list: [
+					{ name: '合同成立', value: 1 },
+					{ name: '合同解除', value: 4 },
+					{ name: '合同过期', value: 5 },
+					{ name: '无纸质合同', value: 6 },
+				]
 			}
 		},
-		onReachBottom() {
-			// this.getList()
-			// if (this.page.total > this.page.current * this.page.size) {
-			// 	this.status = 'loading'
-			// 	this.page.current++
-			// 	this.getList()
-			// } else{
-			// 	this.status = 'nomore'
-			// }
-		},
-		onPullDownRefresh () {
-			this.data = []
-			// this.page.current = 1
-			this.getList()
-		},
 		onLoad (params) {
-			console.log('params', params)
-			this.getList(params.shipNo)
+			this.form.shipNo = params.shipNo
+			this.getList(1)
+			this.getList(4)
+			this.getList(5)
+			this.getList(6)
 		},
 		methods: {
-			getList (id) {
+			getList (status = '') {
 				this.$http.get('/tmlms/tybcontract/listByShipName', {
 					params: {
-						// size: this.page.size,
-						// current: this.page.current,
-						shipNo: id
+						shipNo: this.form.shipNo,
+						stauts: status
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						let result = data.data
-						this.data = result
-						console.log(this.data)
-						// this.data = this.data.concat(result.records)
-						// console.log(result, this.data)
-						// this.page.total = result.total
-						// if (this.page.total <= this.page.size) {
-						// 	this.status = 'nomore'
-						// }
+						this[`data${status}`] = result
 					}
-					// uni.stopPullDownRefresh()
 				})
+			},
+			change(index) {
+				this.current = index;
 			}
 		}
 	}
@@ -83,8 +98,5 @@
 
 <style scoped lang="scss">
 	.user-contract-container {
-		.empty-wrapper {
-			padding-top: 100rpx;
-		}
 	}
 </style>

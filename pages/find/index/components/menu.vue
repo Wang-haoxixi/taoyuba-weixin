@@ -2,7 +2,7 @@
 	<view class="menu-container">
 		<view class="menu-wrapper">
 			<u-grid :col="4" :border="false">
-				<u-grid-item bg-color="rgba(255, 255, 255, .5)" v-for="(item, index) in menu" :key="index" class="grid-item" @click="onTo(item)">
+				<u-grid-item bg-color="rgba(255, 255, 255, .5)" v-for="(item, index) in findMenu" :key="index" class="grid-item" @click="onTo(item)">
 					<template v-if="item.outreach">
 						 <navigator 
 						 target="miniProgram" 
@@ -83,7 +83,7 @@
 	.menu-container {
 		padding: 30rpx 50rpx;
 		width: 100%;
-		background: url('#{$img-url}/find-bg.png') no-repeat;
+		background: url('#{$img-url}/find-bg.png');
 		background-size: 100%;
 		.menu-wrapper {
 			background-color: rgba(255, 255, 255, .6);
