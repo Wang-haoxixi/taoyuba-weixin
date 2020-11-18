@@ -1,3 +1,29 @@
+ // page {  
+ //     --safe-area-inset-top: 0px;  
+ //     --safe-area-inset-right: 0px;  
+ //     --safe-area-inset-bottom: 0px;  
+ //     --safe-area-inset-left: 0px;  
+ 
+ // }  
+ 
+ // @supports (top: constant(safe-area-inset-top)) {  
+ //     page {  
+ //         --safe-area-inset-top: constant(safe-area-inset-top);  
+ //         --safe-area-inset-right: constant(safe-area-inset-right);  
+ //         --safe-area-inset-bottom: constant(safe-area-inset-bottom);  
+ //         --safe-area-inset-left: constant(safe-area-inset-left);  
+ //     }  
+ 
+ // }  
+ 
+ // @supports (top: env(safe-area-inset-top)) {  
+ //     page {  
+ //         --safe-area-inset-top: env(safe-area-inset-top);  
+ //         --safe-area-inset-right: env(safe-area-inset-right);  
+ //         --safe-area-inset-bottom: env(safe-area-inset-bottom);  
+ //         --safe-area-inset-left: env(safe-area-inset-left);  
+ //     }  
+ // } 
  // 整体页面排版
  .page-base {
 	 padding: 0 30rpx;
@@ -20,7 +46,8 @@
 	-webkit-box-orient: vertical;
 }
 .page-bottom {
-	margin-bottom: 150rpx;
+	// margin-bottom: 200rpx;
+	margin-bottom: calc(200rpx + var(--safe-area-inset-bottom));
 }
 .mb150 {
 	margin-bottom: 150rpx !important;
@@ -32,5 +59,10 @@
 	margin-bottom: env(safe-area-inset-bottom);
 	/* #endif */
 }
-
+.safe-bottom {
+	/* #ifndef APP-NVUE */
+	margin-bottom: constant(safe-area-inset-bottom);
+	margin-bottom: env(safe-area-inset-bottom);
+	/* #endif */
+}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}

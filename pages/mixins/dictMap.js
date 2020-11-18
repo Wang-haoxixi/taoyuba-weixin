@@ -27,7 +27,9 @@ export default {
 					{ label: '上船，已签合同', value: 1 },
 					{ label: '离船，未解除合同 ', value: 2 },
 					{ label: '上船，未签合同', value: 3 },
-					{ label: '离船，未签合同', value: 4 }
+					{ label: '离船，未签合同', value: 4 },
+					{ label: '纸质未签合同', value: 6 },
+					{ label: '待求职', value: 9 },
 				 ],
 				certLevel: [
 					{ value: '0', label: '--' },

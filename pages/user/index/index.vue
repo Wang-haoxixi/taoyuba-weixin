@@ -1,6 +1,6 @@
 <template>
 	<view class="user-container page-bottom">
-		<view class="user-header">
+		<!-- <view class="user-header">
 			<view class="base-info-wrapper">
 				<view class="base-info-wrapper-left">
 					<view class="avatar-wrapper">
@@ -32,16 +32,16 @@
 					<u-select v-if="show" v-model="show" mode="single-column" :list="list" @confirm="onConfirm"></u-select>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<!-- 菜单 -->
-		<user-menu :text="text" :isShipOwer="isShipOwer" :role="roles"></user-menu>
+		<!-- <user-menu :text="text" :isShipOwer="isShipOwer" :role="roles"></user-menu> -->
 		<tyb-tarbar :current-index="4"></tyb-tarbar>
-		<u-modal v-model="modalShow" @cancel="modalShow = false" title="个人资料" :mask-close-able="true" :show-confirm-button="false" show-cancel-button cancel-text="取消">
+		<!-- <u-modal v-model="modalShow" @cancel="modalShow = false" title="个人资料" :mask-close-able="true" :show-confirm-button="false" show-cancel-button cancel-text="取消">
 			<view class="slot-content" style="padding: 30rpx 10rpx;display: flex;justify-content: center;">
 				<u-button @click="onToPath('/pages/release/shipowner-resume/edit')" style="margin-right: 20rpx;">船东简历</u-button>
 				<u-button type="primary" @click="onToPath('/pages/release/resume/edit')">船员简历</u-button>
 			</view>
-		</u-modal>
+		</u-modal> -->
 	</view>
 </template>
 

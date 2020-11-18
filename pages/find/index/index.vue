@@ -1,7 +1,7 @@
 <template>
 	<view class="page-bottom">
 		<!-- 菜单 -->
-		<!-- <find-menu></find-menu> -->
+		<find-menu></find-menu>
 		<!-- 一系类预报 -->
 		<!-- <find-links></find-links> -->
 		<!-- 证书 -->

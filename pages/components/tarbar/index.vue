@@ -1,26 +1,28 @@
 <template>
 	<view class="tyb-tarbar-container">
-		<view class="tyb-tarbar-item" v-for="(item, index) in menu" :key="index" @tap="onTo(item, index)"  :class="index === currentIndex ? 'tyb-tarbar_active' : ''">
-			<template v-if="item.slot">
-				<template v-if="index === item.id">
-					<view class="tyb-tarbar-item_image_slot" :style="{transform: `rotate(${rotate}deg)`}">
-						<image src="../../../static/image/tabbar/release.png"></image>
-					</view>
-					<view class="tyb-tarbar_sub-menu" :style="{display: show ? 'block' : 'none'}">
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/resume/edit', 'resume')">简历</view>
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/recruit/edit', 'recruit')">招聘</view>
-						<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/register/index', 'register')">登记</view>
-						<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">中介</view>	 -->
-					</view>
+		<view class="tyb-tarbar-wrapper">
+			<view class="tyb-tarbar-item" v-for="(item, index) in menu" :key="index" @tap="onTo(item, index)"  :class="index === currentIndex ? 'tyb-tarbar_active' : ''">
+				<template v-if="item.slot">
+					<template v-if="index === item.id">
+						<view class="tyb-tarbar-item_image_slot" :style="{transform: `rotate(${rotate}deg)`}">
+							<image src="../../../static/image/tabbar/release.png"></image>
+						</view>
+						<view class="tyb-tarbar_sub-menu" :style="{display: show ? 'block' : 'none'}">
+							<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/resume/edit', 'resume')">简历</view>
+							<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/recruit/edit', 'recruit')">招聘</view>
+							<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/register/index', 'register')">登记</view>
+							<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">中介</view>	 -->
+						</view>
+						<text class="tyb-tarbar-item_text">{{item.text}}</text>
+					</template>
+				</template>
+				<template>
+					<view class="tyb-tarbar-item_image">
+						<image :src="index === currentIndex ? item.selectedIconPath : item.iconPath" ></image>
+					</view> 
 					<text class="tyb-tarbar-item_text">{{item.text}}</text>
 				</template>
-			</template>
-			<template>
-				<view class="tyb-tarbar-item_image">
-					<image :src="index === currentIndex ? item.selectedIconPath : item.iconPath" ></image>
-				</view> 
-				<text class="tyb-tarbar-item_text">{{item.text}}</text>
-			</template>
+			</view>
 		</view>
 	</view>
 </template>
@@ -155,11 +157,17 @@
 		/* #ifndef APP-NVUE */
 		bottom: constant(safe-area-inset-bottom);
 		bottom: env(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		padding-bottom: constant(safe-area-inset-bottom);
 		/* #endif */
 		// overflow: hidden;
 		background-color: #fff;
-		display: flex;
-		justify-content: space-between;
+		
+		.tyb-tarbar-wrapper {
+			display: flex;
+			background: #fff;
+			justify-content: space-between;
+		}
 		.tyb-tarbar-item {
 			text-align: center;
 			width: 20%;
