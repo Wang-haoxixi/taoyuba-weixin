@@ -1,5 +1,5 @@
 <template>
-	<view class="change-password-container phonex-mb">
+	<view class="change-password-container safe-bottom">
 		<u-form :model="form" ref="uForm" label-position="top" label-width="100" :label-style="{color: '#999'}">
 			<u-form-item label="原密码" prop="oldpwd"><u-input trim v-model="form.oldpwd" type="password" placeholder="请输入原密码"/></u-form-item>
 			<u-form-item label="新密码" prop="newpwd"><u-input trim v-model="form.newpwd" type="password" placeholder="输入新的密码"/></u-form-item>

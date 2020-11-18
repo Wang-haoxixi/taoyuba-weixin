@@ -1,6 +1,6 @@
 <template>
 	<!-- 招聘 -->
-	<view class="release-recruit-edit-container phonex-mb">
+	<view class="release-recruit-edit-container safe-bottom">
 		<view class="image-wrapper">
 			<image :src="`${imgURL}/release-bg.png`"></image>
 		</view>

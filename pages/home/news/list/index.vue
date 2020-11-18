@@ -1,5 +1,5 @@
 <template>
-	<view class="news-list-detail-container phonex-mb">
+	<view class="news-list-detail-container safe-bottom">
 		<view class="search-wrapper">
 			<static-search :placeholder="form.title || '搜索'" :to="`/pages/home/search/index?type=0&keyword=${form.title}`"></static-search>
 		</view>

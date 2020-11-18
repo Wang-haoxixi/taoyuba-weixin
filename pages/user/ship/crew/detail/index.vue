@@ -1,5 +1,5 @@
 <template>
-	<view class="crew-detail-container phonex-mb">
+	<view class="crew-detail-container safe-bottom">
 		<view class="content">
 			<view class="text"><text class="name">姓名：</text>{{data.realName}}</view>
 			<view class="text"><text class="name">身份证号码：</text>{{data.idcard}}</view>

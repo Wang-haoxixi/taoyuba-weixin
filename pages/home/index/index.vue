@@ -1,23 +1,21 @@
 <template>
-	<view class="safe-bottom">
-		<view class="home-container page-bottom">
-			<!-- 头部 菜单 -->
-			<home-header></home-header>
-			<!-- 渔业资讯 政策法规 平台公告 -->
-			<home-notice ref="homeNotice"></home-notice>
-			<!-- 热门招聘 热门简历 禁渔期工作 -->
-			<home-job ref="homeJob"></home-job>
-			<!-- 培训班 -->
-			<!-- 热门视频 -->
-			<home-training ref="homeTraining"></home-training>
-			<!-- 职务 科目 证书 考场信息 -->
-			<home-video ref="homeVideo"></home-video>
-			<home-info></home-info>
-			<home-autograph v-model="show"></home-autograph>
-			<view class="safe-bottom"></view>
-			<!-- <u-button @click="open">签名</u-button> -->
-			<tyb-tarbar :currentIndex="0"></tyb-tarbar>
-		</view>
+	<view class="home-container page-bottom">
+		<!-- 头部 菜单 -->
+		<home-header></home-header>
+		<!-- 渔业资讯 政策法规 平台公告 -->
+		<home-notice ref="homeNotice"></home-notice>
+		<!-- 热门招聘 热门简历 禁渔期工作 -->
+		<home-job ref="homeJob"></home-job>
+		<!-- 培训班 -->
+		<!-- 热门视频 -->
+		<home-training ref="homeTraining"></home-training>
+		<!-- 职务 科目 证书 考场信息 -->
+		<home-video ref="homeVideo"></home-video>
+		<home-info></home-info>
+		<home-autograph v-model="show"></home-autograph>
+		<view class="safe-bottom"></view>
+		<!-- <u-button @click="open">签名</u-button> -->
+		<tyb-tarbar :currentIndex="0"></tyb-tarbar>
 	</view>
 </template>
 
@@ -68,8 +66,8 @@
 <style lang="scss" scoped>
 	.home-container {
 		/* #ifndef APP-NVUE */
-		padding-bottom: constant(safe-area-inset-bottom);
-		padding-bottom: env(safe-area-inset-bottom);
+		padding-bottom: calc(constant(safe-area-inset-bottom) + constant(safe-area-inset-bottom) );
+		padding-bottom: calc(env(safe-area-inset-bottom) + env(safe-area-inset-bottom));
 		/* #endif */
 	}
 </style>

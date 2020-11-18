@@ -131,7 +131,7 @@
 	.btn-container {
 		display: flex;
 		justify-content: space-around;
-		margin-top: 40rpx;
+		// margin-top: 40rpx;
 		padding: 20rpx 20rpx;
 		position: fixed;
 		bottom: 0;
@@ -139,8 +139,8 @@
 		right: 0;
 		background-color: #fff;
 		/* #ifndef APP-NVUE */
-		bottom: constant(safe-area-inset-bottom);
-		bottom: env(safe-area-inset-bottom);
+		padding: 20rpx 20rpx calc(20rpx + constant(safe-area-inset-bottom));
+		padding: 20rpx 20rpx calc(20rpx + env(safe-area-inset-bottom));
 		/* #endif */
 		button {
 			width: 50%;

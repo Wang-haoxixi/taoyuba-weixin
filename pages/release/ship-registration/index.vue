@@ -1,5 +1,5 @@
 <template>
-	<view class="release-register-container phonex-mb">
+	<view class="release-register-container safe-bottom">
 		<view class="title">请上传本人身份证正面照片(边缘完整)</view>
 		<view class="form-wrapper">
 			<u-form :model="form" ref="uForm" :rules="rules" label-width="150" :label-style="{color: '#999'}">

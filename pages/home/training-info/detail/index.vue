@@ -1,5 +1,5 @@
 <template>
-	<view class="news-detail-wrapper phonex-mb mb150">
+	<view class="news-detail-wrapper safe-bottom mb150">
 		<view class="header-wrapper">
 			<view class="title">{{data.title}}</view>
 			<view class="desc">
@@ -10,6 +10,7 @@
 		<view class="content-wrapper">
 			<u-parse :html="data.articleContent"></u-parse>
 		</view>
+		<view class="safe-bottom4"></view>
 		<share-group type="5" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>

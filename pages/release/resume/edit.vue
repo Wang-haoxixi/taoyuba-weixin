@@ -1,6 +1,6 @@
 <template>
 	<!-- 简历 -->
-	<view class="release-resume-edit-container phonex-mb">
+	<view class="release-resume-edit-container safe-bottom">
 		<view class="image-wrapper">
 			<image :src="`${imgURL}/release-bg.png`"></image>
 		</view>

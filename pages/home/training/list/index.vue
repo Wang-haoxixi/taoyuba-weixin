@@ -1,6 +1,6 @@
 <template>
 	<!-- 培训机构 -->
-	<view class="recruit-list-wrapper phonex-mb">
+	<view class="recruit-list-wrapper safe-bottom">
 		<view class="search-wrapper">
 			<static-search :placeholder="form.deptName || '搜索'" :to="`/pages/home/search/index?type=4&keyword=${form.deptName}`"></static-search>
 		</view>

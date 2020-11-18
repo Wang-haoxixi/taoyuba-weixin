@@ -1,5 +1,5 @@
 <template>
-	<view class="page-bottom message-container phonex-mb">
+	<view class="page-bottom message-container safe-bottom">
 		<!-- 菜单 -->
 		<view class="header-wrapper">
 			<message-menu @choose="onChoose"></message-menu>

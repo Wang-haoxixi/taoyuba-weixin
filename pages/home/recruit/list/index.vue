@@ -1,6 +1,6 @@
 <template>
 	<!-- 招聘 -->
-	<view class="recruit-list-wrapper phonex-mb">
+	<view class="recruit-list-wrapper safe-bottom">
 		<!-- <view class="search-wrapper">
 			<static-search :placeholder="form.contactName || '搜索'" :to="`/pages/home/search/index?type=1&keyword=${form.contactName}`"></static-search>
 		</view> -->
@@ -18,7 +18,7 @@
 				<job-item :info="item" btnText="查看" @to="onTo" :dictMap="dictMap"></job-item>
 			</view>
 		</view>
-		<u-loadmore :status="status" />
+		<u-loadmore :status="status" bg-color="tranparent"/>
 	</view>
 </template>
 

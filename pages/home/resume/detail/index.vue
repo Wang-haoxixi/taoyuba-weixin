@@ -1,5 +1,5 @@
 <template>
-	<view class="resume-detail-container phonex-mb mb150">
+	<view class="resume-detail-container safe-bottom mb150">
 		<view class="header-wrapper">
 			<view class="header-top">
 				<view class="avatar">
@@ -51,6 +51,7 @@
 				本站不能保证所有由第三方提供的信息完全准确，用户对这些信息的使用，需要经过进一步核实，对访问者未经自行核实误用相关信息造成的任何损失，本站不承担任何责任，求职招聘过程中请勿缴纳费用，谨防诈骗
 			</content-container>
 		</view>
+		<view class="safe-bottom4"></view>
 		<share-group type="1" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>

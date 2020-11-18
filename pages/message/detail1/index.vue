@@ -1,5 +1,5 @@
 <template>
-	<view class="message-detail-container phonex-mb">
+	<view class="message-detail-container safe-bottom">
 		<view class="header-wrapper">
 			<view class="title">您的申请已通过</view>
 			<view class="time">2019.10.20</view>

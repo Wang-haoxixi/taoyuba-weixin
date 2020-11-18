@@ -16,7 +16,7 @@
 						<text class="tyb-tarbar-item_text">{{item.text}}</text>
 					</template>
 				</template>
-				<template>
+				<template v-else>
 					<view class="tyb-tarbar-item_image">
 						<image :src="index === currentIndex ? item.selectedIconPath : item.iconPath" ></image>
 					</view> 
@@ -155,10 +155,8 @@
 		height: 100rpx;
 		/* iphonex 等安全区设置，底部安全区适配 */
 		/* #ifndef APP-NVUE */
-		bottom: constant(safe-area-inset-bottom);
-		bottom: env(safe-area-inset-bottom);
-		padding-bottom: env(safe-area-inset-bottom);
-		padding-bottom: constant(safe-area-inset-bottom);
+		height: calc(100rpx + env(safe-area-inset-bottom));
+		height: calc(100rpx + constant(safe-area-inset-bottom));
 		/* #endif */
 		// overflow: hidden;
 		background-color: #fff;
@@ -167,6 +165,7 @@
 			display: flex;
 			background: #fff;
 			justify-content: space-between;
+			background-color: #fff;
 		}
 		.tyb-tarbar-item {
 			text-align: center;

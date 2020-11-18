@@ -1,5 +1,5 @@
 <template>
-	<view class="main-container phonex-mb">
+	<view class="main-container safe-bottom">
 		<view class="status_bar"></view>
 		<view class="header-wrapper">
 			<view class="logo-wrapper">

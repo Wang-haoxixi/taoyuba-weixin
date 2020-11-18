@@ -1,5 +1,5 @@
 <template>
-	<view class="user-terminat-list-container phonex-mb">
+	<view class="user-terminat-list-container safe-bottom">
 		<view class="user-terminat-list-wrapper">
 			<view class="border" v-for="(item, index) in list" :key="item.id">
 				<u-swipe-action :index="index" :show="item.show"

@@ -1,6 +1,6 @@
 <template>
 	<!-- 渔船 -->
-	<view class="user-ship-container phonex-mb">
+	<view class="user-ship-container safe-bottom">
 		<list-layout :data="data" empty-text="数据为空">
 			<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="item in data" :key="item.shipId">
 				<view class="ship-item-wrapper" slot="body">

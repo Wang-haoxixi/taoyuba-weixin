@@ -1,6 +1,6 @@
 <template>
 	<!-- 培训班 -->
-	<view class="training-detail-wrapper phonex-mb mb150">
+	<view class="training-detail-wrapper safe-bottom mb150">
 		<view class="header-wrapper">
 			<view class="title">{{data.deptName || ''}}</view>
 			<view class="content">
@@ -27,6 +27,7 @@
 				</view>
 			</view>
 		</view>
+		<view class="safe-bottom4"></view>
 		<share-group type="4" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>

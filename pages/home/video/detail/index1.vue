@@ -1,5 +1,5 @@
 <template>
-	<view class="video-detail-wrapper phonex-mb">
+	<view class="video-detail-wrapper safe-bottom">
 		<view class="video-detail-content">
 			<video :src="data.videoSrc" :poster="data.videoImg"></video>
 		</view>

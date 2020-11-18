@@ -1,5 +1,5 @@
 <template>
-	<view class="phonex-mb">
+	<view class="safe-bottom">
 		<message-list :list="data"></message-list>
 	</view>
 	

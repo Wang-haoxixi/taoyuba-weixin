@@ -1,5 +1,5 @@
 <template>
-	<view class="info-container phonex-mb">
+	<view class="info-container safe-bottom">
 		<view class="tab-wrapper">
 			 <!-- active-color="#409EFF" -->
 			<u-tabs :list="list" :is-scroll="false" inactive-color="#fff" active-color="#fff" bg-color="transparent" :current="current" @change="change"></u-tabs>

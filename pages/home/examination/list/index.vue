@@ -1,6 +1,6 @@
 <template>
 	<!-- 在线测试 -->
-	<view class="examination-container page-base phonex-mb">
+	<view class="examination-container page-base safe-bottom">
 		<view class="item" @tap="openExam(item)" v-for="(item, index) in data" :key="index">
 			<view class="title u-line-2">{{item.kind || ''}}</view>
 			<!-- <view class="number">参与人数：{{ item.testNumber || 0}}人</view> -->

@@ -1,5 +1,5 @@
 <template>
-	<view class="video-detail-wrapper phonex-mb">
+	<view class="video-detail-wrapper safe-bottom">
 		<view class="video-detail-content">
 			<!-- <video :enable-progress-gesture="false" :show-progress="false" :src="data.videoSrc :poster="data.videoImg"></video> -->
 			<!-- 'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4' -->

@@ -46,13 +46,18 @@
 	-webkit-box-orient: vertical;
 }
 .page-bottom {
-	// margin-bottom: 200rpx;
-	margin-bottom: calc(200rpx + var(--safe-area-inset-bottom));
+	margin-bottom: 200rpx;
 }
 .mb150 {
 	margin-bottom: 150rpx !important;
 }
-.phonex-mb {
+.safe-bottom4 {
+	/* #ifndef APP-NVUE */
+	height: calc(constant(safe-area-inset-bottom) + constant(safe-area-inset-bottom) + constant(safe-area-inset-bottom) + constant(safe-area-inset-bottom));
+	height: calc(env(safe-area-inset-bottom) + env(safe-area-inset-bottom) + env(safe-area-inset-bottom) + env(safe-area-inset-bottom));
+	/* #endif */
+}
+.safe-bottom {
 	/* iphonex 等安全区设置，底部安全区适配 */
 	/* #ifndef APP-NVUE */
 	margin-bottom: constant(safe-area-inset-bottom);

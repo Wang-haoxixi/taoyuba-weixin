@@ -1,5 +1,5 @@
 <template>
-	<view class="shipowner-resume-container phonex-mb">
+	<view class="shipowner-resume-container safe-bottom">
 		<view class="image-wrapper">
 			<image :src="`${imgURL}/release-bg.png`"></image>
 		</view>

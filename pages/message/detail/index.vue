@@ -1,5 +1,5 @@
 <template>
-	<view class="message-detail-container phonex-mb">
+	<view class="message-detail-container safe-bottom">
 		<view class="header-wrapper">
 			<view class="title">{{data.name}}</view>
 			<view class="time">{{data.time}}</view>

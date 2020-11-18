@@ -1,6 +1,6 @@
 <template>
 	<!-- 求职 -->
-	<view class="recruit-list-wrapper phonex-mb">
+	<view class="recruit-list-wrapper safe-bottom">
 		<view>
 			<view class="search-wrapper">
 				<static-search :placeholder="form.realName || '搜索'" :to="`/pages/home/search/index?type=2&keyword=${form.realName}`"></static-search>

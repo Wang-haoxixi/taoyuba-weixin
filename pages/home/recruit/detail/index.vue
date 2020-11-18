@@ -1,5 +1,5 @@
 <template>
-	<view class="recruit-detail-wrapper phonex-mb mb150">
+	<view class="recruit-detail-wrapper safe-bottom">
 		<view class="header-wrapper">
 			<view class="title">{{positionIdLabel}}</view>
 			<view class="content">
@@ -39,6 +39,7 @@
 		<!-- <content-container style="margin-top: 20rpx;color: #ba1b20;">
 			本站不能保证所有由第三方提供的信息完全准确，用户对这些信息的使用，需要经过进一步核实，对访问者未经自行核实误用相关信息造成的任何损失，本站不承担任何责任，求职招聘过程中请勿缴纳费用，谨防诈骗
 		</content-container> -->
+		<view class="safe-bottom4"></view>
 		<share-group type="2" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
 	</view>
 </template>
@@ -115,7 +116,8 @@
 
 <style lang="scss" scoped>
 	.recruit-detail-wrapper {
-		margin-bottom: 30rpx;
+		margin-bottom: calc(200rpx + constant(safe-area-inset-bottom) + constant(safe-area-inset-bottom) + constant(safe-area-inset-bottom));
+		margin-bottom: calc(200rpx + env(safe-area-inset-bottom) + env(safe-area-inset-bottom) + env(safe-area-inset-bottom));
 		.header-wrapper {
 			padding: 30rpx;
 			border-radius: 8rpx;
