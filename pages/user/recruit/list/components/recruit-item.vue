@@ -37,7 +37,7 @@
 			updateTimeLabel () {
 				let result = ''
 				if (this.info.updateTime) {
-					let date = +new Date(this.info.updateTime)
+					let date = +new Date(this.$tools.transTimeString(this.info.updateTime))
 					// console.log('date', date)
 					result = this.$tools.timestamp(date / 1000)
 				}

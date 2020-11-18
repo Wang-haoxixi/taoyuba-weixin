@@ -242,6 +242,13 @@ export default {
 	　　} else{ 
 	　　　　return false;
 	　　} 
+	},
+	transTimeString(time) {
+		if(typeof(time)=='string'){ //字符串格式需要转化 "-" 为 "/" ios端才能生效
+			return time.replace(/-/g,'/')
+		}else{
+			return time
+		}
 	}
 }
 
