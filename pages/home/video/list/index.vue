@@ -1,5 +1,5 @@
 <template>
-	<view class="video-list-container">
+	<view class="video-list-container safe-padding-bottom">
 		<!-- <view class="static-search-wrapper">
 			<static-search placeholder="搜索你感兴趣的视频"></static-search>
 		</view> -->
@@ -10,19 +10,19 @@
 			<view v-for="item in data1" :key="item.vedioId" @tap="onTo(item.vedioId)">
 				<video-item :info="item"></video-item>
 			</view>
-			<u-loadmore :status="status1" />
+			<u-loadmore :status="status1" bg-color="tranparent"/>
 		</view>
 		<view class="list-wrapper" v-show="current === 1">
 			<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
 				<video-item :info="item"></video-item>
 			</view>
-			<u-loadmore :status="status" />
+			<u-loadmore :status="status" bg-color="tranparent"/>
 		</view>
 		<view class="list-wrapper" v-show="current === 2">
 			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
 				<video-item :info="item"></video-item>
 			</view>
-			<u-loadmore :status="status" />
+			<u-loadmore :status="status" bg-color="tranparent"/>
 		</view>
 		
 	</view>
@@ -125,6 +125,9 @@
 						if (this.page2.total <= this.page2.size) {
 							this.status2 = 'nomore'
 						}
+						if (this.page2.total === this.data2.length) {
+							this.status2 = 'nomore'
+						}
 					}
 					uni.stopPullDownRefresh()
 				})
@@ -144,6 +147,9 @@
 						if (this.page1.total <= this.page1.size) {
 							this.status1 = 'nomore'
 						}
+						if (this.page1.total === this.data1.length) {
+							this.status1 = 'nomore'
+						}
 					}
 					uni.stopPullDownRefresh()
 				})
@@ -161,6 +167,9 @@
 						this.data = this.data.concat(result.records)
 						this.page.total = result.total
 						if (this.page.total <= this.page.size) {
+							this.status = 'nomore'
+						}
+						if (this.page.total === this.data.length) {
 							this.status = 'nomore'
 						}
 					}

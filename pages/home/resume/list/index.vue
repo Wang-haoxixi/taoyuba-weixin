@@ -1,6 +1,6 @@
 <template>
 	<!-- 求职 -->
-	<view class="recruit-list-wrapper safe-bottom">
+	<view class="recruit-list-wrapper safe-bottom safe-padding-bottom">
 		<view>
 			<view class="search-wrapper">
 				<static-search :placeholder="form.realName || '搜索'" :to="`/pages/home/search/index?type=2&keyword=${form.realName}`"></static-search>
@@ -113,6 +113,9 @@
 						this.data = this.data.concat(this.setList(result.records))
 						this.page.total = result.total
 						if (this.page.total <= this.page.size) {
+							this.status = 'nomore'
+						}
+						if (this.page.total === this.data.length) {
 							this.status = 'nomore'
 						}
 					}

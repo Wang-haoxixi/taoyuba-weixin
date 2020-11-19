@@ -1,5 +1,5 @@
 <template>
-	<view class="user-search-container">
+	<view class="user-search-container safe-padding-bottom">
 		<view class="search-wrapper">
 			<view style="border-radius: 40rpx;overflow: hidden;border: 1px solid #dcdfe6;padding-left: 20rpx;">
 				<u-input v-model="shipName" trim focus type="number" :maxlength="5" placeholder="请输入渔船名,如:00000"/>

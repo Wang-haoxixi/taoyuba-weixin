@@ -51,7 +51,8 @@
 				intervalTime: INTERVAL_TIME, // 间隔记录时间
 				data: {},
 				videoId: undefined,
-				isFirst: false
+				isFirst: false,
+				closeFace: false
 			}
 		},
 		onLoad (params) {
@@ -97,8 +98,9 @@
 						this.initialTime = this.data.learnTime || 0
 						this.faceTime = +this.faceTime + (+this.initialTime)
 						this.intervalTime = +this.intervalTime + (+this.initialTime)
+						this.closeFace = this.data.leranStamp > 0
 						this.videoContext.pause()
-						if (this.roles.includes(this.rolesType.crew.type)) {
+						if (this.roles.includes(this.rolesType.crew.type) && !this.closeFace) {
 							this.$http.get('/tmlms/crew/getCrewByidcard', {
 								params: {
 									idcard: this.userInfo.idCard
@@ -162,12 +164,25 @@
 					idcard: this.userInfo.idCard
 				})
 			},
+			endSubmit () {
+				this.$http.post('/tybhrms/tybLearnRecord/save', {
+					learnTime: this.time,
+					userId: this.userInfo.userId,
+					videoId: this.videoId,
+					idcard: this.userInfo.idCard,
+					leranStamp: this.time
+				}).then(() => {
+					this.closeFace = true
+				})
+			},
 			onPlay (e) {
 				
 			},
 			onEnded (e) {
-				this.setLearnTime()
-				console.log('onEnded', e)
+				this.endSubmit()
+				if (!this.closeFace) {
+					console.log('onEnded', e)
+				}
 			},
 			onPause (e) {
 				console.log('onPause', this.intervalTime, e)
@@ -175,7 +190,7 @@
 			onTimeupdate (e) {
 				let currentTime = e.detail.currentTime
 				this.time = currentTime
-				if (this.roles.includes(this.rolesType.crew.type)) {
+				if (this.roles.includes(this.rolesType.crew.type) && !this.closeFace) {
 					if (this.faceTime < currentTime) {
 						this.videoContext.exitFullScreen()
 						this.videoContext.pause()

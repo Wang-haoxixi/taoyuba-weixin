@@ -1,5 +1,5 @@
 <template>
-	<view class="news-list-detail-container safe-bottom">
+	<view class="news-list-detail-container safe-padding-bottom">
 		<view class="search-wrapper">
 			<static-search :placeholder="form.title || '搜索'" :to="`/pages/home/search/index?type=0&keyword=${form.title}`"></static-search>
 		</view>
@@ -76,6 +76,9 @@
 						this.data = this.data.concat(result.records)
 						this.page.total = result.total
 						if (this.page.total <= this.page.size) {
+							this.status = 'nomore'
+						}
+						if (this.page.total === this.data.length) {
 							this.status = 'nomore'
 						}
 					}

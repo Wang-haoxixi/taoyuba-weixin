@@ -1,5 +1,5 @@
 <template>
-	<view class="info-container safe-bottom">
+	<view class="info-container safe-padding-bottom">
 		<view class="tab-wrapper">
 			 <!-- active-color="#409EFF" -->
 			<u-tabs :list="list" :is-scroll="false" inactive-color="#fff" active-color="#fff" bg-color="transparent" :current="current" @change="change"></u-tabs>
@@ -30,7 +30,7 @@
 			return {
 				current: 0,
 				list: [
-					{ name: '培训机构' },
+					{ name: '培训服务' },
 					{ name: '培训信息' },
 					{ name: '证书查询' },
 					{ name: '教材订购' }
@@ -123,6 +123,9 @@
 						if (this.page0.total <= this.page0.size) {
 							this.status0 = 'nomore'
 						}
+						if (this.page0.total === this.data0.length) {
+							this.status0 = 'nomore'
+						}
 					}
 					uni.stopPullDownRefresh()
 				})
@@ -141,6 +144,9 @@
 						this.data1 = this.data1.concat(result.records)
 						this.page1.total = result.total
 						if (this.page1.total <= this.page1.size) {
+							this.status1 = 'nomore'
+						}
+						if (this.page1.total === this.data1.length) {
 							this.status1 = 'nomore'
 						}
 					}

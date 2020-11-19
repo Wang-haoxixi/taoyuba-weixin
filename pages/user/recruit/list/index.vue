@@ -1,6 +1,6 @@
 <template>
 	<!-- 船员招聘 -->
-	<view class="user-recruit-container page-base">
+	<view class="user-recruit-container page-base safe-padding-bottom">
 		<view class="recruit-item-wrapper">
 			<view @tap="onTo(`/pages/release/recruit/edit?id=${item.recruitId}`)" v-for="item in data" :key="item.recruitId">
 				<recruit-item :info="item"></recruit-item>

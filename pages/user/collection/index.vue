@@ -1,5 +1,5 @@
 <template>
-	<view class="user-collection-container">
+	<view class="user-collection-container safe-padding-bottom">
 		<view>
 			<u-tabs-swiper ref="uTabs" :list="list" :current="current" @change="tabsChange" swiperWidth="750" :is-scroll="false"></u-tabs-swiper>
 		</view>

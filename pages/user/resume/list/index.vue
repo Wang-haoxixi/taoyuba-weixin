@@ -1,5 +1,5 @@
 <template>
-	<view class="user-resume-list safe-bottom">
+	<view class="user-resume-list safe-padding-bottom">
 		<view class="item" v-for="(item, index) in list" :key="item.id" >
 			<u-swipe-action :index="index" :show="item.show"
 				@content-click="onContentClick(item)"

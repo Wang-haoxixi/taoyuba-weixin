@@ -1,5 +1,5 @@
 <template>
-	<view class="user-contract-container">
+	<view class="user-contract-container safe-padding-bottom">
 		<!-- <template v-if="data.length">
 			<view class="">
 				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>

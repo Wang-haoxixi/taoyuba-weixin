@@ -1,6 +1,6 @@
 <template>
 	<!-- 招聘 -->
-	<view class="recruit-list-wrapper safe-bottom">
+	<view class="recruit-list-wrapper safe-bottom safe-padding-bottom">
 		<!-- <view class="search-wrapper">
 			<static-search :placeholder="form.contactName || '搜索'" :to="`/pages/home/search/index?type=1&keyword=${form.contactName}`"></static-search>
 		</view> -->
@@ -18,7 +18,7 @@
 				<job-item :info="item" btnText="查看" @to="onTo" :dictMap="dictMap"></job-item>
 			</view>
 		</view>
-		<u-loadmore :status="status" bg-color="tranparent"/>
+		<u-loadmore :status="status"/>
 	</view>
 </template>
 
@@ -115,6 +115,9 @@
 						this.data = this.data.concat(this.setList(result.records))
 						this.page.total = result.total
 						if (this.page.total <= this.page.size) {
+							this.status = 'nomore'
+						}
+						if (this.page.total === this.data.length) {
 							this.status = 'nomore'
 						}
 					}

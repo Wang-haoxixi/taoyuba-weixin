@@ -1,6 +1,6 @@
 <template>
 	<!-- 在线测试 -->
-	<view class="examination-container page-base safe-bottom">
+	<view class="examination-container page-base safe-padding-bottom">
 		<view class="item" @tap="openExam(item)" v-for="(item, index) in data" :key="index">
 			<view class="title u-line-2">{{item.kind || ''}}</view>
 			<!-- <view class="number">参与人数：{{ item.testNumber || 0}}人</view> -->
@@ -70,6 +70,9 @@
 						this.data = this.data.concat(result.records)
 						this.page.total = result.total
 						if (this.page.total <= this.page.size) {
+							this.status = 'nomore'
+						}
+						if (this.page.total === this.data.length) {
 							this.status = 'nomore'
 						}
 					}

@@ -1,5 +1,5 @@
 <template>
-	<view class="user-video-list-container">
+	<view class="user-video-list-container safe-padding-bottom">
 		<list-layout :data="data" empty-text="视频学习记录为空" :loading="layoutLoading">
 			<view class="video-item-wrapper" v-for="info in data" :key="info.id" @tap="onTo(info)">
 				<view class="item-left">
@@ -7,12 +7,11 @@
 				</view>
 				<view class="item-right">
 					<view class="title u-line-1">{{info.vedioName}}</view>
-					<view class="text">已学习了{{getVideoTime(info.learnTime)}}</view>
+					<view class="text">{{info.leranStamp > 0 ? '已学完' : `已学习了${getVideoTime(info.learnTime)}`}}</view>
 				</view>
 			</view>
 			<u-loadmore :status="status" />
 		</list-layout>
-		
 	</view>
 </template>
 

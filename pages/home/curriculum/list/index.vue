@@ -1,6 +1,6 @@
 <template>
 	<!-- 培训开课 -->
-	<view class="recruit-list-wrapper safe-bottom">
+	<view class="recruit-list-wrapper safe-padding-bottom">
 		<view class="search-wrapper">
 			<u-search placeholder="搜索" v-model="content" clearabled shape="square" bg-color="#fff" @custom="onSearch" @search="onSearch"></u-search>
 		</view>

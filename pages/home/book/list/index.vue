@@ -1,5 +1,5 @@
 <template>
-	<view class="book-list-container">
+	<view class="book-list-container safe-padding-bottom">
 		<view class="tip-wrapper">
 			<view class="title">浙江省海洋渔业船舶交易服务中心专营</view>
 			<view class="text">订购电话：0571-89916991</view>

@@ -1,5 +1,5 @@
 <template>
-	<view class="user-contract-container">
+	<view class="user-contract-container safe-padding-bottom">
 		<!-- <template v-if="data.length > 0">
 			<view class="">
 				<contract-item v-for="item in data" :key="item.id" :info="item" :dictMap="dictMap"></contract-item>
@@ -80,7 +80,7 @@
 				this.$http.get('/tmlms/tybcontract/listByShipName', {
 					params: {
 						shipNo: this.form.shipNo,
-						stauts: status
+						status: status
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {
