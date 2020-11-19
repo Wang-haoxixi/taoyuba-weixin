@@ -66,7 +66,7 @@
 				this.$http.get('/tybhrms/tyblessonvideo/page', {
 					params: {
 						size: 6,
-						type: 1
+						type: 3
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {

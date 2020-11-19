@@ -67,6 +67,9 @@
 				modalShow: false,
 				list: [
 					{
+						image: this.$IMAGE_URL + '/banner3.png'
+					},
+					{
 						image: this.$IMAGE_URL + '/banner1.jpg',
 					},
 					{

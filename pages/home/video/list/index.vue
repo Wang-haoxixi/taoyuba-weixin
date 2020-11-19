@@ -7,19 +7,19 @@
 			<u-tabs :list="list" active-color="#409EFF" :bold="false" :is-scroll="false" :current="current" @change="onChange"></u-tabs>
 		</view>
 		<view class="list-wrapper" v-show="current === 0">
+			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
+				<video-item :info="item"></video-item>
+			</view>
+			<u-loadmore :status="status" bg-color="tranparent"/>
+		</view>
+		<view class="list-wrapper" v-show="current === 1">
 			<view v-for="item in data1" :key="item.vedioId" @tap="onTo(item.vedioId)">
 				<video-item :info="item"></video-item>
 			</view>
 			<u-loadmore :status="status1" bg-color="tranparent"/>
 		</view>
-		<view class="list-wrapper" v-show="current === 1">
-			<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
-				<video-item :info="item"></video-item>
-			</view>
-			<u-loadmore :status="status" bg-color="tranparent"/>
-		</view>
 		<view class="list-wrapper" v-show="current === 2">
-			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
+			<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
 				<video-item :info="item"></video-item>
 			</view>
 			<u-loadmore :status="status" bg-color="tranparent"/>
@@ -41,7 +41,7 @@
 		data () {
 			return {
 				list: [
-					{ name: '安全教育', type: 1 }, { name: '渔业知识', type: 3 },  { name: '课程培训', type: 2 }
+					{ name: '课程培训', type: 2 }, { name: '安全教育', type: 1 }, { name: '渔业知识', type: 3 }
 				],
 				current: 0,
 				status: 'loadmore',
@@ -90,17 +90,17 @@
 		},
 		onPullDownRefresh () {
 			if (this.current === 0) {
-				this.data1 = []
-				this.page1.current = 1
-				this.getList1()
-			} else if (this.current === 1) {
-				this.data2 = []
-				this.page2.current = 1
-				this.getList2()
-			} else {
 				this.data = []
 				this.page.current = 1
 				this.getList()
+			} else if (this.current === 1) {
+				this.data1 = []
+				this.page1.current = 1
+				this.getList1()
+			} else {
+				this.data2 = []
+				this.page2.current = 1
+				this.getList2()
 			}
 			
 		},

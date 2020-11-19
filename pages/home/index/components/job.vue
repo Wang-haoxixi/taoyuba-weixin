@@ -14,7 +14,7 @@
 						<view class="title u-line-1">{{item.title}}</view>
 						<view class="desc u-line-1">{{item.description}}</view>
 					</view>
-					<view class="more" @tap="onToList('/pages/home/recruit/list/index?type=6')">更多</view>
+					<view class="more" @tap="onToList('/pages/home/news/list/index?type=6')">更多</view>
 				</view>
 			</template>
 		</home-container>

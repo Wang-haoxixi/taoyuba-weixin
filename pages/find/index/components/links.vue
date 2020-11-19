@@ -22,7 +22,7 @@
 					// { label: '渔区气象', path: '' }, // http://m.nmc.cn/publish/marine/newcoastal.html
 					// { label: '大风预报', path: '' }, // http://m.nmc.cn/publish/marine/sea-wind.htm
 					
-					{ label: '渔业咨询', path: '/pages/home/news/list/index?type=1' },
+					{ label: '渔业资讯', path: '/pages/home/news/list/index?type=1' },
 					{ label: '政策法规', path: '/pages/home/news/list/index?type=2' },
 					{ label: '船东招聘', path: '/pages/home/recruit/list/index' },
 					{ label: '企业招聘', path: '/pages/home/recruit/list/index?type=6' },
