@@ -20,10 +20,11 @@
 				menu: [
 					{ id: 1, type: 1, label: '系统', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, path: '/pages/message/list/index?type=1' },
 					// { type: 2, label: '审核', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-zhaopin.png`, path: '/pages/message/list/index?type=2' },
-					{ id: 2, type: 2, label: '合同', color: '#77b4e3', icon: `${this.$IMAGE_URL}/home-hetong.png`, path: '/pages/message/list/index?type=3' },
+					{ id: 2, type: 2, label: '合同', color: '#77b4e3', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, path: '/pages/message/list/index?type=3' },
 					// { type: 4, label: '培训', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, path: '/pages/message/list/index?type=4' },
 					// { type: 5, label: '考试', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, path: '/pages/message/list/index?type=5' },
-					{ id: 3, type: 9, label: '其他', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-peixunjigou.png`, path: '/pages/message/list/index?type=6' }
+					{ id: 3, type: 9, label: '其他', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, path: '/pages/message/list/index?type=6' },
+					{ id: 4, type: 3, label: '通报', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, path: '/pages/message/list/index?type=3' },
 				],
 				type: 1,
 				current: 1,

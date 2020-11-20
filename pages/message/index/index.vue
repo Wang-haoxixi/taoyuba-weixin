@@ -45,24 +45,7 @@
 		data () {
 			return {
 				status: 'loadmore',
-				data: [
-					// { id: 1, content: '您的申请已通过您的申请已通过您的申请已通过', time: '2019.01.01' },
-					// { id: 2, content: '您的申请已通过', time: '2019.01.01', dot: true },
-					// { id: 3, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 4, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 3, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 4, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 3, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 4, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 3, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 4, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 3, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 4, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 3, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 4, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 3, content: '您的申请已通过', time: '2019.01.01' },
-					// { id: 4, content: '您的申请已通过', time: '2019.01.01' }
-				],
+				data: [],
 				type: 1
 			}
 		},

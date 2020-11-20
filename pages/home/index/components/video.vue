@@ -114,7 +114,6 @@
 		.video-content {
 			padding: 30rpx 20rpx 20rpx;
 			.video-content-left {
-				padding-left: 20rpx;
 				.mini-wrapper {
 					margin-top: 10rpx;
 					.mini-video {
