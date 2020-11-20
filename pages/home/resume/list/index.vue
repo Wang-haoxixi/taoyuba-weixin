@@ -20,7 +20,9 @@
 				<resume-item :info="item" @to="onTo" :dictMap="dictMap"></resume-item>
 			</view>
 		</view>
-		<u-loadmore :status="status" />
+		<view class="loadmore">
+			<u-loadmore :status="status" bg-color="#f6f6f6"/>
+		</view>
 	</view>
 </template>
 
@@ -200,6 +202,9 @@
 			.item {
 				border-bottom: 1px solid #f6f6f6;
 			}
+		}
+		.loadmore {
+			margin-top: 20rpx;
 		}
 	}
 	::v-deep .u-dropdown-item__options-scroll {

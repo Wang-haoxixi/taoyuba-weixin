@@ -117,7 +117,7 @@
 			width: 90%;
 			margin: 20rpx auto 0;
 			.title {
-				font-size: 34rpx;
+				font-size: 36rpx;
 				color: #333;
 				padding-bottom: 30rpx;
 				border-bottom: 1px solid #f6f6f6;
@@ -125,7 +125,7 @@
 			.content {
 				margin-top: 20rpx;
 				.text {
-					font-size: 26rpx;
+					font-size: 30rpx;
 					color: #999;
 					padding: 10rpx 0rpx;
 				}

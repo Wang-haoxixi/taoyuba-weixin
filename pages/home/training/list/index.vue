@@ -11,7 +11,7 @@
 				<trainning-item :info="item" btn-text="详情" @to="onTo"></trainning-item>
 			</view>
 		</view>
-		<u-loadmore :status="status" />
+		<u-loadmore :status="status"/>
 	</view>
 </template>
 

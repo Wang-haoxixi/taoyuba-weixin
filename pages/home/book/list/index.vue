@@ -5,7 +5,7 @@
 			<view class="text">订购电话：0571-89916991</view>
 			<view class="text">
 				<text class="name">联系人：申屠老师</text>
-				<text>周一-周五 9：00~17：00</text>
+				<text>周一至周五 9：00~17：00</text>
 			</view>
 		</view>
 		<view class="book-content">

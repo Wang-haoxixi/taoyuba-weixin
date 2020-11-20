@@ -18,7 +18,7 @@
 				<job-item :info="item" btnText="查看" @to="onTo" :dictMap="dictMap"></job-item>
 			</view>
 		</view>
-		<u-loadmore :status="status"/>
+		<u-loadmore :status="status" bg-color="#f6f6f6"/>
 	</view>
 </template>
 

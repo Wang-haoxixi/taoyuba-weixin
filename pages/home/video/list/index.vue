@@ -6,25 +6,36 @@
 		<view class="tabs-wrapper">
 			<u-tabs :list="list" active-color="#409EFF" :bold="false" :is-scroll="false" :current="current" @change="onChange"></u-tabs>
 		</view>
-		<view class="list-wrapper" v-show="current === 0">
-			<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
-				<video-item :info="item"></video-item>
+		<view v-show="current === 0">
+			<view class="list-wrapper">
+				<view v-for="item in data" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
+					<video-item :info="item"></video-item>
+				</view>
 			</view>
-			<u-loadmore :status="status" bg-color="tranparent"/>
-		</view>
-		<view class="list-wrapper" v-show="current === 1">
-			<view v-for="item in data1" :key="item.vedioId" @tap="onTo(item.vedioId)">
-				<video-item :info="item"></video-item>
+			<view class="loadmore">
+				<u-loadmore :status="status" bg-color="#f6f6f6"/>
 			</view>
-			<u-loadmore :status="status1" bg-color="tranparent"/>
 		</view>
-		<view class="list-wrapper" v-show="current === 2">
-			<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId)">
-				<video-item :info="item"></video-item>
+		<view v-show="current === 1">
+			<view class="list-wrapper" >
+				<view v-for="item in data1" :key="item.vedioId" @tap="onTo(item.vedioId)">
+					<video-item :info="item"></video-item>
+				</view>
 			</view>
-			<u-loadmore :status="status" bg-color="tranparent"/>
+			<view class="loadmore">
+				<u-loadmore :status="status1" bg-color="#f6f6f6"/>
+			</view>
 		</view>
-		
+		<view v-show="current === 2">
+			<view class="list-wrapper">
+				<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId)">
+					<video-item :info="item"></video-item>
+				</view>
+			</view>
+			<view class="loadmore">
+				<u-loadmore :status="status" bg-color="#f6f6f6"/>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -201,11 +212,13 @@
 		}
 		.list-wrapper {
 			background-color: #fff;
-			padding: 0rpx 10rpx 30rpx;
+			// padding: 0rpx 10rpx 30rpx;
 			.item {
 				margin-bottom: 40rpx;
 			}
 		}
+		.loadmore {
+			margin-top: 20rpx;
+		}
 	}
-	
 </style>

@@ -76,4 +76,7 @@
 	padding-bottom: env(safe-area-inset-bottom);
 	/* #endif */
 }
-.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix:after{content:"";display:block;height:0;clear:both;visibility:hidden}
+.loadmore {
+	margin-top: 20rpx;
+}
