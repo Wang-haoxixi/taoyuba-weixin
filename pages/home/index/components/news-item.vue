@@ -37,6 +37,7 @@
 			flex: 0 0 240rpx;
 			height: 160rpx;
 			overflow: hidden;
+			border-radius: 10rpx; 
 		}
 		.item-right {
 			flex: 1 1 auto;
@@ -49,7 +50,7 @@
 				font-size: 28rpx;
 			}
 			.text {
-				margin-top: 20rpx;
+				margin-top: 11rpx;
 			}
 		}
 	}

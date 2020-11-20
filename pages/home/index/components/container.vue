@@ -26,6 +26,7 @@
 			box-sizing: border-box;
 			background-color: #fff;
 			border-radius: 10rpx;
+			overflow: hidden;
 		}
 	}
 </style>

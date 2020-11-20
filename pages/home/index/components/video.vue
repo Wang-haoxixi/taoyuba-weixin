@@ -112,8 +112,9 @@
 			}
 		}
 		.video-content {
-			padding: 30rpx 20rpx;
+			padding: 30rpx 20rpx 20rpx;
 			.video-content-left {
+				padding-left: 20rpx;
 				.mini-wrapper {
 					margin-top: 10rpx;
 					.mini-video {
@@ -133,7 +134,7 @@
 			text-align: right;
 			font-size: 28rpx;
 			margin-top: 20rpx;
-			padding: 10rpx 30rpx 0;
+			padding: 20rpx 30rpx 0;
 			border-top: 1px solid #f6f6f6;
 			color: $color-blue;
 		}

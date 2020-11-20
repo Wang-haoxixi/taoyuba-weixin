@@ -1,7 +1,7 @@
 <template>
 	<view class="user-collection-container safe-padding-bottom">
 		<view>
-			<u-tabs-swiper ref="uTabs" :list="list" :current="current" @change="tabsChange" swiperWidth="750" :is-scroll="false"></u-tabs-swiper>
+			<u-tabs-swiper ref="uTabs" active-color="#ff9999" :bar-style="{background: '#ff9999'}" :list="list" :current="current" @change="tabsChange" swiperWidth="750" :is-scroll="false"></u-tabs-swiper>
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<!-- 求职 -->

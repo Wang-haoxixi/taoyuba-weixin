@@ -19,7 +19,7 @@
 			<u-loadmore :status="status1" bg-color="tranparent"/>
 		</view>
 		<view class="list-wrapper" v-show="current === 2">
-			<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
+			<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId)">
 				<video-item :info="item"></video-item>
 			</view>
 			<u-loadmore :status="status" bg-color="tranparent"/>

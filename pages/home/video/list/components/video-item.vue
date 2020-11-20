@@ -33,6 +33,7 @@
 			flex: 0 0 240rpx;
 			height: 200rpx;
 			overflow: hidden;
+			border-radius: 10rpx;
 		}
 		.item-right {
 			flex: 1 1 auto;
@@ -42,7 +43,7 @@
 			font-size: 26rpx;
 			.title {
 				color: #666;
-				font-size: 28rpx;
+				font-size: 30rpx;
 			}
 			.text {
 				margin-top: 20rpx;

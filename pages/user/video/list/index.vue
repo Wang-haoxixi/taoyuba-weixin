@@ -4,6 +4,7 @@
 			<view class="video-item-wrapper" v-for="info in data" :key="info.id" @tap="onTo(info)">
 				<view class="item-left">
 					<u-lazy-load :image="info.videoImg" height="150" img-mode="scaleToFill"></u-lazy-load>
+					<view class="finished" v-if="info.leranStamp > 0">完</view>
 				</view>
 				<view class="item-right">
 					<view class="title u-line-1">{{info.vedioName}}</view>
@@ -123,6 +124,19 @@
 			flex: 0 0 180rpx;
 			height: 150rpx;
 			overflow: hidden;
+			position: relative;
+			border-radius: 15rpx;
+			.finished {
+				position: absolute;
+				display: inline-block;
+				padding: 5rpx 15rpx;
+				color: #fff;
+				background-color: #ed748f;
+				font-size: 24rpx;
+				right: 0;
+				top: 0;
+				border-bottom-left-radius: 15rpx;
+			}
 		}
 		.item-right {
 			flex: 1 1 auto;
@@ -136,6 +150,7 @@
 			}
 			.text {
 				margin-top: 70rpx;
+				font-size: 26rpx;
 			}
 		}
 		.empty-container {
