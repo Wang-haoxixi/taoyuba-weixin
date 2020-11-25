@@ -5,7 +5,7 @@
 			<view class="text"><text class="name">身份证号码：</text>{{data.idcard}}</view>
 			<view class="text"><text class="name">民族：</text>{{data.nation}}</view>
 			<view class="text"><text class="name">出生日期：</text>{{data.birthday}}</view>
-			<view class="text"><text class="name">籍贯：</text>{{data.provinceId}}-{{data.cityId}}-{{data.districtId}}</view>
+			<view class="text"><text class="name">籍贯：</text>{{data.districtIdLabel}}</view>
 			<view class="text"><text class="name">地址：</text>{{data.address}}</view>
 			<view class="text"><text class="name">联系电话：</text>{{data.phone}}</view>
 			<view class="text"><text class="name">家庭联系人：</text>{{data.contactName}}</view>
@@ -25,7 +25,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="other" v-if="data.certList.length">
+		<view class="other" v-if="data.certList && data.certList.length">
 			<view class="title">船员职务登记证书</view>
 			<view class="card-wrapper" v-for="item in data.certList" :key="item.certId">
 				<view class="text" v-if="item.certNo"><text class="name">证书编码：</text>{{item.certNo}}</view>
@@ -45,7 +45,9 @@
 		mixins: [infoMixin],
 		data () {
 			return {
-				data: {}
+				data: {
+					certList: []
+				}
 			}
 		},
 		onLoad (params) {
@@ -90,9 +92,30 @@
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						this.data = data.data
+						this.getCityLabel(this.data.districtId)
 					}
 				})
-			}
+			},
+			getCityLabel (id) {
+				this.$http.get(`/admin/region/wholeInfo?areaCode=${id}`).then(({ data }) => {
+					if (data.code === 0) {
+						let result = []
+						this.recursionCityLabel(result, data.data)
+						this.$set(this.data, 'districtIdLabel', result.join('-'))
+					}
+				})
+			},
+			recursionCityLabel (result, data) {
+				for (let key in data) {
+					if (key === 'name') {
+						result.push(data[key])
+						let child = data.child
+						if (child && Object.keys(child).length > 0) {
+							this.recursionCityLabel(result, child)
+						}
+					}
+				}
+			},
 		}
 	}
 </script>

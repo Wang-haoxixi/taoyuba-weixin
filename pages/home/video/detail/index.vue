@@ -112,7 +112,6 @@
 										this.isFirst = true
 									}
 									this.show = true
-									
 								} else {
 									uni.navigateBack({
 										delta: 1

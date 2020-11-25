@@ -41,25 +41,25 @@
 				"navigationBarTitleText": "招聘"
 			}
 		},
-		{
-			"path": "pages/home/video/list/index",
-			"style": {
-				"navigationBarTitleText": "渔民学院",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/video/detail/index",
-			"style": {
-				"navigationBarTitleText": "渔民学院"
-			}
-		},
-		{
-			"path": "pages/home/video/detail/index1",
-			"style": {
-				"navigationBarTitleText": "渔民学院"
-			}
-		},
+		// {
+		// 	"path": "pages/home/video/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/video/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/video/detail/index1",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院"
+		// 	}
+		// },
 		{
 			"path": "pages/home/training/list/index",
 			"style": {
@@ -220,6 +220,12 @@
 		},
 		{
 			"path": "pages/message/detail1/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/message/notification/detail/index",
 			"style": {
 				"navigationBarTitleText": ""
 			}

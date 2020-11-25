@@ -103,7 +103,7 @@
 						form[key] = this.form[key]
 					}
 				}
-				this.$http.get('/tmlms/crew/Page', {
+				this.$http.get('/tmlms/crew/PageWithOutOrg', {
 					params: Object.assign({
 						size: this.page.size,
 						current: this.page.current,

@@ -14,11 +14,22 @@
 			<list-layout :data="data" empty-text="暂无消息" :loading="false">
 				<view class="list-wrapper">
 					<view class="content-wrapper">
-						<u-cell-item :value="item.time" v-for="(item, index) in data" :key="index" @tap="onTo(item)">
-							<view slot="title" class="content u-line-1">{{item.name}}
-								<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0'"></u-badge>
-							</view>
-						</u-cell-item>
+						<template v-if="name === 'message'">
+							<u-cell-item :value="item.time" v-for="(item, index) in data" :key="index" @tap="onTo(item)">
+								<view slot="title" class="content u-line-1">
+								{{item.name}}
+									<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0'"></u-badge>
+								</view>
+							</u-cell-item>
+						</template>
+						<template v-else-if="name === 'notification'">
+							<u-cell-item :value="item.time" v-for="(item, index) in data" :key="index" @tap="onTo(item)">
+								<view slot="title" class="content u-line-1">
+									{{item.bulletinTitle}}
+									<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0' && this.type"></u-badge>
+								</view>
+							</u-cell-item>
+						</template>
 					</view>
 				</view>
 				<u-loadmore :status="status" />
@@ -46,7 +57,8 @@
 			return {
 				status: 'loadmore',
 				data: [],
-				type: 1
+				type: 1,
+				name: 'message'
 			}
 		},
 		onReachBottom() {
@@ -77,9 +89,15 @@
 		methods: {
 			onTo (row) {
 				row.isRead = '1'
-				uni.navigateTo({
-					url: `/pages/message/detail/index?id=${row.id}`
-				})
+				if (this.name === 'notification') {
+					uni.navigateTo({
+						url: `/pages/message/notification/detail/index?id=${row.id}`
+					})
+				} else if (this.name === 'message') {
+					uni.navigateTo({
+						url: `/pages/message/detail/index?id=${row.id}`
+					})
+				}
 			},
 			getList () {
 				// return
@@ -100,12 +118,34 @@
 					}
 				})
 			},
+			getNotificationList () {
+				this.$http.get('/tmlms/bulletin/getPage', {
+					params: {
+						size: this.page.size,
+						current: this.page.current
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let result = data.data
+						this.data = this.data.concat(result.records)
+						this.page.total = result.total
+						if (this.page.total <= this.page.size) {
+							this.status = 'nomore'
+						}
+					}
+				})
+			},
 			onChoose (row) {
 				if (this.type === row.type) {
 					return
 				}
 				this.type = row.type
-				this.getList()
+				this.name = row.name
+				if (this.type) {
+					this.getList()
+				} else {
+					this.getNotificationList()
+				}
 			}
 		}
 	}

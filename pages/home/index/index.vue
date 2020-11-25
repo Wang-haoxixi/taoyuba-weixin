@@ -10,7 +10,7 @@
 		<!-- 热门视频 -->
 		<home-training ref="homeTraining"></home-training>
 		<!-- 职务 科目 证书 考场信息 -->
-		<home-video ref="homeVideo"></home-video>
+		<!-- <home-video ref="homeVideo"></home-video> -->
 		<home-info></home-info>
 		<home-autograph v-model="show"></home-autograph>
 		<view class="safe-bottom"></view>
@@ -24,7 +24,7 @@
 	import homeNotice from './components/notice.vue'
 	import homeJob from './components/job.vue'
 	import homeTraining from './components/training.vue'
-	import homeVideo from './components/video.vue'
+	// import homeVideo from './components/video.vue'
 	import homeInfo from './components/info.vue'
 	import tybTarbar from '@/pages/components/tarbar/index.vue'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
@@ -39,7 +39,7 @@
 			homeNotice,
 			homeJob,
 			homeTraining,
-			homeVideo,
+			// homeVideo,
 			homeInfo
 		},
 		// onShow () {

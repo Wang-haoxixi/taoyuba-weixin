@@ -79,7 +79,33 @@
 				imgUrl: this.$IMAGE_URL
 			}
 		},
+		created () {
+			// this.getAdList()
+		},
 		methods: {
+			getAdList () {
+				this.$http.get('/admin/tybadpos/pageAndSort', {
+					params: {
+						title: '小程序首页',
+						client: 2
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.getBannerListById(data.data.records[0].id)
+					}
+				})
+			},
+			getBannerListById (id) {
+				this.$http.get(`/admin/tybad/pageAndSort`, {
+					params: {
+						posId: id
+					}
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						this.list = data.data.records
+					}
+				})
+			},
 			onToPath (path) {
 				if (path) {
 					uni.navigateTo({

@@ -1,11 +1,18 @@
 <template>
 	<view class="list-wrapper">
 		<view class="content-wrapper">
-			<u-cell-item :value="item.time" v-for="(item, index) in list" :key="index" @tap="onTo(item)">
-				<view slot="title" class="content u-line-1">{{item.name}}
-					<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0'"></u-badge>
-				</view>
-			</u-cell-item>
+			<template v-if="type === 'message'">
+				<u-cell-item :value="item.time" v-for="(item, index) in list" :key="index" @tap="onTo(item)">
+					<view slot="title" class="content u-line-1">{{item.name}}
+						<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0'"></u-badge>
+					</view>
+				</u-cell-item>
+			</template>
+			<template v-else-if="type === 'notification'">
+				<u-cell-item :value="item.time" v-for="(item, index) in list" :key="index" @tap="onTo(item)">
+					<view slot="title" class="content u-line-1">{{item.bulletinTitle}}</view>
+				</u-cell-item>
+			</template>
 		</view>
 	</view>
 </template>
@@ -13,7 +20,8 @@
 <script>
 	export default {
 		props: {
-			list: Array
+			list: Array,
+			type: 'message'
 		},
 		methods: {
 			onTo (row) {
