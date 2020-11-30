@@ -112,7 +112,7 @@
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						let result = data.data
-						this.data = this.data.concat(this.setList(result.records))
+						this.data = this.data.concat(result.records)
 						this.page.total = result.total
 						if (this.page.total <= this.page.size) {
 							this.status = 'nomore'

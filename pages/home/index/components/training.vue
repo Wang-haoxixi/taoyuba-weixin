@@ -5,7 +5,7 @@
 			<template>
 				<view class="" v-show="current === 0"  v-if="data1.length">
 					<view class="trainning-item" v-for="(item, index) in data1" :key="index">
-						<trainning-item :info="item" btn-text="详情" @tap="onTo(item.userId)"></trainning-item>
+						<trainning-item :info="item" btn-text="详情"></trainning-item>
 					</view>
 					<view class="more" @tap="onToList('/pages/home/info/index')">更多</view>
 				</view>

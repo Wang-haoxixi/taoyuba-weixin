@@ -2,7 +2,7 @@
 	<view class="list-item-wrapper" @tap="onTo">
 		<view class="list-item_left">
 			<view class="title">
-				<text class="name ellipsis">{{info.positionIdLabel}}</text>
+				<text class="name ellipsis">{{positionIdLabel}}</text>
 			</view>
 			<view class="content">
 				<text v-if="info.salary">月薪：{{salaryLabel}}</text>
@@ -46,6 +46,9 @@
 			},
 			salaryLabel () {
 				return this.getDictLabel(this.dictMap['salaryList1'], this.info.salary)
+			},
+			positionIdLabel () {
+				return this.getDictLabel(this.dictMap['tyb_resume_position'], this.info.positionId)
 			}
 		},
 		methods: {

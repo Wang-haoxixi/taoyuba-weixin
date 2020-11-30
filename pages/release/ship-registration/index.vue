@@ -163,6 +163,7 @@
 							if (data.data) {
 								this.$http.post('/tmlms/crew/checkMoreRelations', [form]).then(({ data }) => {
 									if (data.data) {
+										this.form.sourceType = 3
 										this.$http.post(`/tmlms/crew/batchCreate?type=1`, [form]).then(({ data }) => {
 											if (data.code === 0) {
 												uni.showToast({

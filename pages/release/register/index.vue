@@ -116,7 +116,7 @@
 				if (data.data.imageState === 'normal') {
 					let result = data.data
 					this.form.idcard= result.idcard
-					this.form.realname = result.name
+					this.form.realName = result.name
 					this.form.photoFront = result.url
 					this.form.address = result.address
 					this.form.nation = result.nation
@@ -145,7 +145,7 @@
 				this.photoFrontList = lists
 				this.form.photoFront = ''
 				this.form.idcard= ''
-				this.form.realname = ''
+				this.form.realName = ''
 				this.form.photoFront = ''
 				this.form.address = ''
 				this.form.nation = ''
