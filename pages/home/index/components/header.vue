@@ -66,25 +66,25 @@
 			return {
 				modalShow: false,
 				list: [
-					{
-						image: this.$IMAGE_URL + '/banner3.png'
-					},
-					{
-						image: this.$IMAGE_URL + '/banner1.jpg',
-					},
-					{
-						image: this.$IMAGE_URL + '/banner2.jpg'
-					}
+					// {
+					// 	image: this.$IMAGE_URL + '/banner3.png'
+					// },
+					// {
+					// 	image: this.$IMAGE_URL + '/banner1.jpg',
+					// },
+					// {
+					// 	image: this.$IMAGE_URL + '/banner2.jpg'
+					// }
 				],
 				imgUrl: this.$IMAGE_URL
 			}
 		},
 		created () {
-			// this.getAdList()
+			this.getAdList()
 		},
 		methods: {
 			getAdList () {
-				this.$http.get('/admin/tybadpos/pageAndSort', {
+				this.$http.get('/admin/tybadpos/page', {
 					params: {
 						title: '小程序首页',
 						client: 2
