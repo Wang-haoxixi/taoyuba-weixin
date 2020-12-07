@@ -2,7 +2,7 @@
 	<!-- 渔船 -->
 	<view class="user-ship-container safe-padding-bottom">
 		<list-layout :data="data" empty-text="数据为空">
-			<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="item in data" :key="item.shipId">
+			<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="(item, index) in data" :key="index">
 				<view class="ship-item-wrapper" slot="body">
 					<view class="left-wrapper">
 						<view class="title">{{item.shipName}}</view>

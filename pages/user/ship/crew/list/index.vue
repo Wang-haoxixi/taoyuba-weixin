@@ -3,7 +3,7 @@
 	<view class="user-my-ship-crew-list-container safe-padding-bottom">
 		<list-layout :data="data" empty-text="暂无船员数据">
 			<view class="my-ship-crew-list-wrapper">
-				<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="item in data" :key="item.id">
+				<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="(item, index) in data" :key="index">
 					<view class="item" slot="body">
 						<view class="title">{{item.realName}}</view>
 						<view class="text">
@@ -17,8 +17,8 @@
 					</view>
 					<view slot="foot">
 						<view class="btn-wrapper">
-							<u-button size="medium" @click="onTo(item)" style="margin-right: 10rpx;">详情</u-button>
-							<u-button size="medium" @click="onToContract(item)">合同</u-button>
+							<u-button size="medium" @click="onTo(item.idcard)" style="margin-right: 10rpx;">详情</u-button>
+							<u-button size="medium" @click="onToContract(item.idcard)">合同</u-button>
 						</view>
 					</view>
 				</u-card>
@@ -62,8 +62,8 @@
 					}
 				})
 			},
-			onToContract (row) {
-				this.$http.get(`/tmlms/tybcontract/shipcrew/${row.idcard}`).then(({ data }) => {
+			onToContract (idcard) {
+				this.$http.get(`/tmlms/tybcontract/shipcrew/${idcard}`).then(({ data }) => {
 					if (data.code === 0) {
 						uni.navigateTo({
 							url: `/pages/base/web?src=https://m.taoyu58.com/api/tmlms/downLoad/intoContractHtml&contractId=${data.data.contractId}`
@@ -71,10 +71,11 @@
 					}
 				})
 			},
-			onTo (row) {
-				if (row.idcard) {
+			onTo (idcard) {
+				console.log('row', idcard)
+				if (idcard) {
 					uni.navigateTo({
-						url: `/pages/user/ship/crew/detail/index?idcard=${row.idcard}`
+						url: `/pages/user/ship/crew/detail/index?idcard=${idcard}`
 					})
 				}
 				

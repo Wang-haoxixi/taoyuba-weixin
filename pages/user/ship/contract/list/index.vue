@@ -3,7 +3,7 @@
 	<view class="user-my-ship-crew-list-container safe-padding-bottom">
 		<list-layout :data="data" empty-text="暂无船员数据">
 			<view class="my-ship-crew-list-wrapper">
-				<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="item in data" :key="item.id">
+				<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="(item, index) in data" :key="index">
 					<view class="item" slot="body">
 						<view class="title">{{item.employeeName}}</view>
 						<view class="text">
