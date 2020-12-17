@@ -5,7 +5,8 @@
 			<view class="time">{{data.time}}</view>
 		</view>
 		<view class="content-wrapper">
-			{{data.content}}
+			<u-parse :html="data.content"></u-parse>
+			<!-- {{data.content}} -->
 			<view class="more" @click="onTo" v-if="data.type === '2'">详情</view>
 		</view>
 	</view>

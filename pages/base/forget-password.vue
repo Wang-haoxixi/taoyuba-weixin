@@ -8,10 +8,10 @@
 			<view class="title">淘渔吧</view>
 			<view class="form-wrapper">
 				<u-form :model="form" ref="uForm">
-					<u-form-item left-icon="account" :leftIconStyle="{color: '#999', fontSize: '32rpx'}">
+					<u-form-item left-icon="phone" :leftIconStyle="{color: '#999', fontSize: '32rpx'}">
 						<u-input trim v-model="form.phone" type="number" placeholder="请输入手机号"/>
 					</u-form-item>
-					<u-form-item :leftIconStyle="{color: '#999', fontSize: '32rpx'}" left-icon="lock" prop="vCode">
+					<u-form-item :leftIconStyle="{color: '#999', fontSize: '32rpx'}" left-icon="edit-pen" prop="vCode">
 						<u-input trim placeholder="请输入验证码" v-model="form.vCode" type="text"></u-input>
 						<u-button slot="right" type="success" size="mini" @click="getCode" hover-class="none" :custom-style="{backgroundColor:'#fff',color: '#409EFF', fontSize: '32rpx'}">{{codeTips}}</u-button>
 					</u-form-item>

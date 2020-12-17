@@ -173,7 +173,8 @@
 									if (data.code === 0) {
 										let filePath = data.data.url
 										console.log('filePath', filePath)
-										this.$http.upload(`/tmlms/crew/faceMatch`,
+										// `/tmlms/crew/faceMatch`
+										this.$http.upload(`admin/file/faceMatch`,
 											{
 												formData: {
 													idcard: this.userInfo.idCard,

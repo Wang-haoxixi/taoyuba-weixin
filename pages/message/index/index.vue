@@ -58,7 +58,8 @@
 				status: 'loadmore',
 				data: [],
 				type: 1,
-				name: 'message'
+				name: 'message',
+				path: '/pages/message/detail/index'
 			}
 		},
 		onReachBottom() {
@@ -78,6 +79,12 @@
 				this.getList()
 			}
 		},
+		onHide () {
+			this.page.current = 1
+			this.page.total = 0
+			this.status = 'loading'
+			this.data = []
+		},
 		watch: {
 			type () {
 				this.data = []
@@ -89,15 +96,19 @@
 		methods: {
 			onTo (row) {
 				row.isRead = '1'
-				if (this.name === 'notification') {
-					uni.navigateTo({
-						url: `/pages/message/notification/detail/index?id=${row.id}`
-					})
-				} else if (this.name === 'message') {
-					uni.navigateTo({
-						url: `/pages/message/detail/index?id=${row.id}`
-					})
-				}
+				console.log(`${this.path}?id=${row.id}`)
+				uni.navigateTo({
+					url: `${this.path}?id=${row.id}`
+				})
+				// if (this.name === 'notification') {
+				// 	uni.navigateTo({
+				// 		url: `/pages/message/notification/detail/index?id=${row.id}`
+				// 	})
+				// } else if (this.name === 'message') {
+				// 	uni.navigateTo({
+				// 		url: `/pages/message/detail/index?id=${row.id}`
+				// 	})
+				// }
 			},
 			getList () {
 				// return
@@ -141,6 +152,7 @@
 				}
 				this.type = row.type
 				this.name = row.name
+				this.path = row.path
 				if (this.type) {
 					this.getList()
 				} else {

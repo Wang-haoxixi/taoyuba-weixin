@@ -85,6 +85,13 @@
 				})
 			},
 			onToContract (id) {
+				// console.log('row', row)
+				// openDocument(`/tmlms/tybmlmsExcelExport/downContractModel`, {
+				// 	params: {
+				// 		shipName: row.shipName
+				// 	}
+				// })
+				// return
 				uni.navigateTo({
 					url: `/pages/base/web?src=https://m.taoyu58.com/api/tmlms/downLoad/intoContractHtml&contractId=${id}`
 				})
