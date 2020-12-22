@@ -1,40 +1,45 @@
 <template>
 	<view class="page-bottom message-container safe-bottom">
-		<!-- 菜单 -->
-		<view class="header-wrapper">
-			<message-menu @choose="onChoose"></message-menu>
-		</view>
-		
-		<!-- 系统消息 -->
-		<!-- <message-list title="最新系统消息" :list="data1"></message-list> -->
-		<view class="" style="height: 190rpx;">
+		<template v-if="!showLoginBtn">
+			<!-- 菜单 -->
+			<view class="header-wrapper">
+				<message-menu @choose="onChoose"></message-menu>
+			</view>
 			
-		</view>
-		<view class="content-wrapper">
-			<list-layout :data="data" empty-text="暂无消息" :loading="false">
-				<view class="list-wrapper">
-					<view class="content-wrapper">
-						<template v-if="name === 'message'">
-							<u-cell-item :value="item.time" v-for="(item, index) in data" :key="index" @tap="onTo(item)">
-								<view slot="title" class="content u-line-1">
-								{{item.name}}
-									<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0'"></u-badge>
-								</view>
-							</u-cell-item>
-						</template>
-						<template v-else-if="name === 'notification'">
-							<u-cell-item :value="item.time" v-for="(item, index) in data" :key="index" @tap="onTo(item)">
-								<view slot="title" class="content u-line-1">
-									{{item.bulletinTitle}}
-									<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0' && this.type"></u-badge>
-								</view>
-							</u-cell-item>
-						</template>
+			<!-- 系统消息 -->
+			<!-- <message-list title="最新系统消息" :list="data1"></message-list> -->
+			<view class="" style="height: 190rpx;">
+				
+			</view>
+			<view class="content-wrapper">
+				<list-layout :data="data" empty-text="暂无消息" :loading="false">
+					<view class="list-wrapper">
+						<view class="content-wrapper">
+							<template v-if="name === 'message'">
+								<u-cell-item :value="item.time" v-for="(item, index) in data" :key="index" @tap="onTo(item)">
+									<view slot="title" class="content u-line-1">
+									{{item.name}}
+										<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0'"></u-badge>
+									</view>
+								</u-cell-item>
+							</template>
+							<template v-else-if="name === 'notification'">
+								<u-cell-item :value="item.time" v-for="(item, index) in data" :key="index" @tap="onTo(item)">
+									<view slot="title" class="content u-line-1">
+										{{item.bulletinTitle}}
+										<u-badge :is-dot="true" type="error" class="dot" v-if="item.isRead === '0' && this.type"></u-badge>
+									</view>
+								</u-cell-item>
+							</template>
+						</view>
 					</view>
-				</view>
-				<u-loadmore :status="status" />
-			</list-layout>
-		</view>
+					<u-loadmore :status="status" />
+				</list-layout>
+			</view>
+		</template>
+		<template v-else>
+			<no-login/>
+		</template>
 		<tyb-tarbar :current-index="3"></tyb-tarbar>
 	</view>
 </template>
@@ -45,16 +50,20 @@
 	import messageMenu from './components/menu.vue'
 	import pageMixin from '@/pages/mixins/page.js'
 	import listLayout from '@/pages/components/list-layout/index.vue'
+	import noLogin from '@/pages/components/noLogin/index1.vue'
+	import { isLogin } from '@/common/utils/login.js'
 	export default {
 		mixins: [pageMixin],
 		components: {
 			tybTarbar,
 			messageMenu,
 			// messageList,
-			listLayout
+			listLayout,
+			noLogin
 		},
 		data () {
 			return {
+				showLoginBtn: true,
 				status: 'loadmore',
 				data: [],
 				type: 1,
@@ -72,12 +81,19 @@
 			}
 		},
 		onShow () {
-			if (this.data.length === 0) {
-				this.page.current = 1
-				this.page.total = 0
-				this.status = 'loading'
-				this.getList()
-			}
+			isLogin().then(data => {
+				if (data) {
+					if (this.data.length === 0) {
+						this.page.current = 1
+						this.page.total = 0
+						this.status = 'loading'
+						this.getList()
+					}
+					this.showLoginBtn = false
+				} else{
+					this.showLoginBtn = true
+				}
+			})
 		},
 		onHide () {
 			this.page.current = 1

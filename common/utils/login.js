@@ -108,3 +108,13 @@ export const logout = () => {
 		})
 	})
 }
+
+export const isLogin = () => {
+	return new Promise((resolve, reject) => {
+		$http.get('/tmlms/crew/checkUser').then(({ data }) => {
+			resolve(data.data)
+		})
+	}).catch((e) => {
+		reject(e)
+	})
+}

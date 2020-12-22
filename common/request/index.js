@@ -28,6 +28,7 @@ const ignoreUrl = [
 	'/tmlms/dept/detail',
 	'/tybhrms/tybarticle/page',
 	'/tybhrms/tyblessonvideo/:id',
+	'/admin/tybadpos/page',
 	// '/tmlms/exam_examination/page',
 	// '/tybhrms/tyblessonvideo/page',
 	// '/tybhrms/tyblessonvideo/',
@@ -147,13 +148,13 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 			title: '请登录后再查看',
 			duration: 1000,
 		})
-		setTimeout(() => {
-			uni.navigateTo({
-				url: '/pages/base/login'
-			})
-		}, 1000)
+		// setTimeout(() => {
+		// 	uni.navigateTo({
+		// 		url: '/pages/base/login'
+		// 	})
+		// }, 1000)
 		tools.clear()
-		return
+		return response
 	}
 	return response
 })

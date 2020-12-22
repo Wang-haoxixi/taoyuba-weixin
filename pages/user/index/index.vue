@@ -1,47 +1,52 @@
 <template>
 	<view class="user-container page-bottom">
-		<view class="user-header">
-			<view class="base-info-wrapper">
-				<view class="base-info-wrapper-left">
-					<view class="avatar-wrapper">
-						<image :src="`${imageUrl}/avatar.jpg`" mode="scaleToFill"></image>
+		<template v-if="!showLoginBtn">
+			<view class="user-header">
+				<view class="base-info-wrapper">
+					<view class="base-info-wrapper-left">
+						<view class="avatar-wrapper">
+							<image :src="`${imageUrl}/avatar.jpg`" mode="scaleToFill"></image>
+						</view>
+						<view class="content">
+							<text class="name">{{userInfo.realName}}</text>
+							<text class="phone">{{userInfo.username}}</text>
+							<text class="phone">{{roleLabel}}</text>
+						</view>
 					</view>
-					<view class="content">
-						<text class="name">{{userInfo.realName}}</text>
-						<text class="phone">{{userInfo.username}}</text>
-						<text class="phone">{{roleLabel}}</text>
+				</view>
+				<view class="content-wrapper">
+					<view class="item" @tap="onToUser" v-if="!roles.includes(rolesType.police.type)">
+						<view class="iconfont iconziliao"></view>
+						<text>个人资料</text>
+					</view>
+					<view class="item" @tap="onTo('/pages/user/collection/index')">
+						<view class="iconfont iconshoucang other-ic"></view>
+						<text>我的收藏</text>
+					</view>
+					<view class="item" @tap="onTo('/pages/user/change-password/index')">
+						<view class="iconfont iconmima other-ic"></view>
+						<text>密码修改</text>
+					</view>
+					<view class="item" v-if="isBecome" @click="onChoose">
+						<view class="iconfont iconchengyuan other-ic"></view>
+						<text>我要成为</text>
+						<u-select v-if="show" v-model="show" mode="single-column" :list="list" @confirm="onConfirm"></u-select>
 					</view>
 				</view>
 			</view>
-			<view class="content-wrapper">
-				<view class="item" @tap="onToUser" v-if="!roles.includes(rolesType.police.type)">
-					<view class="iconfont iconziliao"></view>
-					<text>个人资料</text>
+			<!-- 菜单 -->
+			<user-menu :text="text" :isShipOwer="isShipOwer" :role="roles"></user-menu>
+			<u-modal v-model="modalShow" @cancel="modalShow = false" title="个人资料" :mask-close-able="true" :show-confirm-button="false" show-cancel-button cancel-text="取消">
+				<view class="slot-content" style="padding: 30rpx 10rpx;display: flex;justify-content: center;">
+					<u-button @click="onToPath('/pages/release/shipowner-resume/edit')" style="margin-right: 20rpx;">船东简历</u-button>
+					<u-button type="primary" @click="onToPath('/pages/release/resume/edit')">船员简历</u-button>
 				</view>
-				<view class="item" @tap="onTo('/pages/user/collection/index')">
-					<view class="iconfont iconshoucang other-ic"></view>
-					<text>我的收藏</text>
-				</view>
-				<view class="item" @tap="onTo('/pages/user/change-password/index')">
-					<view class="iconfont iconmima other-ic"></view>
-					<text>密码修改</text>
-				</view>
-				<view class="item" v-if="isBecome" @click="onChoose">
-					<view class="iconfont iconchengyuan other-ic"></view>
-					<text>我要成为</text>
-					<u-select v-if="show" v-model="show" mode="single-column" :list="list" @confirm="onConfirm"></u-select>
-				</view>
-			</view>
-		</view>
-		<!-- 菜单 -->
-		<user-menu :text="text" :isShipOwer="isShipOwer" :role="roles"></user-menu>
+			</u-modal>
+		</template>
+		<template v-else="showLoginBtn">
+			<no-login/>
+		</template>
 		<tyb-tarbar :current-index="4"></tyb-tarbar>
-		<u-modal v-model="modalShow" @cancel="modalShow = false" title="个人资料" :mask-close-able="true" :show-confirm-button="false" show-cancel-button cancel-text="取消">
-			<view class="slot-content" style="padding: 30rpx 10rpx;display: flex;justify-content: center;">
-				<u-button @click="onToPath('/pages/release/shipowner-resume/edit')" style="margin-right: 20rpx;">船东简历</u-button>
-				<u-button type="primary" @click="onToPath('/pages/release/resume/edit')">船员简历</u-button>
-			</view>
-		</u-modal>
 	</view>
 </template>
 
@@ -51,11 +56,14 @@
 	import { TOKEN } from '@/common/config/index.js'
 	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
+	import { isLogin } from '@/common/utils/login.js'
+	import noLogin from '@/pages/components/noLogin/index.vue'
 	export default {
 		mixins: [dictMapMixin, userInfoMixin],
 		components: {
 			tybTarbar,
-			userMenu
+			userMenu,
+			noLogin
 		},
 		data () {
 			return {
@@ -66,6 +74,7 @@
 				roles: this.$cache.get('roles') || [],
 				imageUrl: this.$IMAGE_URL,
 				show: false,
+				showLoginBtn: true,
 				list: [
 					{ value: 1, label: '船员' },
 					{ value: 2, label: '船东' },
@@ -101,14 +110,22 @@
 			}
 		},
 		onShow () {
-			this.userInfo = this.$cache.get('userInfo') || {}
-			this.roles = this.$cache.get('roles') || []
-			console.log('this.userInfo', this.userInfo, 'this.roles', this.roles)
-			this.text = ''
-			this.getUserInfo().then(() => {
-				this.getShipOwer()
-				this.init()
+			isLogin().then(data => {
+				if (data) {
+					this.showLoginBtn = false
+					this.userInfo = this.$cache.get('userInfo') || {}
+					this.roles = this.$cache.get('roles') || []
+					console.log('this.userInfo', this.userInfo, 'this.roles', this.roles)
+					this.text = ''
+					this.getUserInfo().then(() => {
+						this.getShipOwer()
+						this.init()
+					})
+				} else {
+					this.showLoginBtn = true
+				}
 			})
+			
 			// if (Object.keys(this.userInfo).length === 0) {
 			// 	this.getUserInfo().then(() => {
 			// 		this.init()
@@ -118,6 +135,7 @@
 			// }
 		},
 		methods: {
+			// 判断是否已登录
 			// 获取船东是否是持证人信息
 			getShipOwer () {
 				if (this.roles.includes(this.rolesType.shipowner.type)) {
@@ -270,6 +288,12 @@
 			justify-content: space-between;
 			align-items: center;
 			padding: 50rpx 60rpx;
+			&.login-btn-wrapper {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100%;
+			}
 			.base-info-wrapper-left {
 				display: flex;
 				align-items: center;

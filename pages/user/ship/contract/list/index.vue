@@ -17,7 +17,7 @@
 					</view>
 					<view class="" slot="foot">
 						<view class="btn-wrapper">
-							<u-button size="medium" @click="onToContract(item.contractId)">合同</u-button>
+							<u-button size="medium" @click="onToContract(item)">合同</u-button>
 						</view>
 					</view>
 				</u-card>
@@ -31,6 +31,7 @@
 	import pageMixin from '@/pages/mixins/page.js'
 	import infoMixin from '@/pages/home/recruit/mixins/info.js'
 	import listLayout from '@/pages/components/list-layout/index.vue'
+	import { openDocument } from '@/common/utils/utils.js'
 	export default {
 		mixins: [pageMixin, infoMixin],
 		components: { listLayout },
@@ -84,16 +85,16 @@
 					uni.stopPullDownRefresh()
 				})
 			},
-			onToContract (id) {
-				// console.log('row', row)
-				// openDocument(`/tmlms/tybmlmsExcelExport/downContractModel`, {
-				// 	params: {
-				// 		shipName: row.shipName
-				// 	}
-				// })
-				// return
+			onToContract (row) {
+				console.log('row', row)
+				openDocument(`/tmlms/tybmlmsExcelExport/downContractModel`, {
+					params: {
+						shipName: row.shipName
+					}
+				})
+				return
 				uni.navigateTo({
-					url: `/pages/base/web?src=https://m.taoyu58.com/api/tmlms/downLoad/intoContractHtml&contractId=${id}`
+					url: `/pages/base/web?src=https://m.taoyu58.com/api/tmlms/downLoad/intoContractHtml&contractId=${row.contractId}`
 				})
 			}
 		}

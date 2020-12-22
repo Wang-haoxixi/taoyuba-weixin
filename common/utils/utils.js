@@ -27,25 +27,37 @@ export const encryption = params => {
 }
 
 export const openDocument = (url,params = {}) => {
-	// console.log(url, 'Bearer ' + uni.getStorageSync(TOKEN))
-	// uni.downloadFile({
-	// 	url: API_URL + url,
-	// 	header: {  
-	// 		'Authorization': 'Bearer ' + uni.getStorageSync(TOKEN) 
-	// 	},
-	// 	success: (res) => {
-	// 		consoloe.log('downloadFile', res)
-	// 	},
-	// 	fail: (err) => {
-	// 		console.log('fail', err)
-	// 	}
-	// })
-	// return
+	console.log(url, 'Bearer ' + uni.getStorageSync(TOKEN))
+	uni.downloadFile({
+		url: API_URL + url + `?shipName=${params.params.shipName}`,
+		header: {  
+			'Authorization': 'Bearer ' + uni.getStorageSync(TOKEN),
+			'Content-Type': 'application/msword;charset=utf-8'
+		},
+		success: (res) => {
+			let filePath = res.tempFilePath
+			uni.openDocument({
+				filePath: filePath,
+				success: function(res) {
+					console.log('打开文档成功')
+				},
+				fail: function (err) {
+					console.log('打开失败')
+				}
+			})
+			console.log('downloadFile', res)
+		},
+		fail: (err) => {
+			console.log('fail', err)
+		}
+	})
+	return
 	$http.download(url, params).then((data) => {
 		console.log('openDocument', data)
 		filePath = data.tempFilePath
 		uni.openDocument({
 			filePath: filePath,
+			// fileType: 'doc',
 			success: function(res) {
 				console.log('打开文档成功')
 			},

@@ -115,13 +115,15 @@
 										title: '参与失败',
 									})
 								}
-							}).catch(({data}) => {
-								if (data.code === 1) {
-									this.$refs.uToast.show({
-										title: data.msg || '参与失败',
-									})
-								}
 							})
+							// .catch(({data}) => {
+							// 	console.log('data error', data)
+							// 	if (data.code === 1) {
+							// 		this.$refs.uToast.show({
+							// 			title: data.msg || '参与失败',
+							// 		})
+							// 	}
+							// })
 							
 						}
 					}
