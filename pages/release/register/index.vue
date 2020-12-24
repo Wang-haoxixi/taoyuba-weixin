@@ -10,6 +10,9 @@
 						</view>
 					</u-upload>
 				</u-form-item>
+				<u-form-item label="区域" required prop="orgId">
+					<u-input type="select" border :select-open="orgIdShow" v-model="form.orgIdName" placeholder="请选择区域" @click="orgIdShow = true"></u-input>
+				</u-form-item>
 				<u-form-item label="本人手机" required prop="phone">
 					<u-input v-model="form.phone" border type="number" trim placeholder="请输入本人手机"/>
 				</u-form-item>
@@ -25,22 +28,28 @@
 			<view class="tip">
 				为及时便捷提供渔船求职服务，你的姓名、手机号码、籍贯（非详细地址）、民族、年龄向渔船船东、船长开放。其他个人信息由政府部门存档备案，不对外公布。
 			</view>
-			<view class="tip">咨询电话：0580-4790160（衢山镇渔业船员服务中心）。</view>
+			<view class="tip" v-show="form.orgId === '21'">咨询电话：0580-4790160（衢山镇渔业船员服务中心）。</view>
 		</view>
 		<view class="btn-wrapper">
 			<u-button size="default" hover-class="none" :loading="loading" :custom-style="btnStyle" @click="onSubmit">申请</u-button>
 		</view>
+		<!-- 联系人 -->
 		<u-select safe-area-inset-bottom mode="single-column" :list="contactNameList" v-model="contactNameShow" @confirm="onConfirm"></u-select>
+		<!-- 区域 -->
+		<u-select safe-area-inset-bottom mode="single-column" :list="organizationList" v-model="orgIdShow" @confirm="onOrgIdConfirm"></u-select>
 	</view>
 </template>
 
 <script>
 	import { TOKEN } from '@/common/config/index.js'
+	import orgMixin from '@/pages/mixins/org'
 	export default {
+		mixins: [orgMixin],
 		data () {
 			return {
 				photoFrontList: [],
 				contactNameShow: false,
+				orgIdShow: false,
 				// header: {
 				// 	'Authorization': 'Bearer ' + uni.getStorageSync(TOKEN)
 				// },
@@ -66,6 +75,7 @@
 					cityId: '',
 					districtId: '',
 					photoFront: '',
+					orgId: '', // 区域
 					phone: '', // 本人手机
 					contactName: '', // 家属
 					contactPhone: '', // 家属手机
@@ -78,6 +88,7 @@
 					{ value: '姐妹', label: '姐妹' },
 				],
 				rules: {
+					orgId: [{ required: true, message: '请选择区域', trigger: ['change'] }],
 					photoFront: [{ required: true, message: '请上传你的身份证', trigger: ['change', 'blur'] }],
 					phone: [
 						{ required: true, message: '请输入本人手机', trigger: ['blur'] },
@@ -157,6 +168,10 @@
 			onConfirm (e) {
 				this.form.contactName = e[0].label
 			},
+			onOrgIdConfirm (e) {
+				this.form.orgIdName = e[0].label
+				this.form.orgId = e[0].value
+			},
 			// 保存信息判断信息
 			save () {
 				this.loading = true
@@ -203,12 +218,12 @@
 					}
 					
 					
-					if(data.data){
+					// if(data.data){
 						
-						uni.switchTab({
-							url: '/pages/user/index/index'
-						})
-					}
+					// 	uni.switchTab({
+					// 		url: '/pages/user/index/index'
+					// 	})
+					// }
 				}).catch(() => {
 					this.loading = false
 				})

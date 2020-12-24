@@ -10,7 +10,7 @@
 						<view class="tyb-tarbar_sub-menu" :style="{display: show ? 'block' : 'none'}">
 							<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/resume/edit', 'resume')">简历</view>
 							<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/recruit/edit', 'recruit')">招聘</view>
-							<view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/register/index', 'register')">登记</view>
+							<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('/pages/release/register/index', 'register')">登记</view> -->
 							<!-- <view class="tyb-tarbar_sub-menu-item" @tap="onSubMenu('')">中介</view>	 -->
 						</view>
 						<text class="tyb-tarbar-item_text">{{item.text}}</text>
@@ -222,18 +222,18 @@
 				box-shadow: 0rpx 0rpx 10rpx $color-blue;
 				display: hidden;
 				&:nth-child(1) {
-					top: -40rpx;
-					left: -46rpx;
+					top: -50rpx;
+					left: -36rpx;
 					color: #e57979;
 				}
+				// &:nth-child(2) {
+				// 	top: -100rpx;
+				// 	left: 40rpx;
+				// 	color: #b2c835;
+				// }
 				&:nth-child(2) {
-					top: -100rpx;
-					left: 40rpx;
-					color: #b2c835;
-				}
-				&:nth-child(3) {
-					top: -40rpx;
-					left: 120rpx;
+					top: -50rpx;
+					left: 110rpx;
 					color: #82d967;
 				}
 				// &:nth-child(4) {

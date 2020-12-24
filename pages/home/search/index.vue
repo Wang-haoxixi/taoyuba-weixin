@@ -156,7 +156,7 @@
 					return `/pages/home/news/list/index?keyword=${this.content}`
 				} else if (this.current === 1) {
 					// return `/pages/home/recruit/list/index?keyword=${this.content}`
-					return `/pages/home/resume/list/index?keyword=${this.content}`
+					return `/pages/home/jobRegistration/index?keyword=${this.content}`
 				} else if (this.current === 2) {
 					// return `/pages/home/training-info/list/index?keyword=${this.content}`
 					return `/pages/home/info/index?title=${this.content}&index=1`

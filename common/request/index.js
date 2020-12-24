@@ -29,6 +29,7 @@ const ignoreUrl = [
 	'/tybhrms/tybarticle/page',
 	'/tybhrms/tyblessonvideo/:id',
 	'/admin/tybadpos/page',
+	'/admin/tybad/pageAndSort',
 	// '/tmlms/exam_examination/page',
 	// '/tybhrms/tyblessonvideo/page',
 	// '/tybhrms/tyblessonvideo/',
@@ -36,7 +37,10 @@ const ignoreUrl = [
 	'/tybhrms/tybbook/page',
 	'/admin/dict/all_map',
 	'/tmlms/crew/idcardcheck',
-	'/tmlms/crew/createByWx'
+	'/tmlms/crew/createByWx',
+	'/tmlms/crew/checkMoreRelations',
+	'/tmlms/crew/batchCreate',
+	'/tybship/tybship/findmyshipWx'
 ]
 const getTokenStorage = () => {
 	let token = ''

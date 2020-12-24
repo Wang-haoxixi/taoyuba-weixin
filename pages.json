@@ -29,6 +29,13 @@
 			}
 		},
 		{
+			"path": "pages/home/jobRegistration/index",
+			"style": {
+				"navigationBarTitleText": "求职",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path": "pages/home/recruit/list/index",
 			"style": {
 				"navigationBarTitleText": "招聘",
@@ -41,25 +48,25 @@
 				"navigationBarTitleText": "招聘"
 			}
 		},
-		{
-			"path": "pages/home/video/list/index",
-			"style": {
-				"navigationBarTitleText": "渔民学院",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/video/detail/index",
-			"style": {
-				"navigationBarTitleText": "渔民学院"
-			}
-		},
-		{
-			"path": "pages/home/video/detail/index1",
-			"style": {
-				"navigationBarTitleText": "渔民学院"
-			}
-		},
+		// {
+		// 	"path": "pages/home/video/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/video/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/video/detail/index1",
+		// 	"style": {
+		// 		"navigationBarTitleText": "渔民学院"
+		// 	}
+		// },
 		{
 			"path": "pages/home/training/list/index",
 			"style": {
@@ -196,7 +203,7 @@
 		{
 			"path": "pages/release/ship-registration/index",
 			"style": {
-				"navigationBarTitleText": "船员上传登记"
+				"navigationBarTitleText": "上船登记"
 			}
 		},
 		{

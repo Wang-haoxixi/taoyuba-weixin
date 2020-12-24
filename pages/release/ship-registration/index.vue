@@ -4,14 +4,18 @@
 		<view class="form-wrapper">
 			<u-form :model="form" ref="uForm" :rules="rules" label-width="150" :label-style="{color: '#999'}">
 				<u-form-item prop="photoFront" label-position="top">
-					<u-upload custom-btn width="500" :show-progress="false" @on-success="onSuccessPhotoFront" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/idcard`">
+					<!-- :header="header" -->
+					<u-upload custom-btn width="500" :show-progress="false" @on-success="onSuccessPhotoFront" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :action="`${apiUrl}/admin/file/upload/idcard`">
 						<view class="img-wrapper" slot="addBtn">
 							<image :src="`${imgUrl}/homo-face.png`" mode="aspectFit"></image>
 						</view>
 					</u-upload>
 				</u-form-item>
+				<u-form-item label="区域" required prop="orgId">
+					<u-input type="select" border :select-open="orgIdShow" v-model="form.orgIdName" placeholder="请选择区域" @click="orgIdShow = true"></u-input>
+				</u-form-item>
 				<u-form-item label="类型" required prop="shipName">
-					<u-input type="select" border :select-open="shipNameShow" v-model="form.shipName" placeholder="请选择类型" @click="shipNameShow = true"></u-input>
+					<u-input type="select" border :select-open="shipNameShow" v-model="form.shipName" placeholder="请选择类型" @click="openShipName"></u-input>
 				</u-form-item>
 				<u-form-item label="船名号" required prop="shipNum">
 					<u-input v-model="form.shipNum" border type="number" trim placeholder="请输入船名号"/>
@@ -25,17 +29,21 @@
 			<u-button size="default" hover-class="none" :loading="loading" :custom-style="btnStyle" @click="onSubmit">申请</u-button>
 		</view>
 		<u-select safe-area-inset-bottom mode="single-column" :list="shipNameList" v-model="shipNameShow" @confirm="onConfirm"></u-select>
+		<!-- 区域 -->
+		<u-select safe-area-inset-bottom mode="single-column" :list="organizationList" v-model="orgIdShow" @confirm="onOrgIdConfirm"></u-select>
 	</view>
 </template>
 
 <script>
 	import { TOKEN } from '@/common/config/index.js'
 	import cloneDeep from 'lodash/cloneDeep'
+	import orgMixin from '@/pages/mixins/org'
 	export default {
+		mixins: [orgMixin],
 		data () {
 			return {
-				shipNameList: [],
 				shipNameShow: false,
+				orgIdShow: false,
 				header: {
 					'Authorization': 'Bearer ' + uni.getStorageSync(TOKEN)
 				},
@@ -53,7 +61,7 @@
 					address: '',
 					realName: '',
 					sex: '',
-					orgId: 21, // 衢山
+					orgId: '', // 衢山
 					flag: 2,
 					birthday: '',
 					gender: '',
@@ -67,13 +75,8 @@
 					shipName: '', // 类型
 					shipNum: '', // 船名号
 				},
-				shipNameList: [
-					{ value: '浙岱渔', label: '浙岱渔' },
-					{ value: '浙岱渔运', label: '浙岱渔运' },
-					{ value: '浙岱渔冷', label: '浙岱渔冷' },
-					{ value: '浙岱渔休', label: '浙岱渔休' }
-				],
 				rules: {
+					orgId: [{ required: true, message: '请选择区域', trigger: ['change'] }],
 					photoFront: [{ required: true, message: '请上传你的身份证', trigger: ['change', 'blur'] }],
 					phone: [
 						{ required: true, message: '请输入本人手机', trigger: ['blur'] },
@@ -102,11 +105,45 @@
 				}
 			}
 		},
+		computed: {
+			shipNameList () {
+				let name = this.form.orgId ? this.organizationTypeList[this.form.orgId] : ''
+				return [
+					{ value: `${name}渔`, label: `${name}渔` },
+					{ value: `${name}渔运`, label: `${name}渔运` },
+					{ value: `${name}渔冷`, label: `${name}渔冷` },
+					{ value: `${name}渔休`, label: `${name}渔休` }
+				]
+			}
+		},
 		onReady () {
 			this.$refs.uForm.setRules(this.rules)
 			this.photoFrontList = this.$refs.uUpload1.lists
 		},
+		watch: {
+			'form.orgId': {
+				handler (newVal) {
+					if (newVal) {
+						this.form.shipName = ''
+					}
+				}
+			}
+		},
 		methods: {
+			openShipName () {
+				if (this.form.orgId) {
+					this.shipNameShow = true
+				} else {
+					uni.showToast({
+						icon: 'none',
+						title: '请先选择区域'
+					})
+				}
+			},
+			onOrgIdConfirm (e) {
+				this.form.orgIdName = e[0].label
+				this.form.orgId = e[0].value
+			},
 			onSuccessPhotoFront (data, index, lists, name) {
 				if (data.data.imageState === 'normal') {
 					let result = data.data
@@ -171,12 +208,12 @@
 													title: '船员登记添加成功'
 												})
 												uni.navigateTo({
-													url: '/pages/release/register/success?text=船员登记添加成功'
+													url: '/pages/release/register/success?text=上船登记添加成功'
 												})
 											} else {
 												uni.showToast({
 													icon: 'none',
-													title: data.msg || '船员登记添加失败'
+													title: data.msg || '上船登记添加失败'
 												})
 											}
 											

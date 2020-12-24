@@ -49,7 +49,7 @@
 				list: [
 					{ name: '培训服务' },
 					{ name: '培训信息' },
-					{ name: '职业规划' },
+					{ name: '证书查询' },
 					{ name: '教程订购' }
 				],
 				data1: [],
@@ -70,7 +70,8 @@
 			tabsChange (index) {
 				if (index === 2) {
 					uni.navigateTo({
-						url: `/pages/base/web?src=https://m.taoyu58.com/careerplanning`
+						url: '/pages/home/info/index?index=2'
+						// url: `/pages/base/web?src=https://m.taoyu58.com/careerplanning`
 					})
 				} else if (index === 3) {
 					uni.navigateTo({
