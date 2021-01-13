@@ -12,7 +12,7 @@
 					</u-upload>
 				</u-form-item>
 				<u-form-item label="区域" required prop="orgId">
-					<u-input type="select" border :select-open="orgIdShow" v-model="form.orgIdName" placeholder="请选择区域" @click="orgIdShow = true"></u-input>
+					<u-input type="select" border :select-open="orgIdShow" v-model="form.orgIdName" placeholder="请选择区域" @click="orgIdOpen"></u-input>
 				</u-form-item>
 				<u-form-item label="类型" required prop="shipName">
 					<u-input type="select" border :select-open="shipNameShow" v-model="form.shipName" placeholder="请选择类型" @click="openShipName"></u-input>
@@ -42,6 +42,7 @@
 		mixins: [orgMixin],
 		data () {
 			return {
+				orgIdDisabled: false,
 				shipNameShow: false,
 				orgIdShow: false,
 				header: {
@@ -116,6 +117,13 @@
 				]
 			}
 		},
+		onLoad (params) {
+			if (params.orgId) {
+				this.form.orgId = params.orgId
+				this.orgIdDisabled = true
+				console.log('this.form.orgId', this.form.orgId)
+			}
+		},
 		onReady () {
 			this.$refs.uForm.setRules(this.rules)
 			this.photoFrontList = this.$refs.uUpload1.lists
@@ -127,9 +135,31 @@
 						this.form.shipName = ''
 					}
 				}
+			},
+			organizationList: {
+				handler (newVal) {
+					let orgId = this.form.orgId
+					if (newVal && orgId) {
+						this.form.orgId = orgId
+						newVal.forEach((item) => {
+							if (item.value === orgId) {
+								this.form.orgIdName = item.label
+								return false
+							}
+						})
+						this.orgIdDisabled = true
+					}
+				},
+				deep: true,
+				immediate: true
 			}
 		},
 		methods: {
+			orgIdOpen () {
+				if (!this.orgIdDisabled) {
+					this.orgIdShow = true
+				}
+			},
 			openShipName () {
 				if (this.form.orgId) {
 					this.shipNameShow = true

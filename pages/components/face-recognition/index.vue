@@ -20,6 +20,7 @@
 </template>
 
 <script>
+	let COUNT = 3
 	import { TOKEN } from '@/common/config/index.js'
 	export default {
 		props: {
@@ -177,6 +178,7 @@
 										this.$http.upload(`admin/file/faceMatch`,
 											{
 												formData: {
+													useId: this.userInfo.useId,
 													idcard: this.userInfo.idCard,
 													// name: this.userInfo.realName,
 													file: filePath
@@ -191,9 +193,18 @@
 													this._isFirst = false
 													this.loading = false
 													this.phoneSrc = ''
+													COUNT = 3
 													this.$emit('end')
 													this.close()
 												} else {
+													COUNT--
+													if (COUNT <= 0) {
+														this.$refs.uToast.show({
+															title: '你当前的信息和系统数据不匹配，请重新验证',
+															back: true
+														})
+														return
+													}
 													this.$refs.uToast.show({
 														title: '你当前的信息和系统数据不匹配，请重新验证'
 													})
@@ -204,12 +215,20 @@
 												if (msg === '检测成功') {
 													this.loading = false
 													this.phoneSrc = ''
+													COUNT = 3
 													this.$emit('end')
 													this.close()
 												} else {
+													COUNT--
+													if (COUNT <= 0) {
+														this.$refs.uToast.show({
+															title: '你当前的信息和系统数据不匹配，请重新验证',
+															back: true
+														})
+														return
+													}
 													this.$refs.uToast.show({
-														title: '你当前的信息和系统数据不匹配，请重新验证',
-														back: true
+														title: '你当前的信息和系统数据不匹配，请重新验证'
 													})
 												}
 											}

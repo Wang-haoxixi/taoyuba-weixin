@@ -58,8 +58,9 @@
 		onLoad (params) {
 			this.videoId = params.id
 			if (params.id) {
-				this.getUserInfoApi().then(() => {
-					this.getList(params.id)
+				this.getList(params.id)
+				// this.getUserInfoApi().then(() => {
+					// this.getList(params.id)
 					// if (this.roles.includes(this.rolesType.crew.type)) {
 					// 	this.getList(params.id)
 					// } else {
@@ -68,7 +69,19 @@
 					// 		back: true
 					// 	})
 					// }
-				})
+				// }).catch(() => {
+				// 	setTimeout(() => {
+				// 		uni.navigateBack({
+				// 			delta: 1
+				// 		})
+				// 	}, 1000)
+				// })
+			} else {
+				setTimeout(() => {
+					uni.navigateBack({
+						delta: 1
+					})
+				}, 1000)
 			}
 			// this.getList(params.id)
 			this.faceTime += this.initialTime
@@ -92,7 +105,7 @@
 		},
 		methods: {
 			getList (id) {
-				this.$http.get(`/tybhrms/tyblessonvideo/${id}`).then(({ data }) => {
+				this.$http.get(`/tybhrms/tyblessonvideo/details/${id}`).then(({ data }) => {
 					if (data.code === 0) {
 						this.data = data.data
 						this.initialTime = this.data.learnTime || 0
@@ -100,15 +113,12 @@
 						this.intervalTime = +this.intervalTime + (+this.initialTime)
 						this.closeFace = this.data.leranStamp > 0
 						this.videoContext.pause()
-						if (this.roles.includes(this.rolesType.crew.type) && !this.closeFace) {
-							this.$http.get('/tmlms/crew/getCrewByidcard', {
-								params: {
-									idcard: this.userInfo.idCard
-								}
-							}).then(({ data }) => {
+						// this.roles.includes(this.rolesType.crew.type) &&
+						if (!this.closeFace) {
+							this.$http.get(`/admin/user/details/${this.userInfo.username}`).then(({ data }) => {
 								if (data.code === 0) {
 									let facePhoto = data.data.facePhoto
-									if (facePhoto === '' || facePhoto.indexOf('2019') > -1) {
+									if (facePhoto === '' || facePhoto == null) {
 										this.isFirst = true
 									}
 									this.show = true
@@ -126,32 +136,13 @@
 						} else {
 							this.show = false
 						}
-						
-						
-						// this.$http.get('/tmlms/crew/getCrewByidcard', {
-						// 	params: {
-						// 		idcard: this.userInfo.idCard
-						// 	}
-						// }).then(({ data }) => {
-						// 	if (data.code === 0) {
-						// 		let facePhoto = data.data.facePhoto
-						// 		if (facePhoto === '' || facePhoto.indexOf('2019') > -1) {
-						// 			this.isFirst = true
-						// 		}
-						// 		this.show = true
-								
-						// 	} else {
-						// 		uni.navigateBack({
-						// 			delta: 1
-						// 		})
-						// 	}
-						// }).catch(() => {
-						// 	uni.navigateBack({
-						// 		delta: 1
-						// 	})
-						// })
-						// this.show = true
 					}
+				}).catch(() => {
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
+						})
+					}, 1000)
 				})
 			},
 			// 记录学习时间
@@ -189,7 +180,8 @@
 			onTimeupdate (e) {
 				let currentTime = e.detail.currentTime
 				this.time = currentTime
-				if (this.roles.includes(this.rolesType.crew.type) && !this.closeFace) {
+				// this.roles.includes(this.rolesType.crew.type) && 
+				if (!this.closeFace) {
 					if (this.faceTime < currentTime) {
 						this.videoContext.exitFullScreen()
 						this.videoContext.pause()

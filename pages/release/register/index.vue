@@ -11,7 +11,7 @@
 					</u-upload>
 				</u-form-item>
 				<u-form-item label="区域" required prop="orgId">
-					<u-input type="select" border :select-open="orgIdShow" v-model="form.orgIdName" placeholder="请选择区域" @click="orgIdShow = true"></u-input>
+					<u-input type="select" border :select-open="orgIdShow" v-model="form.orgIdName" placeholder="请选择区域" @click="orgIdOpen"></u-input>
 				</u-form-item>
 				<u-form-item label="本人手机" required prop="phone">
 					<u-input v-model="form.phone" border type="number" trim placeholder="请输入本人手机"/>
@@ -45,8 +45,15 @@
 	import orgMixin from '@/pages/mixins/org'
 	export default {
 		mixins: [orgMixin],
+		props: {
+			orgId: {
+				type: String,
+				default: ''
+			}
+		},
 		data () {
 			return {
+				orgIdDisabled: false,
 				photoFrontList: [],
 				contactNameShow: false,
 				orgIdShow: false,
@@ -118,11 +125,45 @@
 				}
 			}
 		},
+		watch: {
+			// orgId: {
+			// 	handler (newVal) {
+			// 		if (newVal) {
+			// 			this.form.orgId = newVal
+			// 			this.form.orgIdName = ''
+			// 			this.orgIdDisabled = true
+			// 		}
+			// 	},
+			// 	deep: true,
+			// 	immediate: true
+			// },
+			organizationList: {
+				handler (newVal) {
+					if (newVal && this.orgId) {
+						this.form.orgId = this.orgId
+						newVal.forEach((item) => {
+							if (item.value === this.orgId) {
+								this.form.orgIdName = item.label
+								return false
+							}
+						})
+						this.orgIdDisabled = true
+					}
+				},
+				deep: true,
+				immediate: true
+			}
+		},
 		onReady () {
 			this.$refs.uForm.setRules(this.rules)
 			this.photoFrontList = this.$refs.uUpload1.lists
 		},
 		methods: {
+			orgIdOpen () {
+				if (!this.orgIdDisabled) {
+					this.orgIdShow = true
+				}
+			},
 			onSuccessPhotoFront (data, index, lists, name) {
 				if (data.data.imageState === 'normal') {
 					let result = data.data
@@ -193,19 +234,28 @@
 						} else {
 							this.loading = true
 							this.$http.post('/tmlms/crew/editByWx?type=2', this.form).then(({ data }) => {
+								console.log('success', data)
 								this.loading = false
 								uni.showToast({
 									icon: 'none',
 									title: '你的船员信息已登记成功！'
 								})
+								uni.navigateTo({
+									url: `/pages/release/register/success?text=你的船员信息已登记成功`
+								})
+							}).catch((res) => {
+								uni.showToast({
+									icon: 'none',
+									title: res.data.msg
+								})
+								this.loading = false
 							})
-							uni.navigateTo({
-								url: `/pages/release/register/success?text=你的船员信息已登记成功`
-							})
+							
 						}
 					} else {
 						this.loading = true
 						this.$http.post('/tmlms/crew/createByWx', this.form).then(({ data }) => {
+							console.log()
 							this.loading = false
 							uni.showToast({
 								icon: 'none',
@@ -214,6 +264,12 @@
 							uni.navigateTo({
 								url: `/pages/release/register/success?text=你的船员信息已登记成功`
 							})
+						}).catch((res) => {
+							uni.showToast({
+								icon: 'none',
+								title: res.data.msg
+							})
+							this.loading = false
 						})
 					}
 					

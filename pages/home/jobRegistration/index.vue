@@ -6,7 +6,7 @@
 		</view>
 		<view style="height: 80rpx;"></view>
 		<view class="content-wrapper">
-			<page-register v-show="current === 1"></page-register>
+			<page-register v-show="current === 1" :orgId="jobForm.orgId"></page-register>
 			<view v-show="current === 0">
 				<view class="recruit-list-wrapper safe-bottom safe-padding-bottom">
 					<view>
@@ -71,6 +71,9 @@
 					workMode: '',
 					order: ''
 				},
+				jobForm: {
+					orgId: ''
+				},
 				data: []
 			}
 		},
@@ -105,12 +108,17 @@
 			}
 		},
 		onLoad (params) {
+			console.log('params', params)
 			if (params.keyword) {
 				this.form.realName = params.keyword
 			}
 			if (params.index) {
-				this.current = params.index
+				this.current = +params.index
 			}
+			if (params.orgId) {
+				this.jobForm.orgId = params.orgId
+			}
+			console.log('current', this.current)
 			this.getList()
 		},
 		onUnload () {

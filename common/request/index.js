@@ -40,7 +40,9 @@ const ignoreUrl = [
 	'/tmlms/crew/createByWx',
 	'/tmlms/crew/checkMoreRelations',
 	'/tmlms/crew/batchCreate',
-	'/tybship/tybship/findmyshipWx'
+	'/tybship/tybship/findmyshipWx',
+	'/admin/org/page',
+	'/tmlms/crew/PageWithOutOrg',
 ]
 const getTokenStorage = () => {
 	let token = ''
