@@ -36,7 +36,7 @@
 			</content-container>
 			<content-container title="个人资料" v-if="show">
 				<view>
-					<view class="text">电话：{{data.contactPhone || ''}}</view>
+					<view class="text">电话：{{data.phone || ''}}</view>
 					<view class="text">性别：{{genderLabel || ''}}</view>
 					<view class="text">出生日期：{{data.birthday || ''}}</view>
 					<view class="text">教育程度：{{eduDegreeLabel || ''}}</view>
