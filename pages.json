@@ -339,6 +339,12 @@
 			}
 		},
 		{
+			"path": "pages/user/report/index",
+			"style": {
+				"navigationBarTitleText": "勘验报告"
+			}
+		},
+		{
 			"path": "pages/base/web",
 			"style": {
 				"navigationBarTitleText": ""

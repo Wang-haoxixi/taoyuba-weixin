@@ -14,6 +14,7 @@
 		<home-info></home-info>
 		<home-autograph v-model="show"></home-autograph>
 		<view class="safe-bottom"></view>
+		<official-account></official-account>
 		<!-- <u-button @click="open">签名</u-button> -->
 		<tyb-tarbar :currentIndex="0"></tyb-tarbar>
 	</view>

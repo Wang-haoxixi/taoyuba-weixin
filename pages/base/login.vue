@@ -23,8 +23,14 @@
 						<u-input trim placeholder="请输入验证码" v-model="form.code" type="text"></u-input>
 						<u-button slot="right" type="success" size="mini" @click="getCode" hover-class="none" :custom-style="{backgroundColor:'#fff',color: '#409EFF', fontSize: '32rpx'}">{{codeTips}}</u-button>
 					</u-form-item> -->
-					<view class="btn-wrapper">
-						<u-button @click="onSubmit" type="default" :custom-style="{backgroundColor: '#409EFF', color: '#fff'}" hover-class="none" shape="circle" :loading="loading">登录</u-button>
+					<view class="btn-wrapper two-btn-wrapper">
+						<div style="width: 100%;">
+							<u-button @click="onSubmit" type="default" :custom-style="{backgroundColor: '#409EFF', color: '#fff'}" hover-class="none" shape="circle" :loading="loading">登录</u-button>
+						</div>
+						<div style="padding-left: 20rpx;">
+							<!-- <button style="background-color: #eaeaea;color: #333; font-size: 30rpx;" @click="onToHome('/pages/home/index/index')">取消</button> -->
+							<u-button @click="onToHome('/pages/home/index/index')" type="default" :custom-style="{backgroundColor: '#eaeaea', color: '#888'}" hover-class="none" shape="circle" :loading="loading">取消</u-button>
+						</div>
 					</view>
 				</u-form>
 			</view>
@@ -106,6 +112,13 @@
 			this.refreshCode()
 		},
 		methods: {
+			onToHome (path) {
+				if (path) {
+					uni.switchTab({
+						url: path
+					})
+				}
+			},
 			onTo (path) {
 				if (path) {
 					uni.navigateTo({
@@ -336,5 +349,9 @@
 	}
 	.wechat-phone-wrapper {
 		padding: 50rpx 20rpx 30rpx 20rpx;
+	}
+	.two-btn-wrapper {
+		display: flex;
+		justify-content: space-between;
 	}
 </style>
