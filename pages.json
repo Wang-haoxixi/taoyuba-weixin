@@ -9,39 +9,39 @@
 				"navigationBarTitleText": ""
 			}
 		},
-		{
-			"path": "pages/home/search/index",
-			"style": {
-				"navigationBarTitleText": "搜索"
-			}
-		},
-		{
-			"path": "pages/home/resume/list/index",
-			"style": {
-				"navigationBarTitleText": "求职",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/resume/detail/index",
-			"style": {
-				"navigationBarTitleText": "求职"
-			}
-		},
-		{
-			"path": "pages/home/jobRegistration/index",
-			"style": {
-				"navigationBarTitleText": "求职",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/recruit/list/index",
-			"style": {
-				"navigationBarTitleText": "招聘",
-				"enablePullDownRefresh": true
-			}
-		},
+		// {
+		// 	"path": "pages/home/search/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "搜索"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/resume/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "求职",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/resume/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "求职"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/jobRegistration/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "求职",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/recruit/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "招聘",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
 		{
 			"path": "pages/home/recruit/detail/index",
 			"style": {
@@ -74,70 +74,70 @@
 				"enablePullDownRefresh": true
 			}
 		},
-		{
-			"path": "pages/home/training/detail/index",
-			"style": {
-				"navigationBarTitleText": "培训机构"
-			}
-		},
-		{
-			"path": "pages/home/training-info/list/index",
-			"style": {
-				"navigationBarTitleText": "培训信息"
-			}
-		},
-		{
-			"path": "pages/home/examination/detail/index",
-			"style": {
-				"navigationBarTitleText": "模拟考试",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/home/examination/list/index",
-			"style": {
-				"navigationBarTitleText": "模拟考试",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/training-info/detail/index",
-			"style": {
-				"navigationBarTitleText": "培训信息"
-			}
-		},
-		{
-			"path": "pages/home/news/list/index",
-			"style": {
-				"navigationBarTitleText": "新闻",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/news/detail/index",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/home/book/list/index",
-			"style": {
-				"navigationBarTitleText": "教材订购",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/home/contract/list/index",
-			"style": {
-				"navigationBarTitleText": "合同"
-			}
-		},
-		{
-			"path": "pages/home/contract/detail/index",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
+		// {
+		// 	"path": "pages/home/training/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "培训机构"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/training-info/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "培训信息"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/examination/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "模拟考试",
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/examination/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "模拟考试",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/training-info/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "培训信息"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/news/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "新闻",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/news/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": ""
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/book/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "教材订购",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/contract/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "合同"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/home/contract/detail/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": ""
+		// 	}
+		// },
 		{
 			"path": "pages/home/info/index",
 			"style": {
