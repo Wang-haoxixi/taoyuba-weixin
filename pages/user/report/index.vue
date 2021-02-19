@@ -21,11 +21,15 @@
 		},
 		data () {
 			return {
-				current: 1
+				current: 2
 			}
 		},
 		methods: {
 			onNext (index) {
+				uni.pageScrollTo({
+		　　　　　　duration: 0,//过渡时间必须为0，uniapp bug，否则运行到手机会报错
+		　　　　　　scrollTop: 0,//滚动到实际距离是元素距离顶部的距离减去最外层盒子的滚动距离
+		　　　　})
 				this.current = index
 			}
 		}

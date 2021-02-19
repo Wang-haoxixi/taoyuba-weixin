@@ -5,7 +5,7 @@
 				<u-input v-model="shipName" trim focus type="number" :maxlength="5" placeholder="请输入渔船名,如:00000"/>
 			</view>
 			<view class="search-result" v-show="shipNameShow">
-				<view class="item" v-for="item in shipNameList" :key="item.shipId" @click="onSearch(item.shipName)">
+				<view class="item" v-for="item in shipNameList" :key="item.shipId" @click="onSearch(item.shipId)">
 					<text>{{item.shipName}}</text>
 					<i class="iconfont iconicon-"></i>
 				</view>
@@ -94,13 +94,24 @@
 					}
 				})
 			},
+			getShipInfo (id) {
+				if (!id) {
+					return
+				}
+				this.$http.get(`/tybship/tybship/${id}`).then(({ data }) => {
+					if (data.code === 0) {
+						this.form = data.data
+					}
+				})
+			},
 			onNext () {
 				if (this.form.shipName) {
 					this.$emit('next', 2)
 				}
 			},
-			onSearch () {
+			onSearch (id) {
 				this.shipName = ''
+				this.getShipInfo(id)
 			}
 		}
 	}

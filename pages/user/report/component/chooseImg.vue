@@ -2,26 +2,33 @@
 	<view class="">
 		<view class="choose-img-wrapper">
 			<view class="img-item" v-for="(item, index) in value">
-				<u-image width="200rpx" height="200rpx" :key="index" :src="item" mode="scaleToFill"></u-image>
+				<u-image width="200rpx" height="200rpx" :key="index" :src="item" mode="scaleToFill" @click="openImg(index)"></u-image>
 				<u-icon class="icon-delete" name="close-circle-fill" color="#333" size="40" @click="deleteImg(index)"></u-icon>
 			</view>
 			<view class="add-upload" @click="onChooseImg">
 				<u-icon name="plus" color="#d7d7d7" size="80"></u-icon>
 			</view>
 		</view>
-		<u-popup
-			mode="top"
-			v-model="show"
-			:duration="50"
-			closeable
-			:zoom="false"
-			height="100%"
-			safe-area-inset-bottom>
-			<view class="content">
-				<u-swiper height="auto" :list="listImg" :autoplay="false"></u-swiper>
-				<!-- <image :src="imgs[current]" mode="aspectFit" width="100%"></image> -->
+		<view v-if="show" class="pic-wrapper">
+			<view class="pic-header">
+				<view class="icon-left">
+					<u-icon name="arrow-left" color="#333" size="34" @click="closePopup"></u-icon>
+				</view>
+				<view class="pic-center">
+					{{current + 1}}/{{value.length}}
+				</view>
+				<view class="icon-right">
+					<u-icon name="trash" color="#333" size="34" @click="deleteImgSwiper"></u-icon>
+				</view>
 			</view>
-		</u-popup>
+			<view class="content">
+				<swiper class="swiper" style="height: 100vh;" :current="current" @change="onChangeSwiper">
+					<swiper-item v-for="(item, index) in value" :key="index">
+						<image :src="item" mode="widthFix" style="width: 100%;"></image>
+					</swiper-item>
+				</swiper>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -33,27 +40,15 @@
 		data () {
 			return {
 				show: false,
-				current: 0,
-				listImg: []
+				current: 0
 			}
 		},
 		methods: {
 			openPopup (index) {
-				console.log('index', index)
-				let img2 = this.value.splice(0, index) || []
-				let img1 = this.value.splice(index - 1) || []
-				let imgs = img1.concat(img2)
-				console.log('img1', img1)
-				console.log('img2', img2)
-				imgs.forEach((item) => {
-					let obj = { image: item }
-					this.listImg.push(obj)
-				})
-				console.log('this.listImg', this.listImg)
+				this.current = index
 				this.show = true
 			},
 			closePopup () {
-				this.listImg = []
 				this.show = false
 			},
 			onChooseImg () {
@@ -71,11 +66,24 @@
 				let arr = []
 				arr = arr.concat(this.value)
 				this.$emit('input', arr)
-				console.log('this.value', this.value)
-				// this.$emit('deleteImg', index)
 			},
 			openImg (index) {
 				this.openPopup(index)
+			},
+			onChangeSwiper (event) {
+				this.current = event.detail.current
+			},
+			deleteImgSwiper () {
+				this.value.splice(this.current, 1)
+				let arr = []
+				arr = arr.concat(this.value)
+				this.$emit('input', arr)
+				if (this.current > this.value.length - 1) {
+					this.current = this.value.length - 1
+				}
+				if (this.value.length === 0) {
+					this.closePopup()
+				}
 			}
 		}
 	}
@@ -106,6 +114,23 @@
 		}
 	}
 	.content {
-		padding: 40rpx 0;
+		image {
+			width: 100%;
+		}
+	}
+	.pic-wrapper {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #000;
+		z-index: 10;
+		.pic-header {
+			padding: 20rpx;
+			background-color: #fff;
+			display: flex;
+			justify-content: space-between;
+		}
 	}
 </style>
