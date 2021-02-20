@@ -33,6 +33,7 @@
 </template>
 
 <script>
+	import { API_URL } from '@/env'
 	export default {
 		props: {
 			value: Array
@@ -52,12 +53,25 @@
 				this.show = false
 			},
 			onChooseImg () {
+				let config_url = API_URL
 				uni.chooseImage({
 					sizeType: 'compressed',
 					sourceType: ['album', 'camera'],
 					success: (res) => {
 						const tempFilePaths = res.tempFilePaths
-						this.$emit('getImgs', tempFilePaths)
+						tempFilePaths.forEach((item) => {
+							this.$http.upload('/admin/file/upload/avatar', {
+								filePath: item,
+								name: 'file'
+							}).then(({ data }) => {
+								console.log('图片上传成功', data)
+								if (data.code === 0) {
+									let arr = [data.data.url]
+									this.$emit('getImgs', data.data.url)
+								}
+							})
+						})
+						// this.$emit('getImgs', tempFilePaths)
 					}
 				})
 			},

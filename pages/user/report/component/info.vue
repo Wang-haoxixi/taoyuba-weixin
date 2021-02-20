@@ -1,6 +1,6 @@
 <template>
 	<view class="report-info-wrapper">
-		<view class="search-wrapper">
+		<view class="search-wrapper" v-show="!form.shipName">
 			<view style="border-radius: 40rpx;overflow: hidden;border: 1px solid #dcdfe6;padding-left: 20rpx;">
 				<u-input v-model="shipName" trim focus type="number" :maxlength="5" placeholder="请输入渔船名,如:00000"/>
 			</view>
@@ -54,6 +54,7 @@
 				shipNameList: [],
 				shipNameShow: false,
 				form: {
+					shipId: '',
 					shipName: '', // 船名号
 					shipNo: '', // 渔船编码
 					hullMaterial: '', // 船体材质
@@ -100,13 +101,23 @@
 				}
 				this.$http.get(`/tybship/tybship/${id}`).then(({ data }) => {
 					if (data.code === 0) {
-						this.form = data.data
+						let val = data.data
+						if (val.buildDate) {
+							let date = +new Date(val.buildDate)
+							val.buildDate = this.$tools.timestamp(date / 1000)
+						}
+						for (let key in this.form) {
+							this.form[key] = val[key]
+						}
+						
+						this.$emit('getShip', this.form)
 					}
 				})
 			},
 			onNext () {
 				if (this.form.shipName) {
 					this.$emit('next', 2)
+					// console.log('基本信息', this.form)
 				}
 			},
 			onSearch (id) {

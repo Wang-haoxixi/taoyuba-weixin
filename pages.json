@@ -157,36 +157,36 @@
 				"navigationBarTitleText": ""
 			}
 		},
-		{
-			"path": "pages/release/resume/edit",
-			"style": {
-				"navigationBarTitleText": "简历"
-			}
-		},
-		{
-			"path": "pages/release/recruit/edit",
-			"style": {
-				"navigationBarTitleText": "招聘"
-			}
-		},
-		{
-			"path": "pages/release/shipowner-resume/edit",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
-		{
-			"path": "pages/release/ship/index",
-			"style": {
-				"navigationBarTitleText": "绑定渔船"
-			}
-		},
-		{
-			"path": "pages/release/identity/index",
-			"style": {
-				"navigationBarTitleText": "绑定渔船"
-			}
-		},
+		// {
+		// 	"path": "pages/release/resume/edit",
+		// 	"style": {
+		// 		"navigationBarTitleText": "简历"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/release/recruit/edit",
+		// 	"style": {
+		// 		"navigationBarTitleText": "招聘"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/release/shipowner-resume/edit",
+		// 	"style": {
+		// 		"navigationBarTitleText": "个人中心"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/release/ship/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "绑定渔船"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/release/identity/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "绑定渔船"
+		// 	}
+		// },
 		{
 			"path": "pages/release/register/index",
 			"style": {

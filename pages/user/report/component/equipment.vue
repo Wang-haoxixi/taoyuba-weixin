@@ -128,9 +128,9 @@
 
 <script>
 	import chooseImg from './chooseImg.vue'
-	import imgMixin from './img.js'
+	import reportMixin from './mixin.js'
 	export default {
-		mixins: [imgMixin],
+		mixins: [reportMixin],
 		components: {
 			chooseImg
 		},
@@ -138,17 +138,17 @@
 			return {
 				form: {
 					shipMark: '', // 主机-实船型号
-					shipMarkFlag: 2 , // 主机-铭牌
+					shipMarkFlag: 0, // 主机-铭牌
 					shipMarkImage: [], // 主机-照片
 					dynamo: '', // 发电机-型号
 					dynamoQuantity: '', // 发电机-数量
 					dynamoImage: [], // 发电机-照片
 					electricBoxImage: [], // 控制电箱
 					gearBoxMark: '', // 齿轮箱-型号
-					gearBoxFlag: 2, // 齿轮箱-铭牌
+					gearBoxFlag: 0, // 齿轮箱-铭牌
 					gearBoxImage: [], // 齿轮箱-照片
 					oilEquipmentMark: '', // 滤油设备型号
-					oilEquipmentFlag: 2, // 滤油设备铭牌
+					oilEquipmentFlag: 0, // 滤油设备铭牌
 					oilEquipmentImage: [], // 滤油设备照片
 					residualOilTank: [], // 残油舱
 					dirtyOilTank: [], // 污油水柜(舱)
@@ -173,8 +173,25 @@
 				this.$emit('prev', 3)
 			},
 			onSubmit () {
+				// this.form.dynamoQuantity = 1
 				this.$emit('submit')
-			}
+			},
+			getForm () {
+				let form = this.form
+				let value = Object.assign({}, this.value)
+				for (let key in form) {
+					if (Array.isArray(form[key])) {
+						form[key] = value[key] || []
+					} else {
+						if (['shipMarkFlag', 'gearBoxFlag', 'oilEquipmentFlag'].indexOf(key) > -1) {
+							form[key] = value[key] || 0
+						} else {
+							form[key] = value[key] || ''
+						}
+						
+					}
+				}
+			},
 		}
 	}
 </script>

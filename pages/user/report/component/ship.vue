@@ -21,9 +21,9 @@
 
 <script>
 	import chooseImg from './chooseImg.vue'
-	import imgMixin from './img.js'
+	import reportMixin from './mixin.js'
 	export default {
-		mixins: [imgMixin],
+		mixins: [reportMixin],
 		components: {
 			chooseImg
 		},
@@ -69,6 +69,7 @@
 			},
 			onNext () {
 				this.$emit('next', 4)
+				// console.log('船体部分', this.form)
 			},
 			onPrev () {
 				this.$emit('prev', 2)
