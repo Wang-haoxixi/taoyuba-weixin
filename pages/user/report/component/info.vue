@@ -103,7 +103,7 @@
 					if (data.code === 0) {
 						let val = data.data
 						if (val.buildDate) {
-							let date = +new Date(val.buildDate)
+							let date = +new Date(val.buildDate.replace(/-/g, '/') )
 							val.buildDate = this.$tools.timestamp(date / 1000)
 						}
 						for (let key in this.form) {

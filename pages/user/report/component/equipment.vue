@@ -11,7 +11,8 @@
 			<view class="form-input form-wrapper"><u-input border v-model="form.shipMark" /></view>
 			<view class="item-sub-title">铭牌：</view>
 			<view class="form-wrapper">
-				<u-radio-group v-model="form.shipMarkFlag">
+				<u-input border v-model="form.shipMarkFlag" />
+				<!-- <u-radio-group v-model="form.shipMarkFlag">
 					<u-radio
 						v-for="(item, index) in dicData.isNot"
 						:key="index"
@@ -19,7 +20,7 @@
 					>
 						{{item.label}}
 					</u-radio>
-				</u-radio-group>
+				</u-radio-group> -->
 			</view>
 			<view class="item-sub-title">照片：</view>
 			<view class="">
@@ -58,7 +59,8 @@
 			<view class="form-input form-wrapper"><u-input border v-model="form.gearBoxMark" /></view>
 			<view class="item-sub-title">铭牌：</view>
 			<view class="form-wrapper">
-				<u-radio-group v-model="form.gearBoxFlag">
+				<u-input border v-model="form.gearBoxFlag" />
+				<!-- <u-radio-group v-model="form.gearBoxFlag">
 					<u-radio
 						v-for="(item, index) in dicData.isNot"
 						:key="index"
@@ -66,7 +68,7 @@
 					>
 						{{item.label}}
 					</u-radio>
-				</u-radio-group>
+				</u-radio-group> -->
 			</view>
 			<view class="item-sub-title">照片：</view>
 			<view class="">
@@ -82,7 +84,8 @@
 			<view class="form-input form-wrapper"><u-input border v-model="form.oilEquipmentMark" /></view>
 			<view class="item-sub-title">滤油设备铭牌：</view>
 			<view class="form-wrapper">
-				<u-radio-group v-model="form.oilEquipmentFlag">
+				<u-input border v-model="form.oilEquipmentFlag" />
+				<!-- <u-radio-group v-model="form.oilEquipmentFlag">
 					<u-radio
 						v-for="(item, index) in dicData.isNot"
 						:key="index"
@@ -90,7 +93,7 @@
 					>
 						{{item.label}}
 					</u-radio>
-				</u-radio-group>
+				</u-radio-group> -->
 			</view>
 			<view class="item-sub-title">滤油设备：</view>
 			<view class="">

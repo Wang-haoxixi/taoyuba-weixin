@@ -39,7 +39,7 @@
 					<view class="title">个人资料</view>
 					<view class="body-wrapper">
 						<u-form-item label="身份证正面照片" required prop="photoFront" label-position="top">
-							<u-upload :show-progress="false" @on-success="onSuccessPhotoFront" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/idcard`"></u-upload>
+							<u-upload :size-type="['compressed']" :show-progress="false" @on-success="onSuccessPhotoFront" @on-remove="onRemovePhotoFront" ref="uUpload1" :file-list="photoFrontList" max-count="1" :header="header" :action="`${apiUrl}/admin/file/upload/idcard`"></u-upload>
 						</u-form-item>
 						<u-form-item label="姓名" prop="realName" required>
 							<u-input v-model="form.realName" trim placeholder="请输入姓名"/>
