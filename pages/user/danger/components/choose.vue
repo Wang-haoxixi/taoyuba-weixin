@@ -1,19 +1,36 @@
 <template>
 	<view class="choose-danger-wrapper">
-		<view class="title">{{title}}</view>
-		<view class="form-radio">
-			<u-radio-group v-model="form.flag">
-				<u-radio
-					v-for="(item, index) in isNot"
-					:key="index"
-					:name="item.value"
-				>
-					{{item.label}}
-				</u-radio>
-			</u-radio-group>
+		<view class="title">排查要点：{{title}}</view>
+		<view class="current-wrapper">
+			<view class="sub-title">排查记录：</view>
+			<view class="form-radio">
+				<u-radio-group v-model="form.flag" @change="onChange">
+					<u-radio
+						v-for="(item, index) in isNot"
+						:key="index"
+						:name="item.value"
+					>
+						{{item.label}}
+					</u-radio>
+				</u-radio-group>
+			</view>
+			<view v-show="form.flag === 0" class="sub-title">照片：</view>
+			<view v-show="form.flag === 0">
+				<choose-img @close="onClose" @open="onOpen" v-model="form.url" status="update" @get-img="getImg" @delete-img="deleteImg"></choose-img>
+			</view>
 		</view>
-		<view>
-			<choose-img @get-img="getImg"></choose-img>
+		<view class="history-wrapper" v-if="showHistory">
+			<view class="history-title sub-title">历史记录</view>
+			<view class="history-content-wrapper">
+				<view class="sub-title">
+					排查记录：
+					<view class="text" :class="historyData.flag === 0 ? 'error' : (historyData.flag === 1 ? 'success' : '')" >{{historyData.flag === 0 ? '不合格' : (historyData.flag === 1 ? '合格' : '')}}</view>
+				</view>
+				<view class="sub-title" v-show="historyData.flag === 0">照片：</view>
+				<view v-show="historyData.flag === 0">
+					<choose-img @close="onClose" @open="onOpen" status="detail" v-model="imgs"></choose-img>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -25,11 +42,17 @@
 			chooseImg
 		},
 		props: {
-			data: Array,
-			title: String,
+			value: Object,
+			historyData: {
+				type: Object,
+				default: () => {}
+			},
+			title: String
 		},
 		data () {
 			return {
+				imgs: [],
+				showHistory: false,
 				isNot: [
 					{ label: '合格', value: 1 },
 					{ label: '不合格', value: 0 }
@@ -40,19 +63,99 @@
 				}
 			}
 		},
+		watch: {
+			historyData: {
+				handler (newVal) {
+					if (newVal && Object.keys(newVal).length > 0) {
+						if (newVal.flag === 1) {
+							this.showHistory = true
+							this.form.flag = newVal.flag
+							this.form.url = newVal.imgs.split(',')
+						} else {
+							this.showHistory = true
+							if (newVal && newVal.imgs) {
+								this.imgs = newVal.imgs.split(',')
+							}
+						}						
+					} else {
+						this.showHistory = false
+					}
+					
+				},
+				deep: true,
+				immediate: true
+			}
+		},
 		methods: {
+			deleteImg (index) {
+				this.form.url.splice(index, 1)
+				this.$emit('input', this.form)
+			},
 			getImg (data) {
 				// let obj = Object.assign({}, this.value)
 				// obj.url = obj.imgUrl[].split(',') || []
 				this.form.url = this.form.url.concat(data)
+				let form = Object.assign({}, this.form)
+				// form.url = form.url.join(',')
+				this.$emit('input', form)
 				// obj.imgUrl = obj.url.join(',')
 			},
+			onClose () {
+				this.$emit('close')
+			},
+			onOpen () {
+				this.$emit('open')
+			},
+			onChange (val) {
+				if (val === 1) {
+					this.form.url = []
+					let form = Object.assign({}, this.form)
+					this.$emit('input', form)
+				} else{
+					let form = Object.assign({}, this.form)
+					this.$emit('input', form)
+				}
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.choose-danger-wrapper {
-		
+		.title {
+			font-size: 30rpx;
+			color: #333;
+			margin-top: 20rpx;
+		}
+		.history-wrapper {
+			margin-top: 20rpx;
+			padding: 30rpx 30rpx;
+			border: 1px solid #f6f6f6;
+			background-color: #f6f6f6;
+			overflow: hidden;
+			border-radius: 10rpx;
+			.history-title {
+				margin-top: 0;
+				color: #666;
+				font-weight: 700;
+			}
+			.success {
+				color: #19be6b;
+			}
+			.error {
+				color: #FF0000;
+			}
+			.text {
+				display: inline-block;
+			}
+		}
+		.current-wrapper {
+			margin-top: 20rpx;
+		}
+		.sub-title {
+			margin: 20rpx 0;
+			font-size: 30rpx;
+			color: #333;
+		}
 	}
 </style>

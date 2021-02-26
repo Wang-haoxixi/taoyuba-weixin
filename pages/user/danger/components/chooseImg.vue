@@ -3,9 +3,9 @@
 		<view class="choose-img-wrapper">
 			<view class="img-item" v-for="(item, index) in value">
 				<u-image width="200rpx" height="200rpx" :key="index" :src="item" mode="scaleToFill" @click="openImg(index)"></u-image>
-				<u-icon class="icon-delete"  v-if="type === 'update'" name="close-circle-fill" color="#333" size="40" @click="deleteImg(index)"></u-icon>
+				<u-icon class="icon-delete"  v-if="status === 'update'" name="close-circle-fill" color="#333" size="40" @click="deleteImg(index)"></u-icon>
 			</view>
-			<view class="add-upload" @click="onChooseImg" v-show="value.length <= 2">
+			<view class="add-upload" @click="onChooseImg" v-show="showUploadBtn">
 				<u-icon name="plus" color="#d7d7d7" size="80"></u-icon>
 			</view>
 		</view>
@@ -17,8 +17,8 @@
 				<view class="pic-center">
 					{{current + 1}}/{{value.length}}
 				</view>
-				<view class="icon-right" v-if="type === 'update'">
-					<u-icon name="trash" color="#333" size="34" @click="deleteImgSwiper"></u-icon>
+				<view class="icon-right">
+					<u-icon name="trash" v-if="status === 'update'" color="#333" size="34" @click="deleteImgSwiper"></u-icon>
 				</view>
 			</view>
 			<view class="content">
@@ -38,21 +38,50 @@
 	export default {
 		props: {
 			value: Array,
-			type: 'update'
+			status: {
+				type: String,
+				default: 'update'
+			},
+			maxLength: {
+				type: Number,
+				default: 2
+			}
 		},
 		data () {
 			return {
-				maxLength: 2,
 				show: false,
-				current: 0
+				current: 0,
+				showUploadBtn: false
 			}
 		},
+		watch: {
+			value: {
+				handler () {
+					this.showUpload()
+				},
+				deep: true,
+				immediate: true
+			},
+		},
 		methods: {
+			showUpload () {
+				if (this.status === 'detail') {
+					this.showUploadBtn = false
+					return
+				}
+				if (this.value.length >= this.maxLength) {
+					this.showUploadBtn = false
+					return
+				}
+				this.showUploadBtn = true
+			},
 			openPopup (index) {
 				this.current = index
+				this.$emit('open')
 				this.show = true
 			},
 			closePopup () {
+				this.$emit('close')
 				this.show = false
 			},
 			onChooseImg () {
@@ -62,13 +91,14 @@
 					sourceType: ['album', 'camera'],
 					success: (res) => {
 						const tempFilePaths = res.tempFilePaths
-						if (this.maxLength <= tempFilePaths.length) {
+						let len = this.value.length
+						if ((this.maxLength - len) < tempFilePaths.length) {
 							this.$refs.uToast.show({
-								title: '图片只能上传两张'
+								title: '最多上传两张照片'
 							})
 						}
 						tempFilePaths.forEach((item, index) => {
-							if (index < 2) {
+							if (index < (this.maxLength - len)) {
 								this.$http.upload('/admin/file/upload/avatar', {
 									filePath: item,
 									name: 'file'
@@ -85,10 +115,11 @@
 				})
 			},
 			deleteImg (index) {
-				this.value.splice(index, 1)
-				let arr = []
-				arr = arr.concat(this.value)
-				this.$emit('input', arr)
+				this.$emit('delete-img', index)
+				// this.value.splice(index, 1)
+				// let arr = []
+				// arr = arr.concat(this.value)
+				// this.$emit('input', arr)
 			},
 			openImg (index) {
 				this.openPopup(index)
