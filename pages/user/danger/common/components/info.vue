@@ -6,6 +6,14 @@
 			<u-form-item label="排查人员:"><u-input v-model="form.registrant" disabled placeholder="排查人员"/></u-form-item>
 			<u-form-item label="排查地点:"><u-input v-model="form.address" placeholder="排查地点"/></u-form-item>
 		</u-form>
+		<view class="history-wrapper" v-show="showHistory">
+			<view class="history-title">历史记录</view>
+			<view class="text">船名号：{{historyData.shipName}}</view>
+			<view class="text">排查单位：{{historyData.enterprise}}</view>
+			<view class="text">排查人员：{{historyData.registrant}}</view>
+			<view class="text">排查时间：{{historyData.updateTime}}</view>
+			<view class="text">排查地点：{{historyData.address}}</view>
+		</view>
 		<!-- <view class="btn-next">
 			<u-button @click="onNext">下一步</u-button>
 		</view> -->
@@ -15,10 +23,12 @@
 <script>
 	export default {
 		props: {
-			shipInfo: Object
+			shipInfo: Object,
+			historyData: Object
 		},
 		data () {
 			return {
+				showHistory: false,
 				form: {
 					shipName: '',
 					address: '',
@@ -29,6 +39,14 @@
 			}
 		},
 		watch: {
+			historyData: {
+				handler (newVal) {
+					if (newVal && Object.keys(newVal).length > 0) {
+						this.showHistory = true
+					}
+				},
+				deep: true
+			},
 			shipInfo: {
 				handler (newVal) {
 					this.form.shipName = newVal.shipName
@@ -64,8 +82,27 @@
 <style scoped lang="scss">
 	.info-wrapper {
 		padding-bottom: 150rpx;
+		.history-wrapper {
+			margin-top: 20rpx;
+			padding: 30rpx 30rpx;
+			border: 1px solid #f6f6f6;
+			background-color: #f6f6f6;
+			overflow: hidden;
+			border-radius: 10rpx;
+			font-size: 30rpx;
+			color: #333;
+			.history-title {
+				margin-bottom: 20rpx;
+				color: #666;
+				font-weight: 700;
+			}
+			.text {
+				margin-bottom: 15px;
+			}
+		}
+		.btn-next {
+			margin-top: 20rpx;
+		}
 	}
-	.btn-next {
-		margin-top: 20rpx;
-	}
+	
 </style>

@@ -3,18 +3,15 @@
 		<!-- 船员配置 -->
 		<view class="item-wrapper">
 			<view class="title">驾驶职务船员最低配员标准</view>
-			<component-choose v-model="driveStandardData" :title="driveStandardTitle" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose v-model="driveStandardData" :title="driveStandardTitle" @close="onClose" @open="onOpen" :history-data="driveStandardHistoryData"></component-choose>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">轮机职务船员最低配员标准</view>
-			<component-choose v-model="turbineStandardData" :title="turbineStandardTitle" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose v-model="turbineStandardData" :title="turbineStandardTitle" @close="onClose" @open="onOpen" :history-data="turbineStandardHistoryData"></component-choose>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">普通船员</view>
-			<component-choose v-model="crewData" @close="onClose" @open="onOpen" title="普通船员持有普通船员证书" :history-data="{
-				flag: 0,
-				imgs: 'https://img.taoyu58.com/upload/202102/b2138540-5a63-45bd-b59e-ad3150041f70_FcnVyetGbK7f8067f3d8148f7c18535ca8518c72d7d4.png,https://img.taoyu58.com/upload/202102/ca6f455e-607a-4b38-ab02-beec5afba921_D1jlQD9bhP4G469c8ecaf5c45d1122bb672cfe35d508.png'
-			}"></component-choose>
+			<component-choose v-model="crewData" @close="onClose" @open="onOpen" title="普通船员持有普通船员证书" :history-data="crewHistoryData"></component-choose>
 		</view>
 		<!-- <view class="btn-next">
 			<u-button @click="onNext">上一步</u-button>
@@ -64,18 +61,12 @@
 					crewResult: '', // 普通船员 
 					crewImage: ''
 				},
-				driveStandardData: {
-					flag: 2,
-					url: []
-				},
-				turbineStandardData: {
-					flag: 2,
-					url: []
-				},
-				crewData: {
-					flag: 2,
-					url: []
-				}
+				driveStandardData: { flag: 2, url: '' },
+				turbineStandardData: { flag: 2, url: '' },
+				crewData: { flag: 2, url: '' },
+				driveStandardHistoryData: {},
+				turbineStandardHistoryData: {},
+				crewHistoryData: {}
 			}
 		},
 		computed: {
@@ -116,13 +107,17 @@
 				return ''
 			}
 		},
+		watch: {
+			historyData: {
+				handler (newVal) {
+					this.setHistoryData('driveStandard')
+					this.setHistoryData('turbineStandard')
+					this.setHistoryData('crew')
+				},
+				deep: true,
+			}
+		},
 		methods: {
-			onClose () {
-				this.$emit('show')
-			},
-			onOpen () {
-				this.$emit('hide')
-			},
 			onPrev () {
 				this.$emit('prev', 0)
 			},
@@ -131,9 +126,9 @@
 			},
 			onValidate () {
 				// 驾驶职务配置标准
-				if (this.validateItem(this.driveStandardData, '驾驶职务船员最低配员标准') 
-					&& this.validateItem(this.turbineStandardData, '轮机职务船员最低配员标准') 
-					&& this.validateItem(this.crewData, '普通船员')) {
+				if (this.validateItem(this.driveStandardData, '驾驶职务船员最低配员标准', 'driveStandard') 
+					&& this.validateItem(this.turbineStandardData, '轮机职务船员最低配员标准', 'turbineStandard') 
+					&& this.validateItem(this.crewData, '普通船员', 'crew')) {
 						
 					this.form.driveStandardResult = this.driveStandardData.flag
 					this.form.driveStandardImage = this.driveStandardData.url.join(',')

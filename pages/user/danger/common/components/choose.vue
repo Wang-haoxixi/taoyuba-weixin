@@ -14,8 +14,8 @@
 					</u-radio>
 				</u-radio-group>
 			</view>
-			<view v-show="form.flag === 0" class="sub-title">照片：</view>
-			<view v-show="form.flag === 0">
+			<view v-show="showUploadImg" class="sub-title">照片：</view>
+			<view v-show="showUploadImg">
 				<choose-img @close="onClose" @open="onOpen" v-model="form.url" status="update" @get-img="getImg" @delete-img="deleteImg"></choose-img>
 			</view>
 		</view>
@@ -26,8 +26,8 @@
 					排查记录：
 					<view class="text" :class="historyData.flag === 0 ? 'error' : (historyData.flag === 1 ? 'success' : '')" >{{historyData.flag === 0 ? '不合格' : (historyData.flag === 1 ? '合格' : '')}}</view>
 				</view>
-				<view class="sub-title" v-show="historyData.flag === 0">照片：</view>
-				<view v-show="historyData.flag === 0">
+				<view class="sub-title" v-show="showHistoryUploadImg">照片：</view>
+				<view v-show="showHistoryUploadImg">
 					<choose-img @close="onClose" @open="onOpen" status="detail" v-model="imgs"></choose-img>
 				</view>
 			</view>
@@ -42,17 +42,15 @@
 			chooseImg
 		},
 		props: {
-			value: Object,
-			historyData: {
-				type: Object,
-				default: () => {}
-			},
+			historyData: Object,
 			title: String
 		},
 		data () {
 			return {
 				imgs: [],
 				showHistory: false,
+				showUploadImg: false,
+				showHistoryUploadImg: false,
 				isNot: [
 					{ label: '合格', value: 1 },
 					{ label: '不合格', value: 0 }
@@ -67,16 +65,17 @@
 			historyData: {
 				handler (newVal) {
 					if (newVal && Object.keys(newVal).length > 0) {
-						if (newVal.flag === 1) {
+						if(newVal.flag === 1) {
 							this.showHistory = true
-							this.form.flag = newVal.flag
-							this.form.url = newVal.imgs.split(',')
 						} else {
 							this.showHistory = true
-							if (newVal && newVal.imgs) {
-								this.imgs = newVal.imgs.split(',')
+							if (newVal && newVal.url) {
+								this.imgs = newVal.url.split(',')
 							}
-						}						
+						}
+						if (newVal.url && newVal.url.length > 0) {
+							this.showHistoryUploadImg = true
+						}
 					} else {
 						this.showHistory = false
 					}
@@ -107,13 +106,23 @@
 				this.$emit('open')
 			},
 			onChange (val) {
-				if (val === 1) {
+				let historyData = this.historyData
+				if (historyData && Object.keys(historyData).length > 0 && historyData.flag === 0) {
+					this.showUploadImg = true
 					this.form.url = []
 					let form = Object.assign({}, this.form)
 					this.$emit('input', form)
-				} else{
-					let form = Object.assign({}, this.form)
-					this.$emit('input', form)
+				} else {
+					if (val === 1) {
+						this.showUploadImg = false
+						this.form.url = []
+						let form = Object.assign({}, this.form)
+						this.$emit('input', form)
+					} else{
+						this.showUploadImg = true
+						let form = Object.assign({}, this.form)
+						this.$emit('input', form)
+					}
 				}
 			}
 		}

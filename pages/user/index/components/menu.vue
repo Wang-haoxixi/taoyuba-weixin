@@ -46,7 +46,8 @@
 					{ label: '船员招聘', path: '/pages/user/recruit/list/index',  show: this.role.includes(this.rolesType.shipowner.type) },
 					{ label: '一船一档', path: '/pages/user/ship/list/index', show: this.role.includes(this.rolesType.police.type) }, // this.roles.includes(this.rolesType.police.type)
 					{ label: '勘验报告', path: '/pages/user/report/index' },
-					{ label: '一般性隐患排查', path: '/pages/user/danger/index' },
+					{ label: '一般性隐患排查', path: '/pages/user/danger/common/index' },
+					{ label: '专业性隐患排查', path: '/pages/user/danger/major/index' },
 					{ label: '设置', path: '/pages/user/setting/index' },
 				]
 				// if (this.type === 105) {

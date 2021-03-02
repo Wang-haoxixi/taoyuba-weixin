@@ -345,9 +345,15 @@
 			}
 		},
 		{
-			"path": "pages/user/danger/index",
+			"path": "pages/user/danger/common/index",
 			"style": {
 				"navigationBarTitleText": "一般性隐患排查"
+			}
+		},
+		{
+			"path": "pages/user/danger/major/index",
+			"style": {
+				"navigationBarTitleText": "专业性隐患排查"
 			}
 		},
 		{
