@@ -154,7 +154,7 @@
 						if (data.code === 0) {
 							let val = data.data.records
 							if (val.length !== 0) {
-								this.historyData = val[val.length - 1]
+								this.historyData = val[0]
 							}
 						}
 					})

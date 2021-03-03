@@ -69,11 +69,9 @@
 							this.showHistory = true
 						} else {
 							this.showHistory = true
-							if (newVal && newVal.url) {
-								this.imgs = newVal.url.split(',')
-							}
 						}
-						if (newVal.url && newVal.url.length > 0) {
+						if (newVal.url && newVal.url) {
+							this.imgs = newVal.url.split(',')
 							this.showHistoryUploadImg = true
 						}
 					} else {
