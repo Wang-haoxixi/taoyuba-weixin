@@ -3,7 +3,7 @@
 		<!-- 四种机器 -->
 		<view class="item-wrapper">
 			<view class="title">主机、辅机、舵机、锚机</view>
-			<component-choose v-model="machineData" :title="constText.machine" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="machineHistoryData" v-model="machineData" :title="constText.machine" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 	</view>
 </template>
@@ -28,6 +28,15 @@
 					machineImage: ''
 				},
 				machineData: { flag: 2, url: [] },
+				machineHistoryData: {}
+			}
+		},
+		watch: {
+			historyData: {
+				handler (newVal) {
+					this.setHistoryData('machine')
+				},
+				deep: true,
 			}
 		},
 		methods: {

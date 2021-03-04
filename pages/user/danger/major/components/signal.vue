@@ -3,15 +3,15 @@
 		<!-- 信号设备 -->
 		<view class="item-wrapper">
 			<view class="title">航行基本灯</view>
-			<component-choose v-model="signalLampData" :title="constText.signalLamp1" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="signalLampHistoryData" v-model="signalLampData" :title="constText.signalLamp1" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">号型</view>
-			<component-choose v-model="signalLampTypeData" :title="constText.signalLampType2" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="signalLampTypeHistoryData" v-model="signalLampTypeData" :title="constText.signalLampType2" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">号笛、号钟</view>
-			<component-choose v-model="signalLampStatusData" :title="constText.signalLampStatus3" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="signalLampStatusHistoryData" v-model="signalLampStatusData" :title="constText.signalLampStatus3" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 	</view>
 </template>
@@ -41,7 +41,20 @@
 				},
 				signalLampData: { flag: 2, url: [] },
 				signalLampTypeData: { flag: 2, url: [] },
-				signalLampStatusData: { flag: 2, url: [] }
+				signalLampStatusData: { flag: 2, url: [] },
+				signalLampHistoryData: {},
+				signalLampTypeHistoryData: {},
+				signalLampStatusHistoryData: {}
+			}
+		},
+		watch: {
+			historyData: {
+				handler (newVal) {
+					this.setHistoryData('signalLamp')
+					this.setHistoryData('signalLampType')
+					this.setHistoryData('signalLampStatus')
+				},
+				deep: true,
 			}
 		},
 		methods: {

@@ -22,7 +22,7 @@
 			<component-choose :history-data="behaviorHistoryData" v-model="behaviorData" :title="constText.behavior" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 		<view class="item-wrapper">
-			<view class="title">规章制度</view>
+			<view class="title">规章锢度</view>
 			<component-choose :history-data="regulationHistoryData" v-model="regulationData" :title="constText.regulation" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 	</view>

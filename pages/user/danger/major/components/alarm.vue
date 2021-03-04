@@ -3,11 +3,11 @@
 		<!-- 警报设备 -->
 		<view class="item-wrapper">
 			<view class="title">氮泄漏监控报警系统</view>
-			<component-choose v-model="alarmFirstData" :title="constText.alarmFirst" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="alarmFirstHistoryData" v-model="alarmFirstData" :title="constText.alarmFirst" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">弃船警报设备</view>
-			<component-choose v-model="alarmSecondData" :title="constText.alarmSecond" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="alarmSecondHistoryData" v-model="alarmSecondData" :title="constText.alarmSecond" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 	</view>
 </template>
@@ -35,6 +35,17 @@
 				},
 				alarmFirstData: { flag: 2, url: [] },
 				alarmSecondData: { flag: 2, url: [] },
+				alarmFirstHistoryData: {},
+				alarmSecondHistoryData: {}
+			}
+		},
+		watch: {
+			historyData: {
+				handler (newVal) {
+					this.setHistoryData('alarmFirst')
+					this.setHistoryData('alarmSecond')
+				},
+				deep: true,
 			}
 		},
 		methods: {
@@ -46,7 +57,6 @@
 					return true
 				}
 			},
-			
 		}
 	}
 </script>

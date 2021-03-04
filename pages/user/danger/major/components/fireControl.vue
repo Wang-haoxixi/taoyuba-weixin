@@ -4,47 +4,47 @@
 		<view class="item-wrapper">
 			<view class="title">水消防</view>
 			<view class="item">
-				<component-choose v-model="waterFireFightingFirstData" :title="constText.waterFireFightingFirst1" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="waterFireFightingFirstHistoryData" v-model="waterFireFightingFirstData" :title="constText.waterFireFightingFirst1" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="waterFireFightingSecondData" :title="constText.waterFireFightingSecond" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="waterFireFightingSecondHistoryData" v-model="waterFireFightingSecondData" :title="constText.waterFireFightingSecond" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">厨房防火</view>
 			<view class="item">
-				<component-choose v-model="kitchenFirstData" :title="constText.kitchenFirst" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="kitchenFirstHistoryData" v-model="kitchenFirstData" :title="constText.kitchenFirst" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="kitchenSecondData" :title="constText.kitchenSecond" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="kitchenSecondHistoryData" v-model="kitchenSecondData" :title="constText.kitchenSecond" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="kitchenThirdData" :title="constText.kitchenThird" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="kitchenThirdHistoryData" v-model="kitchenThirdData" :title="constText.kitchenThird" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 		</view>
 		
 		<view class="item-wrapper">
 			<view class="title">机舱防火</view>
 			<view class="item">
-				<component-choose v-model="engineRoomFirstData" :title="constText.engineRoomFirst" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="engineRoomFirstHistoryData" v-model="engineRoomFirstData" :title="constText.engineRoomFirst" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="engineRoomSecondData" :title="constText.engineRoomSecond" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="engineRoomSecondHistoryData" v-model="engineRoomSecondData" :title="constText.engineRoomSecond" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="engineRoomThirdData" :title="constText.engineRoomThird" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="engineRoomThirdHistoryData" v-model="engineRoomThirdData" :title="constText.engineRoomThird" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="engineRoomFourthData" :title="constText.engineRoomFourth" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="engineRoomFourthHistoryData" v-model="engineRoomFourthData" :title="constText.engineRoomFourth" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">电气设备防火</view>
 			<view class="item">
-				<component-choose v-model="electricAccessoryFirstData" :title="constText.electricAccessoryFirst" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="electricAccessoryFirstHistoryData" v-model="electricAccessoryFirstData" :title="constText.electricAccessoryFirst" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="electricAccessorySecondData" :title="constText.electricAccessorySecond" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="electricAccessorySecondHistoryData" v-model="electricAccessorySecondData" :title="constText.electricAccessorySecond" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 		</view>
 	</view>
@@ -99,7 +99,36 @@
 				engineRoomThirdData: { flag: 2, url: [] },
 				engineRoomFourthData: { flag: 2, url: [] },
 				electricAccessoryFirstData: { flag: 2, url: [] },
-				electricAccessorySecondData: { flag: 2, url: [] }
+				electricAccessorySecondData: { flag: 2, url: [] },
+				waterFireFightingFirstHistoryData: {},
+				waterFireFightingSecondHistoryData: {},
+				kitchenFirstHistoryData: {},
+				kitchenSecondHistoryData: {},
+				kitchenThirdHistoryData: {},
+				engineRoomFirstHistoryData: {},
+				engineRoomSecondHistoryData: {},
+				engineRoomThirdHistoryData: {},
+				engineRoomFourthHistoryData: {},
+				electricAccessoryFirstHistoryData: {},
+				electricAccessorySecondHistoryData: {}
+			}
+		},
+		watch: {
+			historyData: {
+				handler (newVal) {
+					this.setHistoryData('waterFireFightingFirst')
+					this.setHistoryData('waterFireFightingSecond')
+					this.setHistoryData('kitchenFirst')
+					this.setHistoryData('kitchenSecond')
+					this.setHistoryData('kitchenThird')
+					this.setHistoryData('engineRoomFirst')
+					this.setHistoryData('engineRoomSecond')
+					this.setHistoryData('engineRoomThird')
+					this.setHistoryData('engineRoomFourth')
+					this.setHistoryData('electricAccessoryFirst')
+					this.setHistoryData('electricAccessorySecond')
+				},
+				deep: true,
 			}
 		},
 		methods: {

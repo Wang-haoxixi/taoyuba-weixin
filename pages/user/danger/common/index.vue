@@ -148,7 +148,8 @@
 					this.$http.get('/tmlms/tybTroubleshootReport/pageByShipNo', {
 						params: {
 							shipNo: this.shipData.shipNo,
-							shipName: this.shipData.shipName
+							shipName: this.shipData.shipName,
+							reportType: 0
 						}
 					}).then(({ data }) => {
 						if (data.code === 0) {
@@ -183,7 +184,7 @@
 					} else {
 						form.lastId = 0
 					}
-					console.log('form', form)
+					form.reportType = 0
 					// return
 					this.loading = true
 					this.$http.post('/tmlms/tybTroubleshootReport/save', form).then(({ data }) => {

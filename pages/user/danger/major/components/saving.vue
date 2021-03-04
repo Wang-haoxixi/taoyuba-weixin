@@ -3,15 +3,15 @@
 		<!-- 救生设备 -->
 		<view class="item-wrapper">
 			<view class="title">救生筏</view>
-			<component-choose v-model="lifeRaftData" :title="constText.lifeRaft1" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="lifeRaftHistoryData" v-model="lifeRaftData" :title="constText.lifeRaft1" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">其他救生设备</view>
 			<view class="item">
-				<component-choose v-model="otherPreserverFirstData" :title="constText.otherPreserverFirst1" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="otherPreserverFirstHistoryData" v-model="otherPreserverFirstData" :title="constText.otherPreserverFirst1" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="otherPreserverSecondData" :title="constText.otherPreserverSecond1" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="otherPreserverSecondHistoryData" v-model="otherPreserverSecondData" :title="constText.otherPreserverSecond1" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 		</view>
 	</view>
@@ -43,6 +43,19 @@
 				lifeRaftData: { flag: 2, url: [] },
 				otherPreserverFirstData: { flag: 2, url: [] },
 				otherPreserverSecondData: { flag: 2, url: [] },
+				lifeRaftHistoryData: {},
+				otherPreserverFirstHistoryData: {},
+				otherPreserverSecondHistoryData: {}
+			}
+		},
+		watch: {
+			historyData: {
+				handler (newVal) {
+					this.setHistoryData('lifeRaft')
+					this.setHistoryData('otherPreserverFirst')
+					this.setHistoryData('otherPreserverSecond')
+				},
+				deep: true,
 			}
 		},
 		methods: {

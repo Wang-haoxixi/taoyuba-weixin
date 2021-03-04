@@ -4,35 +4,35 @@
 		<view class="item-wrapper">
 			<view class="title">渔捞起重设备</view>
 			<view class="item">
-				<component-choose v-model="fishingEquipmentFirstData" :title="constText.fishingEquipmentFirst" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="fishingEquipmentFirstHistoryData" v-model="fishingEquipmentFirstData" :title="constText.fishingEquipmentFirst" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="fishingEquipmentSecondData" :title="constText.fishingEquipmentSecond" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="fishingEquipmentSecondHistoryData" v-model="fishingEquipmentSecondData" :title="constText.fishingEquipmentSecond" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">船体结构</view>
 			<view class="item">
-				<component-choose v-model="hullFirstData" :title="constText.hullFirst" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="hullFirstHistoryData" v-model="hullFirstData" :title="constText.hullFirst" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="hullSecondData" :title="constText.hullSecond" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="hullSecondHistoryData" v-model="hullSecondData" :title="constText.hullSecond" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 			<view class="item">
-				<component-choose v-model="hullThirdData" :title="constText.hullThird" @close="onClose" @open="onOpen"></component-choose>
+				<component-choose :history-data="hullThirdHistoryData" v-model="hullThirdData" :title="constText.hullThird" @close="onClose" @open="onOpen"></component-choose>
 			</view>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">海底阀</view>
-			<component-choose v-model="submarineValveData" :title="constText.submarineValve" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="submarineValveHistoryData" v-model="submarineValveData" :title="constText.submarineValve" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">渔获物储藏室</view>
-			<component-choose v-model="catchStorageRoomData" :title="constText.catchStorageRoom" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="catchStorageRoomHistoryData" v-model="catchStorageRoomData" :title="constText.catchStorageRoom" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">机舱</view>
-			<component-choose v-model="engineRoomData" :title="constText.engineRoom" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="engineRoomHistoryData" v-model="engineRoomData" :title="constText.engineRoom" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 	</view>
 </template>
@@ -78,6 +78,29 @@
 				submarineValveData: { flag: 2, url: [] },
 				catchStorageRoomData: { flag: 2, url: [] },
 				engineRoomData: { flag: 2, url: [] },
+				fishingEquipmentFirstHistoryData: {},
+				fishingEquipmentSecondHistoryData: {},
+				hullFirstHistoryData: {},
+				hullSecondHistoryData: {},
+				hullThirdHistoryData: {},
+				submarineValveHistoryData: {},
+				catchStorageRoomHistoryData: {},
+				engineRoomHistoryData: {}
+			}
+		},
+		watch: {
+			historyData: {
+				handler (newVal) {
+					this.setHistoryData('fishingEquipmentFirst')
+					this.setHistoryData('fishingEquipmentSecond')
+					this.setHistoryData('hullFirst')
+					this.setHistoryData('hullSecond')
+					this.setHistoryData('hullThird')
+					this.setHistoryData('submarineValve')
+					this.setHistoryData('catchStorageRoom')
+					this.setHistoryData('engineRoom')
+				},
+				deep: true,
 			}
 		},
 		methods: {
