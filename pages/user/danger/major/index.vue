@@ -203,7 +203,11 @@
 								url: '/pages/user/index/index'
 							})
 						}
-					}).catch(() => {
+					}).catch((e) => {
+						this.$refs.uToast.show({
+							title: e.data.msg || '提交失败',
+							isTab: true
+						})
 						this.loading = false
 					})
 				}

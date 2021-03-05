@@ -50,15 +50,6 @@
 					{ label: '专业性隐患排查', path: '/pages/user/danger/major/index' },
 					{ label: '设置', path: '/pages/user/setting/index' },
 				]
-				// if (this.type === 105) {
-				// 	return this.menu105
-				// } else if (this.type === 108) {
-				// 	return this.menu108
-				// } else if (this.type === 115) {
-				// 	return this.menu115
-				// }
-				// return this.menu0
-				// return this.type === 105 ? this.menu105 : (this.type === 108 ? this.menu108 : this.menu0)
 			},
 			menu108 () {
 				return [

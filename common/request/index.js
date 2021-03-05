@@ -162,6 +162,7 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 		tools.clear()
 		return response
 	}
+	console.log('response', response)
 	return response
 })
 
