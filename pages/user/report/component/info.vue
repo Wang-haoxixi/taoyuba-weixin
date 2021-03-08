@@ -28,8 +28,8 @@
 			<u-form ref="uForm" label-width="150">
 				<u-form-item label="船名号:"><u-input v-model="form.shipName" disabled placeholder=" "/></u-form-item>
 				<u-form-item label="渔船编码:"><u-input v-model="form.shipNo" disabled placeholder=" "/></u-form-item>
-				<u-form-item label="船体材质:"><u-input v-model="form.hullMaterial" disabled placeholder=" "/></u-form-item>
-				<u-form-item label="作业方式:"><u-input v-model="form.workMode" disabled placeholder=" "/></u-form-item>
+				<u-form-item label="船体材质:"><u-input v-model="hullMaterialLabel" disabled placeholder=" "/></u-form-item>
+				<u-form-item label="作业方式:"><u-input v-model="workModeLabel" disabled placeholder=" "/></u-form-item>
 				<!-- <u-form-item label="总长:"><u-input v-model="form.value" disabled placeholder=" "/></u-form-item> -->
 				<u-form-item label="船长:"><u-input v-model="form.hullLength" disabled placeholder=" "/></u-form-item>
 				<u-form-item label="型深:"><u-input v-model="form.mouldedDepth" disabled placeholder=" "/></u-form-item>
@@ -47,7 +47,9 @@
 </template>
 
 <script>
+	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	export default {
+		mixins: [dictMapMixin],
 		data () {
 			return {
 				shipName: '',
@@ -68,6 +70,35 @@
 					// 船舶呼号或识别码
 					buildDate: '' // 建造完工日期
 				}
+			}
+		},
+		computed: {
+			hullMaterialLabel () {
+				let result = ''
+				let maps = this.dictMap['tyb_ship_material']
+				if (maps && this.form.hullMaterial) {
+					let val = maps.find((item) => {
+						return item.value === this.form.hullMaterial
+					})
+					if (val) {
+						result = val.label
+					}
+				}
+				return result
+			},
+			workModeLable () {
+				let result = ''
+				let maps = this.dictMap['tyb_resume_worktype']
+				console.log('maps', maps, this.form.workMode)
+				if (maps && this.form.workMode) {
+					let val = maps.find((item) => {
+						return item.value === this.form.workMode
+					})
+					if (val) {
+						result = val.label
+					}
+				}
+				return result
 			}
 		},
 		watch: {
