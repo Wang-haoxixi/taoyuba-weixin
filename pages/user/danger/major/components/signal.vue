@@ -7,11 +7,11 @@
 		</view>
 		<view class="item-wrapper">
 			<view class="title">号型</view>
-			<component-choose :history-data="signalLampTypeHistoryData" v-model="signalLampTypeData" :title="constText.signalLampType2" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="signalLampTypeHistoryData" v-model="signalLampTypeData" :title="constText.signalLampType1" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 		<view class="item-wrapper">
 			<view class="title">号笛、号钟</view>
-			<component-choose :history-data="signalLampStatusHistoryData" v-model="signalLampStatusData" :title="constText.signalLampStatus3" @close="onClose" @open="onOpen"></component-choose>
+			<component-choose :history-data="signalLampStatusHistoryData" v-model="signalLampStatusData" :title="constText.signalLampStatus1" @close="onClose" @open="onOpen"></component-choose>
 		</view>
 	</view>
 </template>

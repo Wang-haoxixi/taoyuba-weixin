@@ -2,7 +2,7 @@
 	<view class="firw-control-container">
 		<!-- 消防设备 -->
 		<view class="item-wrapper">
-			<view class="title">救生圈</view>
+			<view class="title">灭火器</view>
 			<view class="item">
 				<component-choose :history-data="extinguisherFirstHistoryData" v-model="extinguisherFirstData" :title="constText.extinguisherFirst" @close="onClose" @open="onOpen"></component-choose>
 			</view>

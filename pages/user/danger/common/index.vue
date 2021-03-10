@@ -99,7 +99,7 @@
 					{ name: '救生设备' },
 					{ name: '消防设备' },
 					{ name: '信号设备' },
-					{ name: '通道设备' },
+					{ name: '通导设备' },
 					{ name: '其他情况' }
 				],
 				shipData: {},
@@ -188,14 +188,17 @@
 					// return
 					this.loading = true
 					this.$http.post('/tmlms/tybTroubleshootReport/save', form).then(({ data }) => {
-						console.log('ssss', data)
-						this.loading = false
 						if (data.code === 0) {
 							this.$refs.uToast.show({
 								title: '提交成功',
 								isTab: true,
-								url: '/pages/user/index/index'
+								url: '/pages/user/index/index',
+								callback: () => {
+									this.loading = false
+								}
 							})
+						} else {
+							this.loading = false
 						}
 					}).catch((e) => {
 						this.$refs.uToast.show({

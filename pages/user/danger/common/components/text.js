@@ -36,7 +36,7 @@ export default {
 	// 通信设备
 	'communicationEquipment': '中高频、甚高频、双向艇筏甚高频无线电话等要正确安装并能有效使用',
 	// 导航设备
-	'navigationalAids': '北斗、雷达应答器、应急无线电示位标等耍正确安装并能有效使用',
+	'navigationalAids': '北斗、雷达应答器、应急无线电示位标等要正确安装并能有效使用',
 	// 其他情况
 	// 逃生通道
 	'escapeTrunk': '船员室、驾驶室逃生通道畅通',
@@ -69,7 +69,7 @@ export default {
 	// 航行基本号灯
 	'signalLamp1': '航行灯和作业灯要正确安装且有效',
 	// 号型
-	'signalLampType1': '罴色锚球和双圆锥体各1个',
+	'signalLampType1': '黑色锚球和双圆锥体各1个',
 	// 号笛、号钟
 	'signalLampStatus1': '号钟要按规定安装，号笛可正常使用',
 	// 消防、防火情况
