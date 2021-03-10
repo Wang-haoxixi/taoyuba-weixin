@@ -58,7 +58,7 @@
 			@close="onClosePhone"
 			:mask-close-able="false">
 			<view class="wechat-phone-wrapper">
-				<u-form :model="formPhone" ref="formPhone">
+				<!-- <u-form :model="formPhone" ref="formPhone">
 					<u-form-item left-icon="phone" :leftIconStyle="{color: '#999', fontSize: '32rpx'}">
 						<u-input trim v-model="formPhone.phone" type="number" placeholder="请输入手机号"/>
 					</u-form-item>
@@ -66,9 +66,9 @@
 						<u-input trim placeholder="请输入验证码" v-model="formPhone.vCode" type="text"></u-input>
 						<u-button slot="right" type="success" size="mini" @click="getCode" hover-class="none" :custom-style="{backgroundColor:'#fff',color: '#409EFF', fontSize: '32rpx'}">{{codeTips}}</u-button>
 					</u-form-item>
-				</u-form>
+				</u-form> -->
 				<view class="btn-wrapper">
-					<u-button type="default" @click="onSubmitPhone" :custom-style="{backgroundColor: '#409EFF', color: '#fff'}" hover-class="none" shape="circle" :loading="loading">微信绑定</u-button>
+					<u-button type="default" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" :custom-style="{backgroundColor: '#409EFF', color: '#fff'}" hover-class="none" shape="circle">手机号绑定</u-button>
 				</view>
 			</view>
 		</u-popup>
@@ -262,8 +262,30 @@
 			},
 			onWechat () {
 				getUser.onLogin().then((res) => {
-					console.log('success', res)
+					if (res) {
+						uni.switchTab({
+							url: '/pages/home/index/index',
+							success: () => {
+								this.getUserInfoApi()
+							}
+						})
+					} else {
+						this.showPhone = true
+					}
 				})
+			},
+			getPhoneNumber (e) {
+				if (e.detail.iv) {
+					getUser.getPhoneNumber(e).then(() => {
+						this.showPhone = false
+						uni.switchTab({
+							url: '/pages/home/index/index',
+							success: () => {
+								this.getUserInfoApi()
+							}
+						})
+					})
+				}
 			},
 			refreshCode () {
 				this.form.code = ''
@@ -348,7 +370,7 @@
 		}
 	}
 	.wechat-phone-wrapper {
-		padding: 50rpx 20rpx 30rpx 20rpx;
+		padding: 100rpx 20rpx 50rpx 20rpx;
 	}
 	.two-btn-wrapper {
 		display: flex;

@@ -42,7 +42,7 @@
 				if (!shipName) {
 					return
 				}
-				this.$http.get('/tmlms/investigationReport/page', {
+				this.$http.get('/tmlms/investigationReport/pageByShipName', {
 					params: {
 						shipName
 					}
