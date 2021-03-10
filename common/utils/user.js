@@ -28,8 +28,11 @@ const login = (cb) => {
 			}
 		)
 		.then(res => {
-			cache.set(TOKEN, res['access_token'])
-			cache.set('refresh_token', res['refresh_token'])
+			console.log(11, res)
+			uni.setStorageSync(TOKEN, res.data['access_token'])
+			uni.setStorageSync('refresh_token', res.data['refresh_token'])
+			// cache.set(TOKEN, res['access_token'])
+			// cache.set('refresh_token', res['refresh_token'])
 			cb(true)
 		})
 }
@@ -89,7 +92,7 @@ export default {
 				provider: 'weixin',
 				success: function(loginRes) {
 					console.log('微信登录login', loginRes)
-					uni.setStorageSync('code', loginRes.code);
+					uni.setStorageSync('code', loginRes.code)
 					// 获取用户信息
 					uni.getUserInfo({
 						provider: 'weixin',
@@ -112,7 +115,7 @@ export default {
 									}
 								)
 								.then((res) => {
-									if (res.data === true) {
+									if (res.data.data === true) {
 										login(resolve)
 									} else {
 										resolve(false)
@@ -158,7 +161,8 @@ export default {
 					}
 				)
 				.then(res => {
-					if (res.code == 0) {
+					console.log('res', res)
+					if (res.data.code == 0) {
 						login(resolve)
 					} else {
 						console.log('登录失败')
