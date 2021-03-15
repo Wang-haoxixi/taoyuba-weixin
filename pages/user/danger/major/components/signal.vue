@@ -74,7 +74,7 @@
 
 <style lang="scss" scoped>
 	.signal-container {
-		padding-bottom: 150rpx;
+		padding-bottom: 250rpx;
 		.title {
 			font-size: 34rpx;
 			color: #333;

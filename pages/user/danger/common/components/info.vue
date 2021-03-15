@@ -66,10 +66,10 @@
 				this.form.enterprise = userInfo.realName
 			},
 			onValidate () {
-				if (!this.form.address) {
-					this.$emit('validate', '排查地点不能为空')
-					return false
-				}
+				// if (!this.form.address) {
+				// 	this.$emit('validate', '排查地点不能为空')
+				// 	return false
+				// }
 				return true
 			},
 			onNext () {
@@ -81,7 +81,7 @@
 
 <style scoped lang="scss">
 	.info-wrapper {
-		padding-bottom: 150rpx;
+		padding-bottom: 250rpx;
 		.history-wrapper {
 			margin-top: 20rpx;
 			padding: 30rpx 30rpx;

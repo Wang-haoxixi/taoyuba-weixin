@@ -7,7 +7,7 @@
 			<view v-show="tabsShow">
 				<u-tabs-swiper :show-bar="false" active-color="#ff9999" :bar-style="{background: '#ff9999'}" ref="uTabs" :list="list" :is-scroll="true" @change="tabsChange" :current="current"></u-tabs-swiper>
 			</view>
-			<swiper :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish" style="height: 100vh">
+			<swiper :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish" style="height: calc(100vh - 150rpx)">
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100vh;width: 100%;">
 						<view class="item">
@@ -169,7 +169,6 @@
 					&& this.$refs.pageSignal.onValidate()
 					&& this.$refs.pageSignalCommunication.onValidate()
 					&& this.$refs.pageOther.onValidate()) {
-						
 					let pageInfoData = this.$refs.pageInfo.form
 					let pageCrewData = this.$refs.pageCrew.form
 					let pageLifeSavingData = this.$refs.pageLifeSaving.form
@@ -185,7 +184,7 @@
 						form.lastId = 0
 					}
 					form.reportType = 0
-					// return
+					
 					this.loading = true
 					this.$http.post('/tmlms/tybTroubleshootReport/save', form).then(({ data }) => {
 						if (data.code === 0) {
@@ -207,14 +206,9 @@
 						})
 						this.loading = false
 					})
-					// console.log('pageInfoData', pageInfoData)
-					// console.log('pageCrewData', pageCrewData)
-					// console.log('pageLifeSavingData', pageLifeSavingData)
-					// console.log('pageFireControlData', pageFireControlData)
-					// console.log('pageSignalData', pageSignalData)
-					// console.log('pageSignalCommunicationData', pageSignalCommunicationData)
-					// console.log('pageOtherData', pageOtherData)
 				}
+				
+				
 			}
 		}
 	}

@@ -132,7 +132,7 @@
 
 <style lang="scss" scoped>
 	.other-wrapper {
-		padding-bottom: 150rpx;
+		padding-bottom: 250rpx;
 		.title {
 			font-size: 34rpx;
 			color: #333;
