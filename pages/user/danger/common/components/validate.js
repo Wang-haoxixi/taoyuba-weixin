@@ -8,7 +8,7 @@ export default {
 		},
 		setForm (name) {
 			this.form[`${name}Result`] = this[`${name}Data`].flag
-			this.form[`${name}Image`] = this[`${name}Data`].url.join(',')
+			this.form[`${name}Image`] = (this[`${name}Data`].url || []).join(',')
 		},
 		setHistoryData (name) {
 			if (this.historyData && Object.keys(this.historyData).length > 0) {

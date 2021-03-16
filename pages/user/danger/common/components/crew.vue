@@ -131,11 +131,11 @@
 					&& this.validateItem(this.crewData, '普通船员', 'crew')) {
 						
 					this.form.driveStandardResult = this.driveStandardData.flag
-					this.form.driveStandardImage = this.driveStandardData.url.join(',')
+					this.form.driveStandardImage = (this.driveStandardData.url || []).join(',')
 					this.form.turbineStandardResult = this.turbineStandardData.flag
-					this.form.turbineStandardImage = this.turbineStandardData.url.join(',')
+					this.form.turbineStandardImage = (this.turbineStandardData.url || []).join(',')
 					this.form.crewResult = this.crewData.flag
-					this.form.crewImage = this.crewData.url.join(',')
+					this.form.crewImage = (this.crewData.url || []).join(',')
 					return true
 				}
 			},
