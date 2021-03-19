@@ -39,14 +39,14 @@
 			<text @tap="onTo('/pages/base/register')">没有账号？立即注册</text>
 			<text @tap="onTo('/pages/base/forget-password')">找回密码</text>
 		</view>
-		<!-- <view class="other-wrapper">
+		<view class="other-wrapper">
 			<u-divider bg-color="transparent">其他方式登录</u-divider>
 			<view class="ic-wrapper">
 				<u-button open-type="getUserInfo" @getuserinfo="onWechat" hover-class="none" :custom-style="{backgroundColor: 'transparent', borderColor: '#f8f8f8'}" size="medium " :hair-line="false">
 					<u-icon name="weixin-circle-fill" size="80rpx" color="#4cbf00"></u-icon>
 				</u-button>
 			</view>
-		</view> -->
+		</view>
 		<u-verification-code seconds="60" ref="uCode" @change="codeChange"></u-verification-code>
 		<u-toast ref="uToast" />
 		<u-popup
