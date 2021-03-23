@@ -27,7 +27,7 @@
 					machineResult: '', // 驾驶职务配置标准
 					machineImage: ''
 				},
-				machineData: { flag: 2, url: [] },
+				machineData: { flag: 2, url: [], reason: '' },
 				machineHistoryData: {}
 			}
 		},

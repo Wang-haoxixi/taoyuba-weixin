@@ -18,6 +18,13 @@
 			<view v-show="showUploadImg">
 				<choose-img @close="onClose" @open="onOpen" v-model="form.url" status="update" @get-img="getImg" @delete-img="deleteImg"></choose-img>
 			</view>
+			<view class="" v-if="showUploadImg">
+				<u-form :label-position="'top'" :model="form">
+					<u-form-item label="不合格原因：">
+						<u-input v-model="form.reason" :type="'textarea'"  :auto-height="true" :maxlength="200" @blur="reasonChange"/>
+					</u-form-item>
+				</u-form>
+			</view>
 		</view>
 		<view class="history-wrapper" v-if="showHistory">
 			<view class="history-title sub-title">历史记录</view>
@@ -30,6 +37,7 @@
 				<view v-show="showHistoryUploadImg">
 					<choose-img @close="onClose" @open="onOpen" status="detail" v-model="imgs"></choose-img>
 				</view>
+				<view v-show="historyData.flag === 0">不合格原因：{{ historyData.reason }}</view>
 			</view>
 		</view>
 	</view>
@@ -57,8 +65,9 @@
 				],
 				form: {
 					flag: 2,
-					url: []
-				}
+					url: [],
+					reason: ''
+				},
 			}
 		},
 		watch: {
@@ -122,6 +131,11 @@
 						this.$emit('input', form)
 					}
 				}
+			},
+			// 变化
+			reasonChange () {
+				let form = Object.assign({}, this.form)
+				this.$emit('input', form)
 			}
 		}
 	}

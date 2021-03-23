@@ -17,10 +17,14 @@ export default {
 			}
 		},
 		validateItem (value, title, name) {
-			// if (value.flag === 2 || value.flag === '') {
-			// 	this.$emit('validate', `${title}中排查记录不能为空`)
-			// 	return false
-			// }
+			if (value.flag === 2 || value.flag === '') {
+				this.$emit('validate', `${title}中排查记录不能为空`)
+				return false
+			}
+			if (value.flag === 0 && !value.reason ) {
+				this.$emit('validate', `${title}中不合格原因不能为空`)
+				return false
+			}
 			// if (value.flag === 0 && value.url.length === 0) {
 			// 	this.$emit('validate', `${title}中照片不能为空`)
 			// 	return false
