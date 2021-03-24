@@ -18,7 +18,7 @@
 			<view v-show="showUploadImg">
 				<choose-img @close="onClose" @open="onOpen" v-model="form.url" status="update" @get-img="getImg" @delete-img="deleteImg"></choose-img>
 			</view>
-			<view class="" v-if="showUploadImg">
+			<view v-if="showUploadImg">
 				<u-form :label-position="'top'" :model="form">
 					<u-form-item label="不合格原因：">
 						<u-input v-model="form.reason" :type="'textarea'"  :auto-height="true" :maxlength="200" @blur="reasonChange"/>
@@ -37,7 +37,7 @@
 				<view v-show="showHistoryUploadImg">
 					<choose-img @close="onClose" @open="onOpen" status="detail" v-model="imgs"></choose-img>
 				</view>
-				<view v-show="historyData.flag === 0">不合格原因：{{ historyData.reason }}</view>
+				<view v-show="historyData.flag === 0" class="sub-title">不合格原因：{{ historyData.reason || '' }}</view>
 			</view>
 		</view>
 	</view>

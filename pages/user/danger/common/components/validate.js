@@ -9,10 +9,12 @@ export default {
 		setForm (name) {
 			this.form[`${name}Result`] = this[`${name}Data`].flag
 			this.form[`${name}Image`] = (this[`${name}Data`].url || []).join(',')
+			this.form[`${name}Reason`] = this[`${name}Data`].reason
 		},
 		setHistoryData (name) {
 			if (this.historyData && Object.keys(this.historyData).length > 0) {
 				this.$set(this[`${name}HistoryData`], 'flag', this.historyData[`${name}Result`])
+				this.$set(this[`${name}HistoryData`], 'reason', this.historyData[`${name}Reason`])
 				this.$set(this[`${name}HistoryData`], 'url', this.historyData[`${name}Image`] || '')
 			}
 		},
