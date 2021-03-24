@@ -43,6 +43,9 @@ const ignoreUrl = [
 	'/tybship/tybship/findmyshipWx',
 	'/admin/org/page',
 	'/tmlms/crew/PageWithOutOrg',
+	'/admin/social/get_mini_user_exist',
+	'/auth/mobile/token/social',
+	'/admin/social/get_mini_mobile'
 ]
 const getTokenStorage = () => {
 	let token = ''
