@@ -18,7 +18,7 @@
 			<view v-show="showUploadImg">
 				<choose-img @close="onClose" @open="onOpen" v-model="form.url" status="update" @get-img="getImg" @delete-img="deleteImg"></choose-img>
 			</view>
-			<view v-if="showUploadImg">
+			<view v-if="form.flag === 0">
 				<u-form :label-position="'top'" :model="form">
 					<u-form-item label="不合格原因：">
 						<u-input v-model="form.reason" :type="'textarea'"  :auto-height="true" :maxlength="200" @blur="reasonChange"/>
