@@ -87,7 +87,11 @@
 						this.page.current = 1
 						this.page.total = 0
 						this.status = 'loading'
-						this.getList()
+						if (this.type) {
+							this.getList()
+						} else {
+							this.getNotificationList()
+						}
 					}
 					this.showLoginBtn = false
 				} else{
