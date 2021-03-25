@@ -200,13 +200,13 @@
 													COUNT--
 													if (COUNT <= 0) {
 														this.$refs.uToast.show({
-															title: data.data || '你当前的信息和系统数据不匹配，请重新验证',
+															title: '你当前的信息和系统数据不匹配，请重新验证',
 															back: true
 														})
 														return
 													}
 													this.$refs.uToast.show({
-														title: data.data || '你当前的信息和系统数据不匹配，请重新验证'
+														title: '你当前的信息和系统数据不匹配，请重新验证'
 													})
 													this.loading = false
 													this.phoneSrc = ''
