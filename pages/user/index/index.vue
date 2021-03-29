@@ -8,9 +8,16 @@
 							<image :src="userInfo.avatar || `${imageUrl}/avatar.jpg`" mode="scaleToFill"></image>
 						</view>
 						<view class="content">
-							<text class="name">{{userInfo.realName}}</text>
-							<text class="phone">{{userInfo.username}}</text>
-							<text class="phone">{{roleLabel}}</text>
+							<view>
+								<text class="name">{{userInfo.realName}}</text>
+							</view>
+							<view class="phone-all">
+								<text class="phone">{{userInfo.username}}</text>
+								<text class="phone">{{roleLabel}}</text>
+							</view>
+							<view>
+								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/index')">实名认证</u-button>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -312,8 +319,15 @@
 					margin-left: 30rpx;
 					color: #666;
 					font-size: 32rpx;
-					text {
-						display: block;
+					.phone {
+						margin-right: 30rpx;
+					}
+					.phone-all {
+						margin: 10rpx 0;
+					}
+					::v-deep .u-size-mini {
+						height: 40rpx;
+						line-height: 40rpx;
 					}
 				}
 				

@@ -281,6 +281,12 @@
 			}
 		},
 		{
+			"path": "pages/user/real/index",
+			"style": {
+				"navigationBarTitleText": "上传身份证"
+			}
+		},
+		{
 			"path": "pages/user/change-password/index",
 			"style": {
 				"navigationBarTitleText": "修改密码"
