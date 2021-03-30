@@ -16,7 +16,8 @@
 								<text class="phone">{{roleLabel}}</text>
 							</view>
 							<view>
-								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/index')">实名认证</u-button>
+								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/index')" v-if="!isname">实名认证</u-button>
+								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/authenticationCenter')" v-if="isname">已实名</u-button>
 							</view>
 						</view>
 					</view>
@@ -86,6 +87,7 @@
 					{ value: 1, label: '船员' },
 					{ value: 2, label: '船东' },
 				],
+				isname: false
 			}
 		},
 		computed: {
@@ -128,11 +130,18 @@
 						this.getShipOwer()
 						this.init()
 					})
+					// // 判断是否实名完成
+					this.$http.get('/tmlms/tyb_order_certificate_holder/my_info').then(({ data }) => {
+						if(data.data){
+							this.isname = true
+						}
+						console.log(data)
+						// this.isname = true
+					})
 				} else {
 					this.showLoginBtn = true
 				}
 			})
-			
 			// if (Object.keys(this.userInfo).length === 0) {
 			// 	this.getUserInfo().then(() => {
 			// 		this.init()

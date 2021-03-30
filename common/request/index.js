@@ -135,12 +135,12 @@ http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
 // 必须使用异步函数，注意
 http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 	uni.hideLoading();
-	if (response.data.code == 1) {
-		uni.showToast({
-			icon: 'none',
-			title: response.data.msg
-		})
-	}
+	// if (response.data.code == 1) {
+	// 	uni.showToast({
+	// 		icon: 'none',
+	// 		title: response.data.msg
+	// 	})
+	// }
 	return response
 }, (response) => { // 请求错误后执行
 	uni.hideLoading()

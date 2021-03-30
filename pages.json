@@ -287,6 +287,24 @@
 			}
 		},
 		{
+			"path": "pages/user/real/peopleFace",
+			"style": {
+				"navigationBarTitleText": "人脸对比"
+			}
+		},
+		{
+			"path": "pages/user/real/authenticationCenter",
+			"style": {
+				"navigationBarTitleText": "实名认证中心"
+			}
+		},
+		{
+			"path": "pages/user/real/personalInformation",
+			"style": {
+				"navigationBarTitleText": "个人信息"
+			}
+		},
+		{
 			"path": "pages/user/change-password/index",
 			"style": {
 				"navigationBarTitleText": "修改密码"

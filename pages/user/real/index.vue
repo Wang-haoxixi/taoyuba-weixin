@@ -1,13 +1,13 @@
 <template>
 	<view class="id-boss">
-		<u-image height="250rpx" :src="`${imgUrl}/release-bg.png`"></u-image>
+		<u-image height="250rpx" :src="imgUrlHeader"></u-image>
 		<view class="id-title">
 			请拍摄{{ user.realName }}本人的二代身份证
 		</view>
 		<view class="u-text-center">
 			确保拍摄的证件完整清晰
 		</view>
-		<u-image width="622rpx" class="id-img" height="396rpx" :src="`${imgUrl}/homo-face.png`"></u-image>
+		<u-image width="622rpx" class="id-img" height="396rpx" :src="imgUrlImg || imgUrl" @click="imgLook"></u-image>
 		<view class="id-check">
 			<u-checkbox-group>
 				<u-checkbox v-model="checked" :disabled="false">同意保存证件以便查看</u-checkbox>
@@ -17,7 +17,7 @@
 			<u-button type="primary" @click="onphone">拍摄</u-button>
 		</view>
 		<view class="id-button">
-			<u-button >保存</u-button>
+			<u-button @click="sumbit">保存</u-button>
 		</view>
 	</view>
 </template>
@@ -29,9 +29,12 @@
 		},
 		data () {
 			return {
-				imgUrl: this.$IMAGE_URL,
+				imgUrl: `${this.$IMAGE_URL}/homo-face.png`,
+				imgUrlHeader: `${this.$IMAGE_URL}/release-bg.png`,
 				user: this.$cache.get('userInfo'),
-				checked: false
+				checked: false,
+				imgUrlImg: '',
+				form: {}
 			}
 		},
 		onShow () {
@@ -39,14 +42,69 @@
 		watch: {
 		},
 		methods: {
+			// 拍照
 			onphone () {
-				console.log(2323)
 				uni.chooseImage({
 					quality: 'high',
 					success: (res) => {
-						console.log(res)
+						this.$http.upload('/admin/file/upload/idcard2', {
+							filePath: res.tempFilePaths[0],
+							name: 'file'
+						}).then(({ data }) => {
+							// 将图片上传给阿辉哥 根据imageState是否为normal字段来判断
+							if( data.data.imageState === 'normal' ){
+								this.form = data.data
+								this.imgUrlImg = data.data.url
+								// 吧BASE64给阿辉哥 他转成url给我 然后他需要吧地址给我 窝在最后一步将地址发给他 
+								this.$http.post('/admin/file/upload/avatarBase64', {
+									photo: this.form.photo,
+								}).then(({ data }) => {
+									this.form.photo = data.data.url
+								})
+							}else{
+								uni.showToast({
+									icon: 'none',
+									title: '无法识别!请上传正确且清晰的身份证正面照片！'
+								})
+							}
+						})
 					}
 				})
+			},
+			// 保存跳转个人信息
+			sumbit () {
+				if( this.checked && this.form.name){
+					uni.setStorage({
+					    key: 'cardInformation',
+					    data: this.form,
+					    success: function () {
+					        uni.navigateTo({
+					        	url: `/pages/user/real/personalInformation`
+					        });
+					    }
+					});
+					// 需要点击保存证件
+				}else if( !this.checked ){
+					uni.showToast({
+						icon: 'none',
+						title: '请先同意保存证件以便查看'
+					})
+					// 需要上传身份证并且成功获取到信息
+				}else if( !this.form.name ){
+					uni.showToast({
+						icon: 'none',
+						title: '请上传身份证!'
+					})
+				}
+			},
+			// 打开图片看大图
+			imgLook () {
+				if(this.imgUrlImg){
+					uni.previewImage({
+						current: 0,
+						urls: [this.imgUrlImg]
+					});
+				}
 			}
 		}
 	}
