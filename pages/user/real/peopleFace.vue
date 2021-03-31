@@ -202,12 +202,20 @@
 				this.$http.post('/tmlms/tyb_order_certificate_holder/save', {
 					...data
 				}).then(({ data }) => {
-					uni.showToast({
-						title: '实名认证已完成!'
-					})
-					uni.switchTab({
-						url: '/pages/user/index/index'
-					});
+					if( data.code === 0 ){
+						uni.showToast({
+							title: '实名认证已完成!'
+						})
+						uni.switchTab({
+							url: '/pages/user/index/index'
+						});
+					}else{
+						uni.showToast({
+							duration: 3000,
+							icon: 'none',
+							title: data.msg
+						})
+					}
 				})
 			}
 		}

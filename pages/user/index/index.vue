@@ -134,9 +134,9 @@
 					this.$http.get('/tmlms/tyb_order_certificate_holder/my_info').then(({ data }) => {
 						if(data.data){
 							this.isname = true
+						}else{
+							this.isname = false
 						}
-						console.log(data)
-						// this.isname = true
 					})
 				} else {
 					this.showLoginBtn = true
@@ -163,7 +163,6 @@
 						if (data.data && data.data.type == 1) {
 							this.isShipOwer = true
 						}
-						
 					})
 				}
 			},

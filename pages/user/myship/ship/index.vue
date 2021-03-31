@@ -1,95 +1,63 @@
 <template>
-	<!-- 渔船 -->
 	<view class="user-ship-container safe-padding-bottom">
-		<list-layout :data="data" empty-text="数据为空">
-			<u-card :show-head="false" box-shadow="0px 0px 5px #d7d7d7" v-for="(item, index) in data" :key="index">
-				<view class="ship-item-wrapper" slot="body">
-					<view class="left-wrapper">
-						<view class="title">{{item.shipName}}</view>
-						<view class="text">渔船编号：{{item.shipNo}}</view>
-						<view class="text">持证人：{{item.shipowner}}</view>
-					</view>
-				</view>
-				<view slot="foot">
-					<view class="btn-wrapper">
-						<u-button size="medium" @click="onToContract(item)" class="btn">合同</u-button>
-						<u-button size="medium" @click="onTo(item)">船员</u-button>
-					</view>
-				</view>
-			</u-card>
-		</list-layout>
+		<view class="user-ship-title">
+			<u-tag :text="item" :mode="active === item ? 'dark' : 'light'" v-for="item in title" @click="tagClick(item)"/>
+		</view>
+		<view v-show="active === '出售记录'">
+			<sales-records ref="records" :type="1"></sales-records>
+		</view>
+		<view v-show="active === '购买记录'">
+			<sales-records ref="records1" :type="2"></sales-records>
+		</view>
 	</view>
 </template>
 
 <script>
-	import userInfoMixin from '@/pages/mixins/user-info.js'
-	import listLayout from '@/pages/components/list-layout/index.vue'
-	export default {
-		components: {
-			listLayout
+import salesRecords from './components/salesRecords.vue'
+export default {
+	components: {
+		salesRecords
+	},
+	mixins: [],
+	data () {
+		return {
+			active: '出售记录',
+			title: ['出售记录','购买记录','交易合同'],
+			type: 1
+		}
+	},
+	onLoad () {
+	},
+	onShow() {
+	},
+	methods: {
+		tagClick (val) {
+			this.active = val
 		},
-		mixins: [userInfoMixin],
-		data () {
-			return {
-				data: [],
-			}
-		},
-		onLoad () {
-			this.getList()
-		},
-		methods: {
-			getList () {
-				this.$http.get(`/tmlms/tybshiphaver/getMyShip/${this.userInfo.userId}`).then(({ data }) => {
-					if (data.code === 0) {
-						this.data = data.data
-					}
-				})
-			},
-			onToContract (row) {
-				if (row.shipNo) {
-					uni.navigateTo({
-						url: `/pages/user/contract/ship-list/index?shipNo=${row.shipNo}`
-					})
-				}
-			},
-			onTo (row) {
-				if (row.shipId) {
-					uni.navigateTo({
-						url: `/pages/user/myship/crew/list/index?id=${row.shipId}`
-					})
-				}
-			}
+		getList () {
+			this.$refs.records.data = []
+			this.$refs.records.page.current = 1
+			this.$refs.records.getList()
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>
-	.user-ship-container {
-		.ship-item-wrapper {
-			background-color: #fff;
-			display: flex;
-			align-items: center;
-			.left-wrapper {
-				flex: 1 1 auto;
-				.title {
-					font-size: 32rpx;
-					color: #333;
-				}
-				.text {
-					margin-top: 15rpx;
-					color: #999;
-					font-size: 28rpx;
-				}
-			}
-			
-		}
-		.btn-wrapper {
-			display: flex;
-			justify-content: flex-end;
-			.btn {
-				display: inline-block;
-				margin-right: 10rpx;
-			}
+.user-ship-container {
+	padding:0 30rpx;
+	min-height: 100vh;
+	background-color: white;
+	.user-ship-title {
+		height: 100rpx;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		padding: 30rpx 0;
+		border-bottom: 1px solid rgba($color: #ccc, $alpha: 0.5);
+		::v-deep .u-size-default {
+			padding: 16rpx 25rpx;
 		}
 	}
+}
 </style>

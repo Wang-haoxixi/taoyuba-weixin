@@ -324,6 +324,12 @@
 			}
 		},
 		{
+			"path": "pages/user/myship/ship/shipDetail",
+			"style": {
+				"navigationBarTitleText": "渔船详情"
+			}
+		},
+		{
 			"path": "pages/user/myship/crew/list/index",
 			"style": {
 				"navigationBarTitleText": "船员管理",
