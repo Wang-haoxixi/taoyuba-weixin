@@ -1,6 +1,6 @@
 <template>
 	<view class="sales-boss">
-		<u-form :model="form" ref="uForm" label-width="220">
+		<u-form :model="form" ref="uForm" label-width="220" :disabled="disabled">
 			<u-form-item label="渔船名"><u-input v-model="form.shipName" /></u-form-item>
 			<u-form-item label="渔船编号"><u-input v-model="form.shipNo" /></u-form-item>
 			<u-form-item label="捕捞许可证编号"><u-input v-model="form.licensesFishingNo" /></u-form-item>
@@ -37,7 +37,7 @@
 				<get-img v-model="form.licensesInspectionNoUrl" @getImg="(url) => getUrl(url, 'licensesInspectionNoUrl')" :url="form.licensesInspectionNoUrl"></get-img>
 			</u-form-item>
 		</u-form>
-		<view class="sumbit-button">
+		<view class="sumbit-button" v-if="!disabled">
 			<u-button type="primary" @click="sumbit">提交出售渔船信息</u-button>
 		</view>
 		<u-picker v-model="show" mode="selector" range-key="label" :range="selectorObj" @confirm="confirmChange"></u-picker>
@@ -65,12 +65,14 @@
 				selectorObj: [],
 				show: false,
 				showModal: false,
-				content: '该渔船出售信息将于72小时内自动关闭,请尽快联系共有人确认出售信息!'
+				content: '该渔船出售信息已提交,请您耐心等待审核!',
+				disabled: false
 			}
 		},
-		onLoad () {
+		onLoad (option) {
 			let value = uni.getStorageSync('saleShipDetail')
 			this.form = value
+			this.disabled = option.disabled
 		},
 		methods: {
 			// 获取图片地址

@@ -9,16 +9,17 @@
 			<view class="content-wrapper" id="contentWrapper">
 				<view class="item" v-for="(item, index) in data" :key="index">
 					<view class="sales-list-content">
-						<view>渔船名: {{ item.shipName }}</view>
-						<view>渔船编号: {{ item.shipNo }}</view>
-						<view>持证人: {{ item.certificateHolderName }}</view>
-						<view>持证人身份证: {{ item.certificateHolderIdCard }}</view>
-						<view>渔船状态: {{ getDictLabel(dictMap['audit_state'],item.auditState) }}</view>
+						<view>渔船名：  {{ item.shipName }}</view>
+						<view>渔船编号：  {{ item.shipNo }}</view>
+						<view>持证人：  {{ item.certificateHolderName }}</view>
+						<view>持证人身份证：  {{ item.certificateHolderIdCard }}</view>
+						<view>渔船状态：  <text :style="item.auditState === '3' ? 'color: green' : item.auditState === '4' ? 'color: red' : '' ">{{ getDictLabel(dictMap['audit_state'],item.auditState) }}</text></view>
 						<view class="sales-operation">
-							<u-button size="mini" @click="edit(item.id)" v-if="type === 1">编辑</u-button>
-							<u-button size="mini" @click="active = item.id;showModel = true" v-if="type === 1">删除</u-button>
-							<u-button size="mini">推送至共有人</u-button>
-							<u-button size="mini">确认进度</u-button>
+							<u-button size="mini" @click="edit(item.id)" v-if="type === 1 && item.auditState === '2'">编辑</u-button>
+							<u-button v-else size="mini" @click="edit(item.id,true)">查看</u-button>
+							<u-button size="mini" @click="active = item.id;showModel = true" v-if="type === 1 && item.auditState === '2'">删除</u-button>
+							<u-button size="mini" v-if="type === 1 && item.auditState === '3'" @click="owners(item.id)">推送至共有人</u-button>
+							<!-- <u-button size="mini">确认进度</u-button> -->
 						</view>
 					</view>
 				</view>
@@ -104,7 +105,7 @@
 					params: Object.assign({
 						size: this.page.size,
 						current: this.page.current,
-						userId: this.$store.state.user.userInfo.userId,
+						userId: this.$cache.get('userInfo').userId,
 						searchType: this.type
 					})
 				}).then(({ data }) => {
@@ -123,7 +124,7 @@
 				})
 			},
 			// 编辑交易信息
-			edit (id) {
+			edit (id,state) {
 				this.$http.get(`/tmlms/tyb_order/getById?id=${id}`).then(({data})=>{
 					this.$getCode(data).then(res=>{
 						uni.setStorage({
@@ -131,7 +132,7 @@
 						    data: res.data,
 						    success: function () {
 						        uni.navigateTo({
-						        	url: `/pages/user/myship/ship/shipDetail`
+						        	url: `/pages/user/myship/ship/shipDetail?disabled=${state || false}`
 						        });
 						    }
 						});
@@ -147,6 +148,11 @@
 						this.getList()
 					})
 				})
+			},
+			owners (id) {
+				uni.navigateTo({
+					url: `/pages/user/myship/ship/saleCode?id=${id}`
+				});
 			}
 		},
 	}
@@ -154,8 +160,8 @@
 
 <style lang="scss" scoped>
 	.sales-boss {
-		padding: 0 30rpx;
-		margin: 30rpx 0;
+		padding: 20rpx 30rpx;
+		margin: 10rpx 0 0 0;
 		.sales-button {
 			width: 150rpx;
 		}

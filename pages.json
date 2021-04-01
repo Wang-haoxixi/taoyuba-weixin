@@ -275,6 +275,12 @@
 			}
 		},
 		{
+			"path": "pages/user/myship/ship/saleCode",
+			"style": {
+				"navigationBarTitleText": "交易二维码"
+			}
+		},
+		{
 			"path": "pages/user/collection/index",
 			"style": {
 				"navigationBarTitleText": "我的收藏"
