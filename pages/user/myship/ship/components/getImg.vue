@@ -1,11 +1,11 @@
 <template>
 	<view class="">
 		<view class="choose-img-wrapper">
-			<view class="img-item" v-if="url">
-				<u-image width="200rpx" height="200rpx" :key="index" :src="url" mode="scaleToFill" @click="openImg(index)"></u-image>
-				<u-icon class="icon-delete"  v-if="status === 'update'" name="close-circle-fill" color="#333" size="40" @click="deleteImg()"></u-icon>
+			<view class="img-item" v-for="(item,index) in url" :key="index">
+				<u-image width="200rpx" height="200rpx" :key="index" :src="item" mode="scaleToFill" @click="openImg()"></u-image>
+				<u-icon class="icon-delete"  v-if="status === 'update' && !disabled" name="close-circle-fill" color="#333" size="40" @click="deleteImg()"></u-icon>
 			</view>
-			<view class="add-upload" @click="onChooseImg" v-show="!url">
+			<view class="add-upload" @click="onChooseImg">
 				<u-icon name="plus" color="#d7d7d7" size="80"></u-icon>
 			</view>
 		</view>
@@ -17,10 +17,17 @@
 	import { API_URL } from '@/env'
 	export default {
 		props: {
-			url: String,
+			url: {
+				type: Array,
+				default: []
+			},
 			status: {
 				type: String,
 				default: 'update'
+			},
+			disabled: {
+				type: Boolean,
+				default: false
 			},
 			// maxLength: {
 			// 	type: Number,
@@ -69,12 +76,12 @@
 				})
 			},
 			deleteImg (index) {
-				this.$emit('getImg', '')
+				this.$emit('delImg', index)
 			},
-			openImg (index) {
+			openImg () {
 				uni.previewImage({
 					current: 0,
-					urls: [this.url]
+					urls: this.url
 				});
 			},
 		}

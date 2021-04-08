@@ -48,7 +48,7 @@
 								})
 							} else if (this.roles[1] === 108) {
 								uni.navigateTo({
-									url: '/pages/user/myship/ship/index'
+									url: '/pages/user/myship/index'
 								})
 							} else {
 								uni.navigateTo({

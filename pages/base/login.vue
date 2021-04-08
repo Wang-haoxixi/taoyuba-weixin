@@ -105,10 +105,14 @@
 					value: '',
 					len: 4,
 					type: 'image'
-				 }
+				 },
+				 id: 0
 			}
 		},
-		onLoad () {
+		onLoad (option) {
+			if( option.id ){
+				this.id = option.id
+			}
 			this.refreshCode()
 		},
 		methods: {
@@ -249,12 +253,18 @@
 					this.getDicMap()
 					this.$cache.set(TOKEN, data['access_token'])
 					this.$cache.set('refresh_token', data['refresh_token'])
-					uni.switchTab({
-						url: '/pages/home/index/index',
-						success: () => {
-							this.getUserInfoApi()
-						}
-					})
+					if( this.id ){
+						uni.navigateTo({
+							url: `/pages/user/myship/ship/confirmShipDetail?id=${this.id}`
+						})
+					}else{
+						uni.switchTab({
+							url: '/pages/home/index/index',
+							success: () => {
+								this.getUserInfoApi()
+							}
+						})
+					}
 					uni.hideLoading()
 				}).catch(() => {
 					this.refreshCode()
@@ -263,12 +273,18 @@
 			onWechat () {
 				getUser.onLogin().then((res) => {
 					if (res) {
-						uni.switchTab({
-							url: '/pages/home/index/index',
-							success: () => {
-								this.getUserInfoApi()
-							}
-						})
+						if( this.id ){
+							uni.navigateTo({
+								url: `/pages/user/myship/ship/confirmShipDetail?id=${this.id}`
+							})
+						}else{
+							uni.switchTab({
+								url: '/pages/home/index/index',
+								success: () => {
+									this.getUserInfoApi()
+								}
+							})
+						}
 					} else {
 						this.showPhone = true
 					}

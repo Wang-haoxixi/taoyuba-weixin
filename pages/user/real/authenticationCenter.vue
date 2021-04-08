@@ -12,6 +12,9 @@
 				<view class="center-logo">
 					<u-image :src="logo" width="55rpx" height="50rpx"></u-image>
 				</view>
+				<view class="issuccess">
+					<u-image :src="success" width="175rpx" height="175rpx" shape="circle"></u-image>
+				</view>
 			</view>
 			<view class="center-img">
 				<view>
@@ -41,6 +44,7 @@
 			return {
 				imgUrl: `${this.$IMAGE_URL}/homo-face.png`,
 				logo: `${this.$IMAGE_URL}/blue-logo.png`,
+				success: `${this.$IMAGE_URL}/success.png`,
 				form: {}
 			}
 		},
@@ -83,6 +87,13 @@
 			box-sizing: border-box;
 			padding: 20rpx;
 			margin-bottom: 50rpx;
+			position: relative;
+			border-radius: 20rpx;
+			.issuccess {
+				position: absolute;
+				right: -14px;
+				bottom: -44rpx;
+			}
 		}
 		.center-card-main {
 			display: flex;

@@ -3,7 +3,7 @@
 		<view class="sales-button">
 			<u-picker v-model="show" mode="selector" range-key="shipName" :range="selectorObj" @confirm="confirmChange"></u-picker>
 			<u-button @click="selling" size="mini" v-if="type === 1">我要卖船</u-button>
-			<u-button @click="selling" size="mini" v-else>我要买船</u-button>
+			<!-- <u-button @click="selling" size="mini" v-else>我要买船</u-button> -->
 		</view>
 		<view class="sales-list">
 			<view class="content-wrapper" id="contentWrapper">
@@ -14,12 +14,15 @@
 						<view>持证人：  {{ item.certificateHolderName }}</view>
 						<view>持证人身份证：  {{ item.certificateHolderIdCard }}</view>
 						<view>渔船状态：  <text :style="item.auditState === '3' ? 'color: green' : item.auditState === '4' ? 'color: red' : '' ">{{ getDictLabel(dictMap['audit_state'],item.auditState) }}</text></view>
+						<view v-if="item.auditState === '4'">驳回理由：{{ item.rejectReason }}</view>
 						<view class="sales-operation">
-							<u-button size="mini" @click="edit(item.id)" v-if="type === 1 && item.auditState === '2'">编辑</u-button>
+							<!-- type 代表卖船还是买船 item.auditState 代表審核進度 item.type 代表是否是持证人-->
+							<u-button size="mini" @click="edit(item.id)" v-if="type === 1 && item.auditState === '2' && item.type === '1'">编辑</u-button>
 							<u-button v-else size="mini" @click="edit(item.id,true)">查看</u-button>
+							<u-button size="mini" @click="confirmProgress(item.id)" v-if="type === 1 && item.auditState === '3'">确认进度</u-button>
 							<u-button size="mini" @click="active = item.id;showModel = true" v-if="type === 1 && item.auditState === '2'">删除</u-button>
-							<u-button size="mini" v-if="type === 1 && item.auditState === '3'" @click="owners(item.id)">推送至共有人</u-button>
-							<!-- <u-button size="mini">确认进度</u-button> -->
+							<u-button size="mini" v-if="type === 1 && item.auditState === '3' && item.type === '1'" @click="owners(item.id)">推送至共有人</u-button>
+							<u-button size="mini" @click="confirmProgress(item.id)" v-if="type !== 1 ">确认信息</u-button>
 						</view>
 					</view>
 				</view>
@@ -82,8 +85,15 @@
 			selling () {
 				this.$http.get('/tmlms/tyb_order/my_ship').then(({ data })=>{
 					this.$getCode(data).then(res=>{
-						this.show = true
-						this.selectorObj = res.data
+						if( res.data.length === 0 ){
+							uni.showToast({
+								icon: 'none',
+								title: '您还没有渔船!'
+							})
+						}else{
+							this.show = true
+							this.selectorObj = res.data
+						}
 					})
 				})
 			},
@@ -132,7 +142,7 @@
 						    data: res.data,
 						    success: function () {
 						        uni.navigateTo({
-						        	url: `/pages/user/myship/ship/shipDetail?disabled=${state || false}`
+						        	url: `/pages/user/myship/ship/shipDetail?disabled=${state}`
 						        });
 						    }
 						});
@@ -152,7 +162,13 @@
 			owners (id) {
 				uni.navigateTo({
 					url: `/pages/user/myship/ship/saleCode?id=${id}`
-				});
+				})
+			},
+			// 确认进度
+			confirmProgress (id) {
+				uni.navigateTo({
+					url: `/pages/user/myship/ship/confirmShipDetail?id=${id}`
+				})
 			}
 		},
 	}

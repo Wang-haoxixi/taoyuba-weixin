@@ -324,15 +324,27 @@
 			}
 		},
 		{
-			"path": "pages/user/myship/ship/index",
+			"path": "pages/user/myship/index",
 			"style": {
 				"navigationBarTitleText": "我的渔船"
+			}
+		},
+		{
+			"path": "pages/user/myship/ship/index",
+			"style": {
+				"navigationBarTitleText": "渔船交易"
 			}
 		},
 		{
 			"path": "pages/user/myship/ship/shipDetail",
 			"style": {
 				"navigationBarTitleText": "渔船详情"
+			}
+		},
+		{
+			"path": "pages/user/myship/ship/confirmShipDetail",
+			"style": {
+				"navigationBarTitleText": "渔船出售信息"
 			}
 		},
 		{
@@ -451,6 +463,9 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "shopping",
 		"navigationBarBackgroundColor": "#FFF",
-		"backgroundColor": "#FFF"
+		"backgroundColor": "#FFF",
+		"usingComponents":{
+		    "painter":"/wxcomponents/painter/painter"
+		}
 	}
 }

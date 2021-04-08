@@ -41,7 +41,8 @@
 					{ label: '简历管理', path: '/pages/release/resume/edit', show: this.role.includes(this.rolesType.crew.type) },
 					{ label: '我的合同', path: '/pages/user/contract/list/index', show: this.role.includes(this.rolesType.crew.type) },
 					{ label: '我的培训', path: '/pages/user/video/list/index', show: true }, // this.role.includes(this.rolesType.crew.type)
-					{ label: '我的渔船', path: '/pages/user/myship/ship/index', show: this.role.includes(this.rolesType.shipowner.type) },
+					{ label: '我的渔船', path: '/pages/user/myship/index', show: this.role.includes(this.rolesType.shipowner.type) },
+					{ label: '渔船交易', path: '/pages/user/myship/ship/index', show: true },
 					{ label: '渔船登记', path: '/pages/release/ship/index?type=1', show: this.role.includes(this.rolesType.shipowner.type) && this.isShipOwer },
 					{ label: '船员招聘', path: '/pages/user/recruit/list/index',  show: this.role.includes(this.rolesType.shipowner.type) },
 					{ label: '一船一档', path: '/pages/user/ship/list/index', show: this.role.includes(this.rolesType.police.type) }, // this.roles.includes(this.rolesType.police.type)
@@ -53,7 +54,7 @@
 			},
 			menu108 () {
 				return [
-					{ label: '我的渔船', path: '/pages/user/myship/ship/index' },
+					{ label: '我的渔船', path: '/pages/user/myship/index' },
 					// { label: '合同解除', path: '/pages/user/contract/terminat-list/index' },
 					// { label: '我的评价', path: '' },
 					{ label: '渔船登记', path: '/pages/release/ship/index?type=1', show: this.isShipOwer },

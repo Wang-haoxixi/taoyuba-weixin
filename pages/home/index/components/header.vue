@@ -46,7 +46,7 @@
 		</view>
 		<u-modal v-model="modalShow" @cancel="modalShow = false" title="合同" :mask-close-able="true" :show-confirm-button="false" show-cancel-button cancel-text="取消">
 			<view class="slot-content" style="padding: 30rpx 10rpx;display: flex;justify-content: center;">
-				<u-button @click="onToPath('/pages/user/myship/ship/index')" style="margin-right: 20rpx;">船东合同</u-button>
+				<u-button @click="onToPath('/pages/user/myship/index')" style="margin-right: 20rpx;">船东合同</u-button>
 				<u-button type="primary" @click="onToPath('/pages/user/contract/list/index')">船员合同</u-button>
 			</view>
 		</u-modal>
@@ -127,7 +127,7 @@
 								})
 							} else if (this.roles.includes(this.rolesType.shipowner.type)) {
 								uni.navigateTo({
-									url: '/pages/user/myship/ship/index'
+									url: '/pages/user/myship/index'
 								})
 							} else {
 								uni.navigateTo({
