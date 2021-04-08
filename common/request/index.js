@@ -144,13 +144,6 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 	return response
 }, (response) => { // 请求错误后执行
 	uni.hideLoading()
-	if(response.data.code === 1){
-		uni.showToast({
-			icon: 'none',
-			title: response.data.msg
-		})
-		return
-	}
 	if (response.errMsg == 'request:fail ') {
 		uni.showToast({
 			icon: 'none',
@@ -171,6 +164,13 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 		// }, 1000)
 		tools.clear()
 		return response
+	}
+	if(response.data.code === 1){
+		uni.showToast({
+			icon: 'none',
+			title: response.data.msg
+		})
+		return
 	}
 	console.log('response', response)
 	return response

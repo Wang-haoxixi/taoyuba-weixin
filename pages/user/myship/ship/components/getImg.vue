@@ -5,7 +5,7 @@
 				<u-image width="200rpx" height="200rpx" :key="index" :src="item" mode="scaleToFill" @click="openImg()"></u-image>
 				<u-icon class="icon-delete"  v-if="status === 'update' && !disabled" name="close-circle-fill" color="#333" size="40" @click="deleteImg()"></u-icon>
 			</view>
-			<view class="add-upload" @click="onChooseImg">
+			<view class="add-upload" @click="onChooseImg" v-if="!disabled">
 				<u-icon name="plus" color="#d7d7d7" size="80"></u-icon>
 			</view>
 		</view>

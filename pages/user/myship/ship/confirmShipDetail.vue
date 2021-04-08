@@ -109,12 +109,17 @@
 				list: [],
 				listBuy: [],
 				arrType: ['管理员','持证人','卖方共有人','买方发起人','买方合伙人'],
-				showSure: false
+				showSure: false,
+				isBuy: false
 			}
 		},
 		onLoad (option) {
-			// 判断是否登录 没登录去登录
+			// 判断是从哪里进来的 一般是扫码 有的时候是自己进来
+			if( option.isBuy ){
+				this.isBuy = true
+			}
 			this.params = this.getQueryParams(option.q).id || option.id
+			// 判断是否登录 没登录去登录
 			isLogin().then(data => {
 				if (data) {
 					this.getList()
@@ -176,6 +181,11 @@
 						icon: 'none'
 					})
 					if( data.code === 0 ){
+						if( this.isBuy ){
+							uni.navigateTo({
+								url: `/pages/user/myship/ship/saleCode?id=${this.params}`
+							})
+						}
 						this.form = data.data
 						this.active = 1
 						this.list = this.form.sellers

@@ -15,7 +15,7 @@
 								<text class="phone">{{userInfo.username}}</text>
 								<text class="phone">{{roleLabel}}</text>
 							</view>
-							<view>
+							<view v-if="arr.includes(user.userId)">
 								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/index')" v-if="!isname">实名认证</u-button>
 								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/authenticationCenter')" v-if="isname">已实名</u-button>
 							</view>
@@ -87,7 +87,9 @@
 					{ value: 1, label: '船员' },
 					{ value: 2, label: '船东' },
 				],
-				isname: false
+				isname: false,
+				user: this.$cache.get('userInfo'),
+				arr: [4201,4221,4183,4193,4196],
 			}
 		},
 		computed: {

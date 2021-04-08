@@ -336,6 +336,12 @@
 			}
 		},
 		{
+			"path": "pages/user/myship/ship/buyShip",
+			"style": {
+				"navigationBarTitleText": "我要买船"
+			}
+		},
+		{
 			"path": "pages/user/myship/ship/shipDetail",
 			"style": {
 				"navigationBarTitleText": "渔船详情"

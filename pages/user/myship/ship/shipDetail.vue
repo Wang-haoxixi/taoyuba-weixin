@@ -146,6 +146,11 @@
 	.sales-boss {
 		background: white;
 		padding: 30rpx;
+		.ischange {
+			::v-deep .u-form-item--left__content__label {
+				color: $color-red
+			}
+		}
 	}
 	.sumbit-button {
 		margin-top: 30rpx;

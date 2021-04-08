@@ -3,7 +3,7 @@
 		<view class="sales-button">
 			<u-picker v-model="show" mode="selector" range-key="shipName" :range="selectorObj" @confirm="confirmChange"></u-picker>
 			<u-button @click="selling" size="mini" v-if="type === 1">我要卖船</u-button>
-			<!-- <u-button @click="selling" size="mini" v-else>我要买船</u-button> -->
+			<u-button @click="buy" size="mini" v-else>我要买船</u-button>
 		</view>
 		<view class="sales-list">
 			<view class="content-wrapper" id="contentWrapper">
@@ -168,6 +168,12 @@
 			confirmProgress (id) {
 				uni.navigateTo({
 					url: `/pages/user/myship/ship/confirmShipDetail?id=${id}`
+				})
+			},
+			// 买船
+			buy () {
+				uni.navigateTo({
+					url: `/pages/user/myship/ship/buyShip`
 				})
 			}
 		},
