@@ -36,7 +36,7 @@ import temeple from './components/temeple.js'
 		onShareAppMessage() {
 			return {
 				title: '出售信息',
-				path: 'pages/pages/user/myship/ship/shipDetail',
+				path: `/pages/user/myship/ship/confirmShipDetail?id=${this.shipDetail.id}`,
 				imageUrl: this.url
 			}
 		},

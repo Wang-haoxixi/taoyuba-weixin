@@ -14,6 +14,10 @@ export default {
 					type: 115,
 					label: '公安边防'
 				}, // 公安
+				check: {
+					type: 117,
+					label: '渔船检验员'
+				}, // 渔船检验员
 			},
 			userInfo: this.$cache.get('userInfo') || {},
 			roles: this.$cache.get('roles') || []

@@ -5,7 +5,7 @@
 			<u-form-item label="渔船名"><u-input v-model="form.shipName" :disabled="disabled" /></u-form-item>
 			<u-form-item label="渔船编号"><u-input v-model="form.shipNo" :disabled="disabled" /></u-form-item>
 			<u-form-item label="捕捞许可证编号"><u-input v-model="form.licensesFishingNo" :disabled="disabled"/></u-form-item>
-			<u-form-item label="渔船所有权登记证书"><u-input v-model="form.licensesOwnerShip" :disabled="disabled"/></u-form-item>
+			<u-form-item label="渔船所有权登记证书编号"><u-input v-model="form.licensesOwnerShip" :disabled="disabled"/></u-form-item>
 			<u-form-item label="国籍证书编号"><u-input v-model="form.licensesNationalNo" :disabled="disabled"/></u-form-item>
 			<u-form-item label="船舶检验证书编号"><u-input v-model="form.licensesInspectionNo" :disabled="disabled"/></u-form-item>
 			<u-form-item label="主机总功率(千瓦)"><u-input v-model="form.engineTotalPower" :disabled="disabled"/></u-form-item>
@@ -73,6 +73,12 @@
 		onLoad (option) {
 			let value = uni.getStorageSync('saleShipDetail')
 			this.form = value
+			if( !this.form.licensesOwnerShipUrlList ){
+				this.form.licensesOwnerShipUrlList = []
+				this.form.licensesNationalNoUrlList = []
+				this.form.licensesFishingNoUrlList = []
+				this.form.licensesInspectionNoUrlList = []
+			}
 			if( option.disabled === 'true' ){
 				this.disabled = true
 			}else{

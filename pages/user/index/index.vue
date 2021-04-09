@@ -16,6 +16,7 @@
 								<text class="phone">{{roleLabel}}</text>
 							</view>
 							<view v-if="arr.includes(user.userId)">
+							<!-- <view> -->
 								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/index')" v-if="!isname">实名认证</u-button>
 								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/authenticationCenter')" v-if="isname">已实名</u-button>
 							</view>
@@ -235,6 +236,11 @@
 					this.onTo('/pages/release/shipowner-resume/edit')
 				} else if (status.crew) {
 					this.onTo('/pages/release/resume/edit')
+				}else {
+					uni.showToast({
+						icon: 'none',
+						title: '请先成为船东或者船员!'
+					})
 				}
 			},
 			getUserInfo () {

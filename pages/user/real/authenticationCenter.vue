@@ -42,8 +42,7 @@
 		},
 		data () {
 			return {
-				imgUrl: `${this.$IMAGE_URL}/homo-face.png`,
-				logo: `${this.$IMAGE_URL}/blue-logo.png`,
+				logo: `${this.$IMAGE_URL}/blueLogo.png`,
 				success: `${this.$IMAGE_URL}/success.png`,
 				form: {}
 			}

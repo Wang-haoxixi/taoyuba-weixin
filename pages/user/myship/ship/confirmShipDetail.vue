@@ -49,8 +49,11 @@
 				<u-button type="error" size="medium" @click="agree(0)">拒绝</u-button>
 				<u-button type="primary" size="medium" @click="sureBuy('')" :disabled="form.canAgree === '1'" v-if="form.orderUserRole === '4'">{{ form.canAgree === '1' ? '已确认买入人' : '确认买入人'}}</u-button>
 			</view>
+			<view v-if="form.sellState === '8'" class="agree-button">
+				<u-button type="error" size="medium">此交易已关闭</u-button>
+			</view>
 			<!-- 同意或者拒绝后的状态 -->
-			<view v-if="form.orderUserRole !== '2' && form.agreeState" class="agree-button">
+			<view v-if="form.orderUserRole !== '2' && form.agreeState && form.sellState !== '8'" class="agree-button">
 				<u-button :type=" form.agreeState === '1' ? 'success' : 'error' "> {{ form.agreeState === '1' ? '您已同意' : '您已拒绝' }} </u-button>
 				<u-button type="primary" size="medium" @click="sureBuy('')" :disabled="form.canAgree === '1'" v-if="form.orderUserRole === '4'">{{ form.canAgree === '1' ? '已确认买入人' : '确认买入人'}}</u-button>
 			</view>
@@ -77,7 +80,7 @@
 		</view>
 		<view v-else class="agree-input">
 			<u-message-input mode="bottomLine" :breathe="true" :maxlength="6" :disabled-keyboard="true" :value="value"></u-message-input>
-			<u-keyboard ref="uKeyboard" mode="number" v-model="showModel" :mask="false" @change="keyboard" :cancel-btn="false" @backspace="backspace" @confirm="confirmCode"></u-keyboard>
+			<u-keyboard ref="uKeyboard" mode="number" v-model="showModel" :mask="false" :mask-close-able="false" @change="keyboard" :cancel-btn="false" @backspace="backspace" @confirm="confirmCode"></u-keyboard>
 		</view>
 	</view>
 	<view class="sales-boss sales-loading" v-else>
@@ -207,7 +210,7 @@
 							if( !this.showModel ){
 								this.showModel = true
 							}
-						}else if(data.msg === '您是购买方,出售方未全部同意出售,无法查看此条信息' || data.msg === '此交易购买人员已经全部确认完毕,您无法查看') {
+						}else if(data.msg === '您是购买方,出售方未全部同意出售,无法查看此条信息' || data.msg === '此交易购买人员已经全部确认完毕,您无法查看' || data.msg === '订单已关闭') {
 							setTimeout(res=>{
 								uni.switchTab({
 									url: '/pages/user/index/index'

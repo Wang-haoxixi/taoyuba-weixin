@@ -9,7 +9,7 @@
   "views": [
     {
       "type": "image",
-      "url": "https://mini.taoyu58.com/blue-logo.png",
+      "url": "https://mini.taoyu58.com/blueLogo.png",
       "css": {
         "width": "79.61500000000001rpx",
         "height": "79.61500000000001rpx",
