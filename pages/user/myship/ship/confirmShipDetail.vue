@@ -28,7 +28,7 @@
 				<u-form-item label="造船厂"><u-input v-model="form.buildFactory" /></u-form-item> -->
 			</u-form>
 			<!-- 卖手发起人的时候 可以查看买受人的进度 -->
-			<template v-if="form.orderUserRole === '4'">
+			<template v-if="form.orderUserRole === '4' && form.sellState !== '6'">
 				<view class="agree-button agree-content" v-for="(item,index) in listBuy" :key="index">
 					<view class="agree-name">
 						<view>{{ item.name }} {{ arrType[Number(item.type)] }}</view>
@@ -45,24 +45,21 @@
 			</template>
 			<!-- 出售合伙人可以进行同意和拒绝 -->
 			<view class="agree-button" v-if="(form.orderUserRole !== '2') && !form.agreeState && form.sellState !== '8'">
-				<u-button type="success" size="medium" @click="agree(1)">同意</u-button>
-				<u-button type="error" size="medium" @click="agree(0)">拒绝</u-button>
-				<u-button type="primary" size="medium" @click="sureBuy('')" :disabled="form.canAgree === '1'" v-if="form.orderUserRole === '4'">{{ form.canAgree === '1' ? '已确认买入人' : '确认买入人'}}</u-button>
-			</view>
-			<view v-if="form.sellState === '8'" class="agree-button">
-				<u-button type="error" size="medium">此交易已关闭</u-button>
+				<!-- 他是买的人的话需要确认才可以同意或者拒绝 -->
+				<u-button type="success" size="medium" @click="agree(1)" v-if="form.canAgree === '1' || form.orderUserRole === '2' || form.orderUserRole === '3'">同意</u-button>
+				<u-button type="error" size="medium" @click="agree(0)" v-if="form.canAgree === '1' || form.orderUserRole === '2' || form.orderUserRole === '3'">拒绝</u-button>
+				<u-button type="primary" size="medium" @click="sureBuy('')" :disabled="form.canAgree === '1'" v-if="form.orderUserRole === '4' && form.canAgree !== '1'">{{  '确认买入人'}}</u-button>
 			</view>
 			<!-- 同意或者拒绝后的状态 -->
-			<view v-if="form.orderUserRole !== '2' && form.agreeState && form.sellState !== '8'" class="agree-button">
+			<view v-if="form.orderUserRole !== '2' && form.agreeState && form.sellState !== '8' && form.sellState !== '6'" class="agree-button">
 				<u-button :type=" form.agreeState === '1' ? 'success' : 'error' "> {{ form.agreeState === '1' ? '您已同意' : '您已拒绝' }} </u-button>
-				<u-button type="primary" size="medium" @click="sureBuy('')" :disabled="form.canAgree === '1'" v-if="form.orderUserRole === '4'">{{ form.canAgree === '1' ? '已确认买入人' : '确认买入人'}}</u-button>
 			</view>
 			<!-- 持证人可以看所有人的记录 -->
-			<view class="agree-button" v-if="form.orderUserRole === '2'">
+			<view class="agree-button" v-if="form.orderUserRole === '2' || form.sellState === '6'">
 				<u-button :type="active ? 'primary' : ''" @click="selectType(1)" size="medium">出售方进度</u-button>
 				<u-button :type="!active ? 'primary' : ''" @click="selectType(0)" size="medium">买受方进度</u-button>
 			</view>
-			<template v-if="form.orderUserRole === '2'">
+			<template v-if="form.orderUserRole === '2' || form.sellState === '6'">
 				<view class="agree-button agree-content" v-for="(item,index) in list" :key="index">
 					<view class="agree-name">
 						<view>{{ item.name }} {{ arrType[Number(item.type)] }}</view>
@@ -74,8 +71,14 @@
 					</view>
 				</view>
 			</template>
+			<view v-if="form.sellState === '8'" class="agree-button">
+				<u-button type="error" size="medium">此交易已关闭</u-button>
+			</view>
+			<view v-if="form.sellState === '6'" class="agree-button">
+				<u-button type="success" size="medium">此交易已完成</u-button>
+			</view>
 			<!-- 确认提示窗 -->
-			<u-modal v-model="show" :content="`此操作将确认${ agreeVal ? '' : '不' }同意`" @confirm="confirmAg" @cancel="show = false" :show-cancel-button="true"></u-modal>
+			<u-modal v-model="show" :content="agreeVal ? '此操作将确认同意' : '此操作将取消本次交易'" @confirm="confirmAg" @cancel="show = false" :show-cancel-button="true"></u-modal>
 			<u-modal v-model="showSure" :content="agreeVal ? `此操作将确认该用户为买方合伙人,是否确定!` : `此操作将确认所有买方合伙人,是否确定!`" @confirm="confirmSure" @cancel="showSure = false" :show-cancel-button="true"></u-modal>
 		</view>
 		<view v-else class="agree-input">
@@ -114,6 +117,12 @@
 				arrType: ['管理员','持证人','卖方共有人','买方发起人','买方合伙人'],
 				showSure: false,
 				isBuy: false
+			}
+		},
+		onShareAppMessage() {
+			return {
+				title: '出售信息',
+				path: `/pages/user/myship/ship/confirmShipDetail?id=${this.form.id}`,
 			}
 		},
 		onLoad (option) {
@@ -184,11 +193,6 @@
 						icon: 'none'
 					})
 					if( data.code === 0 ){
-						if( this.isBuy ){
-							uni.navigateTo({
-								url: `/pages/user/myship/ship/saleCode?id=${this.params}`
-							})
-						}
 						this.form = data.data
 						this.active = 1
 						this.list = this.form.sellers
@@ -203,21 +207,21 @@
 						if( data.msg === '请先进行实名认证'){
 							setTimeout(res=>{
 								uni.switchTab({
-									url: '/pages/user/index/index'
+									url: '/pages/user/real/index'
 								})
 							},2000)
 						}else if( data.msg === '请输入交易码' || data.msg === '交易码错误' ) {
 							if( !this.showModel ){
 								this.showModel = true
 							}
-						}else if(data.msg === '您是购买方,出售方未全部同意出售,无法查看此条信息' || data.msg === '此交易购买人员已经全部确认完毕,您无法查看' || data.msg === '订单已关闭') {
+						}else if(data.msg === '需要您的购买发起人授权您查看信息'){
+							this.audito = false
+						}else {
 							setTimeout(res=>{
 								uni.switchTab({
 									url: '/pages/user/index/index'
 								})
 							},2000)
-						}else if(data.msg === '需要您的购买发起人授权您查看信息'){
-							this.audito = false
 						}
 					}
 				})

@@ -14,7 +14,7 @@
 						<view>渔船状态：  <text :style="item.auditState === '3' ? 'color: green' : item.auditState === '4' ? 'color: red' : '' ">{{ getDictLabel(dictMap['audit_state'],item.auditState) }}</text></view>
 						<view v-if="item.auditState === '4'">驳回理由：{{ item.rejectReason }}</view>
 						<view class="sales-operation">
-							<u-button size="mini" @click="confirmProgress(item.id)">生成二维码</u-button>
+							<u-button size="mini" @click="confirmProgress(item.id)">查看详情</u-button>
 						</view>
 					</view>
 				</view>

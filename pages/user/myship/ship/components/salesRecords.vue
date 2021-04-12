@@ -21,10 +21,10 @@
 						<view class="sales-operation">
 							<!-- type 代表卖船还是买船 item.auditState 代表審核進度 item.type 代表是否是持证人-->
 							<u-button size="mini" @click="edit(item.id)" v-if="type === 1 && item.auditState === '2' && item.type === '1'">编辑</u-button>
-							<u-button v-else size="mini" @click="edit(item.id,true)">查看</u-button>
-							<u-button size="mini" @click="confirmProgress(item.id)" v-if="type === 1 && item.auditState === '3'">确认进度</u-button>
+							<u-button v-else size="mini" @click="edit(item.id,true)">查看详情</u-button>
+							<u-button size="mini" @click="confirmProgress(item.id)" v-if="type === 1 && item.auditState === '3'">查看进度</u-button>
 							<u-button size="mini" @click="deleShow(item.id)" v-if="type === 1 && item.auditState === '2'">删除</u-button>
-							<u-button size="mini" v-if="type === 1 && item.auditState === '3' && item.type === '1'" @click="owners(item.id)">推送至共有人</u-button>
+							<u-button size="mini" v-if="type === 1 && item.auditState === '3' && item.type === '1' && item.sellState !== '8' && item.sellState !== '6' " @click="owners(item.id)">推送至共有人</u-button>
 							<u-button size="mini" @click="confirmProgress(item.id)" v-if="type !== 1 ">确认信息</u-button>
 						</view>
 					</view>

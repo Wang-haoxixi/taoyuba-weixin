@@ -2,29 +2,29 @@
 	<view class="sales-boss">
 		<u-form :model="form" ref="uForm" label-width="220" :disabled="disabled">
 			<u-form-item label="交易金额(元)"><u-input v-model="form.sellPrice" :type="'number'" :disabled="disabled" /></u-form-item>
-			<u-form-item label="渔船名"><u-input v-model="form.shipName" :disabled="disabled" /></u-form-item>
-			<u-form-item label="渔船编号"><u-input v-model="form.shipNo" :disabled="disabled" /></u-form-item>
-			<u-form-item label="捕捞许可证编号"><u-input v-model="form.licensesFishingNo" :disabled="disabled"/></u-form-item>
-			<u-form-item label="渔船所有权登记证书编号"><u-input v-model="form.licensesOwnerShip" :disabled="disabled"/></u-form-item>
-			<u-form-item label="国籍证书编号"><u-input v-model="form.licensesNationalNo" :disabled="disabled"/></u-form-item>
-			<u-form-item label="船舶检验证书编号"><u-input v-model="form.licensesInspectionNo" :disabled="disabled"/></u-form-item>
-			<u-form-item label="主机总功率(千瓦)"><u-input v-model="form.engineTotalPower" :disabled="disabled"/></u-form-item>
-			<u-form-item label="主机功率(千瓦)"><u-input v-model="form.mainEnginePower" :disabled="disabled"/></u-form-item>
-			<u-form-item label="双控功率(千瓦)"><u-input v-model="form.dualPower" :disabled="disabled"/></u-form-item>
-			<u-form-item label="主机型号"><u-input v-model="form.grossTonnage" :disabled="disabled"/></u-form-item>
-			<u-form-item label="总吨位（吨）"><u-input v-model="form.mainEngineModel" :disabled="disabled"/></u-form-item>
-			<u-form-item label="船长(米)"><u-input v-model="form.hullLength" :disabled="disabled"/></u-form-item>
-			<u-form-item label="船体材料"><view @click="disabled ? '' :setLabel(dictMapList['tyb_ship_material'],'hullMaterial')" class="label-width">{{ getDictLabel(dictMapList['tyb_ship_material'],form.hullMaterial) }}</view></u-form-item>
-			<u-form-item label="船籍港"><view @click="disabled ? '' :setLabel(dictMapList['tyb_ship_port'],'portRegister')" class="label-width">{{ getDictLabel(dictMapList['tyb_ship_port'],form.portRegister) }}</view></u-form-item>
-			<u-form-item label="渔具名称"><view @click="disabled ? '' :setLabel(dictMapList['tyb_fishing_gear'],'fishingGear')" class="label-width">{{ getDictLabel(dictMapList['tyb_fishing_gear'],form.fishingGear)}}</view></u-form-item>
-			<u-form-item label="建造完工日期"><u-input v-model="form.buildDate" :disabled="disabled"/></u-form-item>
-			<u-form-item label="许可作业类型"><view @click="disabled ? '' :setLabel(dictMapList['tyb_resume_worktype'],'activityType')" class="label-width">{{ getDictLabel(dictMapList['tyb_resume_worktype'],form.activityType) }}</view></u-form-item>
-			<u-form-item label="许可作业方式"><view @click="disabled ? '' :setLabel(dictMapList['tyb_work_mode'],'workMode')" class="label-width">{{ getDictLabel(dictMapList['tyb_work_mode'],form.workMode) }}</view></u-form-item>
-			<u-form-item label="实际作业方式"><view @click="disabled ? '' :setLabel(dictMapList['tyb_work_mode'],'workMode2')" class="label-width">{{ getDictLabel(dictMapList['tyb_work_mode'],form.workMode2) }}</view></u-form-item>
-			<u-form-item label="型宽（米）"><u-input v-model="form.mouldedBreadth" :disabled="disabled"/></u-form-item>
-			<u-form-item label="型深（米）"><u-input v-model="form.mouldedDepth" :disabled="disabled"/></u-form-item>
-			<u-form-item label="净吨位（吨）"><u-input v-model="form.netTonnage" :disabled="disabled"/></u-form-item>
-			<u-form-item label="造船厂"><u-input v-model="form.buildFactory" :disabled="disabled"/></u-form-item>
+			<u-form-item label="渔船名"><u-input v-model="form.shipName" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="渔船编号"><u-input v-model="form.shipNo" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="捕捞许可证编号"><u-input v-model="form.licensesFishingNo" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="渔船所有权登记证书编号"><u-input v-model="form.licensesOwnerShip" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="国籍证书编号"><u-input v-model="form.licensesNationalNo" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="船舶检验证书编号"><u-input v-model="form.licensesInspectionNo" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="主机总功率(千瓦)"><u-input v-model="form.engineTotalPower" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="主机功率(千瓦)"><u-input v-model="form.mainEnginePower" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="双控功率(千瓦)"><u-input v-model="form.dualPower" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="主机型号"><u-input v-model="form.grossTonnage" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="总吨位（吨）"><u-input v-model="form.mainEngineModel" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="船长(米)"><u-input v-model="form.hullLength" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="船体材料"><view @click="true ? '' :setLabel(dictMapList['tyb_ship_material'],'hullMaterial')" class="label-width">{{ getDictLabel(dictMapList['tyb_ship_material'],form.hullMaterial) }}</view></u-form-item>
+			<u-form-item label="船籍港"><view @click="true ? '' :setLabel(dictMapList['tyb_ship_port'],'portRegister')" class="label-width">{{ getDictLabel(dictMapList['tyb_ship_port'],form.portRegister) }}</view></u-form-item>
+			<u-form-item label="渔具名称"><view @click="true ? '' :setLabel(dictMapList['tyb_fishing_gear'],'fishingGear')" class="label-width">{{ getDictLabel(dictMapList['tyb_fishing_gear'],form.fishingGear)}}</view></u-form-item>
+			<u-form-item label="建造完工日期"><u-input v-model="form.buildDate" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="许可作业类型"><view @click="true ? '' :setLabel(dictMapList['tyb_resume_worktype'],'activityType')" class="label-width">{{ getDictLabel(dictMapList['tyb_resume_worktype'],form.activityType) }}</view></u-form-item>
+			<u-form-item label="许可作业方式"><view @click="true ? '' :setLabel(dictMapList['tyb_work_mode'],'workMode')" class="label-width">{{ getDictLabel(dictMapList['tyb_work_mode'],form.workMode) }}</view></u-form-item>
+			<u-form-item label="实际作业方式"><view @click="true ? '' :setLabel(dictMapList['tyb_work_mode'],'workMode2')" class="label-width">{{ getDictLabel(dictMapList['tyb_work_mode'],form.workMode2) }}</view></u-form-item>
+			<u-form-item label="型宽（米）"><u-input v-model="form.mouldedBreadth" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="型深（米）"><u-input v-model="form.mouldedDepth" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="净吨位（吨）"><u-input v-model="form.netTonnage" :disabled="true" placeholder=" "/></u-form-item>
+			<u-form-item label="造船厂"><u-input v-model="form.buildFactory" :disabled="true" placeholder=" "/></u-form-item>
 			<u-form-item label="所有权证书">
 				<get-img v-model="form.licensesOwnerShipUrlList" @getImg="(url) => getUrl(url, 'licensesOwnerShipUrlList')" :url="form.licensesOwnerShipUrlList" :disabled="disabled" @delImg="(index) => delImg(index, 'licensesOwnerShipUrlList')"></get-img>
 			</u-form-item>
@@ -74,10 +74,10 @@
 			let value = uni.getStorageSync('saleShipDetail')
 			this.form = value
 			if( !this.form.licensesOwnerShipUrlList ){
-				this.form.licensesOwnerShipUrlList = []
-				this.form.licensesNationalNoUrlList = []
-				this.form.licensesFishingNoUrlList = []
-				this.form.licensesInspectionNoUrlList = []
+				this.$set(this.form,'licensesOwnerShipUrlList',[])
+				this.$set(this.form,'licensesNationalNoUrlList',[])
+				this.$set(this.form,'licensesFishingNoUrlList',[])
+				this.$set(this.form,'licensesInspectionNoUrlList',[])
 			}
 			if( option.disabled === 'true' ){
 				this.disabled = true

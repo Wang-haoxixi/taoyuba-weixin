@@ -29,7 +29,7 @@
 		},
 		data () {
 			return {
-				imgUrl: `${this.$IMAGE_URL}/homo-face.png`,
+				imgUrl: `${this.$IMAGE_URL}/idcardBack.jpg`,
 				imgUrlHeader: `${this.$IMAGE_URL}/release-bg.png`,
 				user: this.$cache.get('userInfo'),
 				checked: false,
