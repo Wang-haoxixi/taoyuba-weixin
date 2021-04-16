@@ -165,13 +165,13 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 		tools.clear()
 		return response
 	}
-	if(response.data.code === 1){
-		uni.showToast({
-			icon: 'none',
-			title: response.data.msg
-		})
-		return
-	}
+	// if(response.data.code === 1){
+	// 	uni.showToast({
+	// 		icon: 'none',
+	// 		title: response.data.msg
+	// 	})
+	// 	return
+	// }
 	console.log('response', response)
 	return response
 })

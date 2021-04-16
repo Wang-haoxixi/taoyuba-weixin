@@ -18,7 +18,9 @@
 							<!-- <view v-if="arr.includes(user.userId)"> -->
 							<view>
 								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/index')" v-if="!isname">实名认证</u-button>
+								<!-- <u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/faceCollection/index?openid=1')" v-if="!isname">实名认证</u-button> -->
 								<u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/authenticationCenter')" v-if="isname">已实名</u-button>
+								<!-- <u-button type="primary" shape="square" size="mini" plain @click="onTo('/pages/user/real/faceCollection/index?openid=1')" v-if="isname">已实名</u-button> -->
 							</view>
 						</view>
 					</view>

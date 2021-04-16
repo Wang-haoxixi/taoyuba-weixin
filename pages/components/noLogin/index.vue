@@ -11,9 +11,9 @@
 		<view class="body-wrapper">
 			<view class="">
 				<view class="text">登录淘渔吧，查看更多内容</view>
-				<u-button size="default" @click="onTo('/pages/base/login')">登录</u-button>
+				<!-- <u-button size="default" @click="onTo('/pages/base/login')">登录</u-button> -->
+				<u-button size="default" @click="onTo('/pages/user/real/faceCollection/index?openid=oH8fr0ooJPJFxVzSe8jxSyzfhmZw&unionid=oauDHww-UekpDehgCtyMhWr3Fmb8')">登录</u-button>
 			</view>
-			
 		</view>
 	</view>
 </template>

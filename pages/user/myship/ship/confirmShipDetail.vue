@@ -48,11 +48,14 @@
 				<!-- 他是买的人的话需要确认才可以同意或者拒绝 -->
 				<u-button type="success" size="medium" @click="agree(1)" v-if="form.canAgree === '1' || form.orderUserRole === '2' || form.orderUserRole === '3'">同意</u-button>
 				<u-button type="error" size="medium" @click="agree(0)" v-if="form.canAgree === '1' || form.orderUserRole === '2' || form.orderUserRole === '3'">拒绝</u-button>
-				<u-button type="primary" size="medium" @click="sureBuy('')" :disabled="form.canAgree === '1'" v-if="form.orderUserRole === '4' && form.canAgree !== '1'">{{  '确认买入人'}}</u-button>
+				<u-button type="primary" size="medium" @click="sureBuy('')" :disabled="form.canAgree === '1'" v-if="form.orderUserRole === '4' && form.canAgree !== '1'">{{  '确定您的合伙人' }}</u-button>
 			</view>
 			<!-- 同意或者拒绝后的状态 -->
 			<view v-if="form.orderUserRole !== '2' && form.agreeState && form.sellState !== '8' && form.sellState !== '6'" class="agree-button">
 				<u-button :type=" form.agreeState === '1' ? 'success' : 'error' "> {{ form.agreeState === '1' ? '您已同意' : '您已拒绝' }} </u-button>
+			</view>
+			<view v-if="form.canAgree !== '1' && form.orderUserRole === '5'" class="agree-button">
+				<u-button> 请等待买方发起人确认 </u-button>
 			</view>
 			<!-- 持证人可以看所有人的记录 -->
 			<view class="agree-button" v-if="form.orderUserRole === '2' || form.sellState === '6'">

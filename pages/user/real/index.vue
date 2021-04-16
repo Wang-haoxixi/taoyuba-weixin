@@ -2,7 +2,7 @@
 	<view class="id-boss">
 		<u-image height="250rpx" :src="imgUrlHeader"></u-image>
 		<view class="id-title">
-			请拍摄{{ user.realName }}本人的二代身份证
+			请拍摄{{ isface ? '' : user.realName }}本人的二代身份证
 		</view>
 		<view class="u-text-center">
 			确保拍摄的证件完整清晰
@@ -34,12 +34,16 @@
 				user: this.$cache.get('userInfo'),
 				checked: false,
 				imgUrlImg: '',
-				form: {}
+				form: {},
+				isface: ''
 			}
 		},
 		onShow () {
 		},
 		watch: {
+		},
+		onLoad (option) {
+			this.isface = option.isface || ''
 		},
 		methods: {
 			// 拍照
@@ -60,6 +64,8 @@
 									photo: this.form.photo,
 								}).then(({ data }) => {
 									this.form.photo = data.data.url
+									// 大B哥的参数名叫做facePhoto 和阿辉哥的不一样
+									this.form.facePhoto = data.data.url
 								})
 							}else{
 								uni.showToast({
@@ -74,15 +80,16 @@
 			// 保存跳转个人信息
 			sumbit () {
 				if( this.checked && this.form.name){
+					console.log(this.isface)
 					uni.setStorage({
 					    key: 'cardInformation',
 					    data: this.form,
-					    success: function () {
+					    success:  ()=> {
 					        uni.navigateTo({
-					        	url: `/pages/user/real/personalInformation`
-					        });
+					        	url: `/pages/user/real/${ this.isface ? 'faceCollection/information' : 'personalInformation' }`
+					        })
 					    }
-					});
+					})
 					// 需要点击保存证件
 				}else if( !this.checked ){
 					uni.showToast({

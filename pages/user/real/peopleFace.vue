@@ -1,202 +1,65 @@
 <template>
-	<view class="face-recognition-container">
-		<view class="face-recognition-wrapper">
-			<view class="number-wrapper" v-show="showNumber">
-				{{number}}
-			</view>
-			<view class="image-wrapper" v-if="phoneSrc">
-				<u-image v-if="phoneSrc" mode="widthFix" :src="phoneSrc"></u-image>
-			</view>
-			<camera v-if="!phoneSrc && showCamera" device-position="front" class="camera-wrapper" flash="off" binderror="error"></camera>
-		</view>
-		<view class="text-wrapper">
-			请完成人脸指示认证
-		</view>
-		<view class="btn-wrapper">
-			<u-button type="primary" @click="takePhoto" size="medium" :loading="loading">拍照</u-button>
-		</view>
-		<u-toast ref="uToast" />
+	<view>
+		<face @phoneSrc="phoneSrc" ref="face"></face>
 	</view>
 </template>
 
 <script>
-	let COUNT = 3
-	import { TOKEN } from '@/common/config/index.js'
+	import face from '@/pages/components/face-recognition/indexNew.vue'
 	export default {
 		props: {
-			value: {
-				type: Boolean,
-				default: false
-			},
-			isFirst: Boolean
 		},
 		data () {
 			return {
-				showCamera: false,
-				visibleSync: false,
-				timer: null,
-				showNumber: false,
-				number: 3,
-				phoneSrc: '',
-				loading: false,
-				_isFirst: false
 			}
+		},
+		components: {
+			face
 		},
 		watch: {
-			value (newVal) {
-				if (newVal) {
-					this.open()
-				} else {
-					this.close()
-				}
-			},
-			isFirst (newVal) {
-				this._isFirst = newVal
-			}
 		},
 		created () {
-			uni.getSetting({
-				success: (res) => {
-					this.getAuthSetting(res)
-				},
-				fail: () => {
-				}
-			})
+		},
+		onLoad (option) {
 		},
 		methods: {
-			getAuthSetting (res) {
-				// console.log('getAuthSetting', res.authSetting['scope.camera'])
-				if (!res.authSetting['scope.camera']) {
-					uni.authorize({
-						scope:'scope.camera',
-						success: () => {
-							// console.log('成功', this.showCamera)
-							this.showCamera = true
-						},
-						fail: () => {
-							// console.log('失败', this.showCamera)
-							uni.showModal({
-							 	icon: 'none',
-								title: '提示',
-								content: '尚未进行授权，请打开相机权限',
-								success: (res) => {
-									if (res.confirm) {
-										// console.log('重新获取')
-										uni.openSetting({
-											success: (res) => {
-												this.getAuthSetting(res)
-											}
-										})
-									} else {
-										// console.log('重新开始')
-										uni.getSetting({
-											success: (res) => {
-												this.getAuthSetting(res)
-											},
-											fail: () => {
-												
-											}
-										})
-									}
-									
+			phoneSrc (phoneSrc) {
+				this.$http.upload('/admin/file/upload/avatar', {
+					filePath: phoneSrc,
+					name: 'file'
+				}).then(({ data }) => {
+					if (data.code === 0) {
+						let filePath = data.data.url
+						let user = this.$cache.get('userInfo')
+						this.$http.upload(`admin/file/faceMatch`,
+							{
+								formData: {
+									userId: user.userId,
+									// name: this.userInfo.realName,
+									file: filePath
 								},
-								fail: () => {
-									// console.log('重新开始')
-									uni.getSetting({
-										success: (res) => {
-											this.getAuthSetting(res)
-										},
-										fail: () => {
-											
-										}
-									})
-								}
-							 })
-						}
-					})
-				} else {
-					this.showCamera = true
-				}
-			},
-			open () {
-				this.visibleSync = true
-			},
-			close () {
-				this.visibleSync = false
-			},
-			takePhoto () {
-				this.loading = true
-				this.showNumber = true
-				this.onPhone()
-			},
-			onPhone () {
-				this.timer = setInterval(() => {
-				 	this.number--
-				 	if (this.number <= 0) {
-				 		clearInterval(this.timer)
-				 		this.showNumber = false
-				 		this.number = 3
-				 		const ctx = uni.createCameraContext()
-				 		ctx.takePhoto({
-				 			quality: 'high',
-				 			success: (res) => {
-								// console.log('res', res)
-				 				this.phoneSrc = res.tempImagePath
-								console.log(res)
-								console.log(this.phoneSrc)
-								this.$http.upload('/admin/file/upload/avatar', {
-									filePath: this.phoneSrc,
-									name: 'file'
-								}).then(({ data }) => {
-									if (data.code === 0) {
-										let filePath = data.data.url
-										let user = this.$cache.get('userInfo')
-										this.$http.upload(`admin/file/faceMatch`,
-											{
-												formData: {
-													userId: user.userId,
-													// name: this.userInfo.realName,
-													file: filePath
-												},
-												filePath: this.phoneSrc,
-												name: 'file'
-											}
-										).then(({ data }) => {
-											let msg = data.data
-											console.log(msg)
-											if (msg === '检测成功') {
-												this._isFirst = false
-												this.loading = false
-												this.phoneSrc = ''
-												COUNT = 3
-												this.saveInformation()
-											} else {
-												COUNT--
-												if (COUNT <= 0) {
-													this.$refs.uToast.show({
-														title: '无法识别!请对准摄像头再来一次!',
-														back: true
-													})
-													return
-												}
-												this.$refs.uToast.show({
-													title: '无法识别!请对准摄像头再来一次!'
-												})
-												this.loading = false
-												this.phoneSrc = ''
-											}
-								        })
-									}
+								filePath: phoneSrc,
+								name: 'file'
+							}
+						).then(({ data }) => {
+							let msg = data.data
+							console.log(msg)
+							if (msg === '检测成功') {
+								this._isFirst = false
+								this.loading = false
+								this.saveInformation()
+							} else {
+								uni.showToast({
+									icon: 'none',
+									title: '请对准摄像头再来一次！'
 								})
-				 			},
-				 			fail: () => {
-				 				this.loading = false
-				 			}
-				 		})
-				 	}
-				}, 1000)
+								this.loading = false
+								this.phoneSrc = ''
+							}
+				        })
+					}
+				})
 			},
-			// 保存一下信息
 			saveInformation() {
 				let data = uni.getStorageSync('cardInformation')
 				this.$http.post('/tmlms/tyb_order_certificate_holder/save', {

@@ -287,6 +287,18 @@
 			}
 		},
 		{
+			"path": "pages/user/real/faceCollection/index",
+			"style": {
+				"navigationBarTitleText": "身份采集"
+			}
+		},
+		{
+			"path": "pages/user/real/faceCollection/information",
+			"style": {
+				"navigationBarTitleText": "信息详情"
+			}
+		},
+		{
 			"path": "pages/user/real/index",
 			"style": {
 				"navigationBarTitleText": "上传身份证"
