@@ -16,6 +16,9 @@
 			<u-button type="primary" @click="takePhoto" size="medium" :loading="loading">拍照</u-button>
 		</view>
 		<u-toast ref="uToast" />
+<!-- 		<view class="facegif">
+			<u-image :src="imgUrl" height="250rpx" width="250rpx"></u-image>
+		</view> -->
 	</view>
 </template>
 
@@ -40,7 +43,8 @@
 				phoneSrc: '',
 				loading: false,
 				_isFirst: false,
-				show: false
+				show: false,
+				imgUrl: `${this.$IMAGE_URL}/faceGif.gif`,
 			}
 		},
 		watch: {
@@ -173,14 +177,22 @@
 </script>
 
 <style lang="scss" scoped>
+	.facegif {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
 	.face-recognition-container {
 		background-color: rgba(255, 255, 255, .9);
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		top: 0;
+		// position: fixed;
+		// bottom: 0;
+		// left: 0;
+		// right: 0;
+		// top: 0;
 		z-index: 10000;
+		position: relative!important;
+		min-height: 100vh;
+		padding-top: 50rpx;
 		.face-recognition-wrapper {
 			// position: absolute;
 			// bottom: 0;
@@ -193,7 +205,7 @@
 			height: 400rpx;
 			overflow: hidden;
 			border-radius: 50%;
-			margin: 100rpx auto 0;
+			margin: 0 auto;
 			.camera-wrapper {
 				width: 100%;
 				height: 100%;

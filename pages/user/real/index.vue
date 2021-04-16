@@ -7,7 +7,12 @@
 		<view class="u-text-center">
 			确保拍摄的证件完整清晰
 		</view>
-		<u-image width="622rpx" class="id-img" height="396rpx" :src="imgUrlImg || imgUrl" @click="imgLook"></u-image>
+		<view class="id-img-boss">
+			<u-image width="622rpx" class="id-img" height="396rpx" :src="imgUrlImg || imgUrl" @click="imgLook"></u-image>
+			<view class="id-close" v-if="imgUrlImg">
+				<u-icon name="close" @click="imgUrlImg = ''"></u-icon>
+			</view>
+		</view>
 		<view class="id-check">
 			<u-checkbox-group>
 				<u-checkbox v-model="checked" :disabled="false">同意保存证件以便查看</u-checkbox>
@@ -123,6 +128,22 @@
 		text-align: center;
 		font-size: 35rpx;
 		margin: 35rpx 0;
+	}
+	.id-img-boss {
+		position: relative;
+		.id-close {
+			position: absolute;
+			background: white;
+			color:#ccc;
+			top: -20rpx;
+			right: 37rpx;
+			border: 1px solid #ccc;
+			text-align: center;
+			line-height: 25px;
+			border-radius: 50%;
+			width: 60rpx;
+			height: 60rpx;
+		}
 	}
 	.id-img {
 		margin: 30rpx 0;

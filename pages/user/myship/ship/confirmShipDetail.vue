@@ -49,6 +49,7 @@
 				<u-button type="success" size="medium" @click="agree(1)" v-if="form.canAgree === '1' || form.orderUserRole === '2' || form.orderUserRole === '3'">同意</u-button>
 				<u-button type="error" size="medium" @click="agree(0)" v-if="form.canAgree === '1' || form.orderUserRole === '2' || form.orderUserRole === '3'">拒绝</u-button>
 				<u-button type="primary" size="medium" @click="sureBuy('')" :disabled="form.canAgree === '1'" v-if="form.orderUserRole === '4' && form.canAgree !== '1'">{{  '确定您的合伙人' }}</u-button>
+				<u-button size="medium" @click="gotoThree" v-if="form.orderUserRole === '4' && form.canAgree !== '1'">推送至共有人</u-button>
 			</view>
 			<!-- 同意或者拒绝后的状态 -->
 			<view v-if="form.orderUserRole !== '2' && form.agreeState && form.sellState !== '8' && form.sellState !== '6'" class="agree-button">
@@ -82,7 +83,7 @@
 			</view>
 			<!-- 确认提示窗 -->
 			<u-modal v-model="show" :content="agreeVal ? '此操作将确认同意' : '此操作将取消本次交易'" @confirm="confirmAg" @cancel="show = false" :show-cancel-button="true"></u-modal>
-			<u-modal v-model="showSure" :content="agreeVal ? `此操作将确认该用户为买方合伙人,是否确定!` : `此操作将确认所有买方合伙人,是否确定!`" @confirm="confirmSure" @cancel="showSure = false" :show-cancel-button="true"></u-modal>
+			<u-modal v-model="showSure" :content="agreeVal ? `此操作将确认该用户为买方合伙人,是否确定!` : `此操作将确认所有买方合伙人,确认后请于48小时内进行操作,是否确定!`" @confirm="confirmSure" @cancel="showSure = false" :show-cancel-button="true"></u-modal>
 		</view>
 		<view v-else class="agree-input">
 			<u-message-input mode="bottomLine" :breathe="true" :maxlength="6" :disabled-keyboard="true" :value="value"></u-message-input>
@@ -209,7 +210,7 @@
 						// 根据中文判断
 						if( data.msg === '请先进行实名认证'){
 							setTimeout(res=>{
-								uni.switchTab({
+								uni.navigateTo({
 									url: '/pages/user/real/index'
 								})
 							},2000)
@@ -272,6 +273,11 @@
 						})
 					})
 				}
+			},
+			gotoThree () {
+				uni.navigateTo({
+					url: `/pages/user/myship/ship/saleCode?id=${this.form.id}`
+				})
 			}
 		}
 	}

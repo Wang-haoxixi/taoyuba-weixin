@@ -1,7 +1,11 @@
 <template>
-	<view>
-		<face @phoneSrc="phoneSrc" ref="face"></face>
-		<u-modal v-model="show" :content="'是否为本人采集?'" :show-cancel-button="true" :confirm-text="'本人'" :cancel-text="'非本人'" @confirm="confirm" @cancel="cancel"></u-modal>
+	<view class="face-boss">
+		<view >{{ isCollet ? '请拍摄本人人脸' : '请拍摄受协助人人脸' }}</view>
+		<view class="isrelation">
+			<face @phoneSrc="phoneSrc" ref="face"></face>
+		</view>
+		<view class="isHelp" @click="isCollet = !isCollet">{{ !isCollet ? '本人采集' : '协助采集' }}</view>
+		<!-- <u-modal v-model="show" :content="'是否为本人采集?'" :show-cancel-button="true" :confirm-text="'本人'" :cancel-text="'非本人'" @confirm="confirm" @cancel="cancel"></u-modal> -->
 		<u-modal v-model="showModel" @confirm="sumbit" :show-title="false" >
 			<view class="slot-content">
 				<view class="page-base page-base-nomargin">
@@ -29,7 +33,9 @@
 			return {
 				show: true,
 				showModel: false,
-				form: {}
+				form: {},
+				isCollet: true,
+				openIdObj: {}
 			}
 		},
 		components: {
@@ -40,10 +46,10 @@
 		created () {
 		},
 		onLoad (option) {
-			uni.setStorageSync('openIdObj', {
+			this.openIdObj = {
 				realWxOpenid: option.openid,
 				unionId: option.unionid
-			});
+			}
 		},
 		methods: {
 			sumbit () {
@@ -51,17 +57,17 @@
 					url: '/pages/user/index/index'
 				})
 			},
-			confirm () {
-				this.show = false
-				this.$refs.face.takePhoto()
-			},
-			cancel () {
-				uni.setStorageSync('openIdObj', {
-					realWxOpenid: '',
-					unionId: ''
-				});
-				this.confirm()
-			},
+			// confirm () {
+			// 	this.show = false
+			// 	this.$refs.face.takePhoto()
+			// },
+			// cancel () {
+			// 	uni.setStorageSync('openIdObj', {
+			// 		realWxOpenid: '',
+			// 		unionId: ''
+			// 	});
+			// 	this.confirm()
+			// },
 			phoneSrc (phoneSrc) {
 				this.$http.upload('/admin/gather/getFace', {
 					filePath: phoneSrc,
@@ -81,6 +87,17 @@
 						if( data.msg === '未找到匹配的用户:match user is not found' ){
 							this.$refs.face.loading = false
 							this.$refs.face.phoneSrc = ''
+							if(!this.isCollet){
+								uni.setStorageSync('openIdObj', {
+									realWxOpenid: '',
+									unionId: ''
+								})
+							}else{
+								uni.setStorageSync('openIdObj', {
+									realWxOpenid: this.openIdObj.openid,
+									unionId: this.openIdObj.unionid
+								});
+							}
 							uni.showToast({
 								icon: 'none',
 								title: '请上传身份证进行采集!'
@@ -106,6 +123,19 @@
 </script>
 
 <style lang="scss" scoped>
+	.face-boss {
+		min-height: 100vh;
+		background: white;
+		text-align:center;
+		.isHelp {
+			position: absolute;
+			text-align: center;
+			top: 820rpx;
+			left: 0;
+			width: 100%;
+			color: $color-blue;
+		}
+	}
 	.page-base {
 		::v-deep .u-form{
 			margin: 50rpx 0;
