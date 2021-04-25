@@ -30,14 +30,21 @@ export default {
 	},
 	onShow() {
 	},
+	onPullDownRefresh() {
+		if(this.active === '出售记录'){
+			this.getList('records')
+		}else{
+			this.getList('records1')
+		}
+	},
 	methods: {
 		tagClick (val) {
 			this.active = val
 		},
-		getList () {
-			this.$refs.records.data = []
-			this.$refs.records.page.current = 1
-			this.$refs.records.getList()
+		getList ( name = 'records') {
+			this.$refs[name].data = []
+			this.$refs[name].page.current = 1
+			this.$refs[name].getList()
 		}
 	}
 }

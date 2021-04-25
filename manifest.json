@@ -75,7 +75,11 @@
             "postcss" : false
         },
         "navigateToMiniProgramAppIdList" : [ "wxd43c7f6f30974960" ],
-        "permission" : {}
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "需要获取您的位置进行签到"
+            }
+        }
     },
     "h5" : {
         "router" : {

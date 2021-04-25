@@ -76,11 +76,14 @@ http.validateStatus = (statusCode) => {
 
 http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
 // console.log('config', config)
-	uni.showLoading({
-		icon: 'none',
-		title: '加载中',
-		mask: true,
-	});
+// 这里之前配置了调接口就loading 但是我有一个接口不能这么做单独判断下
+	if( config.url !== '/admin/gather/face_location' ){
+		uni.showLoading({
+			icon: 'none',
+			title: '加载中',
+			mask: true,
+		});
+	}
 	config.header = {
 		...config.header,
 	}

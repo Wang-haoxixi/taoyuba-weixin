@@ -24,6 +24,7 @@
 		<view class="id-button">
 			<u-button @click="sumbit">保存</u-button>
 		</view>
+		<u-modal v-model="content" content="拍摄人脸与身份证不符,是否继续操作？" @confirm="confirmSure" :show-cancel-button="true" ></u-modal>
 	</view>
 </template>
 
@@ -34,13 +35,15 @@
 		},
 		data () {
 			return {
+				content: false,
 				imgUrl: `${this.$IMAGE_URL}/idcardBack.jpg`,
 				imgUrlHeader: `${this.$IMAGE_URL}/release-bg.png`,
 				user: this.$cache.get('userInfo'),
 				checked: false,
 				imgUrlImg: '',
 				form: {},
-				isface: ''
+				isface: '',
+				photo: '',
 			}
 		},
 		onShow () {
@@ -49,6 +52,11 @@
 		},
 		onLoad (option) {
 			this.isface = option.isface || ''
+		},
+		onUnload () {
+			let pages = getCurrentPages();//获取页面栈
+			let beforePage = pages[pages.length - 2];//上一页
+			beforePage.$vm.getFace();//直接调用上一页的方法
 		},
 		methods: {
 			// 拍照
@@ -64,6 +72,7 @@
 							if( data.data.imageState === 'normal' ){
 								this.form = data.data
 								this.imgUrlImg = data.data.url
+								this.photo = this.form.photo
 								// 吧BASE64给阿辉哥 他转成url给我 然后他需要吧地址给我 窝在最后一步将地址发给他 
 								this.$http.post('/admin/file/upload/avatarBase64', {
 									photo: this.form.photo,
@@ -84,17 +93,41 @@
 			},
 			// 保存跳转个人信息
 			sumbit () {
-				if( this.checked && this.form.name){
-					console.log(this.isface)
-					uni.setStorage({
-					    key: 'cardInformation',
-					    data: this.form,
-					    success:  ()=> {
-					        uni.navigateTo({
-					        	url: `/pages/user/real/${ this.isface ? 'faceCollection/information' : 'personalInformation' }`
-					        })
-					    }
-					})
+				if( this.checked && this.form.name && this.imgUrlImg){
+					if( uni.getStorageSync('phoneSrc') ){
+						this.$http.upload('/admin/file/faceMatch2', {
+							filePath: uni.getStorageSync('phoneSrc'),
+							name: 'fileOne',
+							formData:{
+								baseImage: this.photo
+							},
+						}).then(({data})=>{
+							console.log(data)
+							if( data.data < 80 ){
+								this.content = true
+							}else{
+								uni.setStorage({
+								    key: 'cardInformation',
+								    data: this.form,
+								    success:  ()=> {
+								        uni.navigateTo({
+								        	url: `/pages/user/real/${ this.isface ? 'faceCollection/information' : 'personalInformation' }`
+								        })
+								    }
+								})
+							}
+						})
+					}else{
+						uni.setStorage({
+						    key: 'cardInformation',
+						    data: this.form,
+						    success:  ()=> {
+						        uni.navigateTo({
+						        	url: `/pages/user/real/${ this.isface ? 'faceCollection/information' : 'personalInformation' }`
+						        })
+						    }
+						})
+					}
 					// 需要点击保存证件
 				}else if( !this.checked ){
 					uni.showToast({
@@ -102,7 +135,7 @@
 						title: '请先同意保存证件以便查看'
 					})
 					// 需要上传身份证并且成功获取到信息
-				}else if( !this.form.name ){
+				}else if( !this.form.name || !this.imgUrlImg ){
 					uni.showToast({
 						icon: 'none',
 						title: '请上传身份证!'
@@ -117,6 +150,17 @@
 						urls: [this.imgUrlImg]
 					});
 				}
+			},
+			confirmSure () {
+				uni.setStorage({
+				    key: 'cardInformation',
+				    data: this.form,
+				    success:  ()=> {
+				        uni.navigateTo({
+				        	url: `/pages/user/real/${ this.isface ? 'faceCollection/information' : 'personalInformation' }`
+				        })
+				    }
+				})
 			}
 		}
 	}
@@ -139,7 +183,7 @@
 			right: 37rpx;
 			border: 1px solid #ccc;
 			text-align: center;
-			line-height: 25px;
+			line-height: 60rpx;
 			border-radius: 50%;
 			width: 60rpx;
 			height: 60rpx;

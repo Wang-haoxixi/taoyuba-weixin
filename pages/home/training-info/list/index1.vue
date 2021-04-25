@@ -1,7 +1,12 @@
 <template>
 	<view class="training-info-container">
 		<view class="search-wrapper">
-			<static-search :placeholder="keyword || '搜索'" :to="`/pages/home/search/index?type=5&keyword=${keyword}`"></static-search>
+			<view class="search-wrapper-title">
+				
+			</view>
+			<view class="search-wrapper-search">
+				<static-search :placeholder="keyword || '搜索'" :to="`/pages/home/search/index?type=5&keyword=${keyword}`"></static-search>
+			</view>
 		</view>
 		<view class="content-wrapper">
 			<view class="item" v-for="(item, index) in data" :key="index">
@@ -32,6 +37,20 @@
 <style scoped lang="scss">
 	.search-wrapper {
 		padding: 20rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		.search-wrapper-title {
+			width: 30%;
+			height: 65rpx;
+			background: #FFFFFF;
+			box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+			opacity: 1;
+			border-radius: 3px;
+		}
+		.search-wrapper-search {
+			width: 65%;
+		}
 	}
 	.content-wrapper {
 		.item {

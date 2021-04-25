@@ -57,11 +57,11 @@
 			if (this.current === 0) {
 				this.data0 = []
 				this.page0.current = 1
-				this.$refs.training.getList()
+				this.getList0()
 			} else if (this.current === 1) {
 				this.data1 = []
 				this.page1.current = 1
-				this.$refs.trainingInfo.getList()
+				this.getList1()
 			}
 			
 		},

@@ -3,6 +3,9 @@
 		<view v-if="!showModel">
 			<u-form :model="form" ref="uForm" label-width="220">
 				<u-form-item label="交易金额(元)"><u-input v-model="form.sellPrice" :disabled="true"/></u-form-item>
+				<u-form-item label="大写金额">
+					<view>{{ number_chinese }}</view>
+				</u-form-item>
 				<u-form-item label="渔船名"><u-input v-model="form.shipName" :disabled="true"/></u-form-item>
 				<u-form-item label="渔船编号"><u-input v-model="form.shipNo" :disabled="true"/></u-form-item>
 				<u-form-item label="捕捞许可证编号"><u-input v-model="form.licensesFishingNo" :disabled="true"/></u-form-item>
@@ -205,7 +208,8 @@
 					}else{
 						uni.showToast({
 							icon: 'none',
-							title: data.msg
+							title: data.msg,
+							duration: 2500
 						})
 						// 根据中文判断
 						if( data.msg === '请先进行实名认证'){
@@ -213,7 +217,7 @@
 								uni.navigateTo({
 									url: '/pages/user/real/index'
 								})
-							},2000)
+							},2500)
 						}else if( data.msg === '请输入交易码' || data.msg === '交易码错误' ) {
 							if( !this.showModel ){
 								this.showModel = true
@@ -225,7 +229,7 @@
 								uni.switchTab({
 									url: '/pages/user/index/index'
 								})
-							},2000)
+							},2500)
 						}
 					}
 				})
@@ -279,7 +283,24 @@
 					url: `/pages/user/myship/ship/saleCode?id=${this.form.id}`
 				})
 			}
-		}
+		},
+		computed:{
+			number_chinese(){
+				var num = parseFloat(this.form.sellPrice);
+				var strOutput = "",
+					strUnit = '仟佰拾亿仟佰拾万仟佰拾元角分';
+				num += "00";
+				var intPos = num.indexOf('.');  
+				if (intPos >= 0){
+					num = num.substring(0, intPos) + num.substr(intPos + 1, 2);
+				}
+				strUnit = strUnit.substr(strUnit.length - num.length);
+				for (var i=0; i < num.length; i++){
+					strOutput += '零壹贰叁肆伍陆柒捌玖'.substr(num.substr(i,1),1) + strUnit.substr(i,1);
+				}
+				return strOutput.replace(/零角零分$/, '整').replace(/零[仟佰拾]/g, '零').replace(/零{2,}/g, '零').replace(/零([亿|万])/g, '$1').replace(/零+元/, '元').replace(/亿零{0,3}万/, '亿').replace(/^元/, "零元")
+			}
+		},
 	}
 </script>
 

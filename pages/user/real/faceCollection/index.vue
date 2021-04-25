@@ -1,122 +1,50 @@
 <template>
 	<view class="face-boss">
-		<view >{{ isCollet ? '请拍摄本人人脸' : '请拍摄受协助人人脸' }}</view>
-		<view class="isrelation">
-			<face @phoneSrc="phoneSrc" ref="face"></face>
+		<view class="title">人脸采集</view>
+		<view class="content" @click="goFace(true)">
+			<image :src="`${imgUrl}/people.png`"></image>
+			<text>本人采集</text>
+				<u-icon name="arrow-right" size="30" color="#2979ff"></u-icon>
 		</view>
-		<view class="isHelp" @click="isCollet = !isCollet">{{ !isCollet ? '本人采集' : '协助采集' }}</view>
-		<!-- <u-modal v-model="show" :content="'是否为本人采集?'" :show-cancel-button="true" :confirm-text="'本人'" :cancel-text="'非本人'" @confirm="confirm" @cancel="cancel"></u-modal> -->
-		<u-modal v-model="showModel" @confirm="sumbit" :show-title="false" >
-			<view class="slot-content">
-				<view class="page-base page-base-nomargin">
-					<u-image :src="form.image" height="250rpx" width="250rpx" shape="circle"></u-image>
-					<u-form :model="form" ref="uForm" label-width="150">
-						<u-form-item label="姓名" prop="realName"><u-input v-model="form.realName" :disabled="true"/></u-form-item>
-						<u-form-item label="性别" prop="gender">{{ form.gender === 1 ? '男' : '女' }}</u-form-item>
-						<u-form-item label="身份证" prop="idcard"><u-input v-model="form.idcard" :disabled="true"/></u-form-item>
-						<u-form-item label="联系地址" prop="address"><u-input v-model="form.address" :disabled="true"/></u-form-item>
-						<u-form-item label="手机号" prop="phone"><u-input v-model="form.phone" :disabled="true"/></u-form-item>
-						<u-form-item label="民族" prop="nation"><u-input v-model="form.nation" :disabled="true"/></u-form-item>
-					</u-form>
-				</view>
-			</view>
-		</u-modal>
+		<view class="content" @click="goFace(false)">
+			<image :src="`${imgUrl}/peopleTwo.png`"></image>
+			<text>代人采集</text>
+				<u-icon name="arrow-right" size="30" color="#2979ff"></u-icon>
+		</view>
 	</view>
 </template>
 
 <script>
-	import face from '../../../../pages/components/face-recognition/indexNew.vue'
 	export default {
 		props: {
 		},
 		data () {
 			return {
-				show: true,
-				showModel: false,
-				form: {},
-				isCollet: true,
-				openIdObj: {}
+				option: {},
+				imgUrl: this.$IMAGE_URL,
 			}
 		},
 		components: {
-			face
 		},
 		watch: {
 		},
 		created () {
 		},
 		onLoad (option) {
-			this.openIdObj = {
-				realWxOpenid: option.openid,
-				unionId: option.unionid
-			}
+			uni.clearStorage()
+			this.option = option
 		},
 		methods: {
-			sumbit () {
-				uni.switchTab({
-					url: '/pages/user/index/index'
-				})
-			},
-			// confirm () {
-			// 	this.show = false
-			// 	this.$refs.face.takePhoto()
-			// },
-			// cancel () {
-			// 	uni.setStorageSync('openIdObj', {
-			// 		realWxOpenid: '',
-			// 		unionId: ''
-			// 	});
-			// 	this.confirm()
-			// },
-			phoneSrc (phoneSrc) {
-				this.$http.upload('/admin/gather/getFace', {
-					filePath: phoneSrc,
-					name: 'file'
-				}).then(({ data })=>{
-					console.log(data)
-					if( data.code === 0 ){
-						uni.showToast({
-							icon: 'none',
-							title: '您已完成采集,请查看具体信息!'
-						})
-						this.form = data.data
-						setTimeout(()=>{
-							this.showModel = true
-						},1000)
-					}else{
-						if( data.msg === '未找到匹配的用户:match user is not found' ){
-							this.$refs.face.loading = false
-							this.$refs.face.phoneSrc = ''
-							if(!this.isCollet){
-								uni.setStorageSync('openIdObj', {
-									realWxOpenid: '',
-									unionId: ''
-								})
-							}else{
-								uni.setStorageSync('openIdObj', {
-									realWxOpenid: this.openIdObj.openid,
-									unionId: this.openIdObj.unionid
-								});
-							}
-							uni.showToast({
-								icon: 'none',
-								title: '请上传身份证进行采集!'
-							})
-							setTimeout(res=>{
-								uni.navigateTo({
-									url: `/pages/user/real/index?isface=1`
-								})
-							},1000)
-						}else{
-							uni.showToast({
-								icon: 'none',
-								title: '无法识别!请对准摄像头再来一次!'
-							})
-							this.$refs.face.loading = false
-							this.$refs.face.phoneSrc = ''
-						}
-					}
-				})
+			goFace (val) {
+				if( val ){
+					uni.navigateTo({
+						url: `/pages/user/real/faceCollection/face?openid=${this.option.openid}&unionid=${this.option.unionid}&orgId=${this.option.orgId}&isTrue=1`
+					})
+				}else{
+					uni.navigateTo({
+						url: `/pages/user/real/faceCollection/face?openid=${this.option.openid}&unionid=${this.option.unionid}&orgId=${this.option.orgId}`
+					})
+				}
 			}
 		}
 	}
@@ -124,38 +52,33 @@
 
 <style lang="scss" scoped>
 	.face-boss {
-		min-height: 100vh;
-		background: white;
-		text-align:center;
-		.isHelp {
-			position: absolute;
-			text-align: center;
-			top: 820rpx;
-			left: 0;
-			width: 100%;
-			color: $color-blue;
+		    min-height: 100vh;
+		    background: white;
+		.title {
+			    text-align: center;
+			    padding: 30rpx;
+			    font-size: 49rpx;
 		}
-	}
-	.page-base {
-		::v-deep .u-form{
-			margin: 50rpx 0;
+		.content {
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			width: 90%;
+			margin: 30rpx auto;
+			margin: 30rpx auto;
+			font-size: 35rpx;
+			padding: 35rpx 0;
+			border: 1px solid rgba(204, 204, 204, 0.5);
+			border-radius: 15rpx;
+			box-shadow: 0 0 9rpx 3rpx rgba(100,149,237, 0.2);
+			text {
+				font-weight: 800;
+			}
+			image {
+				width: 200rpx;
+				height: 150rpx;
+			}
 		}
-		::v-deep .u-btn{
-			margin: 50rpx 0;
-		}
-	}
-	.page-base-nomargin {
-		::v-deep .u-form{
-			margin: 0;
-		}
-		::v-deep .u-btn{
-			margin: 0;
-		}
-		::v-deep .u-form-item {
-			padding: 5rpx;
-		}
-		::v-deep .u-image{
-			margin: 20rpx auto;
-		}
+		
 	}
 </style>

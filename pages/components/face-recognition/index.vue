@@ -10,7 +10,7 @@
 			<camera v-if="!phoneSrc && showCamera" device-position="front" class="camera-wrapper" flash="off" binderror="error"></camera>
 		</view>
 		<view class="text-wrapper">
-			请完成人脸指示认证
+			请点击拍照完成人脸指示认证
 		</view>
 		<view class="btn-wrapper">
 			<u-button type="primary" @click="takePhoto" size="medium" :loading="loading">拍照</u-button>

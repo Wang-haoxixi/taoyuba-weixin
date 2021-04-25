@@ -238,6 +238,12 @@
 			}
 		},
 		{
+			"path": "pages/base/Jump",
+			"style": {
+				"navigationBarTitleText": "正在跳转"
+			}
+		},
+		{
 			"path": "pages/user/index/index",
 			"style": {
 				"navigationBarTitleText": ""
@@ -287,9 +293,21 @@
 			}
 		},
 		{
-			"path": "pages/user/real/faceCollection/index",
+			"path": "pages/user/real/faceCollection/face",
 			"style": {
 				"navigationBarTitleText": "身份采集"
+			}
+		},
+		{
+			"path": "pages/user/real/faceCollection/index",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
+		{
+			"path": "pages/user/real/signIn/index",
+			"style": {
+				"navigationBarTitleText": "进行签到"
 			}
 		},
 		{
@@ -344,7 +362,8 @@
 		{
 			"path": "pages/user/myship/ship/index",
 			"style": {
-				"navigationBarTitleText": "渔船交易"
+				"navigationBarTitleText": "渔船交易",
+				"enablePullDownRefresh": true
 			}
 		},
 		{

@@ -1,23 +1,24 @@
 <template>
 	<view class="face-recognition-container">
+		<view style="font-size: 40rpx;font-weight: 700;margin: 20rpx 0 40rpx 0;">{{ title }}</view>
 		<view class="face-recognition-wrapper">
-			<view class="number-wrapper" v-show="showNumber">
+<!-- 			<view class="number-wrapper" v-show="showNumber">
 				{{number}}
-			</view>
+			</view> -->
 			<view class="image-wrapper" v-if="phoneSrc">
 				<u-image v-if="phoneSrc" mode="widthFix" :src="phoneSrc"></u-image>
 			</view>
 			<camera v-if="!phoneSrc && showCamera" device-position="front" class="camera-wrapper" flash="off" binderror="error"></camera>
 		</view>
-		<view class="text-wrapper">
-			请完成人脸指示认证
+		<view class="text-wrapper" v-if="!disabled">
+			请点击拍照完成人脸指示认证
 		</view>
-		<view class="btn-wrapper">
-			<u-button type="primary" @click="takePhoto" size="medium" :loading="loading">拍照</u-button>
-		</view>
+<!-- 		<view class="btn-wrapper">
+			<u-button type="primary" @click="takePhoto" size="medium" :loading="loading" :disabled="disabled">拍照</u-button>
+		</view> -->
 		<u-toast ref="uToast" />
 <!-- 		<view class="facegif">
-			<u-image :src="imgUrl" height="250rpx" width="250rpx"></u-image>
+			<u-image :src="imgUrl" height="400rpx" width="400rpx"></u-image>
 		</view> -->
 	</view>
 </template>
@@ -31,7 +32,11 @@
 				type: Boolean,
 				default: false
 			},
-			isFirst: Boolean
+			isFirst: Boolean,
+			disabled: {
+				type: Boolean,
+				default: false
+			},
 		},
 		data () {
 			return {
@@ -44,7 +49,8 @@
 				loading: false,
 				_isFirst: false,
 				show: false,
-				imgUrl: `${this.$IMAGE_URL}/faceGif.gif`,
+				imgUrl: `${this.$IMAGE_URL}/border.gif`,
+				title: '请将人脸置于框内',
 			}
 		},
 		watch: {
@@ -70,9 +76,6 @@
 			})
 		},
 		onLoad (option) {
-			uni.setStorageSync('openIdObj', {
-				openid: option.openid
-			});
 		},
 		methods: {
 			getAuthSetting (res) {
@@ -136,31 +139,38 @@
 				this.visibleSync = false
 			},
 			takePhoto () {
-				this.loading = true
-				this.showNumber = true
+				// this.loading = true
 				this.onPhone()
 			},
 			onPhone () {
+				uni.setStorageSync('phoneSrc', '')
 				this.timer = setInterval(() => {
-				 	this.number--
-				 	if (this.number <= 0) {
-				 		clearInterval(this.timer)
-				 		this.showNumber = false
-				 		this.number = 3
 				 		const ctx = uni.createCameraContext()
 				 		ctx.takePhoto({
 				 			quality: 'high',
 				 			success: (res) => {
-				 				this.phoneSrc = res.tempImagePath
-								uni.setStorageSync('phoneSrc', this.phoneSrc);
-								this.$emit('phoneSrc',this.phoneSrc)
+								this.$http.upload('/admin/gather/face_location', {
+									filePath: res.tempImagePath,
+									name: 'file',
+								}).then(({data})=>{
+									console.log(data)
+									if( data.code === 0 ){
+										clearInterval(this.timer)
+										if( !uni.getStorageSync('phoneSrc') ){
+											this.phoneSrc = res.tempImagePath
+											uni.setStorageSync('phoneSrc', this.phoneSrc)
+											this.$emit('phoneSrc',this.phoneSrc)
+										}
+									}else{
+										this.title = data.msg
+									}
+								})
 				 			},
 				 			fail: () => {
 				 				this.loading = false
 				 			}
 				 		})
-				 	}
-				}, 1000)
+				}, 2000)
 			},
 			confirm () {
 				this.show = false
@@ -204,13 +214,14 @@
 			width: 400rpx;
 			height: 400rpx;
 			overflow: hidden;
-			border-radius: 50%;
+			border-radius: 200rpx;
 			margin: 0 auto;
 			.camera-wrapper {
 				width: 100%;
 				height: 100%;
 				overflow: hidden;
-				border-radius: 50%;
+				z-index: -1;
+				border-radius: 200rpx;
 			}
 			.number-wrapper {
 				position: absolute;
@@ -221,7 +232,7 @@
 				font-size: 250rpx;
 				text-align: center;
 				line-height: 400rpx;
-				z-index: 1;
+				z-index: 2;
 				color: #fff;
 			}
 			.image-wrapper {
@@ -230,6 +241,7 @@
 				right: 0;
 				top: 0;
 				bottom: 0;
+				z-index: -1;
 				image {
 					width: 100%;
 					height: 100%;
