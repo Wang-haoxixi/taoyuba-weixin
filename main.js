@@ -20,6 +20,11 @@ Vue.prototype.$cache = cache
 Vue.prototype.$API_URL = API_URL
 Vue.prototype.$IMAGE_URL = IMAGE_URL
 Vue.prototype.$getCode = getcode
+Vue.prototype.organizationTypeList =  {
+	21: '浙岱',
+	32: '浙普',
+	1: '浙象'
+},
 
 App.mpType = 'app'
 Vue.config.productionTip = false

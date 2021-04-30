@@ -3,13 +3,17 @@
 </template>
 
 <script>
+	import dictMapMixin from '@/pages/mixins/dictMap.js'
 	export default {
 		data () {
 			return {
 			}
 		},
+		mixins: [dictMapMixin],
 		onLoad (option) {
-			uni.clearStorage()
+			// uni.clearStorage()
+			uni.removeStorageSync('taoyuba-token')
+			uni.removeStorageSync('refresh_token')
 			let params = this.getQueryParams(option.q)
 			console.log(params)
 			if( params.type === '1' ){

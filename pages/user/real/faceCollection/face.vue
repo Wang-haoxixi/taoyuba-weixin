@@ -63,6 +63,9 @@
 			// uni.setStorageSync('orgId', 1 )
 		},
 		methods: {
+			getFace () {
+				this.$refs.face.takePhoto()
+			},
 			sumbit () {
 				uni.switchTab({
 					url: '/pages/user/index/index'
@@ -113,6 +116,7 @@
 								icon: 'none',
 								title: '请上传身份证进行采集!'
 							})
+							this.$cache.set('isQD','')
 							setTimeout(res=>{
 								uni.navigateTo({
 									url: `/pages/user/real/index?isface=1`
@@ -125,6 +129,7 @@
 							})
 							this.$refs.face.loading = false
 							this.$refs.face.phoneSrc = ''
+							this.$refs.face.takePhoto()
 						}
 					}
 				})

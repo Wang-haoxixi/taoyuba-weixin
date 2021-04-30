@@ -1,6 +1,6 @@
 <template>
 	<view class="face-recognition-container">
-		<view style="font-size: 40rpx;font-weight: 700;margin: 20rpx 0 40rpx 0;">{{ title }}</view>
+		<view style="font-size: 40rpx;font-weight: 700;margin: 20rpx 0 40rpx 0;" v-if="!disabled">{{ title }}</view>
 		<view class="face-recognition-wrapper">
 <!-- 			<view class="number-wrapper" v-show="showNumber">
 				{{number}}
@@ -11,7 +11,7 @@
 			<camera v-if="!phoneSrc && showCamera" device-position="front" class="camera-wrapper" flash="off" binderror="error"></camera>
 		</view>
 		<view class="text-wrapper" v-if="!disabled">
-			请点击拍照完成人脸指示认证
+			请按照指示完成人脸验证
 		</view>
 <!-- 		<view class="btn-wrapper">
 			<u-button type="primary" @click="takePhoto" size="medium" :loading="loading" :disabled="disabled">拍照</u-button>
@@ -249,8 +249,8 @@
 			}
 		}
 		.text-wrapper {
-			font-size: 30rpx;
-			margin-top: 50rpx;
+			font-size: 40rpx;
+			margin-top: 100rpx;
 			color: #999;
 			text-align: center;
 		}

@@ -103,7 +103,7 @@
 							},
 						}).then(({data})=>{
 							console.log(data)
-							if( data.data < 80 ){
+							if( data.data < 75 ){
 								this.content = true
 							}else{
 								uni.setStorage({
