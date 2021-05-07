@@ -1,6 +1,6 @@
 <template>
 	<view class="face-boss">
-		<view style="font-size: 45rpx;font-weight: 700;padding: 20rpx;">{{ isCollet ? '请拍摄本人人脸' : '请拍摄受协助人人脸' }}</view>
+		<view style="font-size: 45rpx;font-weight: 700;padding: 20rpx;">{{ '请拍摄本人人脸' }}</view>
 		<view class="isrelation">
 			<face @phoneSrc="phoneSrc" ref="face"></face>
 		</view>
@@ -21,12 +21,35 @@
 				</view>
 			</view>
 		</u-modal>
+		<u-modal v-model="loginState" :show-title="false" :content="'请先登录!'">
+			<u-button slot="confirm-button" open-type="getUserInfo" @getuserinfo="onWechat" class="button-color">
+				微信登录
+			</u-button>
+		</u-modal>
+		<u-popup
+			v-model="showPhone"
+			mode="bottom"
+			safe-area-inset-bottom
+			:border-radius="20"
+			closeable
+			@close="onClosePhone"
+			:mask-close-able="false">
+			<view class="wechat-phone-wrapper">
+				<view class="btn-wrapper">
+					<u-button type="default" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" :custom-style="{backgroundColor: '#409EFF', color: '#fff'}" hover-class="none" shape="circle">手机号绑定</u-button>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
 <script>
 	import face from '../../../../pages/components/face-recognition/indexNew.vue'
+	import getUser from '@/common/utils/user'
+	import { isLogin } from '@/common/utils/login.js'
+	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
+		mixins: [userInfoMixin],
 		props: {
 		},
 		data () {
@@ -35,7 +58,10 @@
 				showModel: false,
 				form: {},
 				isCollet: true,
-				openIdObj: {}
+				openIdObj: {},
+				option: {},
+				loginState: false,
+				showPhone: false
 			}
 		},
 		components: {
@@ -46,21 +72,27 @@
 		created () {
 		},
 		onLoad (option) {
-			uni.clearStorage()
-			console.log(option)
-			this.openIdObj = {
+			uni.setStorageSync('openIdObj', {
 				realWxOpenid: option.openid,
 				unionId: option.unionid
-			}
-			
+			})
 			uni.setStorageSync('orgId', option.orgId )
-			if( option.isTrue ){
-				this.isCollet = true
+			uni.setStorageSync('collectionType', option.type )
+			this.option = option
+		},
+		onShow () {
+			// type是1的时候 需要进行授权登录
+			if( this.option.type == 0 ){
+				isLogin().then(data=>{
+					if( !data ){
+						this.loginState = true
+					}else{
+						this.$refs.face.takePhoto()
+					}
+				})
 			}else{
-				this.isCollet = false
+				this.$refs.face.takePhoto()
 			}
-			this.$refs.face.takePhoto()
-			// uni.setStorageSync('orgId', 1 )
 		},
 		methods: {
 			getFace () {
@@ -71,17 +103,30 @@
 					url: '/pages/user/index/index'
 				})
 			},
-			// confirm () {
-			// 	this.show = false
-			// 	this.$refs.face.takePhoto()
-			// },
-			// cancel () {
-			// 	uni.setStorageSync('openIdObj', {
-			// 		realWxOpenid: '',
-			// 		unionId: ''
-			// 	});
-			// 	this.confirm()
-			// },
+			onWechat () {
+				getUser.onLogin().then((res) => {
+					if (res) {
+						this.loginState = false
+						this.getUserInfoApi()
+						this.$refs.face.takePhoto()
+					} else {
+						this.loginState = false
+						this.showPhone = true
+					}
+				})
+			},
+			getPhoneNumber (e) {
+				if (e.detail.iv) {
+					getUser.getPhoneNumber(e).then(() => {
+						this.showPhone = false
+						this.getUserInfoApi()
+						this.$refs.face.takePhoto()
+					})
+				}
+			},
+			onClosePhone () {
+				this.showPhone = false
+			},
 			phoneSrc (phoneSrc) {
 				this.$http.upload('/admin/gather/getFace', {
 					filePath: phoneSrc,
@@ -101,17 +146,6 @@
 						if( data.msg === '未找到匹配的用户:match user is not found' ){
 							this.$refs.face.loading = false
 							this.$refs.face.phoneSrc = ''
-							if(!this.isCollet){
-								uni.setStorageSync('openIdObj', {
-									realWxOpenid: '',
-									unionId: ''
-								})
-							}else{
-								uni.setStorageSync('openIdObj', {
-									realWxOpenid: this.openIdObj.realWxOpenid,
-									unionId: this.openIdObj.unionid
-								});
-							}
 							uni.showToast({
 								icon: 'none',
 								title: '请上传身份证进行采集!'
@@ -152,6 +186,12 @@
 			color: $color-blue;
 			z-index: 10001;
 		}
+	}
+	::v-deep .u-hairline-border:after {
+		border: none!important;
+	}
+	::v-deep .button-color{
+		color: $color-blue;
 	}
 	.page-base {
 		::v-deep .u-form{

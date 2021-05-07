@@ -307,7 +307,7 @@
 		{
 			"path": "pages/user/real/signIn/index",
 			"style": {
-				"navigationBarTitleText": "进行签到"
+				"navigationBarTitleText": "获取身份"
 			}
 		},
 		{

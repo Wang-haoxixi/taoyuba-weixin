@@ -4,6 +4,9 @@
 			<face @phoneSrc="phoneSrc" ref="face" :disabled="isAddress"></face>
 		</view>
 		<view class="isHelp" v-if="isAddress">提示：您的签到地点不在范围内</view>
+		<view v-if="noAddress" class="isHelp">
+			<u-button @click="getAuthorizeInfo" >开启定位</u-button>
+		</view>
 		<!-- <u-modal v-model="show" :content="'是否为本人采集?'" :show-cancel-button="true" :confirm-text="'本人'" :cancel-text="'非本人'" @confirm="confirm" @cancel="cancel"></u-modal> -->
 		<u-modal v-model="showModel" @confirm="sumbit" :show-title="false" :async-close="true" ref="uModal">
 			<view class="slot-content">
@@ -13,23 +16,18 @@
 						<u-form-item label="姓名" prop="realName"><u-input v-model="form.realName" :disabled="true"/></u-form-item>
 						<u-form-item label="身份证" prop="idcard"><u-input v-model="form.idcard" :disabled="true"/></u-form-item>
 						<u-form-item label="手机号" prop="phone"><u-input v-model="form.phone" :disabled="true"/></u-form-item>
-						<u-form-item label="渔船类型" :right-icon="signOut ? '' :'arrow-down-fill'" v-if="showModel">
-							<div @click="showTrue('shipSelect')" v-if="!signOut">{{ getTypeName(form.shipNamePrefix,true,'listType') }} </div>
-							<div v-else>{{ getTypeName(form.shipNamePrefix,true,'listType') }} </div>
-						</u-form-item>
-						<u-form-item label="船名号" prop="shipNameSuffix"><u-input v-model="form.shipNameSuffix" :disabled="signOut" type="number"/></u-form-item>
-						<u-form-item label="职务类型" :right-icon="signOut ? '' :'arrow-down-fill'" v-if="showModel">
-							<div @click="showTrue('showSelect')" v-if="!signOut">{{ getTypeName(form.userType,true,'list') }} {{ getTypeName(form.positionId,false,'list') }}</div>
-							<div v-else>{{ getTypeName(form.userType,true,'list') }} {{ getTypeName(form.positionId,false,'list') }}</div>
+						<u-form-item label="职务类型" :right-icon="signOut ? '' :'arrow-down-fill'" v-if="showModel && isCrew == 2">
+							<div @click="showTrue('showSelect')" v-if="!signOut">{{ getTypeName(form.positionId,'list') }}</div>
+							<div v-else>{{ getTypeName(form.positionId,'list') }}</div>
 						</u-form-item>
 					</u-form>
 				</view>
 			</view>
 		</u-modal>
-		<u-select v-model="showSelect" :list="list" mode="mutil-column-auto" :default-value="[0,0]" @confirm="confirmSelect"></u-select>
-		<u-select v-model="shipSelect" :list="listType" @confirm="confirmSelectShip"></u-select>
+		<u-select v-model="showSelect" :list="list" mode="mutil-column-auto" @confirm="confirmSelect"></u-select>
+		<!-- <u-select v-model="shipSelect" :list="listType" @confirm="confirmSelectShip"></u-select> -->
 		<u-modal v-model="iscontent" :content="content" @confirm="confirmSure"></u-modal>
-		<u-modal v-model="isSure" :content="isSureContent" @confirm="sumbitSure" :show-cancel-button="true"></u-modal>
+		<!-- <u-modal v-model="isSure" :content="isSureContent" @confirm="sumbitSure" :show-cancel-button="true"></u-modal> -->
 	</view>
 </template>
 
@@ -54,31 +52,23 @@
 					position: {},
 				},
 				showSelect: false,
-				list: [
-					{
-						label: '船东',
-						value: 0,
-						children: [{
-							label: '',
-							value: 0,
-						}]
-					},{
-						label: '职务船员',
-						value: 1,
-						children: this.$cache.get('dictMap')['tyb_resume_position']
-					},{
-						label: '渔船监护人',
-						value: 2,
-						children: [{
-							label: '',
-							value: 0,
-						}]
-					}
-				],
-				listType: [],
 				isAddress: false,
+				noAddress: false,
 				url: '',
 				name: '',
+				showSelect: false,
+				list: [
+					{
+						label: '驾驶',
+						value: 1
+					},
+					{
+						label: '轮机',
+						value: 2
+					}
+				],
+				isCrew: 1,
+				sign: 1
 			}
 		},
 		components: {
@@ -91,130 +81,121 @@
 		mounted() {
 		},
 		onLoad (option) {
+			uni.clearStorage()
 			this.option = option
 			uni.setStorageSync('orgId', option.orgId )
 			uni.setStorageSync('trainMeetId', option.id )
+			uni.setStorageSync('isCrew', option.isCrew)
+			uni.setStorageSync('sign', option.sign )
+			// 在签到的时候进行的采集 船东会议的都是家属 船员会议的就是船员
+			if( option.isCrew == 0 ){
+				uni.setStorageSync('collectionType', 2 )
+			}else{
+				uni.setStorageSync('collectionType', 1 )
+			}
+			this.isCrew = option.isCrew
+			this.sign = option.sign
 			console.log(option)
 			uni.showLoading({
 				title: '加载中...'
 			})
 			this.name = this.organizationTypeList[Number(uni.getStorageSync('orgId'))]
-			this.listType = [{
-						label: `${this.name}渔`,
-						value: `${this.name}渔`,
-					},{
-						label: `${this.name}渔运`,
-						value: `${this.name}渔运`,
-					},{
-						label: `${this.name}渔冷`,
-						value: `${this.name}渔冷`,
-					},{
-						label: `${this.name}渔休`,
-						value: `${this.name}渔休`,
-					}]
 		},
 		onReady() {
-			uni.getLocation({
-			    type: 'gcj02',
-				altitude: true,
-			    success: (res) => {
-					console.log(res)
-					let locations = [res.longitude,res.latitude]
-					// let locations = [122.212505,29.977092]
-					const keys= locations.map(_=>`locations=${_}`).join('&');
-					this.$http.get(`/tmlms/trainMeetSign/checkLocation?${keys}&trainMeetId=${ this.option.id }`).then(({ data })=>{
-						uni.hideLoading()
-						if( data.code === 0 ){
-							this.$refs.face.takePhoto()
-						}else{
-							uni.showToast({
-								icon: 'none',
-								title: data.msg
-							})
-							this.isAddress = true
-						}
-					})
-			    },
-				fail: function (res) {
-					uni.hideLoading()
-			        uni.showToast({
-			        	icon: 'none',
-						title: '请打开地理位置!'
-			        })
-					uni.openSetting();
-			    },
-			});
+			this.getaddress()
 		},
 		methods: {
+			// 获取地理位置
+			getaddress () {
+				this.noAddress = false
+				uni.getLocation({
+				    type: 'gcj02',
+					altitude: true,
+				    success: (res) => {
+						let locations = [res.longitude,res.latitude]
+						// let locations = [122.212505,29.977092]
+						const keys= locations.map(_=>`locations=${_}`).join('&');
+						this.$http.get(`/tmlms/trainMeetSign/checkLocation?${keys}&trainMeetId=${ this.option.id }`).then(({ data })=>{
+							uni.hideLoading()
+							if( data.code === 0 ){
+								this.$refs.face.takePhoto()
+							}else{
+								if( data.msg === '签到时间结束' || data.msg === '会议结束' || data.msg == '会议未开始'){
+									this.content = data.msg
+									this.iscontent = true
+								}else{
+									uni.showToast({
+										icon: 'none',
+										title: data.msg
+									})
+									this.isAddress = true
+								}
+							}
+						})
+				    },
+					fail: (res)=> {
+						uni.getSetting();
+						uni.hideLoading()
+				        uni.showToast({
+				        	icon: 'none',
+							title: '请打开地理位置!'
+				        })
+						// 拒绝了给他一个按钮 让他改过自新 允许定位
+						this.noAddress = true
+				    },
+				});
+			},
+			getAuthorizeInfo(a="scope.userLocation"){  //1. uniapp弹窗弹出获取授权（地理，个人微信信息等授权信息）弹窗
+			        var _this=this;
+			        uni.authorize({
+			            scope: a,
+			            success() { //1.1 允许授权
+			                _this.getaddress()
+			            },
+			            fail(){    //1.2 拒绝授权
+							uni.openSetting({
+								success: (res) => {
+									_this.getaddress()
+								}
+							})
+			            }
+			        })
+			    },
 			getFace () {
 				this.$refs.face.takePhoto()
 			},
 			// 确认提交签到
 			sumbit () {
 				// 点击确认 先判断渔船名和类型是否填写
-				if( !this.form.shipNameSuffix ){
-					uni.showToast({
-						icon: 'none',
-						title: '渔船名称不能为空!'
-					})
-					this.$refs.uModal.clearLoading();
-					return false
-				}
-				if( !this.form.shipNamePrefix ){
-					uni.showToast({
-						icon: 'none',
-						title: '渔船类型不能为空!'
-					})
-					this.$refs.uModal.clearLoading();
-					return false
-				}
-				if( !this.form.userType && this.form.userType !== 0 ){
-					uni.showToast({
-						icon: 'none',
-						title: '请选择类型!'
-					})
-					this.$refs.uModal.clearLoading();
-					return false
-				}
-				let form = JSON.parse(JSON.stringify(this.form))
-				this.$http.post(`/tmlms/trainMeetSign/getSignStatus?idcard=${form.idcard}&trainMeetId=${this.option.id}&userType=${form.userType}&shipName=${form.shipNamePrefix + form.shipNameSuffix}`).then(({data})=>{
-					this.$refs.uModal.clearLoading()
-					this.$getCode(data).then(res=>{
-						let data = ['您还未签到,是否签到？','您已签到,是否签退？','您已签退,是否重新签退？','您已超时未签到,是否签退？','会议已结束','会议未开始','会议未结束,是否提前签退？']
-						this.isSureContent = data[res.data]
-						this.isSure = true
-					})
-				})
+				// let form = JSON.parse(JSON.stringify(this.form))
+				// this.$http.post(`/tmlms/trainMeetSign/getSignStatus?idcard=${form.idcard}&trainMeetId=${this.option.id}`).then(({data})=>{
+				// 	this.$refs.uModal.clearLoading()
+				// 	this.$getCode(data).then(res=>{
+				// 		let data = ['您还未签到,是否签到？','您已签到,是否签退？','您已签退,是否重新签退？','您已超时未签到,是否签退？','会议已结束','会议未开始','会议未结束,是否提前签退？']
+				// 		this.isSureContent = data[res.data]
+				// 		this.isSure = true
+				// 	})
+				// })
+				this.sumbitSure()
 			},
 			// 签到
 			sumbitSure () {
-				if( this.isSureContent === '会议已结束' ||  this.isSureContent === '会议未开始'){
-					this.isSure = false
-				}else{
+				// if( this.isSureContent === '会议已结束' ||  this.isSureContent === '会议未开始'){
+				// 	this.isSure = false
+				// }else{
 					let form = JSON.parse(JSON.stringify(this.form))
-					form.shipName = `${form.shipNamePrefix}${form.shipNameSuffix}`
-					this.$http.post('/tmlms/trainMeetSign/signInOut',{ ...form,orgId: uni.getStorageSync('orgId'),trainMeetId: this.option.id,signInImage: this.url }).then(({data})=>{
+					form.userType = form.gatherType
+					this.$http.post('/tmlms/trainMeetSign/signInOut',{ ...form,orgId: uni.getStorageSync('orgId'),trainMeetId: this.option.id,signInImage: this.url,type: uni.getStorageSync('sign') }).then(({data})=>{
 						this.$refs.uModal.clearLoading()
 						this.$getCode(data).then(res=>{
 							this.content = res.msg
 							this.iscontent = true
 						})
 					})
-				}
+				// }
 			},
-			// 打开选择
 			confirmSelect (e) {
-				this.$set(this.form,'userType',e[0].value)
-				console.log(this.form)
-				if( e[0].value === 1 ){
-					this.$set(this.form,'positionId',e[1].value)
-				}else{
-					this.$set(this.form,'positionId','')
-				}
-			},
-			// 打开选择
-			confirmSelectShip (e) {
-				this.$set(this.form,'shipNamePrefix',e[0].value)
+				this.$set(this.form,'positionId',e[0].value)
 			},
 			// 开始拍照
 			phoneSrc (phoneSrc) {
@@ -242,15 +223,11 @@
 							title: '请进行信息确认!'
 						})
 						this.form = data.data
-						// 有船名不展示选项 不然就展示下
-						// if( this.form.shipName ){
-						// 	this.isName = false
-						// }else{
-						// 	this.isName = true
-						// }
-						if( this.form.userType || this.form.userType === 0 ){
+						if( this.form.positionId || this.form.positionId === 0 ){
+							console.log(1)
 							this.signOut = true
 						}else{
+							console.log(2)
 							this.signOut = false
 						}
 						// setTimeout(()=>{
@@ -293,24 +270,16 @@
 				})
 			},
 			// 获取名称
-			getTypeName (val,status,name) {
-				let data = ''
-				if( status ){
-					data = '请点击选择'
-					this[name].forEach(res=>{
-						if( res.value === val ){
-							data = res.label
-						}
-					})
-				}else{
-					console.log(2)
-					console.log(this[name])
-					this[name][1].children.forEach(res=>{
-						if( res.value === val ){
-							data = res.label
-						}
-					})
+			getTypeName (val,name) {
+				if( !val ){
+					return '请点击选择'
 				}
+				let data = ''
+				this[name].forEach(res=>{
+					if( res.value === val ){
+						data = res.label
+					}
+				})
 				return data
 			}
 		},
@@ -323,6 +292,9 @@
 		background: white;
 		text-align:center;
 		.isHelp {
+			::v-deep button {
+				width: 300rpx;
+			}
 			font-size: 40rpx;
 			position: absolute;
 			text-align: center;

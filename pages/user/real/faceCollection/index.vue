@@ -1,7 +1,7 @@
 <template>
-	<view class="face-boss">
-		<view class="title">人脸采集</view>
-		<view class="content" @click="goFace(true)">
+	<view class="face-boss" v-if="show">
+		<view class="title">注意事项</view>
+		<!-- <view class="content" @click="goFace(true)">
 			<image :src="`${imgUrl}/people.png`"></image>
 			<text>本人采集</text>
 				<u-icon name="arrow-right" size="30" color="#2979ff"></u-icon>
@@ -10,6 +10,17 @@
 			<image :src="`${imgUrl}/peopleTwo.png`"></image>
 			<text>代人采集</text>
 				<u-icon name="arrow-right" size="30" color="#2979ff"></u-icon>
+		</view> -->
+		<view class="face-main">
+			注意一下,别去外面打工！
+		</view>
+		<view class="id-check">
+			<u-checkbox-group>
+				<u-checkbox v-model="checked" :disabled="false">同意以上事项</u-checkbox>
+			</u-checkbox-group>
+		</view>
+		<view class="id-button">
+			<u-button @click="sumbit" type="primary">保存</u-button>
 		</view>
 	</view>
 </template>
@@ -22,6 +33,8 @@
 			return {
 				option: {},
 				imgUrl: this.$IMAGE_URL,
+				checked: false,
+				show: false,
 			}
 		},
 		components: {
@@ -31,18 +44,36 @@
 		created () {
 		},
 		onLoad (option) {
-			uni.clearStorage()
 			this.option = option
+			if( this.option.type == 0 ){
+				uni.redirectTo({
+					url: `/pages/user/real/faceCollection/face?openid=${this.option.openid}&unionid=${this.option.unionid}&orgId=${this.option.orgId}&type=${this.option.type}`
+				})
+			}else{
+				this.show = true
+			}
 		},
 		methods: {
-			goFace (val) {
-				if( val ){
+			// goFace (val) {
+			// 	if( val ){
+			// 		uni.navigateTo({
+			// 			url: `/pages/user/real/faceCollection/face?openid=${this.option.openid}&unionid=${this.option.unionid}&orgId=${this.option.orgId}&isTrue=1`
+			// 		})
+			// 	}else{
+			// 		uni.navigateTo({
+			// 			url: `/pages/user/real/faceCollection/face?openid=${this.option.openid}&unionid=${this.option.unionid}&orgId=${this.option.orgId}`
+			// 		})
+			// 	}
+			// },
+			sumbit () {
+				if( this.checked ){
 					uni.navigateTo({
-						url: `/pages/user/real/faceCollection/face?openid=${this.option.openid}&unionid=${this.option.unionid}&orgId=${this.option.orgId}&isTrue=1`
+						url: `/pages/user/real/faceCollection/face?openid=${this.option.openid}&unionid=${this.option.unionid}&orgId=${this.option.orgId}&type=${this.option.type}`
 					})
 				}else{
-					uni.navigateTo({
-						url: `/pages/user/real/faceCollection/face?openid=${this.option.openid}&unionid=${this.option.unionid}&orgId=${this.option.orgId}`
+					uni.showToast({
+						icon: 'none',
+						title: '请先同意注意事项！'
 					})
 				}
 			}
@@ -54,6 +85,19 @@
 	.face-boss {
 		    min-height: 100vh;
 		    background: white;
+			.id-check {
+				width: 622rpx;
+				margin: 20rpx auto 80rpx auto;
+			}
+			.id-button {
+				width: 400rpx;
+				margin: 20rpx auto;
+			}
+			.face-main {
+				width: 622rpx;
+				margin: 0 auto;
+				min-height: 50vh;
+			}
 		.title {
 			    text-align: center;
 			    padding: 30rpx;
