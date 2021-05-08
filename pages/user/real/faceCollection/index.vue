@@ -20,7 +20,7 @@
 			</u-checkbox-group>
 		</view>
 		<view class="id-button">
-			<u-button @click="sumbit" type="primary">保存</u-button>
+			<u-button @click="sumbit" type="primary">同意</u-button>
 		</view>
 	</view>
 </template>

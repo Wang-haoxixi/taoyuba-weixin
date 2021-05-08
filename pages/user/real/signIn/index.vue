@@ -16,7 +16,7 @@
 						<u-form-item label="姓名" prop="realName"><u-input v-model="form.realName" :disabled="true"/></u-form-item>
 						<u-form-item label="身份证" prop="idcard"><u-input v-model="form.idcard" :disabled="true"/></u-form-item>
 						<u-form-item label="手机号" prop="phone"><u-input v-model="form.phone" :disabled="true"/></u-form-item>
-						<u-form-item label="职务类型" :right-icon="signOut ? '' :'arrow-down-fill'" v-if="showModel && isCrew == 2">
+						<u-form-item label="职务类型" :right-icon="signOut ? '' :'arrow-down-fill'" v-if="showModel && isCrew == 1">
 							<div @click="showTrue('showSelect')" v-if="!signOut">{{ getTypeName(form.positionId,'list') }}</div>
 							<div v-else>{{ getTypeName(form.positionId,'list') }}</div>
 						</u-form-item>
@@ -60,11 +60,11 @@
 				list: [
 					{
 						label: '驾驶',
-						value: 1
+						value: '1'
 					},
 					{
 						label: '轮机',
-						value: 2
+						value: '2'
 					}
 				],
 				isCrew: 1,
@@ -112,8 +112,8 @@
 				    type: 'gcj02',
 					altitude: true,
 				    success: (res) => {
-						let locations = [res.longitude,res.latitude]
-						// let locations = [122.212505,29.977092]
+						// let locations = [res.longitude,res.latitude]
+						let locations = [122.212505,29.977092]
 						const keys= locations.map(_=>`locations=${_}`).join('&');
 						this.$http.get(`/tmlms/trainMeetSign/checkLocation?${keys}&trainMeetId=${ this.option.id }`).then(({ data })=>{
 							uni.hideLoading()
@@ -224,10 +224,8 @@
 						})
 						this.form = data.data
 						if( this.form.positionId || this.form.positionId === 0 ){
-							console.log(1)
 							this.signOut = true
 						}else{
-							console.log(2)
 							this.signOut = false
 						}
 						// setTimeout(()=>{

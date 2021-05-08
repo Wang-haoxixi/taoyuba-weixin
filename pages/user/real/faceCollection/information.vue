@@ -116,11 +116,11 @@
 				list: [
 					{
 						label: '驾驶',
-						value: 1
+						value: '1'
 					},
 					{
 						label: '轮机',
-						value: 2
+						value: '2'
 					}
 				],
 				isName: true,
