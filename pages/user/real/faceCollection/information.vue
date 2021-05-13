@@ -158,7 +158,7 @@
 				return data
 			},
 			sumbitOne () {
-				if(!(/^1(3|4|5|7|8)\d{9}$/.test(this.form.phone))){ 
+				if(!(/^1\d{10}$/.test(this.form.phone))){ 
 					uni.showToast({
 						icon: 'none',
 						title: '请输入正确手机号!'

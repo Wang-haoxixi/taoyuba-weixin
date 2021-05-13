@@ -1,7 +1,7 @@
 <template>
 	<view class="face-boss">
 		<view class="isrelation">
-			<face @phoneSrc="phoneSrc" ref="face" :disabled="isAddress"></face>
+			<face @phoneSrc="phoneSrcs" ref="face" :disabled="isAddress"></face>
 		</view>
 		<view class="isHelp" v-if="isAddress">提示：您的签到地点不在范围内</view>
 		<view v-if="noAddress" class="isHelp">
@@ -101,7 +101,7 @@
 			})
 			this.name = this.organizationTypeList[Number(uni.getStorageSync('orgId'))]
 		},
-		onReady() {
+		onShow() {
 			this.getaddress()
 		},
 		methods: {
@@ -112,8 +112,8 @@
 				    type: 'gcj02',
 					altitude: true,
 				    success: (res) => {
-						// let locations = [res.longitude,res.latitude]
-						let locations = [122.212505,29.977092]
+						let locations = [res.longitude,res.latitude]
+						// let locations = [122.212505,29.977092]
 						const keys= locations.map(_=>`locations=${_}`).join('&');
 						this.$http.get(`/tmlms/trainMeetSign/checkLocation?${keys}&trainMeetId=${ this.option.id }`).then(({ data })=>{
 							uni.hideLoading()
@@ -198,7 +198,7 @@
 				this.$set(this.form,'positionId',e[0].value)
 			},
 			// 开始拍照
-			phoneSrc (phoneSrc) {
+			phoneSrcs (phoneSrc) {
 				// 这个接口用来判断是否成功获取到信息
 				this.$http.upload('/tmlms/trainMeetSign/getFace', {
 					filePath: phoneSrc,

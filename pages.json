@@ -394,8 +394,7 @@
 		{
 			"path": "pages/user/video/list/index",
 			"style": {
-				"navigationBarTitleText": "视频学习记录",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "我的培训"
 			}
 		},
 		{

@@ -136,12 +136,12 @@
 					if( data.code === 0 ){
 						uni.showToast({
 							icon: 'none',
-							title: '您已完成采集,请查看具体信息!'
+							title: '您已完成采集,请查看具体信息。'
 						})
 						this.form = data.data
-						setTimeout(()=>{
+						// this.$nextTick(()=>{
 							this.showModel = true
-						},1000)
+						// })
 					}else{
 						if( data.msg === '未找到匹配的用户:match user is not found' ){
 							this.$refs.face.loading = false

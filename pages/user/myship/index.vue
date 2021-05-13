@@ -39,7 +39,7 @@
 		},
 		methods: {
 			getList () {
-				this.$http.get(`/tmlms/tybshiphaver/getMyShip/${this.userInfo.userId}`).then(({ data }) => {
+				this.$http.get(`/tmlms/tybshiphaver/getMyShip/${this.userInfo.userId}?idCard=${this.userInfo.idCard}`).then(({ data }) => {
 					if (data.code === 0) {
 						this.data = data.data
 					}

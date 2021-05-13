@@ -17,12 +17,8 @@
 			let params = this.getQueryParams(option.q)
 			console.log(params)
 			if( params.type === '1' ){
-				uni.redirectTo({
+				uni.reLaunch({
 					url: `/pages/user/real/signIn/index?sign=${params.sign}&isCrew=${params.isCrew}&id=${params.id}&orgId=${params.orgId}`
-				})
-			}else if( params.type === '2' ){
-				uni.navigateTo({
-					url: `/pages/user/real/faceCollection/index?id=${ params.id || 0 }&orgId=${ params.orgId || 0 }&type=1`
 				})
 			}
 		},

@@ -12,8 +12,8 @@
 			<view class="">
 				<view class="text">登录淘渔吧，查看更多内容</view>
 				<u-button size="default" @click="onTo('/pages/base/login')">登录</u-button>
-				<!-- <u-button size="default" @click="onTo('/pages/user/real/signIn/index?type=1&id=34&orgId=21')">登录</u-button> -->
-				<!-- <u-button size="default" @click="onTo('/pages/user/real/faceCollection/index?openid=oH8fr0ooJPJFxVzSe8jxSyzfhmZw&unionid=oauDHww-UekpDehgCtyMhWr3Fmb8&orgId=1&type=1')">登录</u-button> -->
+				<!-- <u-button size="default" @click="onTo('/pages/user/real/signIn/index?type=1&sign=2&isCrew=0&id=53&orgId=21')">登录</u-button> -->
+				<!-- <u-button size="default" @click="onTo('/pages/user/real/faceCollection/index?openid=oH8fr0ooJPJFxVzSe8jxSyzfhmZw&unionid=oauDHww-UekpDehgCtyMhWr3Fmb8&orgId=21&type=1')">登录</u-button> -->
 			</view>
 		</view>
 	</view>

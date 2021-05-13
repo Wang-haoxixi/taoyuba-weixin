@@ -54,9 +54,9 @@
 			this.isface = option.isface || ''
 		},
 		onUnload () {
-			let pages = getCurrentPages();//获取页面栈
-			let beforePage = pages[pages.length - 2];//上一页
-			beforePage.$vm.getFace();//直接调用上一页的方法
+			// let pages = getCurrentPages();//获取页面栈
+			// let beforePage = pages[pages.length - 2];//上一页
+			// beforePage.$vm.getFace();//直接调用上一页的方法
 		},
 		methods: {
 			// 拍照

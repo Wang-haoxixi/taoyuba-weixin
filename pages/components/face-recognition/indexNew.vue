@@ -153,14 +153,13 @@
 									filePath: res.tempImagePath,
 									name: 'file',
 								}).then(({data})=>{
-									console.log(data)
 									if( data.code === 0 ){
 										clearInterval(this.timer)
-										if( !uni.getStorageSync('phoneSrc') ){
+										// if( !uni.getStorageSync('phoneSrc') ){
 											this.phoneSrc = res.tempImagePath
 											uni.setStorageSync('phoneSrc', this.phoneSrc)
 											this.$emit('phoneSrc',this.phoneSrc)
-										}
+										// }
 									}else{
 										this.title = data.msg
 									}
@@ -171,6 +170,36 @@
 				 			}
 				 		})
 				}, 2000)
+				// setTimeout(res=>{
+				// 	const ctx = uni.createCameraContext()
+				// 	ctx.takePhoto({
+				// 		quality: 'high',
+				// 		success: (res) => {
+				// 			this.$http.upload('/admin/gather/face_location', {
+				// 				filePath: res.tempImagePath,
+				// 				name: 'file',
+				// 			}).then(({data})=>{
+				// 				console.log(data)
+				// 				if( data.code === 0 ){
+				// 					// clearInterval(this.timer)
+				// 					// if( !uni.getStorageSync('phoneSrc') ){
+				// 						this.phoneSrc = res.tempImagePath
+				// 						uni.setStorageSync('phoneSrc', this.phoneSrc)
+				// 						this.$emit('phoneSrc',this.phoneSrc)
+				// 					// }
+				// 				}else{
+				// 					this.title = data.msg
+				// 					setTimeout(res=>{
+				// 						this.onPhone()
+				// 					},2000)
+				// 				}
+				// 			})
+				// 		},
+				// 		fail: () => {
+				// 			this.loading = false
+				// 		}
+				// 	})
+				// },2000)
 			},
 			confirm () {
 				this.show = false
