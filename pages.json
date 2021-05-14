@@ -299,6 +299,12 @@
 			}
 		},
 		{
+			"path": "pages/user/real/success",
+			"style": {
+				"navigationBarTitleText": "完成"
+			}
+		},
+		{
 			"path": "pages/user/real/faceCollection/index",
 			"style": {
 				"navigationBarTitleText": "身份认证"

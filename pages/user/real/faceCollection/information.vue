@@ -125,7 +125,10 @@
 				],
 				isName: true,
 				listType: [],
-				collectionType: 0
+				collectionType: 0,
+				orgId: 21,
+				trainMeetId: 0,
+				sign: 1,
 			}
 		},
 		onShow () {
@@ -139,6 +142,9 @@
 			this.$set(this.form,'phone','')
 			this.$refs.uForm.setRules(this.rules)
 			this.collectionType = uni.getStorageSync('collectionType')
+			this.orgId = uni.getStorageSync('orgId')
+			this.trainMeetId = uni.getStorageSync('trainMeetId')
+			this.sign = uni.getStorageSync('sign')
 		},
 		watch: {
 		},
@@ -213,8 +219,8 @@
 											title: '数据上传成功!'
 										})
 										setTimeout(()=>{
-											uni.switchTab({
-												url: '/pages/home/index/index'
+											uni.navigateTo({
+												url: '/pages/user/real/success?content=采集成功'
 											})
 										},1000)
 									}
@@ -240,8 +246,8 @@
 				this.$set(this.form,'positionId',e[0].value)
 			},
 			confirmSure () {
-				uni.switchTab({
-					url: '/pages/home/index/index'
+				uni.navigateTo({
+					url: `/pages/user/real/success?content=${this.content}`
 				})
 			},
 			qd () {
@@ -249,7 +255,7 @@
 				form = { ...this.arrForm,...form }
 				form.userType = form.gatherType
 				// form.shipName = `${form.shipNamePrefix}${form.shipNameSuffix}`
-				this.$http.post('/tmlms/trainMeetSign/signInOut',{ ...form,orgId: uni.getStorageSync('orgId'),trainMeetId: uni.getStorageSync('trainMeetId'),signInImage: form.image,type: uni.getStorageSync('sign') }).then(d=>{
+				this.$http.post('/tmlms/trainMeetSign/signInOut',{ ...form,orgId: this.orgId,trainMeetId: this.trainMeetId,signInImage: form.image,type: this.sign }).then(d=>{
 					if( d.data.code === 0 ){
 						this.content = d.data.msg
 						this.iscontent = true

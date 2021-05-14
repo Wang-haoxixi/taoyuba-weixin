@@ -185,7 +185,7 @@
 				// }else{
 					let form = JSON.parse(JSON.stringify(this.form))
 					form.userType = form.gatherType
-					this.$http.post('/tmlms/trainMeetSign/signInOut',{ ...form,orgId: uni.getStorageSync('orgId'),trainMeetId: this.option.id,signInImage: this.url,type: uni.getStorageSync('sign') }).then(({data})=>{
+					this.$http.post('/tmlms/trainMeetSign/signInOut',{ ...form,orgId: this.option.orgId,trainMeetId: this.option.id,signInImage: this.url,type: this.option.sign }).then(({data})=>{
 						this.$refs.uModal.clearLoading()
 						this.$getCode(data).then(res=>{
 							this.content = res.msg
@@ -263,8 +263,8 @@
 				this[name] = true
 			},
 			confirmSure () {
-				uni.switchTab({
-					url: '/pages/home/index/index'
+				uni.navigateTo({
+					url: `/pages/user/real/success?content=${this.content}`
 				})
 			},
 			// 获取名称
