@@ -1,6 +1,6 @@
 <template>
-	<scroll-view style="height: 300px;" scroll-y="true" refresher-enabled="true" :refresher-triggered="triggered" @refresherrestore="onRestore"
-		:refresher-threshold="70" @refresherrefresh="onRefresh">
+	<scroll-view class="face-boss" scroll-y="true" refresher-enabled="true" :refresher-triggered="triggered" @refresherrestore="onRestore"
+		:refresher-threshold="70" @refresherrefresh="onRefresh" @scrolltolower="scrolltolower" :lower-threshold="50">
 		<view class="user-video-list-container safe-padding-bottom">
 			<list-layout :data="data" empty-text="视频学习记录为空" :loading="layoutLoading">
 				<view class="video-item-wrapper" v-for="info in data" :key="info.id" @tap="onTo(info)">
@@ -39,7 +39,7 @@
 		onReady () {
 			this.layoutLoading = true
 			this.triggered = true
-			this.getList()
+			// this.getList()
 		},
 		onReachBottom() {
 			if (this.page.total > this.page.current * this.page.size) {
@@ -57,6 +57,15 @@
 			this.getList()
 		},
 		methods: {
+			scrolltolower (e) {
+				if (this.page.total > this.page.current * this.page.size) {
+					this.status = 'loading'
+					this.page.current++
+					this.getList()
+				} else{
+					this.status = 'nomore'
+				}
+			},
 			onRefresh () {
 				this.layoutLoading = true
 				this.data = []
@@ -131,6 +140,12 @@
 </script>
 
 <style scoped lang="scss">
+	.face-boss {
+		height: 100vh;
+		background-color: white;
+		padding-top:44px;
+		box-sizing: border-box;
+	}
 	.video-item-wrapper {
 		display: flex;
 		background-color: #fff;

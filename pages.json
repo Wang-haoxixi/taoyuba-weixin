@@ -404,6 +404,12 @@
 			}
 		},
 		{
+			"path": "pages/user/video/list/faceToFaceDetail",
+			"style": {
+				"navigationBarTitleText": "培训详情"
+			}
+		},
+		{
 			"path": "pages/user/ship/list/index",
 			"style": {
 				"navigationBarTitleText": "一船一档查询"

@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs>
-		<video-list></video-list>
-		<!-- <face v-else></face> -->
+		<u-tabs :list="list" :is-scroll="false" :current="current" @change="change" class="u-tab-face"></u-tabs>
+		<video-list v-if="current === 1"></video-list>
+		<face v-else></face>
 	</view>
 </template>
 
@@ -37,5 +37,10 @@
 </script>
 
 <style scoped lang="scss">
-
+.u-tab-face {
+	position: fixed;
+	top: 0;
+	z-index: 11;
+	width: 100%;
+}
 </style>

@@ -204,8 +204,9 @@
 								name: 'file',
 								formData: {
 									...this.form,
-									type: uni.getStorageSync('collectionType'),
-									orgId :uni.getStorageSync('orgId')
+									type: this.collectionType,
+									orgId : this.orgId,
+									idcardPhoto: this.form.url
 								}
 							}).then(({ data })=>{
 								console.log(data)
