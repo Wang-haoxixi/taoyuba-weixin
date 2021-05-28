@@ -132,19 +132,26 @@
 			}
 		},
 		onShow () {
+			try{
+				this.$refs.uForm.setRules(this.rules)
+				this.collectionType = this.$store.collectionType || uni.getStorageSync('collectionType')
+				this.orgId = this.$store.orgId || uni.getStorageSync('orgId')
+				this.trainMeetId = this.$store.trainMeetId || uni.getStorageSync('sign')
+				this.sign = this.$store.sign || uni.getStorageSync('cardInformation')
+				this.form = uni.getStorageSync('cardInformation')
+				this.$set(this.form,'phone','')
+				this.phoneSrc = uni.getStorageSync('phoneSrc')
+			}catch {
+				uni.showToast({
+					icon: 'none',
+					title: '系统异常请重新扫码!!'
+				})
+			}
 		},
 		onLoad (option) {
 			// this.name = this.organizationTypeList[uni.getStorageSync('orgId')]
 		},
 		onReady() {
-			this.form = uni.getStorageSync('cardInformation')
-			this.phoneSrc = uni.getStorageSync('phoneSrc')
-			this.$set(this.form,'phone','')
-			this.$refs.uForm.setRules(this.rules)
-			this.collectionType = uni.getStorageSync('collectionType')
-			this.orgId = uni.getStorageSync('orgId')
-			this.trainMeetId = uni.getStorageSync('trainMeetId')
-			this.sign = uni.getStorageSync('sign')
 		},
 		watch: {
 		},

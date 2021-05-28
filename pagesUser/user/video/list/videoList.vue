@@ -70,6 +70,7 @@
 				this.layoutLoading = true
 				this.data = []
 				this.page.current = 1
+				this.triggered = true
 				this.getList()
 			},
 			getList () {

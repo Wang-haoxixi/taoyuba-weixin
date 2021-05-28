@@ -76,6 +76,8 @@
 				realWxOpenid: option.openid,
 				unionId: option.unionid
 			})
+			this.$store.orgId = option.orgId
+			this.$store.collectionType = option.type
 			uni.setStorageSync('orgId', option.orgId )
 			uni.setStorageSync('collectionType', option.type )
 			this.option = option

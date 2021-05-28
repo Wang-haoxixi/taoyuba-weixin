@@ -52,7 +52,8 @@
 				historyTrainingInfo: this.$cache.get('historyTrainingInfo') || [], // 培训信息
 				hotList: [],
 				historyList: [],
-				showHistory: false
+				showHistory: false,
+				active: ''
 			}
 		},
 		// computed: {
@@ -73,6 +74,9 @@
 			}
 		},
 		onLoad (params) {
+			if (params.active) {
+				this.active = params.active
+			}
 			if (params.keyword) {
 				this.content = params.keyword
 			}
@@ -159,7 +163,7 @@
 					return `/pages/home/jobRegistration/index?keyword=${this.content}`
 				} else if (this.current === 2) {
 					// return `/pages/home/training-info/list/index?keyword=${this.content}`
-					return `/pages/home/info/index?title=${this.content}&index=1`
+					return `/pages/home/info/index?title=${this.content}&index=1&active=${this.active}`
 				} else if (this.current === 3) {
 					// return `/pages/home/training/list/index?keyword=${this.content}`
 					return `/pages/home/info/index?deptName=${this.content}&index=0`

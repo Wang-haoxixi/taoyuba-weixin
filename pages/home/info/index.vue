@@ -6,7 +6,7 @@
 		</view>
 		<view style="height: 80rpx;"></view>
 		<view class="content-wrapper">
-			<page-training-info :keyword="title" :data="data1" v-show="current === 1" ref="trainingInfo"></page-training-info>
+			<page-training-info :keyword="title" :data="data1" :activeType="active" v-show="current === 1" ref="trainingInfo" @setactive="setactive()"></page-training-info>
 			<page-training :keyword="deptName" :data="data0" v-show="current === 0" ref="training"></page-training>
 			<page-content v-show="current === 2"></page-content>
 			<page-book v-show="current === 3" ref="book"></page-book>
@@ -50,7 +50,8 @@
 					total: 0,
 					current: 1,
 					size: 10
-				}
+				},
+				active: false
 			}
 		},
 		onPullDownRefresh () {
@@ -89,6 +90,9 @@
 			let index = +params.index
 			if (index) {
 				this.current = index
+			}
+			if (params.active === '面对面教育') {
+				this.active = true
 			}
 			// console.log('params', params)
 			if (params.title) {
@@ -131,27 +135,50 @@
 				})
 			},
 			getList1 () {
-				this.$http.get('/tybhrms/tybarticle/page', {
-					params: {
-						size: this.page1.size,
-						current: this.page1.current,
-						title: this.title,
-						type: 8
-					}
-				}).then(({ data }) => {
-					if (data.code === 0) {
-						let result = data.data
-						this.data1 = this.data1.concat(result.records)
-						this.page1.total = result.total
-						if (this.page1.total <= this.page1.size) {
-							this.status1 = 'nomore'
+				if( this.active ){
+					this.$http.get('/tmlms/trainMeet/page', {
+						params: {
+							size: this.page1.size,
+							current: this.page1.current,
+							meetName: this.title,
 						}
-						if (this.page1.total === this.data1.length) {
-							this.status1 = 'nomore'
+					}).then(({ data }) => {
+						if (data.code === 0) {
+							let result = data.data
+							this.data1 = this.data1.concat(result.records)
+							this.page1.total = result.total
+							if (this.page1.total <= this.page1.size) {
+								this.status1 = 'nomore'
+							}
+							if (this.page1.total === this.data1.length) {
+								this.status1 = 'nomore'
+							}
 						}
-					}
-					uni.stopPullDownRefresh()
-				})
+						uni.stopPullDownRefresh()
+					})
+				}else{
+					this.$http.get('/tybhrms/tybarticle/page', {
+						params: {
+							size: this.page1.size,
+							current: this.page1.current,
+							title: this.title,
+							type: 8
+						}
+					}).then(({ data }) => {
+						if (data.code === 0) {
+							let result = data.data
+							this.data1 = this.data1.concat(result.records)
+							this.page1.total = result.total
+							if (this.page1.total <= this.page1.size) {
+								this.status1 = 'nomore'
+							}
+							if (this.page1.total === this.data1.length) {
+								this.status1 = 'nomore'
+							}
+						}
+						uni.stopPullDownRefresh()
+					})
+				}
 			},
 			change(index) {
 				// if (index === 2) {
@@ -161,6 +188,12 @@
 				// 	return
 				// }
 				this.current = index
+			},
+			setactive (val) {
+				this.active = val
+				this.data1 = []
+				this.page1.current = 1
+				this.getList1()
 			}
 		}
 	}

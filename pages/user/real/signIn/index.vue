@@ -15,7 +15,7 @@
 					<u-form :model="form" ref="uForm" label-width="150">
 						<u-form-item label="姓名" prop="realName"><u-input v-model="form.realName" :disabled="true"/></u-form-item>
 						<u-form-item label="身份证" prop="idcard"><u-input v-model="form.idcard" :disabled="true"/></u-form-item>
-						<u-form-item label="手机号" prop="phone"><u-input v-model="form.phone" :disabled="true"/></u-form-item>
+						<u-form-item label="手机号" prop="phone"><u-input v-model="form.phone"/></u-form-item>
 						<u-form-item label="职务类型" :right-icon="signOut ? '' :'arrow-down-fill'" v-if="showModel && isCrew == 1">
 							<div @click="showTrue('showSelect')" v-if="!signOut">{{ getTypeName(form.positionId,'list') }}</div>
 							<div v-else>{{ getTypeName(form.positionId,'list') }}</div>
@@ -83,14 +83,20 @@
 		onLoad (option) {
 			uni.clearStorage()
 			this.option = option
+			this.$store.trainMeetId = option.id
+			this.$store.orgId = option.orgId
+			this.$store.sign = option.sign
+			// setStorageSync 这个API有点问题 但是后面很多地方有用到 现在只能在这个基础上加个vuex 双重保障
 			uni.setStorageSync('orgId', option.orgId )
 			uni.setStorageSync('trainMeetId', option.id )
 			uni.setStorageSync('isCrew', option.isCrew)
 			uni.setStorageSync('sign', option.sign )
 			// 在签到的时候进行的采集 船东会议的都是家属 船员会议的就是船员
 			if( option.isCrew == 0 ){
+				this.$store.collectionType = 2
 				uni.setStorageSync('collectionType', 2 )
 			}else{
+				this.$store.collectionType = 1
 				uni.setStorageSync('collectionType', 1 )
 			}
 			this.isCrew = option.isCrew

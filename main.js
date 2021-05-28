@@ -14,6 +14,7 @@ import {
 	IMAGE_URL
 } from './env.js'
 
+Vue.prototype.$store = store
 Vue.prototype.$http = http
 Vue.prototype.$tools = tools
 Vue.prototype.$cache = cache

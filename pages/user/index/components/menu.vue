@@ -26,7 +26,7 @@
 				menu105: [
 					{ label: '简历管理', path: '/pages/release/resume/edit' },
 					{ label: '我的合同', path: '/pages/user/contract/list/index' },
-					{ label: '我的培训', path: '/pages/user/video/list/index' },
+					{ label: '我的培训', path: '/pagesUser/user/video/list/index' },
 					{ label: '设置', path: '/pages/user/setting/index' },
 				],
 				menu115: [
@@ -51,7 +51,7 @@
 				return [
 					{ label: '简历管理', path: '/pages/release/resume/edit', show: this.role.includes(this.rolesType.crew.type) },
 					{ label: '我的合同', path: '/pages/user/contract/list/index', show: this.role.includes(this.rolesType.crew.type) },
-					{ label: '我的培训', path: '/pages/user/video/list/index', show: true }, // this.role.includes(this.rolesType.crew.type)
+					{ label: '我的培训', path: '/pagesUser/user/video/list/index', show: true }, // this.role.includes(this.rolesType.crew.type)
 					{ label: '我的渔船', path: '/pages/user/myship/index', show: this.role.includes(this.rolesType.shipowner.type) },
 					// { label: '渔船交易', path: '/pages/user/myship/ship/index', show: this.arr.includes(value.userId) },
 					{ label: '渔船交易', path: '/pages/user/myship/ship/index', show: true },

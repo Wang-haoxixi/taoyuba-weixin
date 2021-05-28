@@ -1,6 +1,6 @@
 <template>
 	<scroll-view class="face-boss" scroll-y="true" refresher-enabled="true" :refresher-triggered="triggered" @refresherrestore="onRestore"
-		:refresher-threshold="70" @refresherrefresh="onRefresh" @scrolltolower="scrolltolower" :lower-threshold="50">
+		:refresher-threshold="50" @refresherrefresh="onRefresh" @scrolltolower="scrolltolower" :lower-threshold="50">
 		<view class="user-video-list-container safe-padding-bottom">
 			<list-layout :data="data" empty-text="面对面教育培训" :loading="layoutLoading">
 				<view class="video-item-wrapper" v-for="info in data" :key="info.id" @tap="onTo(info.id)">
@@ -76,6 +76,7 @@
 				this.layoutLoading = true
 				this.data = []
 				this.page.current = 1
+				this.triggered = true
 				this.getList()
 			},
 			getList () {
@@ -94,7 +95,7 @@
 							this.status = 'nomore'
 						}
 					}
-					uni.stopPullDownRefresh()
+					// uni.stopPullDownRefresh()
 					this.triggered = false
 					this.layoutLoading = false
 				}).catch(() => {
@@ -107,7 +108,7 @@
 			},
 			onTo (row) {
 				uni.navigateTo({
-					url: `/pages/user/video/list/faceToFaceDetail?id=${row}`,
+					url: `/pagesUser/user/video/list/faceToFaceDetail?id=${row}`,
 				})
 			}
 		}
@@ -127,7 +128,7 @@
 	.video-item-wrapper {
 		display: flex;
 		background-color: #fff;
-		padding: 30rpx 30rpx;
+		padding: 50rpx 30rpx;
 		border-bottom: 1px solid #f6f6f6;
 		.item-left {
 			flex: 0 0 180rpx;
@@ -170,18 +171,21 @@
 			justify-content: space-between;
 			align-items: center;
 			color: #999999;
-			font-weight: 300;
+			// font-weight: 300;
+			font-size: 27rpx;
 		}
 		.face-main {
 			width: 100%;
 		}
 		.face-meetName {
-			font-size: 38rpx;
+			font-size: 35rpx;
+			font-weight: 800;
 		}
 		.face-time {
 			color: #999999;
-			padding: 15rpx 0;
-			font-weight: 300;
+			padding: 30rpx 0 20rpx 0;;
+			// font-weight: 300;
+			font-size: 27rpx;
 		}
 		.face-sin {
 			display: inline-block;

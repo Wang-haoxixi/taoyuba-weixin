@@ -74,6 +74,9 @@
             "minified" : true,
             "postcss" : false
         },
+		"optimization" : {
+			"subPackages" : true
+		},
         "navigateToMiniProgramAppIdList" : [ "wxd43c7f6f30974960" ],
         "permission" : {
             "scope.userLocation" : {

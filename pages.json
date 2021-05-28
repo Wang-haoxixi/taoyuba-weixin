@@ -398,18 +398,6 @@
 			}
 		},
 		{
-			"path": "pages/user/video/list/index",
-			"style": {
-				"navigationBarTitleText": "我的培训"
-			}
-		},
-		{
-			"path": "pages/user/video/list/faceToFaceDetail",
-			"style": {
-				"navigationBarTitleText": "培训详情"
-			}
-		},
-		{
 			"path": "pages/user/ship/list/index",
 			"style": {
 				"navigationBarTitleText": "一船一档查询"
@@ -483,6 +471,21 @@
 			}
 		}
 	],
+	// 分包操作
+	"subPackages": [{
+		"root": "pagesUser",
+		"pages": [{
+			"path": "user/video/list/faceToFaceDetail",
+			"style": {
+				"navigationBarTitleText": "培训详情"
+			}
+		},{
+			"path": "user/video/list/index",
+			"style": {
+				"navigationBarTitleText": "我的培训"
+			}
+		}]
+	}],
 	"tabBar": {
 		"custom": true,
 		"color": "#919397",

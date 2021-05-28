@@ -25,7 +25,7 @@ page {
 	background: #f6f6f6;
 	width: 100%;
 	font-size: 30upx;
-	font-family: NotoSansHans-Bold;
+	font-family: -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
 	color: #333;
 }
 ::-webkit-scrollbar {
