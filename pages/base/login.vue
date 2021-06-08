@@ -6,7 +6,7 @@
 				<image :src="`${imgUrl}/logo.png`"></image>
 			</view>
 			<view class="title">淘渔吧</view>
-			<view class="form-wrapper">
+			<view class="form-wrapper" v-if="show">
 				<u-form :model="form" ref="uForm">
 					<u-form-item left-icon="account" :leftIconStyle="{color: '#999', fontSize: '32rpx'}">
 						<u-input trim v-model="form.username" placeholder="请输入用户名"/>
@@ -29,17 +29,29 @@
 						</div>
 						<div style="padding-left: 20rpx;">
 							<!-- <button style="background-color: #eaeaea;color: #333; font-size: 30rpx;" @click="onToHome('/pages/home/index/index')">取消</button> -->
-							<u-button @click="onToHome('/pages/home/index/index')" type="default" :custom-style="{backgroundColor: '#eaeaea', color: '#888'}" hover-class="none" shape="circle" :loading="loading">取消</u-button>
+							<u-button @click="show = false" type="default" :custom-style="{backgroundColor: '#eaeaea', color: '#888'}" hover-class="none" shape="circle" :loading="loading">取消</u-button>
 						</div>
 					</view>
 				</u-form>
 			</view>
+			<view v-if="!show" class="form-wrapper form-wrapper-latter">
+				<view class="latter-title">登录后更精彩</view>
+				<view class="latter-name">
+					<u-button open-type="getUserInfo" @getuserinfo="onWechat" hover-class="none" :custom-style="{backgroundColor: '#4cbf00',width: '100%'}" size="medium " :hair-line="false">
+						<u-icon name="weixin-fill" size="50rpx" color="white"></u-icon><text style="color: white">微信登录</text>
+					</u-button>
+				</view>
+				<view class="latter-name" @click="show = true" style="color: #959aba">
+					账号登陆
+				</view>
+			</view>
 		</view>
-		<view class="other-wrapper1">
+		<view @click="onToHome('/pages/home/index/index')" class="back-home" v-if="!show">返回首页</view>
+		<view class="other-wrapper1" v-if="show">
 			<text @tap="onTo('/pages/base/register')">没有账号？立即注册</text>
 			<text @tap="onTo('/pages/base/forget-password')">找回密码</text>
 		</view>
-		<view class="other-wrapper">
+		<view class="other-wrapper" v-if="show">
 			<u-divider bg-color="transparent">其他方式登录</u-divider>
 			<view class="ic-wrapper">
 				<u-button open-type="getUserInfo" @getuserinfo="onWechat" hover-class="none" :custom-style="{backgroundColor: 'transparent', borderColor: '#f8f8f8'}" size="medium " :hair-line="false">
@@ -106,7 +118,8 @@
 					len: 4,
 					type: 'image'
 				 },
-				 id: 0
+				 id: 0,
+				 show: false,
 			}
 		},
 		onLoad (option) {
@@ -274,7 +287,7 @@
 				getUser.onLogin().then((res) => {
 					if (res) {
 						if( this.id ){
-							uni.navigateTo({
+							uni.reLaunch({
 								url: `/pages/user/myship/ship/confirmShipDetail?id=${this.id}`
 							})
 						}else{
@@ -324,6 +337,10 @@
 
 <style lang="scss" scoped>
 	.main-container {
+		::v-deep .u-size-medium {
+			height: 80rpx;
+			line-height: 80rpx;
+		}
 		.status_bar {
 			height: var(--status-bar-height);
 			background-color: #409eff;
@@ -367,6 +384,28 @@
 					margin-top: 40rpx;
 				}
 			}
+			.form-wrapper-latter {
+					position: absolute;
+				    width: 80%;
+				    box-sizing: border-box;
+				    padding: 60rpx 40rpx;
+				    height: 490rpx;
+				    background-color: #fff;
+				    top: 450rpx;
+				    left: 10%;
+				    right: 10%;
+				    overflow: hidden;
+				    border-radius: 10rpx;
+				    box-shadow: 0rpx 0rpx 5rpx rgba(0, 0, 0, 0.5);
+					.latter-title {
+						text-align: center;
+						color: #7e7a7b;
+					}
+					.latter-name {
+						text-align: center;
+						margin-top: 90rpx;
+					}
+			}
 		}
 		.other-wrapper1 {
 			margin-top: 450rpx;
@@ -391,5 +430,10 @@
 	.two-btn-wrapper {
 		display: flex;
 		justify-content: space-between;
+	}
+	.back-home {
+		text-align: center;
+		color: #ccc;
+		margin-top: 450rpx;
 	}
 </style>

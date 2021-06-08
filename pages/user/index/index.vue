@@ -184,7 +184,8 @@
 						}
 					}).then(({ data }) => {
 						if(data.msg == '成功获取船员信息' && data.data.status == 1){
-						    this.text = "您的船员信息正在审核中..."
+						    // this.text = "您的船员信息正在审核中..."
+							this.text = ''
 						} else {
 							this.text = ''
 						}

@@ -160,13 +160,13 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 			title: '请登录后再查看',
 			duration: 1000,
 		})
-		// setTimeout(() => {
-		// 	uni.navigateTo({
-		// 		url: '/pages/base/login'
-		// 	})
-		// }, 1000)
-		tools.clear()
-		return response
+		setTimeout(() => {
+			uni.navigateTo({
+				url: '/pages/base/login'
+			})
+		}, 1000)
+		// tools.clear()
+		// return response
 	}
 	// if(response.data.code === 1){
 	// 	uni.showToast({

@@ -1,6 +1,6 @@
 <template>
 	<view class="face-recognition-container">
-		<view style="font-size: 40rpx;font-weight: 700;margin: 20rpx 0 40rpx 0;" v-if="!disabled">{{ title }}</view>
+		<view style="font-size: 40rpx;font-weight: 700;margin: 20rpx 0 40rpx 0;width:100%;text-align: center;" v-if="!disabled">{{ title }}</view>
 		<view class="face-recognition-wrapper">
 <!-- 			<view class="number-wrapper" v-show="showNumber">
 				{{number}}

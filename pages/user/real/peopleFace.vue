@@ -22,6 +22,9 @@
 		},
 		onLoad (option) {
 		},
+		onShow() {
+			this.$refs.face.takePhoto()
+		},
 		methods: {
 			phoneSrc (phoneSrc) {
 				this.$http.upload('/admin/file/upload/avatar', {
