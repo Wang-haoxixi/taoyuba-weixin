@@ -127,6 +127,8 @@
 				this.id = option.id
 			}
 			this.refreshCode()
+			uni.removeStorageSync('refresh_token')
+			uni.removeStorageSync('taoyuba-token')
 		},
 		methods: {
 			onToHome (path) {

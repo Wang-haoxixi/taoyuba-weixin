@@ -160,11 +160,11 @@ http.interceptor.response(async (response) => { /* 请求之后拦截器 */
 			title: '请登录后再查看',
 			duration: 1000,
 		})
-		setTimeout(() => {
-			uni.navigateTo({
-				url: '/pages/base/login'
-			})
-		}, 1000)
+		setTimeout(res=>{
+			uni.redirectTo({
+			    url: '/pages/base/login'
+			});
+		},1000)
 		// tools.clear()
 		// return response
 	}
