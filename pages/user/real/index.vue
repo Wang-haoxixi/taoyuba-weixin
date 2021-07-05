@@ -2,7 +2,7 @@
 	<view class="id-boss">
 		<u-image height="250rpx" :src="imgUrlHeader"></u-image>
 		<view class="id-title">
-			请拍摄{{ isface ? '' : user.realName }}本人的二代身份证
+			请拍摄本人的二代身份证
 		</view>
 		<view class="u-text-center">
 			确保拍摄的证件完整清晰

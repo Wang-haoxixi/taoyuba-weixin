@@ -54,12 +54,19 @@
 							} else {
 								uni.showToast({
 									icon: 'none',
-									title: '请对准摄像头再来一次！'
+									title: msg
 								})
+								this.$refs.face.takePhoto()
 								this.loading = false
 								this.phoneSrc = ''
 							}
 				        })
+					}else{
+						uni.showToast({
+							icon: 'none',
+							title: data.msg
+						})
+						this.$refs.face.takePhoto()
 					}
 				})
 			},
@@ -81,6 +88,7 @@
 							icon: 'none',
 							title: data.msg
 						})
+						this.$refs.face.takePhoto()
 					}
 				})
 			}

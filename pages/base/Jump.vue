@@ -20,6 +20,10 @@
 				uni.reLaunch({
 					url: `/pages/user/real/signIn/index?sign=${params.sign}&isCrew=${params.isCrew}&id=${params.id}&orgId=${params.orgId}`
 				})
+			}else if(params.type === '2'){
+				uni.reLaunch({
+					url: '/pages/release/ship-registration/index'
+				})
 			}
 		},
 		methods: {

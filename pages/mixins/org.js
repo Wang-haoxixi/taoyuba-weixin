@@ -5,7 +5,8 @@ export default {
 			organizationTypeList: {
 				21: '浙岱',
 				32: '浙普',
-				1: '浙象'
+				1: '浙象',
+				80: '浙岱'
 			}
 		}
 	},
