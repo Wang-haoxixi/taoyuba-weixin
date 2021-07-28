@@ -484,6 +484,11 @@
 			"style": {
 				"navigationBarTitleText": "我的培训"
 			}
+		},{
+			"path": "user/ship/appraisal/index",
+			"style": {
+				"navigationBarTitleText": "实船鉴证"
+			}
 		}]
 	}],
 	"tabBar": {

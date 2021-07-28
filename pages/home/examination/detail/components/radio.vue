@@ -2,6 +2,11 @@
 	<!-- 单选题 -->
 	<view class="radio-wrapper">
 		<view class="title">{{info.title || ''}}</view>
+		<view v-if="info.url" style="display: flex;flex-wrap: wrap;width: 100%;">
+			<template v-for="item in JSON.parse(info.url)">
+					<u-image width="300rpx" height="300rpx" :src="item" @click="look(item)"></u-image>
+			</template>
+		</view>
 		<view class="">
 			<u-radio-group wrap size="40" width="100%" :disabled="disabled" v-model="defaultValue" @change="radioGroupChange" >
 				<view class="radio" v-for="(item, index) in info.optionsJson" :key="index">
@@ -47,6 +52,12 @@
 		methods: {
 			radioGroupChange (name) {
 				this.$emit('choose', name)
+			},
+			look (url) {
+				uni.previewImage({
+					current: 0,
+					urls: [url]
+				});
 			},
 		}
 	}

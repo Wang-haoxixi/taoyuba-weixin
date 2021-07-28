@@ -49,6 +49,7 @@
 					return this.menu117
 				}
 				return [
+					{ label: '实船鉴证', path: '/pagesUser/user/ship/appraisal/index', show: true },
 					{ label: '简历管理', path: '/pages/release/resume/edit', show: this.role.includes(this.rolesType.crew.type) },
 					{ label: '我的合同', path: '/pages/user/contract/list/index', show: this.role.includes(this.rolesType.crew.type) },
 					{ label: '我的培训', path: '/pagesUser/user/video/list/index', show: true }, // this.role.includes(this.rolesType.crew.type)
