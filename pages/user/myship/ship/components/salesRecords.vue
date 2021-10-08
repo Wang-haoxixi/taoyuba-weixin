@@ -24,7 +24,7 @@
 							<u-button v-else size="mini" @click="edit(item.id,true)">查看详情</u-button>
 							<u-button size="mini" @click="confirmProgress(item.id)" v-if="type === 1 && item.auditState === '3'">查看进度</u-button>
 							<u-button size="mini" @click="deleShow(item.id)" v-if="type === 1 && item.auditState === '2'">删除</u-button>
-							<u-button size="mini" v-if="type === 1 && item.auditState === '3' && item.type === '1' && item.sellState !== '8' && item.sellState !== '6' " @click="owners(item.id)">推送至共有人</u-button>
+							<u-button size="mini" v-if="type === 1 && item.auditState === '3' && item.type === '1' && item.sellState !== '8' && item.sellState !== '6' " @click="owners(item.id)">推送給买方</u-button>
 							<u-button size="mini" @click="confirmProgress(item.id)" v-if="type !== 1 ">确认信息</u-button>
 						</view>
 					</view>

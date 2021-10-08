@@ -2,8 +2,7 @@
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/home/index/index",
 			"style": {
 				"navigationBarTitleText": ""
@@ -352,13 +351,13 @@
 				"navigationBarTitleText": "修改密码"
 			}
 		},
-		{
-			"path": "pages/user/recruit/list/index",
-			"style": {
-				"navigationBarTitleText": "船员招聘",
-				"enablePullDownRefresh": true
-			}
-		},
+		// {
+		// 	"path": "pages/user/recruit/list/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "船员招聘",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
 		{
 			"path": "pages/user/myship/index",
 			"style": {
@@ -469,17 +468,104 @@
 				"navigationStyle": "custom",
 				"navigationBarTextStyle": "white"
 			}
+		}, 
+		// {
+		// 	"path": "pages/user/crewCode/crewCode",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "船员码"
+		// 	}
+
+		// }, {
+		// 	"path": "pages/user/crewCode/resume",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "履历情况"
+		// 	}
+		// }, {
+		// 	"path": "pages/user/crewCode/contract",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "合同情况"
+		// 	}
+
+		// }, {
+		// 	"path": "pages/user/crewCode/safe",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "安全教育培训"
+		// 	}
+
+		// }, {
+		// 	"path": "pages/user/crewCode/Insurance",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "保险"
+		// 	}
+
+		// }, {
+		// 	"path": "pages/user/crewCode/card",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "船员电子身份证"
+		// 	}
+
+		// }, {
+		// 	"path": "pages/user/crewCode/certificate",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "船员证书"
+		// 	}
+
+		// },
+		// {
+		// 	"path": "pages/user/crewCode/release",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "职位发布"
+		// 	}
+
+		// },
+		// {
+		// 	"path": "pages/user/release/release",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "职位发布"
+		// 	}
+		
+		// },
+		{
+			"path": "pages/reg_ok/reg_ok",
+			"style": {
+				"navigationBarTitleText": "提交成功",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "dark",
+				"app-plus": {
+					"titleView": false
+				}
+			}
 		}
 	],
 	// 分包操作
-	"subPackages": [{
+	"subPackages": [
+		
+		{
 		"root": "pagesUser",
 		"pages": [{
 			"path": "user/video/list/faceToFaceDetail",
 			"style": {
 				"navigationBarTitleText": "培训详情"
 			}
-		},{
+		}, {
 			"path": "user/video/list/index",
 			"style": {
 				"navigationBarTitleText": "我的培训"
@@ -490,15 +576,97 @@
 				"navigationBarTitleText": "实船鉴证"
 			}
 		}]
-	}],
+	},
+	
+	{
+		"root": "pages/user/crewCode",
+		"pages": [{
+			"path": "crewCode",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "船员码"
+			}
+
+		}, {
+			"path": "resume",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "履历情况"
+			}
+		}, {
+			"path": "contract",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "合同情况"
+			}
+
+		}, {
+			"path": "safe",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "安全教育培训"
+			}
+
+		}, {
+			"path": "Insurance",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "保险"
+			}
+
+		}, {
+			"path": "card",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "船员电子身份证"
+			}
+
+		}, {
+			"path": "certificate",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "船员证书"
+			}
+
+		}]
+	},
+	
+	{
+		"root": "pages/user/release",
+		"pages": [{
+			"path": "release",
+			"style": {
+				"navigationBarTitleText": "船员招聘"
+			}
+		}]
+	},
+	{
+		"root": "pages/user/recruit/list",
+		
+		"pages": [{
+			"path": "index",
+			"style": {
+				"navigationBarTitleText": "船员招聘",
+				"enablePullDownRefresh": true
+			}
+		}]
+		
+	}
+	],
 	"tabBar": {
 		"custom": true,
 		"color": "#919397",
 		"selectedColor": "#FF4603",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
-		"list": [
-			{
+		"list": [{
 				"pagePath": "pages/home/index/index"
 			},
 			{
@@ -520,8 +688,8 @@
 		"navigationBarTitleText": "shopping",
 		"navigationBarBackgroundColor": "#FFF",
 		"backgroundColor": "#FFF",
-		"usingComponents":{
-		    "painter":"/wxcomponents/painter/painter"
+		"usingComponents": {
+			"painter": "/wxcomponents/painter/painter"
 		}
 	}
 }
