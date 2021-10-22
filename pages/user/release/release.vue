@@ -45,94 +45,104 @@
 				phone: "",
 				shipName: "",
 				shipowner: "",
-				range:[],
-				show:false
+				shipId: "",
+				range: [],
+				show: false,
+				orgId: ""
 			}
 		},
+		onLoad(e) {
+			this.orgId = e.orgId
+			console.log(this.orgId)
+		},
 		methods: {
-			confirm(e){
-				this.shipName=this.range[e[0]].shipName
+			confirm(e) {
+				this.shipName = this.range[e[0]].shipName
 				this.shipowner = this.range[e[0]].shipowner,
-				this.phone = this.range[e[0]].mobile
+					this.phone = this.range[e[0]].mobile
 				this.shipId = this.range[e[0]].shipId
 			},
 			change() {
 				this.find()
 			},
 			find() {
-				this.$http.get('/tmlms/tybship/allPage?orgId=36&shipName=' + this.shipName, {
-
-				}).then(({
-					data
-				}) => {
-					if(data.data.total==0){
-						this.shipName=''
-						this.$refs.uTips.show({
-							title: '无此渔船信息',
-							type: 'error'		
-						}) 
-					}else if(data.data.total==1){
-						this.shipName=data.data.records[0].shipName
-						this.shipowner = data.data.records[0].shipowner,
-						this.phone = data.data.records[0].mobile
-						this.shipId = data.data.records[0].shipId
-						this.range=data.data.records
-						// this.show=true
-					}else if(data.data.total>1){
-						this.range=data.data.records
-						this.show=true
-					}
-					// this.shipowner = data.data.shipowner,
-					// this.phone = data.data.mobile
-					// this.shipId = data.data.shipId
-				})
+				if(this.shipName){
+					this.$http.get('/tmlms/tybship/allPage?orgId=' + this.orgId + '&shipName=' + this.shipName, {
+					
+					}).then(({
+						data
+					}) => {
+						if (data.data.total == 0) {
+							this.shipName = ''
+							this.$refs.uTips.show({
+								title: '无此渔船信息',
+								type: 'error'
+							})
+						} else if (data.data.total == 1) {
+							this.shipName = data.data.records[0].shipName
+							this.shipowner = data.data.records[0].shipowner,
+								this.phone = data.data.records[0].mobile
+							this.shipId = data.data.records[0].shipId
+							this.range = data.data.records
+							// this.show=true
+						} else if (data.data.total > 1) {
+							this.range = data.data.records
+							this.show = true
+						}
+						// this.shipowner = data.data.shipowner,
+						// this.phone = data.data.mobile
+						// this.shipId = data.data.shipId
+					})
+				}
 			},
 			submit() {
-				if(!this.phone){
+				if (!this.phone) {
 					this.$refs.uTips.show({
 						title: '请填写联系电话',
 						type: 'error'
 					})
 					return
 				}
-				if(!this.shipowner){
+				if (!this.shipowner) {
 					this.$refs.uTips.show({
 						title: '请填写船东姓名',
 						type: 'error'
 					})
 					return
 				}
-				if(this.shipId&&this.mobile&&this.shipowner){
-					
-			
-				this.$http.post('/tmlms/shipownerRecruit/create', {
-					normalQuantity: this.normalQuantity,
-					engineQuantity: this.engineQuantity,
-					driverQuantity: this.driverQuantity,
-					phone: this.phone,
-					shipName: this.shipName,
-					shipowner: this.shipowner,
-					shipId: this.shipId
-				}).then(({
-					data
-				}) => {
-					if (data.msg == 'success') {
-						this.$refs.uTips.show({
-							title: '提交成功',
-							type: 'success'
-						})
-						uni.reLaunch({
-						    url: '/pages/reg_ok/reg_ok'
-						});
-					}else{
-						this.$refs.uTips.show({
-							title: '提交失败',
-							type: 'error'
-						
-						})
-					}
-				})
-				}else{
+
+				if (this.shipId && this.phone && this.shipowner) {
+					if (this.normalQuantity + this.engineQuantity + this.driverQuantity > 0) {
+						this.$http.post('/tmlms/shipownerRecruit/create', {
+							normalQuantity: this.normalQuantity,
+							engineQuantity: this.engineQuantity,
+							driverQuantity: this.driverQuantity,
+							phone: this.phone,
+							shipName: this.shipName,
+							shipowner: this.shipowner,
+							shipId: this.shipId
+						}).then(({
+								data
+							}) => {
+								if (data.msg == 'success') {
+									this.$refs.uTips.show({
+										title: '提交成功',
+										type: 'success'
+									})
+									uni.reLaunch({
+										url: '/pages/reg_ok/reg_ok'
+									});
+								} else {
+									this.$refs.uTips.show({
+										title: '提交失败',
+										type: 'error'
+
+									})
+								}
+							}
+						}
+					)
+				} else {
 					this.$refs.uTips.show({
 						title: '无此渔船信息，请填写正确的渔船号',
 						type: 'error'
