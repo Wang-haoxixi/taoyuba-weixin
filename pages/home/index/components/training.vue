@@ -47,8 +47,8 @@
 			return {
 				current: 0,
 				list: [
-					{ name: '培训服务' },
-					{ name: '培训信息' },
+					{ name: '培训机构' },
+					{ name: '培训预约' },
 					{ name: '证书查询' },
 					{ name: '教程订购' }
 				],

@@ -54,8 +54,8 @@
 			return {
 				current: 0,
 				list: [
-					{ name: '求职' },
 					{ name: '求职登记' },
+					{ name: '求职' },
 				],
 				status: 'loadmore',
 				options4: [

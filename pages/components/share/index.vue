@@ -142,7 +142,7 @@
 		padding: 20rpx 20rpx calc(20rpx + constant(safe-area-inset-bottom));
 		padding: 20rpx 20rpx calc(20rpx + env(safe-area-inset-bottom));
 		/* #endif */
-		button {
+		/deep/ button {
 			width: 50%;
 			background-color: #fff;
 			border: none;

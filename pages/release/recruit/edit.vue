@@ -142,7 +142,16 @@
 				rules: {
 					shipName: [ { required: true, message: '请选择渔船', trigger: 'change' } ],
 					positionId: [ { required: true, message: '请选择招聘岗位', trigger: 'change' } ],
-					recruitNo: [ { required: true, message: '请输入招聘人数', trigger: 'blur,change' } ],
+					recruitNo: [ { required: true, message: '请输入招聘人数', trigger: 'blur,change' },{
+						validator(rule,value,callback){
+							if(/(^[1-9]\d*$)/.test(value)){
+								callback()
+							}else{
+								callback(new Error('请输入正整数'))
+							}
+						},
+						trigger:'blur'
+					}],
 					salaryLabel: [ { required: true, message: '请选择月薪', trigger: ['change'] } ],
 					salaryCurrency: [ { required: true, message: '请选择货币种类', trigger: 'change' } ],
 					certTitle: [ { required: true, message: '请选择证书职务', trigger: 'change' } ],
