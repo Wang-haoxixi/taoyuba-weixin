@@ -17,22 +17,22 @@
 			<view class="examInfo">
 				<view class="examInfoItem">
 					<view class="examInfoItemTitle">课程</view>
-					<view class="examInfoItemInfo">{{data.kind}}</view>
+					<view class="examInfoItemInfo">{{data.kind?data.kind:''}}</view>
 				</view>
 				<view class="examInfoItem">
 					<view class="examInfoItemTitle">考试类型</view>
-					<view class="examInfoItemInfo">{{data.level}}</view>
+					<view class="examInfoItemInfo">{{data.level?data.level:''}}</view>
 				</view>
 				<view class="examInfoItem">
 					<view class="examInfoItemTitle">考试时间</view>
-					<view class="examInfoItemInfo">{{createTime}}</view>
+					<view class="examInfoItemInfo">{{createTime?createTime:''}}</view>
 				</view>
 				<view class="examInfoItem">
 					<view class="examInfoItemTitle">考试分数</view>
 					<view class="examInfoItemInfo" style="display: flex;align-items: center;">
-						<view style="margin-right: 8rpx;">{{data.score}}分</view>
-						<view style="color: #FD6565;" v-if="data.result == '不及格'">{{data.result}}</view>
-						<view style="color: #2DC9C3;" v-else>{{data.result}}</view>
+						<view style="margin-right: 8rpx;">{{data.score?data.score:'0'}}分</view>
+						<view style="color: #FD6565;" v-if="data.result == '不及格'">{{data.result?data.result:''}}</view>
+						<view style="color: #2DC9C3;" v-else>{{data.result?data.result:''}}</view>
 					</view>
 				</view>
 				<view class="examInfoItem">
@@ -41,7 +41,7 @@
 				</view>
 				<view class="examInfoItem">
 					<view class="examInfoItemTitle">错误题数</view>
-					<view class="examInfoItemInfo">{{data.totalType.badTotal}}/{{data.totalType.end}}</view>
+					<view class="examInfoItemInfo" v-if="data.totalType">{{data.totalType.badTotal}}/{{data.totalType.end}}</view>
 				</view>
 			</view>
 		</view>

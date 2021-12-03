@@ -292,60 +292,6 @@
 			}
 		},
 		{
-			"path": "pages/user/real/faceCollection/face",
-			"style": {
-				"navigationBarTitleText": "身份采集"
-			}
-		},
-		{
-			"path": "pages/user/real/success",
-			"style": {
-				"navigationBarTitleText": "完成"
-			}
-		},
-		{
-			"path": "pages/user/real/faceCollection/index",
-			"style": {
-				"navigationBarTitleText": "身份认证"
-			}
-		},
-		{
-			"path": "pages/user/real/signIn/index",
-			"style": {
-				"navigationBarTitleText": "获取身份"
-			}
-		},
-		{
-			"path": "pages/user/real/faceCollection/information",
-			"style": {
-				"navigationBarTitleText": "信息详情"
-			}
-		},
-		{
-			"path": "pages/user/real/index",
-			"style": {
-				"navigationBarTitleText": "上传身份证"
-			}
-		},
-		{
-			"path": "pages/user/real/peopleFace",
-			"style": {
-				"navigationBarTitleText": "人脸对比"
-			}
-		},
-		{
-			"path": "pages/user/real/authenticationCenter",
-			"style": {
-				"navigationBarTitleText": "实名认证中心"
-			}
-		},
-		{
-			"path": "pages/user/real/personalInformation",
-			"style": {
-				"navigationBarTitleText": "个人信息"
-			}
-		},
-		{
 			"path": "pages/user/change-password/index",
 			"style": {
 				"navigationBarTitleText": "修改密码"
@@ -663,6 +609,65 @@
 			}
 		}]
 		
+	},
+	{
+		"root": "pages/user/real",
+		"pages": [
+			{
+				"path": "success",
+				"style": {
+					"navigationBarTitleText": "完成"
+				}
+			},
+			{
+				"path": "personalInformation",
+				"style": {
+					"navigationBarTitleText": "个人信息"
+				}
+			},
+			{
+				"path": "peopleFace",
+				"style": {
+					"navigationBarTitleText": "人脸对比"
+				}
+			},
+			{
+				"path": "authenticationCenter",
+				"style": {
+					"navigationBarTitleText": "实名认证中心"
+				}
+			},
+			{
+				"path": "index",
+				"style": {
+					"navigationBarTitleText": "上传身份证"
+				}
+			},
+			{
+				"path": "signIn/index",
+				"style": {
+					"navigationBarTitleText": "获取身份"
+				}
+			},
+			{
+				"path": "faceCollection/face",
+				"style": {
+					"navigationBarTitleText": "身份采集"
+				}
+			},
+			{
+				"path": "faceCollection/index",
+				"style": {
+					"navigationBarTitleText": "身份认证"
+				}
+			},
+			{
+				"path": "faceCollection/information",
+				"style": {
+					"navigationBarTitleText": "信息详情"
+				}
+			}
+		]
 	}
 	],
 	"tabBar": {
