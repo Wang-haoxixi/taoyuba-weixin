@@ -61,7 +61,7 @@
 			</tyb-subject>
 		</u-popup>
 		<u-toast ref="uToast" />
-		<u-modal v-model="modelShow" :content="content" title="成绩"></u-modal>
+		<!-- <u-modal v-model="modelShow" :content="content" title="成绩"></u-modal> -->
 	</view>
 </template>
 
@@ -97,7 +97,8 @@
 				scroe: '',
 				isError: false,
 				modelShow: false,
-				content: ''
+				content: '',
+				createTime:''
 			}
 		},
 		computed: {
@@ -112,6 +113,7 @@
 				let result = ''
 				if (!this.isEnd) {
 					let time = this.getTime(this.time)
+					// console.log(time)
 					result = `${time.h}:${time.m}:${time.s}`
 				} else {
 					result = `${this.scroe}分`
@@ -131,7 +133,9 @@
 			}
 		},
 		onUnload() {
-			this.onSubmit()
+			if(this.isEnd==false){
+				this.onSubmit()
+			}
 		},
 		onLoad (params) {
 			if (params.id) {
@@ -143,6 +147,10 @@
 					title: '找不到考试内容',
 					back : true
 				})
+			}
+			if(params.createTime){
+				this.createTime= params.createTime
+				// console.log(this.createTime)
 			}
 		},
 		methods: {
@@ -162,6 +170,7 @@
 							this.setCheckbox()
 							this.info = this.data.examAnswerVOList[0]
 							let time = this.data.remainingTime.split('-')
+							// console.log(time)
 							for (let i = 0, len = time.length; i < len; i++) {
 								if (i === 0) {
 									this.time = (+time[0]) * 60 
@@ -171,7 +180,7 @@
 							}
 							this.total = this.data.examAnswerVOList.length
 							this.current = this.info.questionNum
-							console.log(this.current, 'current')
+							// console.log(this.current, 'current')
 							let len = this.data.examAnswerVOList.length
 							for (let i = 0; len > i; i++) {
 								this.answerList.push('')
@@ -316,12 +325,14 @@
 			onSubmitApi () {
 				this.onSubmitExam()
 				this.endLoading = true
+				let mm  = Math.floor(this.time/60)
+				let ss = Math.floor(this.time%60)
+				let remainingTime = mm + '-' +ss
 				return new Promise((resolve) => {
 					this.$http.post('/tmlms/exam_answer/commit_paper', {
 						examinationId: this.data.examinationId,
 						examId: this.examId,
-						answerTime: '00-00',
-						remainingTime: '00-00'
+						remainingTime:remainingTime
 					}).then(({ data }) => {
 						resolve(data)
 					}).catch(() => {
@@ -339,6 +350,9 @@
 						this.$refs.uToast.show({
 							title: '考试结束',
 							position: 'bottom'
+						})
+						uni.navigateTo({
+							url:`/pages/home/examination/detail/result/result?examId=${this.examId}&createTime=${this.createTime}`
 						})
 					} else {
 						this.$refs.uToast.show({
@@ -377,8 +391,8 @@
 						this.isSame()
 						this.value = this.answerList[this.current - 1]
 						// 成绩弹窗显示
-						this.modelShow = true
-						this.content = `最终得分${this.scroe}分。正确率${this.scroe}%。成绩${this.data.result}`
+						// this.modelShow = true
+						// this.content = `最终得分${this.scroe}分。正确率${this.scroe}%。成绩${this.data.result}`
 					}
 				})
 			},

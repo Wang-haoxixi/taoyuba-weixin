@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 	<view class="content">
 		<view class="head">
 			<view class="name">
@@ -32,8 +32,8 @@
 			</view>
 		</view>
 		<view class="table">
-			<u-grid :col="3" :border="false"	>
-				<u-grid-item v-for="(item, index) in menu" @click="goTo(item.url)">
+			<u-grid :col="3" :border="false">
+				<u-grid-item v-for="(item, index) in menu" @click="goTo(item.url)" :key="index">
 					<u-icon :name="item.img" :size="88"></u-icon>
 					<view class="grid-text">{{item.name}}</view>
 				</u-grid-item>
@@ -254,3 +254,4 @@ line-height: 22rpx;
 		/*水平方向居中*/
 	}
 </style>
+ -->

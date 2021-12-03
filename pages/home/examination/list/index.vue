@@ -96,6 +96,24 @@
 				this.setList(row.list)
 				this.show = true
 			},
+			// 时间格式转换 YYYY-MM-DD hh:mm:ss
+			getDayTimer () {
+			  var date = new Date()
+			  var y = date.getFullYear()
+			  var m = date.getMonth() + 1
+			  m = m < 10 ? ('0' + m) : m
+			  var d = date.getDate()
+			  d = d < 10 ? ('0' + d) : d
+			  var currentdate = y + '-' + m + '-' + d;
+			  var hh = date.getHours()
+			  hh = hh < 10 ? ('0' + hh) : hh
+			  var mm = date.getMinutes()
+			  mm = mm < 10 ? ('0' + mm) : mm
+			  var ss = date.getSeconds()
+			  ss = ss < 10 ? ('0' + ss) : ss
+			  var time = hh + ':' + mm + ':' + ss;
+			  return currentdate + " " + time
+			},
 			onConfirm (e) {
 				let id = e[0].value
 				uni.showModal({
@@ -107,8 +125,9 @@
 								examinationId: id
 							}).then(({ data }) => {
 								if (data.code === 0) {
+									// console.log(this.getDayTimer())
 									uni.navigateTo({
-										url: `/pages/home/examination/detail/index?id=${data.data.id}`
+										url: `/pages/home/examination/detail/index?id=${data.data.id}&createTime=${this.getDayTimer()}`
 									})
 								} else {
 									this.$refs.uToast.show({

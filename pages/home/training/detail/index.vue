@@ -5,7 +5,7 @@
 			<view class="title">{{data.deptName || ''}}</view>
 			<view class="content">
 				<view class="text">联系人：{{data.contactName || ''}}</view>
-				<view class="text">联系电话：{{data.phone || ''}}</view>
+				<view class="text">座机号码：{{data.phone || ''}}</view>
 				<view class="text">联系地址：{{data.address || ''}}</view>
 			</view>
 		</view>

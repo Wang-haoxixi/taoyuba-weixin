@@ -472,12 +472,12 @@
 		// {
 		// 	"path": "pages/user/crewCode/crewCode",
 		// 	"style": {
-		// 		"navigationBarTitleText": "",
 		// 		"enablePullDownRefresh": false,
 		// 		"navigationBarTitleText": "船员码"
 		// 	}
 
-		// }, {
+		// }, 
+		// {
 		// 	"path": "pages/user/crewCode/resume",
 		// 	"style": {
 		// 		"navigationBarTitleText": "",
@@ -554,7 +554,17 @@
 				}
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/home/examination/detail/result/result",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "考试结果",
+                "enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+            }
+            
+        }
+    ],
 	// 分包操作
 	"subPackages": [
 		
@@ -580,25 +590,24 @@
 	
 	{
 		"root": "pages/user/crewCode",
-		"pages": [{
-			"path": "crewCode",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
-				"navigationBarTitleText": "船员码"
-			}
+		"pages": [
+		// 	{
+		// 	"path": "crewCode",
+		// 	"style": {
+		// 		"enablePullDownRefresh": false,
+		// 		"navigationBarTitleText": "船员码"
+		// 	}
 
-		}, {
+		// }, 
+		{
 			"path": "resume",
 			"style": {
-				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"navigationBarTitleText": "履历情况"
 			}
 		}, {
 			"path": "contract",
 			"style": {
-				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"navigationBarTitleText": "合同情况"
 			}
@@ -606,7 +615,6 @@
 		}, {
 			"path": "safe",
 			"style": {
-				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"navigationBarTitleText": "安全教育培训"
 			}
@@ -614,7 +622,6 @@
 		}, {
 			"path": "Insurance",
 			"style": {
-				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"navigationBarTitleText": "保险"
 			}
@@ -622,7 +629,6 @@
 		}, {
 			"path": "card",
 			"style": {
-				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"navigationBarTitleText": "船员电子身份证"
 			}
@@ -630,7 +636,6 @@
 		}, {
 			"path": "certificate",
 			"style": {
-				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"navigationBarTitleText": "船员证书"
 			}

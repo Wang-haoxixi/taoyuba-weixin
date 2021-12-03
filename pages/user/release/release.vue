@@ -140,7 +140,6 @@
 									})
 								}
 							}
-						}
 					)
 				} else {
 					this.$refs.uTips.show({
@@ -151,7 +150,8 @@
 				}
 			}
 		}
-	}
+	},
+}	
 </script>
 
 <style lang="scss">
