@@ -33,7 +33,7 @@ const ignoreUrl = [
 	// '/tmlms/exam_examination/page',
 	// '/tybhrms/tyblessonvideo/page',
 	// '/tybhrms/tyblessonvideo/',
-	'/tmlms/crew_cert/newPage',
+	'/tmlms/crew_cert/getPage',
 	'/tybhrms/tybbook/page',
 	'/admin/dict/all_map',
 	'/tmlms/crew/idcardcheck',

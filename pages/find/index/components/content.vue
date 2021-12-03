@@ -81,7 +81,7 @@
 				}
 				this.loading = true
 				this.data = []
-				this.$http.get('/tmlms/crew_cert/newPage', {
+				this.$http.get('/tmlms/crew_cert/getPage', {
 					params: {
 						idcard: this.form.idcard,
 						realName: this.form.realName
