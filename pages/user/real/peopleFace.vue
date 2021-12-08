@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	import face from '@/pages/components/face-recognition/indexNew.vue'
+	import face from './components/face-recognition/indexNew.vue'
 	export default {
 		props: {
 		},

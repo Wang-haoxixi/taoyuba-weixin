@@ -4,6 +4,7 @@
 			<!-- <video :enable-progress-gesture="false" :show-progress="false" :src="data.videoSrc :poster="data.videoImg"></video> -->
 			<!-- 'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4' -->
 			<video
+				v-show="!show"
 				id="myVideo"
 				:initial-time="initialTime"
 				@loadedmetadata="onLoadedmetadata"
@@ -16,7 +17,7 @@
 				:src="data.videoSrc"
 				:poster="data.videoImg"></video>
 		</view>
-		<view class="content-wrapper">
+		<view class="content-wrapper" v-show="!show">
 			<view class="title1 title">{{data.vedioName || ''}}</view>
 			<view class="people">
 				{{data.videoViewerNum || 0}}人学过
@@ -26,15 +27,15 @@
 				{{data.videoDescript || ''}}
 			</view>
 		</view>
-		<face-recognition v-model="show" @end="onFaceEnd" :userInfo="userInfo" :isFirst="isFirst"></face-recognition>
+		<face-recognition ref="face" v-model="show" @end="onFaceEnd" :userInfo="userInfo" :isFirst="isFirst"></face-recognition>
 		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
-	const TIME = 3 * 10
+	const TIME = 3 * 60
 	const INTERVAL_TIME = 2 * 60
-	import faceRecognition from '@/pages/components/face-recognition/index.vue'
+	import faceRecognition from '../components/face-recognition/index.vue'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
 		mixins: [userInfoMixin],
@@ -110,9 +111,12 @@
 						this.data = data.data
 						this.initialTime = this.data.learnTime || 0
 						this.faceTime = +this.faceTime + (+this.initialTime)
+						// console.log(this.faceTime)
 						this.intervalTime = +this.intervalTime + (+this.initialTime)
-						this.closeFace = this.data.leranStamp > 0
-						this.videoContext.pause()
+						// this.closeFace = this.data.leranStamp > 0
+						if(this.videoContext){
+							this.videoContext.pause()
+						}
 						// this.roles.includes(this.rolesType.crew.type) &&
 						if (!this.closeFace) {
 							this.$http.get(`/admin/user/details/${this.userInfo.username}`).then(({ data }) => {
@@ -122,12 +126,14 @@
 										this.isFirst = true
 									}
 									this.show = true
+									// console.log(this.$refs.face)
+									this.$refs.face.takePhoto()
 								} else {
 									uni.navigateBack({
 										delta: 1
 									})
 								}
-							}).catch(() => {
+							}).catch((err) => {
 								uni.navigateBack({
 									delta: 1
 								})
@@ -137,12 +143,15 @@
 							this.show = false
 						}
 					}
-				}).catch(() => {
-					setTimeout(() => {
-						uni.navigateBack({
-							delta: 1
-						})
-					}, 1000)
+				})
+				.catch((err) => {
+					if(err.statusCode!=401){
+						setTimeout(() => {
+							uni.navigateBack({
+								delta: 1
+							})
+						}, 1000)
+					}
 				})
 			},
 			// 记录学习时间
@@ -178,7 +187,9 @@
 				console.log('onPause', this.intervalTime, e)
 			},
 			onTimeupdate (e) {
+				// console.log(e)
 				let currentTime = e.detail.currentTime
+				// console.log(currentTime)
 				this.time = currentTime
 				// this.roles.includes(this.rolesType.crew.type) && 
 				if (!this.closeFace) {
@@ -188,6 +199,7 @@
 						this.faceTime += TIME
 						this.intervalTime += INTERVAL_TIME
 						this.show = true
+						this.$refs.face.takePhoto()
 						this.setLearnTime()
 						// console.log('活体识别时间', currentTime, this.intervalTime)
 						return

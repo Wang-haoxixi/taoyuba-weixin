@@ -4,10 +4,10 @@
 		<view class="">
 			<u-form :model="form" ref="uForm" label-width="100" :label-style="{color: '#999'}" :border-bottom="false">
 				<u-form-item label="姓名" required prop="phone">
-					<u-input v-model="form.realName" border trim placeholder="请输入姓名"/>
+					<u-input v-model="form.crewName" border trim placeholder="请输入姓名"/>
 				</u-form-item>
 				<u-form-item label="身份证" required prop="phone">
-					<u-input v-model="form.idcard" border trim placeholder="请输入身份证"/>
+					<u-input v-model="form.idCard" border trim placeholder="请输入身份证"/>
 				</u-form-item>
 			</u-form>
 			<view class="btn-wrapper">
@@ -15,6 +15,8 @@
 			</view>
 			<view class="content-wrapper" v-if="data.length">
 				<view class="item" v-for="item in data" :key="item.certId">
+					<view class="text">姓名：{{item.crewName}}</view>
+					<view class="text">身份证号：{{item.idcard}}</view>
 					<view class="text">证书编码：{{item.certNo}}</view>
 					<view class="text">证书类型：{{getCertTypeLabel(item.certType)}}</view>
 					<view class="text">证书等级：{{getCertLevelLabel(item.certLevel)}}</view>
@@ -37,8 +39,8 @@
 			return {
 				loading: false,
 				form: {
-					idcard: '',
-					realName: ''
+					idCard: '',
+					crewName: ''
 				},
 				data: []
 			}
@@ -60,20 +62,20 @@
 				return this.getDictLabel(dict, type) || ''
 			},
 			onSubmit () {
-				if (this.form.realName === '') {
+				if (this.form.crewName === '') {
 					this.$refs.uToast.show({
 						title: '姓名不能为空',
 					})
 					return
 				}
-				if (this.form.idcard === '') {
+				if (this.form.idCard === '') {
 					this.$refs.uToast.show({
 						title: '身份证不能为空',
 					})
 					return
 				}
 				let reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
-				if (!reg.test(this.form.idcard)) {
+				if (!reg.test(this.form.idCard)) {
 					this.$refs.uToast.show({
 						title: '身份证号码不正确',
 					})
@@ -83,14 +85,14 @@
 				this.data = []
 				this.$http.get('/tmlms/crew_cert/getPage', {
 					params: {
-						idcard: this.form.idcard,
-						realName: this.form.realName
+						idCard: this.form.idCard,
+						crewName: this.form.crewName
 					}
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						this.data = data.data.records
-						this.form.idcard = ''
-						this.form.realName = ''
+						this.form.idCard = ''
+						this.form.crewName = ''
 						if (this.data.length === 0) {
 							this.$refs.uToast.show({
 								title: '查不到此条信息',

@@ -44,7 +44,7 @@
 </template>
 
 <script>
-	import face from '../../../../pages/components/face-recognition/indexNew.vue'
+	import face from '../components/face-recognition/indexNew.vue'
 	import getUser from '@/common/utils/user'
 	import { isLogin } from '@/common/utils/login.js'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
