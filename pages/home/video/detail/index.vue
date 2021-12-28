@@ -35,7 +35,9 @@
 <script>
 	const TIME = 3 * 60
 	const INTERVAL_TIME = 2 * 60
-	import faceRecognition from '../components/face-recognition/index.vue'
+	// import faceRecognition from '../components/face-recognition/index.vue'
+	import faceRecognition from '@/pages/components/face-recognition/index.vue'
+	// import faceRecognition from '../components/face-recognition/index.vue'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
 		mixins: [userInfoMixin],
@@ -45,7 +47,7 @@
 		data () {
 			return {
 				show: false,
-				initialTime: 0,
+				initialTime: 0,  // 指定视频初始播放位置，单位为秒（s）。
 				time: 0,
 				videoContext: null,
 				faceTime: TIME, // 活体识别间隔时间
@@ -85,10 +87,10 @@
 				}, 1000)
 			}
 			// this.getList(params.id)
-			this.faceTime += this.initialTime
+			this.faceTime += this.initialTime  // 180+0
 			this.intervalTime += this.initialTime
 			this.time = this.initialTime
-			// console.log('this.faceTime:', this.faceTime, 'this.intervalTime:', this.intervalTime, 'this.time:', this.time)
+			console.log('this.faceTime:', this.faceTime, 'this.intervalTime:', this.intervalTime, 'this.time:', this.time)
 		},
 		onReady (res) {
 			this.videoContext = uni.createVideoContext('myVideo')
@@ -107,27 +109,29 @@
 		methods: {
 			getList (id) {
 				this.$http.get(`/tybhrms/tyblessonvideo/details/${id}`).then(({ data }) => {
+					console.log('/tybhrms/tyblessonvideo/details...', data)
 					if (data.code === 0) {
 						this.data = data.data
-						this.initialTime = this.data.learnTime || 0
-						this.faceTime = +this.faceTime + (+this.initialTime)
-						// console.log(this.faceTime)
-						this.intervalTime = +this.intervalTime + (+this.initialTime)
-						// this.closeFace = this.data.leranStamp > 0
-						if(this.videoContext){
-							this.videoContext.pause()
-						}
+						this.initialTime = this.data.learnTime || 0 //已经学习的时间
+						this.faceTime = +this.faceTime + (+this.initialTime)  //活体识别间隔时间  180  
+						console.log('faceTime..',this.faceTime)
+						this.intervalTime = +this.intervalTime + (+this.initialTime)  //间隔记录时间  0
+						console.log('intervalTime..',this.intervalTime)
+						this.closeFace = this.data.leranStamp > 0
+						console.log('closeFace..',this.closeFace)
+						// if(this.videoContext){
+						// 	this.videoContext.pause()
+						// }
 						// this.roles.includes(this.rolesType.crew.type) &&
 						if (!this.closeFace) {
 							this.$http.get(`/admin/user/details/${this.userInfo.username}`).then(({ data }) => {
+								console.log('/admin/user/details..', data)
 								if (data.code === 0) {
 									let facePhoto = data.data.facePhoto
 									if (facePhoto === '' || facePhoto == null) {
 										this.isFirst = true
 									}
 									this.show = true
-									// console.log(this.$refs.face)
-									this.$refs.face.takePhoto()
 								} else {
 									uni.navigateBack({
 										delta: 1
@@ -143,15 +147,12 @@
 							this.show = false
 						}
 					}
-				})
-				.catch((err) => {
-					if(err.statusCode!=401){
-						setTimeout(() => {
-							uni.navigateBack({
-								delta: 1
-							})
-						}, 1000)
-					}
+				}).catch(() => {
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
+						})
+					}, 1000)
 				})
 			},
 			// 记录学习时间
@@ -177,15 +178,18 @@
 			onPlay (e) {
 				
 			},
+			// 当播放到末尾时触发
 			onEnded (e) {
 				this.endSubmit()
 				if (!this.closeFace) {
 					console.log('onEnded', e)
 				}
 			},
+			// 当暂停播放时触发
 			onPause (e) {
 				console.log('onPause', this.intervalTime, e)
 			},
+			// 播放进度变化时触发
 			onTimeupdate (e) {
 				// console.log(e)
 				let currentTime = e.detail.currentTime
@@ -199,7 +203,7 @@
 						this.faceTime += TIME
 						this.intervalTime += INTERVAL_TIME
 						this.show = true
-						this.$refs.face.takePhoto()
+						// this.$refs.face.takePhoto()
 						this.setLearnTime()
 						// console.log('活体识别时间', currentTime, this.intervalTime)
 						return
@@ -216,8 +220,9 @@
 				this.videoContext.play()
 				this.show = false
 			},
+			// 视频元数据加载完成时触发
 			onLoadedmetadata (e) {
-				console.log(e.detail)
+				console.log('onLoadedmetadata...',e.detail)
 			}
 		}
 	}

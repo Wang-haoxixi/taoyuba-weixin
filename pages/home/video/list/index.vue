@@ -18,7 +18,7 @@
 		</view>
 		<view v-show="current === 1">
 			<view class="list-wrapper" >
-				<view v-for="item in data1" :key="item.vedioId" @tap="onTo(item.vedioId)">
+				<view v-for="item in data1" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
 					<video-item :info="item"></video-item>
 				</view>
 			</view>
@@ -173,6 +173,7 @@
 						type: 2
 					}
 				}).then(({ data }) => {
+					console.log('list..', data)
 					if (data.code === 0) {
 						let result = data.data
 						this.data = this.data.concat(result.records)
@@ -191,6 +192,7 @@
 				if (id) {
 					uni.navigateTo({
 						url: name ? `/pages/home/video/detail/index?id=${id}` : `/pages/home/video/detail/index1?id=${id}`
+						// url: `/pages/home/video/detail/index1?id=${id}`
 					});
 				}
 			},

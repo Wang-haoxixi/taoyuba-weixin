@@ -5,10 +5,10 @@
 <!-- 			<view class="number-wrapper" v-show="showNumber">
 				{{number}}
 			</view> -->
-			<view class="image-wrapper" v-if="phoneSrc">
-				<u-image v-if="phoneSrc" mode="widthFix" :src="phoneSrc"></u-image>
+			<view class="image-wrapper" v-if="phoneSrc111">
+				<u-image v-if="phoneSrc111" mode="widthFix" :src="phoneSrc111"></u-image>
 			</view>
-			<camera v-if="!phoneSrc && showCamera" device-position="front" class="camera-wrapper" flash="off" binderror="error"></camera>
+			<camera v-if="!phoneSrc111 && showCamera" device-position="front" class="camera-wrapper" flash="off" binderror="error"></camera>
 		</view>
 		<view class="text-wrapper" v-if="!disabled">
 			请按照指示完成人脸验证
@@ -45,7 +45,7 @@
 				timer: null,
 				showNumber: false,
 				number: 3,
-				phoneSrc: '',
+				phoneSrc111: '',
 				loading: false,
 				_isFirst: false,
 				show: false,
@@ -94,7 +94,6 @@
 								title: '提示',
 								content: '尚未进行授权，请打开相机权限',
 								success: (res) => {
-									console.log('modal..', res)
 									if (res.confirm) {
 										// console.log('重新获取')
 										uni.openSetting({
@@ -155,13 +154,13 @@
 									filePath: res.tempImagePath,
 									name: 'file',
 								}).then(({data})=>{
-									console.log('face_location..222', data)
+									console.log('face_location..111', data)
 									if( data.code === 0 ){
 										clearInterval(this.timer)
-										// if( !uni.getStorageSync('phoneSrc') ){
-											this.phoneSrc = res.tempImagePath
-											uni.setStorageSync('phoneSrc', this.phoneSrc)
-											this.$emit('phoneSrc',this.phoneSrc)
+										// if( !uni.getStorageSync('phoneSrc111') ){
+											this.phoneSrc111 = res.tempImagePath
+											uni.setStorageSync('phoneSrc', this.phoneSrc111)
+											this.$emit('phoneSrcTrain',this.phoneSrc111)
 										// }
 									}else{
 										this.title = data.msg

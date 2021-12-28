@@ -15,10 +15,11 @@
 			// uni.removeStorageSync('taoyuba-token')
 			// uni.removeStorageSync('refresh_token')
 			let params = this.getQueryParams(option.q)
-			console.log(params)
+			console.log(11111,params)
 			if( params.type === '1' ){
 				uni.reLaunch({
 					url: `/pages/user/real/signIn/index?sign=${params.sign}&isCrew=${params.isCrew}&id=${params.id}&orgId=${params.orgId}`
+					// url: `/pages/user/real/signIn/index?type=1&sign=1&isCrew=1&id=297&orgId=21`
 				})
 			}else if(params.type === '2'){
 				uni.reLaunch({
@@ -29,6 +30,7 @@
 		methods: {
 			// 获取扫码进来的连接的参数
 			getQueryParams (queryString) {
+				console.log('queryString..', queryString)
 			    // 微信扫码得到的内容进行了一次编码，所以官方要求需要进行decodeURIComponent一次
 			    queryString = decodeURIComponent(queryString)
 			    let params = {}

@@ -101,7 +101,7 @@
 			}
 			this.isCrew = option.isCrew
 			this.sign = option.sign
-			console.log(option)
+			console.log(123,option)
 			uni.showLoading({
 				title: '加载中...'
 			})
@@ -205,6 +205,7 @@
 			},
 			// 开始拍照
 			phoneSrcs (phoneSrc) {
+				console.log('start phone..', phoneSrc)
 				// 这个接口用来判断是否成功获取到信息
 				this.$http.upload('/tmlms/trainMeetSign/getFace', {
 					filePath: phoneSrc,
@@ -214,12 +215,13 @@
 						orgId: uni.getStorageSync('orgId')
 					},
 				}).then(({ data })=>{
-					console.log(data)
+					console.log("getFace.." ,data)
 					if( data.code === 0 ){
 						this.$http.upload('/admin/file/upload/avatar', {
 							filePath: phoneSrc,
 							name: 'file'
 						}).then(({data})=>{
+							console.log('uploadavatar..',data)
 							this.$getCode(data).then(data=>{
 								this.url = data.data.url
 							})
@@ -229,6 +231,7 @@
 							title: '请进行信息确认!'
 						})
 						this.form = data.data
+						console.log('form..', )
 						if( this.form.positionId || this.form.positionId === 0 ){
 							this.signOut = true
 						}else{

@@ -640,7 +640,7 @@
 			{
 				"path": "index",
 				"style": {
-					"navigationBarTitleText": "上传身份证"
+					"navigationBarTitleText": "上传身份信息"
 				}
 			},
 			{
@@ -663,6 +663,12 @@
 			},
 			{
 				"path": "faceCollection/information",
+				"style": {
+					"navigationBarTitleText": "信息详情"
+				}
+			},
+			{
+				"path": "faceCollection/collegeInfo",
 				"style": {
 					"navigationBarTitleText": "信息详情"
 				}

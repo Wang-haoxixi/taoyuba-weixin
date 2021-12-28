@@ -115,6 +115,7 @@
 				}
 			},
 			onTo (row) {
+				console.log('row..', row)
 				if (row.path1 && row.path2) {
 					// console.log(this.roles, this.roles.length > 0, this.roles[1])
 					this.getUserInfoApi().then(() => {
@@ -150,9 +151,55 @@
 				if (row.path === '') {
 					return
 				}
-				uni.navigateTo({
-					url: row.path
-				})
+				console.log(row.path)
+				if(row.label === '渔民学院'){
+					// 判断是否登录
+					if(!uni.getStorageSync('userInfo')){
+							uni.showToast({
+								icon: 'none',
+								title: '请先登录！',
+								duration: 1500,
+							})
+							setTimeout(()=>{
+								uni.navigateTo({
+									url:'/pages/base/login'
+								})
+							},1500)
+							return
+					}
+					// 此处接口判断用户是否已进行培训实名
+					this.$http.get(`admin/gather/checkByGather`, {
+						params: {
+							idcard: uni.getStorageSync('userInfo').idCard,
+							phone: uni.getStorageSync('userInfo').phone,
+						}
+					}).then(res=>{
+						// 未实名认证
+						if(res.data.code ==0){
+							uni.showToast({
+								icon: 'none',
+								title: '您还未采集过数据!请上传身份信息进行采集!',
+								duration: 2000,
+							})
+							setTimeout(()=>{
+								uni.redirectTo({
+									// url:"/pages/user/real/index?isface=true"
+									url:"/pages/user/real/index?isTrain=true"
+								})
+							},2000)
+							return
+						} else {
+							uni.navigateTo({
+								url: '/pages/home/video/list/index'
+							})
+						}
+					})
+				} else {
+					uni.navigateTo({
+						url: row.path
+					})
+				}
+				
 			},
 		}
 	}

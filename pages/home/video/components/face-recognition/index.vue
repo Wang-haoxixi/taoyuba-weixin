@@ -142,41 +142,42 @@
  				this.visibleSync = false
  			},
  			takePhoto () {
-				if (uni.getStorageSync('userInfo').facePhoto=='' || uni.getStorageSync('userInfo').idCard=='') {
-					uni.showToast({
-						icon: 'none',
-						title: '您还未采集过数据!请上传身份证进行采集!',
-						duration: 2000,
-					})
-					setTimeout(()=>{
-						uni.redirectTo({
-							url:"/pages/user/real/index"
-						})
-					},1000)
-				} else {
-					this.onPhone()
-				}
-				// this.$http.get('admin/gather/checkByGather',{
-				// 	params: {
-				// 		phone: uni.getStorageSync('userInfo').phone,
-				// 		idcard: uni.getStorageSync('userInfo').idCard
-				// 	}
-				// }).then(res=>{
-				// 	if (res.data.code ==0) {
-				// 		uni.showToast({
-				// 			icon: 'none',
-				// 			title: '您还未采集过数据!请上传身份证进行采集!',
-				// 			duration: 2000,
+				// if (uni.getStorageSync('userInfo').facePhoto=='' || uni.getStorageSync('userInfo').idCard=='') {
+				// 	uni.showToast({
+				// 		icon: 'none',
+				// 		title: '您还未采集过数据!请上传身份证进行采集!',
+				// 		duration: 2000,
+				// 	})
+				// 	setTimeout(()=>{
+				// 		uni.redirectTo({
+				// 			url:"/pages/user/real/index"
 				// 		})
-				// 		setTimeout(()=>{
-				// 			uni.redirectTo({
-				// 				url:"/pages/user/real/index"
-				// 			})
-				// 		},1000)
-				// 	} else {
-				// 		this.onPhone()
-				// 	}
-				// })
+				// 	},1000)
+				// } else {
+				// 	this.onPhone()
+				// }
+				this.$http.get('admin/gather/checkByGather',{
+					params: {
+						phone: uni.getStorageSync('userInfo').phone,
+						idcard: uni.getStorageSync('userInfo').idCard
+					}
+				}).then(res=>{
+					console.log('gather..', res)
+					if (res.data.code ==0) {
+						uni.showToast({
+							icon: 'none',
+							title: '您还未采集过数据!请上传身份证进行采集!',
+							duration: 2000,
+						})
+						setTimeout(()=>{
+							uni.redirectTo({
+								url:"/pages/user/real/index"
+							})
+						},1000)
+					} else {
+						this.onPhone()
+					}
+				})
  			},
  			onPhone () {
  				this.timer = setInterval(() => {

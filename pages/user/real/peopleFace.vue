@@ -27,10 +27,12 @@
 		},
 		methods: {
 			phoneSrc (phoneSrc) {
+				console.log('phoneSrc//', phoneSrc)
 				this.$http.upload('/admin/file/upload/avatar', {
 					filePath: phoneSrc,
 					name: 'file'
 				}).then(({ data }) => {
+					console.log("upload11", data)
 					if (data.code === 0) {
 						let filePath = data.data.url
 						let user = this.$cache.get('userInfo')
@@ -45,6 +47,7 @@
 								name: 'file'
 							}
 						).then(({ data }) => {
+							console.log('渔船..111',data)
 							let msg = data.data
 							console.log(msg)
 							if (msg === '检测成功') {
@@ -75,6 +78,7 @@
 				this.$http.post('/tmlms/tyb_order_certificate_holder/save', {
 					...data
 				}).then(({ data }) => {
+					console.log('saveInformation..', data)
 					if( data.code === 0 ){
 						uni.showToast({
 							title: '实名认证已完成!'

@@ -201,6 +201,7 @@
 				}
 				let openIdObj = uni.getStorageSync('openIdObj')
 				this.form = { ...this.form,...openIdObj,realName: this.form.name,gender: this.form.sex === '男' ? 1 : 2,birthday: insertStr(insertStr(this.form.birth,4,'-'),7,'-'), idcardPhoto: this.form.facePhoto }
+				console.log('ffff..', this.form)
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
 						if( this.arrForm  ){
@@ -216,7 +217,6 @@
 									idcardPhoto: this.form.url
 								}
 							}).then(({ data })=>{
-								console.log(data)
 								this.arrForm = data.data
 								this.$getCode(data).then(res=>{
 									if( this.isQD ){
