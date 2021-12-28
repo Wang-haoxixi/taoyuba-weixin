@@ -3,7 +3,7 @@ export default {
 		return {
 			menu: [
 				{ path: '/pages/home/video/list/index', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, label: '渔民学院' },
-				{ label: '渔业资讯', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, path: '/pages/home/news/list/index?type=1' },
+				// { label: '渔业资讯', color: '#8dc7af', icon: `${this.$IMAGE_URL}/home-peixunban.png`, path: '/pages/home/news/list/index?type=1' },
 				{ path: '/pages/home/examination/list/index', color: '#e9b174', icon: `${this.$IMAGE_URL}/home-kaoshi.png`, label: '模拟考试',  },
 				{ path: '/pages/home/recruit/list/index', color: '#e3797d', icon: `${this.$IMAGE_URL}/home-zhaopin.png`, label: '招聘' },
 				{ path: '/pages/home/jobRegistration/index', color: '#bfc78c', icon: `${this.$IMAGE_URL}/home-jianli.png`, label: '求职' },

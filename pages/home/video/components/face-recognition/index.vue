@@ -57,6 +57,7 @@
  			}
  		},
  		watch: {
+			// 此处监听人脸识别组件的显隐
  			value (newVal) {
  				if (newVal) {
  					this.open()
@@ -64,6 +65,7 @@
  					this.close()
  				}
  			},
+			// 判断是否是第一次
  			isFirst (newVal) {
  				this._isFirst = newVal
  			}

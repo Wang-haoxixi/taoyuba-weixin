@@ -44,7 +44,6 @@
 			}
 		},
 		watch: {
-			// 监听人脸识别组件的显隐
 			value (newVal) {
 				if (newVal) {
 					this.open()

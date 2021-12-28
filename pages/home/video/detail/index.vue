@@ -13,7 +13,7 @@
 				@pause="onPause"
 				@play="onPlay"
 				:enable-progress-gesture="false"
-				:show-progress="false"
+				:show-progress="true"
 				:src="data.videoSrc"
 				:poster="data.videoImg"></video>
 		</view>
@@ -27,16 +27,17 @@
 				{{data.videoDescript || ''}}
 			</view>
 		</view>
-		<face-recognition ref="face" v-model="show" @end="onFaceEnd" :userInfo="userInfo" :isFirst="isFirst"></face-recognition>
+		<face-recognition ref="myface" v-model="show" @end="onFaceEnd" :userInfo="userInfo" :isFirst="isFirst" :disabled="isAddress"></face-recognition>
 		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
-	const TIME = 3 * 60
+	// const TIME = 3 * 60
+	const TIME = 10
 	const INTERVAL_TIME = 2 * 60
-	// import faceRecognition from '../components/face-recognition/index.vue'
-	import faceRecognition from '@/pages/components/face-recognition/index.vue'
+	import faceRecognition from '../components/face-recognition/indexNew.vue'
+	// import faceRecognition from '@/pages/components/face-recognition/index.vue'
 	// import faceRecognition from '../components/face-recognition/index.vue'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
@@ -55,7 +56,9 @@
 				data: {},
 				videoId: undefined,
 				isFirst: false,
-				closeFace: false
+				closeFace: false,
+				
+				isAddress:false,
 			}
 		},
 		onLoad (params) {
@@ -88,7 +91,7 @@
 			}
 			// this.getList(params.id)
 			this.faceTime += this.initialTime  // 180+0
-			this.intervalTime += this.initialTime
+			this.intervalTime += this.initialTime  // 120+0
 			this.time = this.initialTime
 			console.log('this.faceTime:', this.faceTime, 'this.intervalTime:', this.intervalTime, 'this.time:', this.time)
 		},
@@ -132,6 +135,9 @@
 										this.isFirst = true
 									}
 									this.show = true
+									this.$nextTick(function(){
+										this.$refs.myface.takePhoto()
+									})
 								} else {
 									uni.navigateBack({
 										delta: 1
@@ -203,7 +209,9 @@
 						this.faceTime += TIME
 						this.intervalTime += INTERVAL_TIME
 						this.show = true
-						// this.$refs.face.takePhoto()
+						this.$nextTick(function(){
+							this.$refs.face.takePhoto()
+						})
 						this.setLearnTime()
 						// console.log('活体识别时间', currentTime, this.intervalTime)
 						return

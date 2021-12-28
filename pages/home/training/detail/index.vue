@@ -26,6 +26,12 @@
 					</view>
 				</view>
 			</view>
+			<!-- <view class="teacher-resources">
+				<view class="name-more">
+					<text>师资库</text>
+					<text>查看更多</text>
+				</view>
+			</view> -->
 		</view>
 		<view class="safe-bottom4"></view>
 		<share-group type="4" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
@@ -99,6 +105,7 @@
 						userId: id
 					}
 				}).then(({ data }) => {
+					console.log('getListInfo..',data)
 					if (data.code === 0) {
 						this.list = data.data.records
 					}

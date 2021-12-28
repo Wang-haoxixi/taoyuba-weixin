@@ -28,7 +28,7 @@
 		</view>
 		<view v-show="current === 2">
 			<view class="list-wrapper">
-				<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId)">
+				<view v-for="item in data2" :key="item.vedioId" @tap="onTo(item.vedioId, 'test')">
 					<video-item :info="item"></video-item>
 				</view>
 			</view>

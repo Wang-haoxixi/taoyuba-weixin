@@ -1,6 +1,6 @@
 <template>
-	<view class="face-recognition-container">
-		<view style="font-size: 40rpx;font-weight: 700;margin: 20rpx 0 40rpx 0;width:100%;text-align: center;" v-if="!disabled">{{ title }}</view>
+	<view class="face-recognition-container" v-if="visibleSync">
+		<view style="font-size: 40rpx;font-weight: 700;margin: 20rpx 0 40rpx 0;width:100%;text-align: center;">{{ title }}</view>
 		<view class="face-recognition-wrapper">
 <!-- 			<view class="number-wrapper" v-show="showNumber">
 				{{number}}
@@ -10,7 +10,7 @@
 			</view>
 			<camera v-if="!phoneSrc && showCamera" device-position="front" class="camera-wrapper" flash="off" binderror="error"></camera>
 		</view>
-		<view class="text-wrapper" v-if="!disabled">
+		<view class="text-wrapper">
 			请按照指示完成人脸验证
 		</view>
 <!-- 		<view class="btn-wrapper">
@@ -32,6 +32,7 @@
 				type: Boolean,
 				default: false
 			},
+			userInfo: Object,
 			isFirst: Boolean,
 			disabled: {
 				type: Boolean,
@@ -140,10 +141,35 @@
 			},
 			takePhoto () {
 				// this.loading = true
+				
+				if (this._isFirst) {
+					uni.showModal({
+						content: '为了更好的向你提供船员便利服务，当前采集的信息只为验证是否为本人。同意采集请继续，否则请退出',
+						cancelText: '退出',
+						success: ({ confirm, cancel }) => {
+							if (confirm) {
+								this.showNumber = true
+								this.onPhone()
+								return
+							}
+							if (cancel) {
+								uni.navigateBack({
+									delta: 1
+								})
+							}
+						}
+					})
+				} else {
+					this.showNumber = true
+					this.onPhone()
+				}
+				
 				this.onPhone()
 			},
 			onPhone () {
+				console.log(1111111111111111)
 				uni.setStorageSync('phoneSrc', '')
+				var _this = this
 				this.timer = setInterval(() => {
 				 		const ctx = uni.createCameraContext()
 				 		ctx.takePhoto({
@@ -156,10 +182,87 @@
 									if( data.code === 0 ){
 										clearInterval(this.timer)
 										// if( !uni.getStorageSync('phoneSrc') ){
-											this.phoneSrc = res.tempImagePath
-											uni.setStorageSync('phoneSrc', this.phoneSrc)
-											this.$emit('phoneSrc',this.phoneSrc)
+										this.phoneSrc = res.tempImagePath
+										uni.setStorageSync('phoneSrc', this.phoneSrc)
+										// this.$emit('phoneSrc',this.phoneSrc)
 										// }
+										
+										
+										this.$http.upload('/admin/file/upload/avatar', {
+											filePath: this.phoneSrc,
+											name: 'file'
+										}).then(({ data }) => {
+											if (data.code === 0) {
+												let filePath = data.data.url
+												console.log('filePath...', filePath)
+												// `/tmlms/crew/faceMatch`
+												this.$http.upload(`admin/file/faceMatch`,
+													{
+														formData: {
+															userId: this.userInfo.userId,
+															idcard: this.userInfo.idCard,
+															// name: this.userInfo.realName,
+															file: filePath
+														},
+														filePath: this.phoneSrc,
+														name: 'file'
+													}
+												).then(({ data }) => {
+													let msg = data.data
+													// console.log('_isFirst...', _this._isFirst)
+													if (this._isFirst) {
+														if (msg === '检测成功') {
+															this._isFirst = false
+															this.loading = false
+															this.phoneSrc = ''
+															COUNT = 3
+															this.$emit('end')
+															this.close()
+														} else {
+															// COUNT--
+															// if (COUNT <= 0) {
+															// 	this.$refs.uToast.show({
+															// 		title: '你当前的信息和系统数据不匹配，请重新验证',
+															// 		back: true
+															// 	})
+															// 	return
+															// }
+															this.$refs.uToast.show({
+																title: '你当前的信息和系统数据不匹配，请重新验证'
+															})
+															this.loading = false
+															this.phoneSrc = ''
+														}
+													} else {
+														if (msg === '检测成功') {
+															this.loading = false
+															this.phoneSrc = ''
+															COUNT = 3
+															this.$emit('end')
+															this.close()
+														} else {
+															// COUNT--
+															// if (COUNT <= 0) {
+															// 	this.$refs.uToast.show({
+															// 		title: '你当前的信息和系统数据不匹配，请重新验证',
+															// 		back: true
+															// 	})
+															// 	this.loading = false
+															// 	this.phoneSrc = ''
+															// 	return
+															// }
+															this.$refs.uToast.show({
+																title: '你当前的信息和系统数据不匹配，请重新验证'
+															})
+															this.loading = false
+															this.phoneSrc = ''
+														}
+													}
+										    })
+											}
+										})
+										
+										
 									}else{
 										this.title = data.msg
 									}
@@ -170,6 +273,8 @@
 				 			}
 				 		})
 				}, 2000)
+				
+				
 				// setTimeout(res=>{
 				// 	const ctx = uni.createCameraContext()
 				// 	ctx.takePhoto({
