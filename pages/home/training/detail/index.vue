@@ -26,12 +26,27 @@
 					</view>
 				</view>
 			</view>
-			<!-- <view class="teacher-resources">
+			<view class="teacher-resources">
 				<view class="name-more">
-					<text>师资库</text>
-					<text>查看更多</text>
+					<text style="color: #303031;font-size: 32rpx;font-weight: 500;">师资库</text>
+					<navigator url="/pages/more/more" hover-class="other-navigator-hover">查看更多</navigator>
 				</view>
-			</view> -->
+				<view class="items-box">
+					<view class="box-resources" v-for="(item, index) in tcList" :key='index'>
+						<view class="people">
+							<view class="sex">
+								{{ item.teacherName.substring(0,1) }}
+							</view>
+							<view class="full-name">
+								{{ item.teacherName }}
+							</view>
+							<view class="position">
+								{{ item.title }}
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
 		</view>
 		<view class="safe-bottom4"></view>
 		<share-group type="4" :info="collectionData" :isCollection="data.collectStatus === 1"></share-group>
@@ -53,6 +68,7 @@
 				markers: [],
 				data: {},
 				list: [],
+				tcList: [],
 				id: undefined
 			}
 		},
@@ -76,6 +92,7 @@
 			this.id = params.id
 			this.getList(params.id)
 			this.getListInfo(params.id)
+			this.getTeacherList()
 		},
 		computed: {
 			collectionData () {
@@ -109,6 +126,16 @@
 					if (data.code === 0) {
 						this.list = data.data.records
 					}
+				})
+			},
+			getTeacherList(){
+				this.$http.get(`/tmlms/tybTeacherTeam/page`, {
+					params: {
+						size: 4,
+					}
+				}).then(res=>{
+					console.log('getTeacherList..', res)
+					this.tcList = res.data.data.records
 				})
 			}
 		}
@@ -201,6 +228,55 @@
 					}
 					.day {
 						margin-bottom: 0rpx;
+					}
+				}
+			}
+			.teacher-resources{
+				background-color: #FFFFFF;
+				margin: 20rpx 24rpx;
+				padding: 32rpx 24rpx;
+				border-radius: 16rpx;
+				.name-more{
+					display: flex;
+					justify-content: space-between;
+				}
+				.items-box{
+					display: flex;
+					justify-content: space-between;
+					flex-wrap: wrap;
+				}
+				.box-resources{
+					box-shadow: 0px 0px 12rpx rgba(0, 0, 0, 0.1);
+					border-radius: 80rpx 20rpx 20rpx 80rpx;
+					height: 80rpx;
+					width: 310rpx;
+					line-height: 80rpx;
+					margin-top: 30rpx;
+					
+					.people{
+						display: flex;
+						.sex{
+							width: 80rpx;
+							height: 80rpx;
+							border-radius: 100%;
+							text-align: center;
+							background-color: #ccc;
+							color: #333;
+							font-weight: 500;
+							font-size: 32rpx;
+						}
+						.full-name{
+							color: #333333;
+							font-weight: 500;
+							font-size: 28rpx;
+							margin: 0rpx 50rpx 0rpx 20rpx;
+						}
+						.position{
+							font-size: 28rpx;
+							font-weight: 400;
+							max-width: 84rpx;
+							
+						}
 					}
 				}
 			}
