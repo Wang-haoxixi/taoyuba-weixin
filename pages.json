@@ -510,6 +510,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/home/training/detail/tsDetail/tsDetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "师资详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	// 分包操作
 	"subPackages": [

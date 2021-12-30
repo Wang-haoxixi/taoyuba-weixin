@@ -27,7 +27,7 @@
 				{{data.videoDescript || ''}}
 			</view>
 		</view>
-		<face-recognition ref="myface" v-model="show" @end="onFaceEnd" :userInfo="userInfo" :isFirst="isFirst" :disabled="isAddress"></face-recognition>
+		<face-recognition ref="face" v-model="show" @end="onFaceEnd" :userInfo="userInfo" :isFirst="isFirst"></face-recognition>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -36,9 +36,9 @@
 	// const TIME = 3 * 60
 	const TIME = 10
 	const INTERVAL_TIME = 2 * 60
-	import faceRecognition from '../components/face-recognition/indexNew.vue'
-	// import faceRecognition from '@/pages/components/face-recognition/index.vue'
 	// import faceRecognition from '../components/face-recognition/index.vue'
+	// import faceRecognition from '@/pages/components/face-recognition/index.vue'
+	import faceRecognition from '../components/face-recognition/indexFace.vue'
 	import userInfoMixin from '@/pages/mixins/user-info.js'
 	export default {
 		mixins: [userInfoMixin],
@@ -56,12 +56,11 @@
 				data: {},
 				videoId: undefined,
 				isFirst: false,
-				closeFace: false,
-				
-				isAddress:false,
+				closeFace: false
 			}
 		},
 		onLoad (params) {
+			console.log('params..',params)
 			this.videoId = params.id
 			if (params.id) {
 				this.getList(params.id)
@@ -91,7 +90,7 @@
 			}
 			// this.getList(params.id)
 			this.faceTime += this.initialTime  // 180+0
-			this.intervalTime += this.initialTime  // 120+0
+			this.intervalTime += this.initialTime
 			this.time = this.initialTime
 			console.log('this.faceTime:', this.faceTime, 'this.intervalTime:', this.intervalTime, 'this.time:', this.time)
 		},
@@ -135,9 +134,6 @@
 										this.isFirst = true
 									}
 									this.show = true
-									this.$nextTick(function(){
-										this.$refs.myface.takePhoto()
-									})
 								} else {
 									uni.navigateBack({
 										delta: 1
@@ -209,9 +205,7 @@
 						this.faceTime += TIME
 						this.intervalTime += INTERVAL_TIME
 						this.show = true
-						this.$nextTick(function(){
-							this.$refs.face.takePhoto()
-						})
+						// this.$refs.face.takePhoto()
 						this.setLearnTime()
 						// console.log('活体识别时间', currentTime, this.intervalTime)
 						return
@@ -225,8 +219,13 @@
 				}
 			},
 			onFaceEnd () {
-				this.videoContext.play()
+				console.log('onFaceEnd...')
 				this.show = false
+				this.$nextTick(function(){
+					this.initialTime = this.time
+					this.videoContext.play()
+					
+				})
 			},
 			// 视频元数据加载完成时触发
 			onLoadedmetadata (e) {

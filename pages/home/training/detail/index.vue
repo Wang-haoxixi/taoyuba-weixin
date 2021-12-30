@@ -29,19 +29,21 @@
 			<view class="teacher-resources">
 				<view class="name-more">
 					<text style="color: #303031;font-size: 32rpx;font-weight: 500;">师资库</text>
-					<navigator url="/pages/more/more" hover-class="other-navigator-hover">查看更多</navigator>
+					<navigator url="/pages/home/training/detail/tsDetail/tsDetail" hover-class="other-navigator-hover">查看更多</navigator>
 				</view>
 				<view class="items-box">
 					<view class="box-resources" v-for="(item, index) in tcList" :key='index'>
-						<view class="people">
+						<view class="people" @tap='tsDetail(item)'>
 							<view class="sex">
 								{{ item.teacherName.substring(0,1) }}
 							</view>
-							<view class="full-name">
-								{{ item.teacherName }}
-							</view>
-							<view class="position">
-								{{ item.title }}
+							<view class="" style="flex: 1;display: flex;justify-content: space-between;">
+								<view class="full-name">
+									{{ item.teacherName }}
+								</view>
+								<view class="position">
+									{{ item.title }}
+								</view>
 							</view>
 						</view>
 					</view>
@@ -92,7 +94,7 @@
 			this.id = params.id
 			this.getList(params.id)
 			this.getListInfo(params.id)
-			this.getTeacherList()
+			this.getTeacherList(params.id)
 		},
 		computed: {
 			collectionData () {
@@ -111,6 +113,7 @@
 				}).then(({ data }) => {
 					if (data.code === 0) {
 						this.data = data.data
+						console.log('data...', this.data)
 						this.markers = [{id: 1, latitude: this.data.lat, longitude: this.data.lng}]
 					}
 				})
@@ -128,15 +131,22 @@
 					}
 				})
 			},
-			getTeacherList(){
+			getTeacherList(id){
 				this.$http.get(`/tmlms/tybTeacherTeam/page`, {
 					params: {
+						deptId: id,
 						size: 4,
 					}
 				}).then(res=>{
 					console.log('getTeacherList..', res)
 					this.tcList = res.data.data.records
 				})
+			},
+			tsDetail(item){
+				console.log(item)
+				uni.navigateTo({
+				    url: '/pages/home/training/detail/tsDetail/tsDetail?id=' + item.id
+				});
 			}
 		}
 	}
@@ -254,13 +264,15 @@
 					margin-top: 30rpx;
 					
 					.people{
+						padding-right: 20rpx;
 						display: flex;
 						.sex{
+							flex-shrink: 0;
 							width: 80rpx;
 							height: 80rpx;
 							border-radius: 100%;
 							text-align: center;
-							background-color: #ccc;
+							background-color: #E8F1FE;
 							color: #333;
 							font-weight: 500;
 							font-size: 32rpx;
@@ -269,13 +281,19 @@
 							color: #333333;
 							font-weight: 500;
 							font-size: 28rpx;
-							margin: 0rpx 50rpx 0rpx 20rpx;
+							margin-left: 20rpx;
+							max-width: 84rpx;
+							white-space:nowrap;
+							overflow:hidden;
+							text-overflow:ellipsis;
 						}
 						.position{
 							font-size: 28rpx;
 							font-weight: 400;
 							max-width: 84rpx;
-							
+							white-space:nowrap;
+							overflow:hidden;
+							text-overflow:ellipsis;
 						}
 					}
 				}
