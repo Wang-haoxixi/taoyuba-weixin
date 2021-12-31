@@ -4,7 +4,7 @@
 			<!-- <video :enable-progress-gesture="false" :show-progress="false" :src="data.videoSrc :poster="data.videoImg"></video> -->
 			<!-- 'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4' -->
 			<video
-				v-show="!show"
+				v-if="!show"
 				id="myVideo"
 				:initial-time="initialTime"
 				@loadedmetadata="onLoadedmetadata"
@@ -17,7 +17,7 @@
 				:src="data.videoSrc"
 				:poster="data.videoImg"></video>
 		</view>
-		<view class="content-wrapper" v-show="!show">
+		<view class="content-wrapper" v-if="!show">
 			<view class="title1 title">{{data.vedioName || ''}}</view>
 			<view class="people">
 				{{data.videoViewerNum || 0}}人学过
@@ -194,6 +194,7 @@
 			// 播放进度变化时触发
 			onTimeupdate (e) {
 				// console.log(e)
+				console.log('播放进度变化时触发..')
 				let currentTime = e.detail.currentTime
 				// console.log(currentTime)
 				this.time = currentTime
@@ -219,13 +220,13 @@
 				}
 			},
 			onFaceEnd () {
-				console.log('onFaceEnd...')
+				console.log('onFaceEnd...', 'time:',this.time, 'initialTime:',this.initialTime)
 				this.show = false
-				this.$nextTick(function(){
-					this.initialTime = this.time
-					this.videoContext.play()
-					
-				})
+				// this.$nextTick(function(){
+				// this.initialTime = this.time
+				this.videoContext.play()
+				
+				// })
 			},
 			// 视频元数据加载完成时触发
 			onLoadedmetadata (e) {

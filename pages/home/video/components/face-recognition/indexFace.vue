@@ -59,15 +59,7 @@
 			}
 		},
 		created () {
-			console.log('onshow')
-			uni.getSetting({
-				success: (res) => {
-					this.getAuthSetting(res)
-				},
-				fail: () => {
-					// console.log('一开始 fail')
-				}
-			})
+			
 		},
 		methods: {
 			getAuthSetting (res) {
@@ -128,6 +120,15 @@
 			},
 			open () {
 				this.visibleSync = true
+				uni.getSetting({
+					success: (res) => {
+						console.log(123123123, res)
+						this.getAuthSetting(res)
+					},
+					fail: () => {
+						// console.log('一开始 fail')
+					}
+				})
 			},
 			close () {
 				this.visibleSync = false
@@ -166,7 +167,6 @@
 				 		ctx.takePhoto({
 				 			quality: 'high',
 				 			success: (res) => {
-								// console.log('res', res)
 								
 								
 								this.$http.upload('/admin/gather/face_location', {
@@ -174,6 +174,7 @@
 									name: 'file',
 								}).then(({data})=>{
 									if(data.code === 0){
+										clearInterval(this.timer)
 										// this.title = data.msg
 										this.phoneSrc = res.tempImagePath
 										console.log('onPhone.........',this.phoneSrc)
@@ -200,6 +201,7 @@
 													let msg = data.data
 													console.log('msg..', msg)
 													if(msg === '检测成功'){
+														
 														this.phoneSrc = ''
 														this.$emit('end')
 														this.close()
@@ -220,90 +222,14 @@
 									}
 								})
 								
-								
-								// console.log('onPhone.........',this.phoneSrc)
-				 			// 	this.phoneSrc = res.tempImagePath
-								// this.$http.upload('/admin/file/upload/avatar', {
-								// 	filePath: this.phoneSrc,
-								// 	name: 'file'
-								// }).then(({ data }) => {
-								// 	if (data.code === 0) {
-								// 		let filePath = data.data.url
-								// 		console.log('filePath...', filePath)
-								// 		// `/tmlms/crew/faceMatch`
-								// 		this.$http.upload(`admin/file/faceMatch`,
-								// 			{
-								// 				formData: {
-								// 					userId: this.userInfo.userId,
-								// 					idcard: this.userInfo.idCard,
-								// 					// name: this.userInfo.realName,
-								// 					file: filePath
-								// 				},
-								// 				filePath: this.phoneSrc,
-								// 				name: 'file'
-								// 			}
-								// 		).then(({ data }) => {
-								// 			let msg = data.data
-								// 			if (this._isFirst) {
-								// 				if (msg === '检测成功') {
-								// 					this._isFirst = false
-								// 					this.loading = false
-								// 					this.phoneSrc = ''
-								// 					COUNT = 3
-								// 					this.$emit('end')
-								// 					this.close()
-								// 				} else {
-								// 					// COUNT--
-								// 					// if (COUNT <= 0) {
-								// 					// 	this.$refs.uToast.show({
-								// 					// 		title: '你当前的信息和系统数据不匹配，请重新验证',
-								// 					// 		back: true
-								// 					// 	})
-								// 					// 	return
-								// 					// }
-								// 					this.$refs.uToast.show({
-								// 						title: '你当前的信息和系统数据不匹配，请重新验证'
-								// 					})
-								// 					this.loading = false
-								// 					this.phoneSrc = ''
-								// 					this.takePhoto()
-								// 				}
-								// 			} else {
-								// 				if (msg === '检测成功') {
-								// 					this.loading = false
-								// 					this.phoneSrc = ''
-								// 					COUNT = 3
-								// 					this.$emit('end')
-								// 					this.close()
-								// 				} else {
-								// 					// COUNT--
-								// 					// if (COUNT <= 0) {
-								// 					// 	this.$refs.uToast.show({
-								// 					// 		title: '你当前的信息和系统数据不匹配，请重新验证',
-								// 					// 		back: true
-								// 					// 	})
-								// 					// 	this.loading = false
-								// 					// 	this.phoneSrc = ''
-								// 					// 	return
-								// 					// }
-								// 					this.$refs.uToast.show({
-								// 						title: '你当前的信息和系统数据不匹配，请重新验证'
-								// 					})
-								// 					this.loading = false
-								// 					this.phoneSrc = ''
-								// 					this.takePhoto()
-								// 				}
-								// 			}
-								//         })
-								// 	}
-								// })
+					
 				 			},
 				 			fail: () => {
 				 				this.loading = false
 								this.phoneSrc = ''
 				 			}
 				 		})
-				}, 5000)
+				}, 3000)
 			}
 		}
 	}
