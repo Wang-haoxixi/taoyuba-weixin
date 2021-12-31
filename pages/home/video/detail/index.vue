@@ -5,7 +5,7 @@
 			<!-- 'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4' -->
 			<video v-if="!show" id="myVideo" :initial-time="initialTime" @loadedmetadata="onLoadedmetadata"
 				@ended="onEnded" @timeupdate="onTimeupdate" @pause="onPause" @play="onPlay"
-				:enable-progress-gesture="false" :show-progress="true" :src="data.videoSrc"
+				:enable-progress-gesture="false" :show-progress="true" :src="data.videoSrc" autoplay
 				:poster="data.videoImg"></video>
 		</view>
 		<view class="content-wrapper" v-if="!show">
@@ -26,7 +26,7 @@
 
 <script>
 	// const TIME = 3 * 60
-	const TIME = 10
+	const TIME = 80
 	const INTERVAL_TIME = 2 * 60
 	// import faceRecognition from '../components/face-recognition/index.vue'
 	// import faceRecognition from '@/pages/components/face-recognition/index.vue'
@@ -74,16 +74,17 @@
 				// 	}, 1000)
 				// })
 			} else {
+				console.log('at onload back..')
 				setTimeout(() => {
 					uni.navigateBack({
 						delta: 1
 					})
 				}, 1000)
 			}
-			// this.getList(params.id)
-			this.faceTime += this.initialTime // 180+0
-			this.intervalTime += this.initialTime
-			this.time = this.initialTime
+			
+			// this.faceTime += this.initialTime // 180+0
+			// this.intervalTime += this.initialTime // 120+0
+			// this.time = this.initialTime // 0
 			console.log('this.faceTime:', this.faceTime, 'this.intervalTime:', this.intervalTime, 'this.time:', this.time)
 		},
 		onReady(res) {
@@ -115,6 +116,10 @@
 						console.log('intervalTime..', this.intervalTime)
 						this.closeFace = this.data.leranStamp > 0
 						console.log('closeFace..', this.closeFace)
+						
+						
+						this.time = this.initialTime
+						console.log('time..',this.time)
 						// if(this.videoContext){
 						// 	this.videoContext.pause()
 						// }
@@ -131,11 +136,13 @@
 									}
 									this.show = true
 								} else {
+									console.log(111)
 									uni.navigateBack({
 										delta: 1
 									})
 								}
 							}).catch((err) => {
+								console.log(222)
 								uni.navigateBack({
 									delta: 1
 								})
@@ -146,6 +153,7 @@
 						}
 					}
 				}).catch(() => {
+					console.log(333)
 					setTimeout(() => {
 						uni.navigateBack({
 							delta: 1
@@ -218,12 +226,10 @@
 				}
 			},
 			onFaceEnd() {
-				let time = this.time;
-				console.log('onFaceEnd...')
 				console.log('onFaceEnd...', 'time:', this.time, 'initialTime:', this.initialTime)
 				this.show = false
-				this.initialTime = time;
-				this.videoContext.play()
+				this.initialTime = this.time;
+				// this.videoContext.play()
 			},
 			// 视频元数据加载完成时触发
 			onLoadedmetadata(e) {

@@ -174,7 +174,7 @@
 									name: 'file',
 								}).then(({data})=>{
 									if(data.code === 0){
-										clearInterval(this.timer)
+										// clearInterval(this.timer)
 										// this.title = data.msg
 										this.phoneSrc = res.tempImagePath
 										console.log('onPhone.........',this.phoneSrc)
@@ -201,6 +201,7 @@
 													let msg = data.data
 													console.log('msg..', msg)
 													if(msg === '检测成功'){
+														clearInterval(this.timer)
 														
 														this.phoneSrc = ''
 														this.$emit('end')
@@ -258,8 +259,10 @@
 			border-radius: 50%;
 			margin: 100rpx auto 0;
 			.camera-wrapper {
-				width: 100%;
-				height: 100%;
+				// width: 100%;
+				// height: 100%;
+				width: 400rpx;
+				height: 400rpx;
 				overflow: hidden;
 				border-radius: 50%;
 			}
@@ -284,6 +287,7 @@
 				image {
 					width: 100%;
 					height: 100%;
+					border-radius: 100%;
 				}
 			}
 		}
