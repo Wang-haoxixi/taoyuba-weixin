@@ -4,7 +4,7 @@
 			<!-- <video :enable-progress-gesture="false" :show-progress="false" :src="data.videoSrc :poster="data.videoImg"></video> -->
 			<!-- 'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4' -->
 			<video
-				v-show="!show"
+				v-if="!show"
 				id="myVideo"
 				:initial-time="initialTime"
 				@loadedmetadata="onLoadedmetadata"
@@ -17,7 +17,7 @@
 				:src="data.videoSrc"
 				:poster="data.videoImg"></video>
 		</view>
-		<view class="content-wrapper" v-show="!show">
+		<view class="content-wrapper" v-if="!show">
 			<view class="title1 title">{{data.vedioName || ''}}</view>
 			<view class="people">
 				{{data.videoViewerNum || 0}}人学过
@@ -197,6 +197,7 @@
 				let currentTime = e.detail.currentTime
 				// console.log(currentTime)
 				this.time = currentTime
+				console.error(this.time);
 				// this.roles.includes(this.rolesType.crew.type) && 
 				if (!this.closeFace) {
 					if (this.faceTime < currentTime) {
@@ -211,21 +212,23 @@
 						return
 					}
 				}
-				
+				// console.error(this.intervalTime);
+				// console.error(currentTime)
 				if (currentTime > this.intervalTime) {
 					this.intervalTime += INTERVAL_TIME
 					this.setLearnTime()
-					// console.log('记录时间', currentTime, this.intervalTime)
+					console.log('记录时间', currentTime, this.intervalTime)
 				}
 			},
 			onFaceEnd () {
+				let time = this.time;
+				console.error("faceend:"+time)
 				console.log('onFaceEnd...')
 				this.show = false
-				this.$nextTick(function(){
-					this.initialTime = this.time
+				// this.$nextTick(function(){
+					this.initialTime = time;
 					this.videoContext.play()
-					
-				})
+				// })
 			},
 			// 视频元数据加载完成时触发
 			onLoadedmetadata (e) {
