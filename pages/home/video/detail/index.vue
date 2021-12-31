@@ -3,18 +3,9 @@
 		<view class="video-detail-content">
 			<!-- <video :enable-progress-gesture="false" :show-progress="false" :src="data.videoSrc :poster="data.videoImg"></video> -->
 			<!-- 'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4' -->
-			<video
-				v-if="!show"
-				id="myVideo"
-				:initial-time="initialTime"
-				@loadedmetadata="onLoadedmetadata"
-				@ended="onEnded"
-				@timeupdate="onTimeupdate"
-				@pause="onPause"
-				@play="onPlay"
-				:enable-progress-gesture="false"
-				:show-progress="true"
-				:src="data.videoSrc"
+			<video v-if="!show" id="myVideo" :initial-time="initialTime" @loadedmetadata="onLoadedmetadata"
+				@ended="onEnded" @timeupdate="onTimeupdate" @pause="onPause" @play="onPlay"
+				:enable-progress-gesture="false" :show-progress="true" :src="data.videoSrc"
 				:poster="data.videoImg"></video>
 		</view>
 		<view class="content-wrapper" v-if="!show">
@@ -27,7 +18,8 @@
 				{{data.videoDescript || ''}}
 			</view>
 		</view>
-		<face-recognition ref="face" v-model="show" @end="onFaceEnd" :userInfo="userInfo" :isFirst="isFirst"></face-recognition>
+		<face-recognition ref="face" v-model="show" @end="onFaceEnd" :userInfo="userInfo" :isFirst="isFirst">
+		</face-recognition>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -45,10 +37,10 @@
 		components: {
 			faceRecognition
 		},
-		data () {
+		data() {
 			return {
 				show: false,
-				initialTime: 0,  // 指定视频初始播放位置，单位为秒（s）。
+				initialTime: 0, // 指定视频初始播放位置，单位为秒（s）。
 				time: 0,
 				videoContext: null,
 				faceTime: TIME, // 活体识别间隔时间
@@ -59,21 +51,21 @@
 				closeFace: false
 			}
 		},
-		onLoad (params) {
-			console.log('params..',params)
+		onLoad(params) {
+			console.log('params..', params)
 			this.videoId = params.id
 			if (params.id) {
 				this.getList(params.id)
 				// this.getUserInfoApi().then(() => {
-					// this.getList(params.id)
-					// if (this.roles.includes(this.rolesType.crew.type)) {
-					// 	this.getList(params.id)
-					// } else {
-					// 	this.$refs.uToast.show({
-					// 		title: '请确认您的身份是船员',
-					// 		back: true
-					// 	})
-					// }
+				// this.getList(params.id)
+				// if (this.roles.includes(this.rolesType.crew.type)) {
+				// 	this.getList(params.id)
+				// } else {
+				// 	this.$refs.uToast.show({
+				// 		title: '请确认您的身份是船员',
+				// 		back: true
+				// 	})
+				// }
 				// }).catch(() => {
 				// 	setTimeout(() => {
 				// 		uni.navigateBack({
@@ -89,15 +81,15 @@
 				}, 1000)
 			}
 			// this.getList(params.id)
-			this.faceTime += this.initialTime  // 180+0
+			this.faceTime += this.initialTime // 180+0
 			this.intervalTime += this.initialTime
 			this.time = this.initialTime
 			console.log('this.faceTime:', this.faceTime, 'this.intervalTime:', this.intervalTime, 'this.time:', this.time)
 		},
-		onReady (res) {
+		onReady(res) {
 			this.videoContext = uni.createVideoContext('myVideo')
 		},
-		onUnload () {
+		onUnload() {
 			// console.log('onUnload', this.time)
 			if (Math.floor(this.time)) {
 				this.$http.post('/tybhrms/tybLearnRecord/save', {
@@ -109,24 +101,28 @@
 			}
 		},
 		methods: {
-			getList (id) {
-				this.$http.get(`/tybhrms/tyblessonvideo/details/${id}`).then(({ data }) => {
+			getList(id) {
+				this.$http.get(`/tybhrms/tyblessonvideo/details/${id}`).then(({
+					data
+				}) => {
 					console.log('/tybhrms/tyblessonvideo/details...', data)
 					if (data.code === 0) {
 						this.data = data.data
 						this.initialTime = this.data.learnTime || 0 //已经学习的时间
-						this.faceTime = +this.faceTime + (+this.initialTime)  //活体识别间隔时间  180  
-						console.log('faceTime..',this.faceTime)
-						this.intervalTime = +this.intervalTime + (+this.initialTime)  //间隔记录时间  0
-						console.log('intervalTime..',this.intervalTime)
+						this.faceTime = +this.faceTime + (+this.initialTime) //活体识别间隔时间  180  
+						console.log('faceTime..', this.faceTime)
+						this.intervalTime = +this.intervalTime + (+this.initialTime) //间隔记录时间  0
+						console.log('intervalTime..', this.intervalTime)
 						this.closeFace = this.data.leranStamp > 0
-						console.log('closeFace..',this.closeFace)
+						console.log('closeFace..', this.closeFace)
 						// if(this.videoContext){
 						// 	this.videoContext.pause()
 						// }
 						// this.roles.includes(this.rolesType.crew.type) &&
 						if (!this.closeFace) {
-							this.$http.get(`/admin/user/details/${this.userInfo.username}`).then(({ data }) => {
+							this.$http.get(`/admin/user/details/${this.userInfo.username}`).then(({
+								data
+							}) => {
 								console.log('/admin/user/details..', data)
 								if (data.code === 0) {
 									let facePhoto = data.data.facePhoto
@@ -144,7 +140,7 @@
 									delta: 1
 								})
 							})
-							
+
 						} else {
 							this.show = false
 						}
@@ -158,7 +154,7 @@
 				})
 			},
 			// 记录学习时间
-			setLearnTime () {
+			setLearnTime() {
 				this.$http.post('/tybhrms/tybLearnRecord/save', {
 					learnTime: this.time,
 					userId: this.userInfo.userId,
@@ -166,7 +162,7 @@
 					idcard: this.userInfo.idCard
 				})
 			},
-			endSubmit () {
+			endSubmit() {
 				this.$http.post('/tybhrms/tybLearnRecord/save', {
 					learnTime: this.time,
 					userId: this.userInfo.userId,
@@ -177,23 +173,24 @@
 					this.closeFace = true
 				})
 			},
-			onPlay (e) {
-				
+			onPlay(e) {
+
 			},
 			// 当播放到末尾时触发
-			onEnded (e) {
+			onEnded(e) {
 				this.endSubmit()
 				if (!this.closeFace) {
 					console.log('onEnded', e)
 				}
 			},
 			// 当暂停播放时触发
-			onPause (e) {
+			onPause(e) {
 				console.log('onPause', this.intervalTime, e)
 			},
 			// 播放进度变化时触发
-			onTimeupdate (e) {
+			onTimeupdate(e) {
 				// console.log(e)
+				console.log('播放进度变化时触发..')
 				let currentTime = e.detail.currentTime
 				// console.log(currentTime)
 				this.time = currentTime
@@ -220,19 +217,17 @@
 					console.log('记录时间', currentTime, this.intervalTime)
 				}
 			},
-			onFaceEnd () {
+			onFaceEnd() {
 				let time = this.time;
-				console.error("faceend:"+time)
 				console.log('onFaceEnd...')
+				console.log('onFaceEnd...', 'time:', this.time, 'initialTime:', this.initialTime)
 				this.show = false
-				// this.$nextTick(function(){
-					this.initialTime = time;
-					this.videoContext.play()
-				// })
+				this.initialTime = time;
+				this.videoContext.play()
 			},
 			// 视频元数据加载完成时触发
-			onLoadedmetadata (e) {
-				console.log('onLoadedmetadata...',e.detail)
+			onLoadedmetadata(e) {
+				console.log('onLoadedmetadata...', e.detail)
 			}
 		}
 	}
@@ -245,8 +240,10 @@
 				width: 100%;
 			}
 		}
+
 		.content-wrapper {
 			color: #999;
+
 			.title {
 				height: 88rpx;
 				line-height: 88rpx;
@@ -254,13 +251,16 @@
 				padding: 0 30rpx;
 				font-size: 28rpx;
 			}
+
 			.title1 {
 				color: #333;
 			}
+
 			.people {
 				font-size: 26rpx;
 				padding: 0rpx 30rpx;
 			}
+
 			.body-wrapper {
 				font-size: 26rpx;
 				background-color: #fff;
