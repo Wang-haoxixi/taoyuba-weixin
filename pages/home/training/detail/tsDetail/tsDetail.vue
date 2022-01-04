@@ -160,7 +160,7 @@
 				margin-right: 16rpx;
 				margin-bottom: 16rpx;
 				border-radius: 4rpx;
-				background: rgba(31, 121, 244, 0.26);
+				background: rgba(31, 121, 244, 0.1);
 				font-size: 20rpx;
 				padding: 4rpx 16rpx;
 				color: #1F79F4;
