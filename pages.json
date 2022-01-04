@@ -519,6 +519,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/home/training/detail/tcList/tcList",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "师资库",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	// 分包操作
 	"subPackages": [

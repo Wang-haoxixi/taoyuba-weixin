@@ -113,7 +113,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.detail-card{
 		margin: 24rpx;
 		padding: 24rpx;

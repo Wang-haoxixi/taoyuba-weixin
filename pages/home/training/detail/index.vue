@@ -29,7 +29,7 @@
 			<view class="teacher-resources">
 				<view class="name-more">
 					<text style="color: #303031;font-size: 32rpx;font-weight: 500;">师资库</text>
-					<navigator url="/pages/home/training/detail/tsDetail/tsDetail" hover-class="other-navigator-hover">查看更多</navigator>
+					<navigator url="/pages/home/training/detail/tcList/tcList" hover-class="other-navigator-hover">查看更多</navigator>
 				</view>
 				<view class="items-box">
 					<view class="box-resources" v-for="(item, index) in tcList" :key='index'>
@@ -70,7 +70,9 @@
 				markers: [],
 				data: {},
 				list: [],
-				tcList: [],
+				tcList: [{
+					teacherName: '',
+				}],
 				id: undefined
 			}
 		},

@@ -256,6 +256,7 @@
 			width: 400rpx;
 			height: 400rpx;
 			overflow: hidden;
+			-webkit-transform: translate3d(0, 0, 0);
 			border-radius: 50%;
 			margin: 100rpx auto 0;
 			.camera-wrapper {
