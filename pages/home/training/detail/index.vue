@@ -26,7 +26,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="teacher-resources">
+			<view class="teacher-resources" v-if="tcList.length>0">
 				<view class="name-more">
 					<text style="color: #303031;font-size: 32rpx;font-weight: 500;">师资库</text>
 					<navigator url="/pages/home/training/detail/tcList/tcList" hover-class="other-navigator-hover">查看更多</navigator>
