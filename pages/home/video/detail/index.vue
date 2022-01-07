@@ -5,7 +5,7 @@
 			<!-- 'https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kgga63nfwb3jqygp/navideo720/mda-kgga63nfwb3jqygp.mp4' -->
 			<video v-if="!show" id="myVideo" :initial-time="initialTime" @loadedmetadata="onLoadedmetadata"
 				@ended="onEnded" @timeupdate="onTimeupdate" @pause="onPause" @play="onPlay"
-				:enable-progress-gesture="false" :show-progress="true" :src="data.videoSrc" autoplay
+				:enable-progress-gesture="false" :show-progress="false" :src="data.videoSrc" autoplay
 				:poster="data.videoImg"></video>
 		</view>
 		<view class="content-wrapper" v-if="!show">
@@ -25,8 +25,8 @@
 </template>
 
 <script>
-	// const TIME = 3 * 60
-	const TIME = 80
+	const TIME = 3 * 60
+	// const TIME = 80
 	const INTERVAL_TIME = 2 * 60
 	// import faceRecognition from '../components/face-recognition/index.vue'
 	// import faceRecognition from '@/pages/components/face-recognition/index.vue'
