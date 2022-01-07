@@ -25,8 +25,9 @@
 </template>
 
 <script>
-	const TIME = 3 * 60
+	// const TIME = 3 * 60
 	// const TIME = 80
+	const TIME = 10 * 60
 	const INTERVAL_TIME = 2 * 60
 	// import faceRecognition from '../components/face-recognition/index.vue'
 	// import faceRecognition from '@/pages/components/face-recognition/index.vue'
